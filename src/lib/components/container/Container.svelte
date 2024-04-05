@@ -1,0 +1,58 @@
+<script context="module" lang="ts">
+  import type { SvelteHTMLElements } from 'svelte/elements';
+
+  import { cn } from '$lib/utils/index.js';
+
+  export type Attributes = SvelteHTMLElements['div'];
+  export type Events = Record<never, never>;
+  export type Props = {
+    /**
+     * The element to render.
+     *
+     * @default 'div'
+     */
+    element?: string;
+    /**
+     * Whether to add horizontal padding.
+     *
+     * @default false
+     */
+    xAxis?: boolean;
+    /**
+     * Whether to add vertical padding.
+     *
+     * @default false
+     */
+    yAxis?: boolean;
+  };
+</script>
+
+<script lang="ts">
+  type $$Events = Record<never, never>;
+  type $$Props = Attributes & Events & Props;
+  type $$Slots = {
+    default: Record<never, never>;
+  };
+
+  export let element: Props['element'] = 'div';
+  export let xAxis: Props['xAxis'] = undefined;
+  export let yAxis: Props['yAxis'] = undefined;
+
+  $: attributes = $$restProps as Attributes;
+</script>
+
+<!-- <style lang="postcss">
+</style> -->
+
+<svelte:element
+  this="{element}"
+  {...attributes}
+  class="{cn(
+    'w-full',
+    xAxis && ['mx-auto max-w-7xl px-2', 'sm:px-4', 'md:px-6', 'lg:px-8'],
+    yAxis && ['py-2', 'sm:py-4', 'md:py-6', 'lg:py-8'],
+    attributes.class,
+  )}"
+>
+  <slot />
+</svelte:element>

@@ -21,6 +21,10 @@
       "types": "./dist/components/button/Button.svelte.d.ts",
       "svelte": "./dist/components/button/Button.svelte"
     },
+    "./components/container/Container.svelte": {
+      "types": "./dist/components/container/Container.svelte.d.ts",
+      "svelte": "./dist/components/container/Container.svelte"
+    },
     "./transition/flyAndScale": {
       "types": "./dist/transition/flyAndScale.d.ts",
       "svelte": "./dist/transition/flyAndScale.js"
