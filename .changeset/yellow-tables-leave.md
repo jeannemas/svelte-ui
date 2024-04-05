@@ -1,5 +1,5 @@
 ---
-"@jeanne-mas/svelte-ui": minor
+'@jeanne-mas/svelte-ui': minor
 ---
 
 Added Container component
