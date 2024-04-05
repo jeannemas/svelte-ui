@@ -6,6 +6,7 @@
   import Button, { variants, type Size, type Variant } from '$lib/components/button/Button.svelte';
 
   const defaultSize = variants.defaultVariants.size;
+  const defaultText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
   const defaultVariant = variants.defaultVariants.variant;
   const disabledKey = 'disabled';
   const sizeKey = 'size';
@@ -22,7 +23,7 @@
 
     return size && sizeKeys.includes(size) ? (size as Size) : defaultSize;
   });
-  const text = derived(page, ($page) => $page.url.searchParams.get(textKey) || '');
+  const text = derived(page, ($page) => $page.url.searchParams.get(textKey) ?? defaultText);
   const variant = derived(page, ($page) => {
     const variant = $page.url.searchParams.get(variantKey);
 
@@ -36,7 +37,7 @@
   }
 
   [data-control] {
-    @apply rounded border border-border p-1;
+    @apply rounded border border-border px-2 py-1;
   }
 </style>
 
@@ -84,6 +85,22 @@
     {/each}
   </select>
 
+  <label for="{textKey}">Text</label>
+
+  <textarea
+    id="{textKey}"
+    name="{textKey}"
+    value="{$text}"
+    data-control
+    on:input="{({ currentTarget }) => {
+      const url = new URL($page.url);
+
+      url.searchParams.set(textKey, currentTarget.value);
+
+      goto(url, { keepFocus: true });
+    }}"
+  ></textarea>
+
   <label for="{variantKey}">Variant</label>
 
   <select
@@ -105,23 +122,6 @@
       </option>
     {/each}
   </select>
-
-  <label for="{textKey}">Text</label>
-
-  <textarea
-    id="{textKey}"
-    name="{textKey}"
-    placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    value="{$text}"
-    data-control
-    on:input="{({ currentTarget }) => {
-      const url = new URL($page.url);
-
-      url.searchParams.set(textKey, currentTarget.value);
-
-      goto(url, { keepFocus: true });
-    }}"
-  ></textarea>
 </div>
 
 <hr class="my-4 border-y border-border" />

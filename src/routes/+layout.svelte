@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
   import { page } from '$app/stores';
   import route_meta_data from '$lib/../../.svelte-kit/types/route_meta_data.json';
+  import Button from '$lib/components/button/Button.svelte';
 
   import '../app.pcss';
 
@@ -24,9 +25,9 @@
     <ul>
       {#each routes as route, index (index)}
         <li>
-          <a class="block p-2 font-mono underline-offset-4 hover:underline" href="{route}">
+          <Button class="block" href="{route}" size="lg" variant="link">
             {route}
-          </a>
+          </Button>
         </li>
       {/each}
     </ul>
@@ -34,7 +35,7 @@
 
   <main>
     <header class="flex flex-row items-center justify-between gap-x-2 border-b border-border p-2">
-      <h1 class="text-lg font-bold">
+      <h1 class="text-xl font-bold">
         {$page.route.id}
       </h1>
 

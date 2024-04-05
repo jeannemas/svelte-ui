@@ -5,8 +5,7 @@
   import { cn } from '$lib/utils/index.js';
 
   export type Attributes = ButtonPrimitive.Props;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  export type Events = {};
+  export type Events = Record<never, never>;
   export type Props = {
     /**
      * The size of the button.
@@ -61,7 +60,7 @@
   type $$Events = ButtonPrimitive.Events;
   type $$Props = Attributes & Events & Props;
   type $$Slots = {
-    default: Record<string, never>;
+    default: Record<never, never>;
   };
 
   export let size: Props['size'] = 'default';
