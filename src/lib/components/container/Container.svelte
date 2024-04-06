@@ -3,15 +3,16 @@
 
   import { cn } from '$lib/utils/index.js';
 
-  export type Attributes = SvelteHTMLElements['div'];
+  export type Attributes<TElement extends keyof HTMLElementTagNameMap> =
+    SvelteHTMLElements[TElement];
   export type Events = Record<never, never>;
-  export type Props = {
+  export type Props<TElement extends keyof HTMLElementTagNameMap> = {
     /**
      * The element to render.
      *
      * @default 'div'
      */
-    element?: string;
+    element?: TElement;
     /**
      * Whether to add horizontal padding.
      *
@@ -27,18 +28,18 @@
   };
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="TElement extends keyof HTMLElementTagNameMap">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes<TElement> & Events & Props<TElement>;
   type $$Slots = {
     default: Record<never, never>;
   };
 
-  export let element: Props['element'] = 'div';
-  export let xAxis: Props['xAxis'] = undefined;
-  export let yAxis: Props['yAxis'] = undefined;
+  export let element: Props<TElement>['element'] = 'div' as TElement;
+  export let xAxis: Props<TElement>['xAxis'] = undefined;
+  export let yAxis: Props<TElement>['yAxis'] = undefined;
 
-  $: attributes = $$restProps as Attributes;
+  $: attributes = $$restProps as Attributes<TElement>;
 </script>
 
 <!-- <style lang="postcss">

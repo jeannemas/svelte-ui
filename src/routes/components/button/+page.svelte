@@ -3,7 +3,7 @@
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import Button, { variants, type Size, type Variant } from '$lib/components/button/Button.svelte';
+  import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
 
   const defaultSize = variants.defaultVariants.size;
   const defaultText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';

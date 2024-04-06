@@ -35,6 +35,7 @@ module.exports = {
             varsIgnorePattern: '^\\$\\$(Events|Props|Slots)$',
           },
         ],
+        'no-undef': 'off',
       },
     },
   ],

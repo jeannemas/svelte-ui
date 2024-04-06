@@ -3,7 +3,7 @@
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import Container from '$lib/components/container/Container.svelte';
+  import Container from '$lib/components/container/index.js';
 
   const xAxisKey = 'xAxis';
   const yAxisKey = 'yAxis';

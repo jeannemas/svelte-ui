@@ -18,14 +18,15 @@
     "prepare": "husky"
   },
   "exports": {
-    "./components/button/Button.svelte": {
-      "types": "./dist/components/button/Button.svelte.d.ts",
-      "svelte": "./dist/components/button/Button.svelte"
+    "./components/button": {
+      "types": "./dist/components/button/index.d.ts",
+      "svelte": "./dist/components/button/index.js"
     },
-    "./components/container/Container.svelte": {
-      "types": "./dist/components/container/Container.svelte.d.ts",
-      "svelte": "./dist/components/container/Container.svelte"
+    "./components/container": {
+      "types": "./dist/components/container/index.d.ts",
+      "svelte": "./dist/components/container/index.js"
     },
+    "./package.json": "./package.json",
     "./transition/flyAndScale": {
       "types": "./dist/transition/flyAndScale.d.ts",
       "svelte": "./dist/transition/flyAndScale.js"
