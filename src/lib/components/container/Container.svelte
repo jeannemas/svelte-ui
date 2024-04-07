@@ -3,16 +3,9 @@
 
   import { cn } from '$lib/utils/index.js';
 
-  export type Attributes<TElement extends keyof HTMLElementTagNameMap = 'div'> =
-    SvelteHTMLElements[TElement];
+  export type Attributes = SvelteHTMLElements['div'];
   export type Events = Record<never, never>;
-  export type Props<TElement extends keyof HTMLElementTagNameMap = 'div'> = {
-    /**
-     * The element to render.
-     *
-     * @default 'div'
-     */
-    element?: TElement;
+  export type Props = {
     /**
      * Whether to add horizontal padding.
      *
@@ -28,25 +21,23 @@
   };
 </script>
 
-<script lang="ts" generics="TElement extends keyof HTMLElementTagNameMap = 'div'">
+<script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes<TElement> & Events & Props<TElement>;
+  type $$Props = Attributes & Events & Props;
   type $$Slots = {
     default: Record<never, never>;
   };
 
-  export let element: Props<TElement>['element'] = 'div' as TElement;
-  export let xAxis: Props<TElement>['xAxis'] = undefined;
-  export let yAxis: Props<TElement>['yAxis'] = undefined;
+  export let xAxis: Props['xAxis'] = undefined;
+  export let yAxis: Props['yAxis'] = undefined;
 
-  $: attributes = $$restProps as Attributes<TElement>;
+  $: attributes = $$restProps as Attributes;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<svelte:element
-  this="{element}"
+<div
   {...attributes}
   class="{cn(
     'w-full',
@@ -56,4 +47,4 @@
   )}"
 >
   <slot />
-</svelte:element>
+</div>
