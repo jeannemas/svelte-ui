@@ -3,10 +3,10 @@
 
   import { cn } from '$lib/utils/index.js';
 
-  export type Attributes<TElement extends keyof HTMLElementTagNameMap> =
+  export type Attributes<TElement extends keyof HTMLElementTagNameMap = 'div'> =
     SvelteHTMLElements[TElement];
   export type Events = Record<never, never>;
-  export type Props<TElement extends keyof HTMLElementTagNameMap> = {
+  export type Props<TElement extends keyof HTMLElementTagNameMap = 'div'> = {
     /**
      * The element to render.
      *
@@ -28,7 +28,7 @@
   };
 </script>
 
-<script lang="ts" generics="TElement extends keyof HTMLElementTagNameMap">
+<script lang="ts" generics="TElement extends keyof HTMLElementTagNameMap = 'div'">
   type $$Events = Record<never, never>;
   type $$Props = Attributes<TElement> & Events & Props<TElement>;
   type $$Slots = {
