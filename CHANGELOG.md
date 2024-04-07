@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.2.1
+
+### Patch Changes
+
+- 65ef9c7: Fixed container default element typing
+
 ## 0.2.0
 
 ### Minor Changes
