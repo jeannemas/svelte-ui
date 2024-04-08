@@ -3,28 +3,26 @@
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
+  import Input, { type Variant } from '$lib/components/input/index.js';
 
   const disabledKey = 'disabled';
-  const sizeKey = 'size';
-  const sizeKeys = Object.keys(variants.variants.size);
+  const placeholderKey = 'placeholder';
   const variantKey = 'variant';
-  const variantKeys = Object.keys(variants.variants.variant);
+  const variantKeys = ['number', 'text'];
 </script>
 
 <script lang="ts">
   const disabled = derived(page, ($page) => $page.url.searchParams.has(disabledKey));
-  const size = derived(page, ($page) => {
-    const size = $page.url.searchParams.get(sizeKey);
-
-    return size && sizeKeys.includes(size) ? (size as Size) : variants.defaultVariants.size;
-  });
+  const placeholder = derived(
+    page,
+    ($page) =>
+      $page.url.searchParams.get(placeholderKey) ||
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  );
   const variant = derived(page, ($page) => {
     const variant = $page.url.searchParams.get(variantKey);
 
-    return variant && variantKeys.includes(variant)
-      ? (variant as Variant)
-      : variants.defaultVariants.variant;
+    return variant && variantKeys.includes(variant) ? (variant as Variant) : 'text';
   });
 </script>
 
@@ -60,27 +58,22 @@
     }}"
   />
 
-  <label for="{sizeKey}">Size</label>
+  <label for="{placeholderKey}">Placeholder</label>
 
-  <select
-    id="{sizeKey}"
-    name="{sizeKey}"
-    value="{$size}"
+  <input
+    id="{placeholderKey}"
+    name="{placeholderKey}"
+    type="text"
+    value="{$placeholder}"
     data-control
     on:change="{({ currentTarget }) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(sizeKey, currentTarget.value);
+      url.searchParams.set(placeholderKey, currentTarget.value);
 
       goto(url);
     }}"
-  >
-    {#each sizeKeys as sizeKey, index (index)}
-      <option selected="{sizeKey === $size}" value="{sizeKey}">
-        {sizeKey}
-      </option>
-    {/each}
-  </select>
+  />
 
   <label for="{variantKey}">Variant</label>
 
@@ -107,6 +100,4 @@
 
 <hr class="my-4 border-y border-border" />
 
-<Button disabled="{$disabled}" size="{$size}" variant="{$variant}">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-</Button>
+<Input disabled="{$disabled}" placeholder="{$placeholder}" variant="{$variant}" />
