@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.4.0
+
+### Minor Changes
+
+- 13fd354: Added input component
+
 ## 0.3.0
 
 ### Minor Changes
