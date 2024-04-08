@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- d7c2beb: Forced container to be a div
+
 ## 0.2.1
 
 ### Patch Changes
