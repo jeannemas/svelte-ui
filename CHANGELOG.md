@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.4.1
+
+### Patch Changes
+
+- 8bdb323: Added missing export entry for input component
+
 ## 0.4.0
 
 ### Minor Changes
