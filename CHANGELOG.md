@@ -1,5 +1,15 @@
 # @jeanne-mas/svelte-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- f23f0c9: Added collapsible component
+
+### Patch Changes
+
+- f23f0c9: Adjusted typing of input's value prop
+
 ## 0.4.1
 
 ### Patch Changes
