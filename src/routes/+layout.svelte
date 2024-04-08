@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
   import { page } from '$app/stores';
   import route_meta_data from '$lib/../../.svelte-kit/types/route_meta_data.json';
-  import Button from '$lib/components/button/Button.svelte';
 
   import '../app.pcss';
 
@@ -25,18 +24,23 @@
     <ul>
       {#each routes as route, index (index)}
         <li>
-          <Button class="block" href="{route}" size="lg" variant="link">
+          <a class="block p-2 font-mono underline-offset-4 hover:underline" href="{route}">
             {route}
-          </Button>
+          </a>
         </li>
       {/each}
     </ul>
   </aside>
 
-  <main>
+  <div>
     <header class="flex flex-row items-center justify-between gap-x-2 border-b border-border p-2">
       <h1 class="text-xl font-bold">
-        {$page.route.id}
+        {$page.route.id
+          ?.replaceAll(/[^\w]/g, ' ')
+          .split(' ')
+          .filter(Boolean)
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')}
       </h1>
 
       <h3 class="text-md font-medium">
@@ -44,8 +48,8 @@
       </h3>
     </header>
 
-    <div class="p-2">
+    <main class="p-2">
       <slot />
-    </div>
-  </main>
+    </main>
+  </div>
 </div>

@@ -76,7 +76,7 @@
   Aliquid autem dolorem magni.
 </p>
 
-<Container class="bg-slate-300" xAxis="{$xAxis}" yAxis="{$yAxis}">
+<Container class="bg-slate-300 transition-all duration-75" xAxis="{$xAxis}" yAxis="{$yAxis}">
   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam sapiente nisi omnis temporibus
   veritatis nihil eligendi impedit similique quo, neque sequi voluptate, ipsum optio odit repellat
   ipsam quidem delectus libero.

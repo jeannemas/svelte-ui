@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
 
-  import { cn } from '$lib/utils/index.js';
+  import { cn } from '$lib/utils/cn.js';
 
   export type Attributes = SvelteHTMLElements['div'];
   export type Events = Record<never, never>;
@@ -9,11 +9,15 @@
     /**
      * Whether to add horizontal padding.
      *
+     * By default, the padding is `px-2 sm:px-4 md:px-6 lg:px-8`.
+     *
      * @default false
      */
     xAxis?: boolean;
     /**
      * Whether to add vertical padding.
+     *
+     * By default, the padding is `py-2 sm:py-4 md:py-6 lg:py-8`.
      *
      * @default false
      */

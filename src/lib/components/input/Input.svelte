@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
 
-  import { cn } from '$lib/utils/index.js';
+  import { cn } from '$lib/utils/cn.js';
 
-  export type Attributes = SvelteHTMLElements['input'];
+  export type Attributes = Omit<SvelteHTMLElements['input'], 'checked' | 'value'>;
   export type Events = Record<never, never>;
   export type Props =
     | {
@@ -16,7 +16,7 @@
       };
   export type Variant = Props['variant'];
 
-  type FormInputEvent<T extends Event = Event> = T & {
+  type FormInputEvent<TEvent extends Event = Event> = TEvent & {
     currentTarget: EventTarget & HTMLInputElement;
   };
 </script>

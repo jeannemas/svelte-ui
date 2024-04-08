@@ -22,6 +22,10 @@
       "types": "./dist/components/button/index.d.ts",
       "svelte": "./dist/components/button/index.js"
     },
+    "./components/collapsible": {
+      "types": "./dist/components/collapsible/index.d.ts",
+      "svelte": "./dist/components/collapsible/index.js"
+    },
     "./components/container": {
       "types": "./dist/components/container/index.d.ts",
       "svelte": "./dist/components/container/index.js"
@@ -34,6 +38,14 @@
     "./transition/flyAndScale": {
       "types": "./dist/transition/flyAndScale.d.ts",
       "svelte": "./dist/transition/flyAndScale.js"
+    },
+    "./utils/cn": {
+      "types": "./dist/utils/cn.d.ts",
+      "svelte": "./dist/utils/cn.js"
+    },
+    "./utils/types": {
+      "types": "./dist/utils/types.d.ts",
+      "svelte": "./dist/utils/types.js"
     },
     ".": {
       "types": "./dist/index.d.ts",

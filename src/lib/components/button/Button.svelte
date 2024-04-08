@@ -2,7 +2,7 @@
   import { Button as ButtonPrimitive } from 'bits-ui';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/index.js';
+  import { cn } from '$lib/utils/cn.js';
 
   export type Attributes = ButtonPrimitive.Props;
   export type Events = Record<never, never>;
