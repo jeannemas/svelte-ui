@@ -82,3 +82,15 @@
       'calt' 1;
   }
 }
+
+[data-form] {
+  @apply grid grid-cols-[auto_1fr] justify-items-stretch gap-2;
+
+  & [data-label] {
+    @apply text-right font-bold;
+  }
+
+  & [data-control] {
+    @apply rounded border border-border px-2 py-1;
+  }
+}

@@ -14,6 +14,7 @@
         value?: string;
         variant: 'text';
       };
+  export type Slots = Record<never, never>;
   export type Variant = Props['variant'];
 
   type FormInputEvent<TEvent extends Event = Event> = TEvent & {
@@ -39,7 +40,7 @@
     input: FormInputEvent<InputEvent>;
   };
   type $$Props = Attributes & Events & Props;
-  type $$Slots = Record<never, never>;
+  type $$Slots = Slots;
 
   export let value: Props['value'] = undefined;
   export let variant: Props['variant'];

@@ -23,14 +23,15 @@
      */
     yAxis?: boolean;
   };
+  export type Slots = {
+    default: Record<never, never>;
+  };
 </script>
 
 <script lang="ts">
   type $$Events = Record<never, never>;
   type $$Props = Attributes & Events & Props;
-  type $$Slots = {
-    default: Record<never, never>;
-  };
+  type $$Slots = Slots;
 
   export let xAxis: Props['xAxis'] = undefined;
   export let yAxis: Props['yAxis'] = undefined;

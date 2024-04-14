@@ -26,18 +26,11 @@
   });
 </script>
 
-<style lang="postcss">
-  label {
-    @apply text-right font-bold;
-  }
+<!-- <style lang="postcss">
+</style> -->
 
-  [data-control] {
-    @apply rounded border border-border px-2 py-1;
-  }
-</style>
-
-<div class="grid grid-cols-[auto_1fr] justify-items-stretch gap-2">
-  <label for="{disabledKey}">Disabled</label>
+<div data-form>
+  <label for="{disabledKey}" data-label>Disabled</label>
 
   <input
     checked="{$disabled}"
@@ -58,7 +51,7 @@
     }}"
   />
 
-  <label for="{placeholderKey}">Placeholder</label>
+  <label for="{placeholderKey}" data-label>Placeholder</label>
 
   <input
     id="{placeholderKey}"
@@ -75,7 +68,7 @@
     }}"
   />
 
-  <label for="{variantKey}">Variant</label>
+  <label for="{variantKey}" data-label>Variant</label>
 
   <select
     id="{variantKey}"

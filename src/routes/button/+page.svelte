@@ -28,18 +28,11 @@
   });
 </script>
 
-<style lang="postcss">
-  label {
-    @apply text-right font-bold;
-  }
+<!-- <style lang="postcss">
+</style> -->
 
-  [data-control] {
-    @apply rounded border border-border px-2 py-1;
-  }
-</style>
-
-<div class="grid grid-cols-[auto_1fr] justify-items-stretch gap-2">
-  <label for="{disabledKey}">Disabled</label>
+<div data-form>
+  <label for="{disabledKey}" data-label>Disabled</label>
 
   <input
     checked="{$disabled}"
@@ -60,7 +53,7 @@
     }}"
   />
 
-  <label for="{sizeKey}">Size</label>
+  <label for="{sizeKey}" data-label>Size</label>
 
   <select
     id="{sizeKey}"
@@ -82,7 +75,7 @@
     {/each}
   </select>
 
-  <label for="{variantKey}">Variant</label>
+  <label for="{variantKey}" data-label>Variant</label>
 
   <select
     id="{variantKey}"

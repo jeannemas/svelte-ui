@@ -1,1 +1,1 @@
-export { default, type Attributes, type Events, type Props } from './Container.svelte';
+export { default, type Attributes, type Events, type Props, type Slots } from './Container.svelte';

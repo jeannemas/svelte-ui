@@ -1,0 +1,62 @@
+<script context="module" lang="ts">
+  import { Calendar as CalendarPrimitive } from 'bits-ui';
+  import type { SvelteHTMLElements } from 'svelte/elements';
+
+  import { variants } from '$lib/components/button/index.js';
+  import { cn } from '$lib/utils/cn.js';
+  import type { ComponentSlots } from '$lib/utils/types.js';
+
+  export type Attributes = SvelteHTMLElements['div'];
+  export type Events = Record<never, never>;
+  export type Props = Omit<CalendarPrimitive.DayProps, keyof Attributes>;
+  export type Slots = ComponentSlots<CalendarPrimitive.Day>;
+</script>
+
+<script lang="ts">
+  type $$Events = CalendarPrimitive.DayEvents;
+  type $$Props = Attributes & Events & Props;
+  type $$Slots = Slots;
+
+  export let asChild: Props['asChild'] = undefined;
+  export let date: Props['date'];
+  export let el: Props['el'] = undefined;
+  export let month: Props['month'];
+
+  $: attributes = $$restProps as Attributes;
+</script>
+
+<!-- <style lang="postcss">
+</style> -->
+
+<CalendarPrimitive.Day
+  {...attributes}
+  asChild="{asChild}"
+  class="{cn(
+    variants({ variant: 'ghost' }),
+
+    'h-9 w-9 p-0 font-normal ',
+    '[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent-foreground',
+    // Selected
+    'data-[selected]:bg-primary data-[selected]:text-primary-foreground data-[selected]:opacity-100 data-[selected]:hover:bg-primary data-[selected]:hover:text-primary-foreground data-[selected]:focus:bg-primary data-[selected]:focus:text-primary-foreground',
+    // Disabled
+    'data-[disabled]:text-muted-foreground data-[disabled]:opacity-50',
+    // Unavailable
+    'data-[unavailable]:text-destructive-foreground data-[unavailable]:line-through',
+    // Outside months
+    'data-[outside-month]:pointer-events-none data-[outside-month]:text-muted-foreground data-[outside-month]:opacity-50 [&[data-outside-month][data-selected]]:bg-accent/50 [&[data-outside-month][data-selected]]:text-muted-foreground [&[data-outside-month][data-selected]]:opacity-30',
+
+    attributes.class,
+  )}"
+  date="{date}"
+  el="{el}"
+  month="{month}"
+  let:builder
+  let:disabled
+  let:selected
+  let:unavailable
+  on:click
+>
+  <slot builder="{builder}" disabled="{disabled}" selected="{selected}" unavailable="{unavailable}">
+    {date.day}
+  </slot>
+</CalendarPrimitive.Day>

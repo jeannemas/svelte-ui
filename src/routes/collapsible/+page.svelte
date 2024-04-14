@@ -13,8 +13,8 @@
   const open = derived(page, ($page) => $page.url.searchParams.has(openKey));
 </script>
 
-<style lang="postcss">
-</style>
+<!-- <style lang="postcss">
+</style> -->
 
 <Collapsible.Root
   onOpenChange="{(open) => {

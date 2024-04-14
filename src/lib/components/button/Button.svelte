@@ -3,6 +3,7 @@
   import { tv, type VariantProps } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
+  import type { ComponentSlots } from '$lib/utils/types.js';
 
   export type Attributes = ButtonPrimitive.Props;
   export type Events = Record<never, never>;
@@ -21,6 +22,7 @@
     variant?: Variant;
   };
   export type Size = NonNullable<VariantProps<typeof variants>['size']>;
+  export type Slots = ComponentSlots<ButtonPrimitive.Root>;
   export type Variant = NonNullable<VariantProps<typeof variants>['variant']>;
 
   export const variants = tv({
@@ -59,12 +61,10 @@
 <script lang="ts">
   type $$Events = ButtonPrimitive.Events;
   type $$Props = Attributes & Events & Props;
-  type $$Slots = {
-    default: Record<never, never>;
-  };
+  type $$Slots = Slots;
 
-  export let size: Props['size'] = 'default';
-  export let variant: Props['variant'] = 'default';
+  export let size: Props['size'] = undefined;
+  export let variant: Props['variant'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 </script>

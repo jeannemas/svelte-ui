@@ -14,18 +14,11 @@
   const yAxis = derived(page, ($page) => $page.url.searchParams.has(yAxisKey));
 </script>
 
-<style lang="postcss">
-  label {
-    @apply text-right font-bold;
-  }
+<!-- <style lang="postcss">
+</style> -->
 
-  [data-control] {
-    @apply rounded border border-border px-2 py-1;
-  }
-</style>
-
-<div class="grid grid-cols-[auto_1fr] justify-items-stretch gap-2">
-  <label for="{xAxisKey}">X axis</label>
+<div data-form>
+  <label for="{xAxisKey}" data-label>X axis</label>
 
   <input
     checked="{$xAxis}"
@@ -46,7 +39,7 @@
     }}"
   />
 
-  <label for="{yAxisKey}">Y axis</label>
+  <label for="{yAxisKey}" data-label>Y axis</label>
 
   <input
     checked="{$yAxis}"
