@@ -4,7 +4,7 @@
 
   import '../app.pcss';
 
-  const routes = Object.keys(route_meta_data);
+  const routesArray = Object.keys(route_meta_data);
 </script>
 
 <script lang="ts">
@@ -22,7 +22,7 @@
 <div class="grid min-h-screen grid-cols-[auto_1fr]">
   <aside class="border-r border-border p-2">
     <ul>
-      {#each routes as route, index (index)}
+      {#each routesArray as route, index (index)}
         <li>
           <a class="block p-2 font-mono underline-offset-4 hover:underline" href="{route}">
             {route}
@@ -34,13 +34,8 @@
 
   <div>
     <header class="flex flex-row items-center justify-between gap-x-2 border-b border-border p-2">
-      <h1 class="text-xl font-bold">
-        {$page.route.id
-          ?.replaceAll(/[^\w]/g, ' ')
-          .split(' ')
-          .filter(Boolean)
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ')}
+      <h1 class="text-xl font-bold capitalize">
+        {$page.route.id?.replaceAll(/[^\w]/g, ' ').split(' ').filter(Boolean).join(' ')}
       </h1>
 
       <h3 class="text-md font-medium">
