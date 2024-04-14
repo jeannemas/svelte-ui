@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.6.0
+
+### Minor Changes
+
+- 29cc70b: Added Calendar and Collapsible components
+
 ## 0.5.0
 
 ### Minor Changes
