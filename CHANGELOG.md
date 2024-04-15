@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.7.0
+
+### Minor Changes
+
+- e84666f: Added label and popover components
+
 ## 0.6.0
 
 ### Minor Changes
