@@ -4,6 +4,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Input, { type Variant } from '$lib/components/input/index.js';
+  import Label from '$lib/components/label/index.js';
 
   const disabledKey = 'disabled';
   const placeholderKey = 'placeholder';
@@ -30,7 +31,7 @@
 </style> -->
 
 <div data-form>
-  <label for="{disabledKey}" data-label>Disabled</label>
+  <Label for="{disabledKey}">Disabled</Label>
 
   <input
     checked="{$disabled}"
@@ -51,14 +52,14 @@
     }}"
   />
 
-  <label for="{placeholderKey}" data-label>Placeholder</label>
+  <Label for="{placeholderKey}">Placeholder</Label>
 
-  <input
+  <Input
     id="{placeholderKey}"
     name="{placeholderKey}"
     type="text"
     value="{$placeholder}"
-    data-control
+    variant="text"
     on:change="{({ currentTarget }) => {
       const url = new URL($page.url);
 
@@ -68,7 +69,7 @@
     }}"
   />
 
-  <label for="{variantKey}" data-label>Variant</label>
+  <Label for="{variantKey}">Variant</Label>
 
   <select
     id="{variantKey}"

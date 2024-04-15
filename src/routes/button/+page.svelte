@@ -4,6 +4,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
+  import Label from '$lib/components/label/index.js';
 
   const disabledKey = 'disabled';
   const sizeKey = 'size';
@@ -32,7 +33,7 @@
 </style> -->
 
 <div data-form>
-  <label for="{disabledKey}" data-label>Disabled</label>
+  <Label for="{disabledKey}">Disabled</Label>
 
   <input
     checked="{$disabled}"
@@ -53,7 +54,7 @@
     }}"
   />
 
-  <label for="{sizeKey}" data-label>Size</label>
+  <Label for="{sizeKey}">Size</Label>
 
   <select
     id="{sizeKey}"
@@ -75,7 +76,7 @@
     {/each}
   </select>
 
-  <label for="{variantKey}" data-label>Variant</label>
+  <Label for="{variantKey}">Variant</Label>
 
   <select
     id="{variantKey}"

@@ -4,6 +4,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Container from '$lib/components/container/index.js';
+  import Label from '$lib/components/label/index.js';
 
   const xAxisKey = 'xAxis';
   const yAxisKey = 'yAxis';
@@ -18,7 +19,7 @@
 </style> -->
 
 <div data-form>
-  <label for="{xAxisKey}" data-label>X axis</label>
+  <Label for="{xAxisKey}">X axis</Label>
 
   <input
     checked="{$xAxis}"
@@ -39,7 +40,7 @@
     }}"
   />
 
-  <label for="{yAxisKey}" data-label>Y axis</label>
+  <Label for="{yAxisKey}">Y axis</Label>
 
   <input
     checked="{$yAxis}"

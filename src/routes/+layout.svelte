@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  import { derived } from 'svelte/store';
+
   import { page } from '$app/stores';
   import route_meta_data from '$lib/../../.svelte-kit/types/route_meta_data.json';
 
@@ -8,6 +10,17 @@
 </script>
 
 <script lang="ts">
+  const title = derived(page, ($page) => {
+    const { id } = $page.route;
+
+    if (!id) {
+      return 'Home';
+    }
+
+    const str = id.replaceAll(/[^\w]/g, ' ').split(' ').filter(Boolean).join(' ');
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  });
 </script>
 
 <style lang="postcss">
@@ -15,7 +28,7 @@
 
 <svelte:head>
   <title>
-    {$page.route.id}
+    SvelteUI | {$title}
   </title>
 </svelte:head>
 
@@ -34,8 +47,8 @@
 
   <div>
     <header class="flex flex-row items-center justify-between gap-x-2 border-b border-border p-2">
-      <h1 class="text-xl font-bold capitalize">
-        {$page.route.id?.replaceAll(/[^\w]/g, ' ').split(' ').filter(Boolean).join(' ')}
+      <h1 class="text-xl font-bold">
+        {$title}
       </h1>
 
       <h3 class="text-md font-medium">

@@ -5,6 +5,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import * as Calendar from '$lib/components/calendar/index.js';
+  import Label from '$lib/components/label/index.js';
 
   const calendarLabelKey = 'calendarLabel';
   const disabledKey = 'disabled';
@@ -54,7 +55,7 @@
 </style> -->
 
 <div data-form>
-  <label for="{disabledKey}" data-label>Disabled</label>
+  <Label for="{disabledKey}">Disabled</Label>
 
   <input
     checked="{$disabled}"
@@ -75,7 +76,7 @@
     }}"
   />
 
-  <label for="{valueKey}" data-label>Value</label>
+  <Label for="{valueKey}">Value</Label>
 
   <textarea
     class="font-mono"
@@ -88,7 +89,7 @@
     data-control
   ></textarea>
 
-  <label for="{weekdayFormatKey}" data-label>Weekday format</label>
+  <Label for="{weekdayFormatKey}">Weekday format</Label>
 
   <select
     class="capitalize"
@@ -111,7 +112,7 @@
     {/each}
   </select>
 
-  <label for="{weekStartsOnKey}" data-label>Week starts on</label>
+  <Label for="{weekStartsOnKey}">Week starts on</Label>
 
   <select
     class="capitalize"

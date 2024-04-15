@@ -21,7 +21,7 @@
   >;
 </script>
 
-<script lang="ts" generics="TMultiple extends boolean = false">
+<script generics="TMultiple extends boolean = false" lang="ts">
   type $$Events = CalendarPrimitive.Events;
   type $$Props = Attributes & TypedEvents & TypedProps;
   type $$Slots = Slots<TMultiple>;
