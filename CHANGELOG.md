@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.9.0
+
+### Minor Changes
+
+- 1396186: Added select component
+
 ## 0.8.1
 
 ### Patch Changes
