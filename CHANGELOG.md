@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.8.1
+
+### Patch Changes
+
+- 03163f8: Fixed deep expanding types causing issues
+
 ## 0.8.0
 
 ### Minor Changes
