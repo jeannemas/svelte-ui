@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
   import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
   import Label from '$lib/components/label/index.js';
+  import * as Select from '$lib/components/select/index.js';
 
   const disabledKey = 'disabled';
   const sizeKey = 'size';
@@ -56,47 +57,85 @@
 
   <Label for="{sizeKey}">Size</Label>
 
-  <select
-    id="{sizeKey}"
-    name="{sizeKey}"
-    value="{$size}"
-    data-control
-    on:change="{({ currentTarget }) => {
+  <Select.Root
+    items="{sizeKeys.map((sizeKey) => ({
+      label: sizeKey,
+      value: sizeKey,
+    }))}"
+    onSelectedChange="{(selected) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(sizeKey, currentTarget.value);
+      if (selected) {
+        url.searchParams.set(sizeKey, selected.value);
+      } else {
+        url.searchParams.delete(sizeKey);
+      }
 
       goto(url);
     }}"
+    portal="{null}"
+    selected="{$size !== undefined
+      ? {
+          label: $size,
+          value: $size,
+        }
+      : undefined}"
   >
-    {#each sizeKeys as sizeKey, index (index)}
-      <option selected="{sizeKey === $size}" value="{sizeKey}">
-        {sizeKey}
-      </option>
-    {/each}
-  </select>
+    <Select.Input id="{sizeKey}" name="{sizeKey}" />
+
+    <Select.Trigger>
+      <Select.Value />
+    </Select.Trigger>
+
+    <Select.Content>
+      {#each sizeKeys as sizeKey, index (index)}
+        <Select.Item value="{sizeKey}">
+          {sizeKey}
+        </Select.Item>
+      {/each}
+    </Select.Content>
+  </Select.Root>
 
   <Label for="{variantKey}">Variant</Label>
 
-  <select
-    id="{variantKey}"
-    name="{variantKey}"
-    value="{$variant}"
-    data-control
-    on:change="{({ currentTarget }) => {
+  <Select.Root
+    items="{variantKeys.map((variantKey) => ({
+      label: variantKey,
+      value: variantKey,
+    }))}"
+    onSelectedChange="{(selected) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(variantKey, currentTarget.value);
+      if (selected) {
+        url.searchParams.set(variantKey, selected.value);
+      } else {
+        url.searchParams.delete(variantKey);
+      }
 
       goto(url);
     }}"
+    portal="{null}"
+    selected="{$variant !== undefined
+      ? {
+          label: $variant,
+          value: $variant,
+        }
+      : undefined}"
   >
-    {#each variantKeys as variantKey, index (index)}
-      <option selected="{variantKey === $variant}" value="{variantKey}">
-        {variantKey}
-      </option>
-    {/each}
-  </select>
+    <Select.Input id="{variantKey}" name="{variantKey}" />
+
+    <Select.Trigger>
+      <Select.Value />
+    </Select.Trigger>
+
+    <Select.Content>
+      {#each variantKeys as variantKey, index (index)}
+        <Select.Item value="{variantKey}">
+          {variantKey}
+        </Select.Item>
+      {/each}
+    </Select.Content>
+  </Select.Root>
 </div>
 
 <hr class="my-4 border-y border-border" />

@@ -6,6 +6,7 @@
   import { page } from '$app/stores';
   import * as Calendar from '$lib/components/calendar/index.js';
   import Label from '$lib/components/label/index.js';
+  import * as Select from '$lib/components/select/index.js';
 
   const calendarLabelKey = 'calendarLabel';
   const disabledKey = 'disabled';
@@ -91,49 +92,85 @@
 
   <Label for="{weekdayFormatKey}">Weekday format</Label>
 
-  <select
-    class="capitalize"
-    id="{weekdayFormatKey}"
-    name="{weekdayFormatKey}"
-    value="{$weekdayFormat}"
-    data-control
-    on:change="{({ currentTarget }) => {
+  <Select.Root
+    items="{weekdayFormatKeys.map((weekdayFormatKey) => ({
+      label: weekdayFormatKey,
+      value: weekdayFormatKey,
+    }))}"
+    onSelectedChange="{(selected) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(weekdayFormatKey, currentTarget.value);
+      if (selected) {
+        url.searchParams.set(weekdayFormatKey, selected.value);
+      } else {
+        url.searchParams.delete(weekdayFormatKey);
+      }
 
       goto(url);
     }}"
+    portal="{null}"
+    selected="{$weekdayFormat !== undefined
+      ? {
+          label: $weekdayFormat,
+          value: $weekdayFormat,
+        }
+      : undefined}"
   >
-    {#each weekdayFormatKeys as weekdayFormatKey, index (index)}
-      <option selected="{weekdayFormatKey === $weekdayFormat}" value="{weekdayFormatKey}">
-        {weekdayFormatKey}
-      </option>
-    {/each}
-  </select>
+    <Select.Input id="{weekdayFormatKey}" name="{weekdayFormatKey}" />
+
+    <Select.Trigger>
+      <Select.Value />
+    </Select.Trigger>
+
+    <Select.Content>
+      {#each weekdayFormatKeys as weekdayFormatKey, index (index)}
+        <Select.Item value="{weekdayFormatKey}">
+          {weekdayFormatKey}
+        </Select.Item>
+      {/each}
+    </Select.Content>
+  </Select.Root>
 
   <Label for="{weekStartsOnKey}">Week starts on</Label>
 
-  <select
-    class="capitalize"
-    id="{weekStartsOnKey}"
-    name="{weekStartsOnKey}"
-    value="{$weekStartsOn}"
-    data-control
-    on:change="{({ currentTarget }) => {
+  <Select.Root
+    items="{weekStartsOnKeys.map((weekStartsOnKey) => ({
+      label: weekStartsOnKey.toString(),
+      value: weekStartsOnKey,
+    }))}"
+    onSelectedChange="{(selected) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(weekStartsOnKey, currentTarget.value);
+      if (selected) {
+        url.searchParams.set(weekStartsOnKey, selected.value.toString());
+      } else {
+        url.searchParams.delete(weekStartsOnKey);
+      }
 
       goto(url);
     }}"
+    portal="{null}"
+    selected="{$weekStartsOn !== undefined
+      ? {
+          label: $weekStartsOn.toString(),
+          value: $weekStartsOn,
+        }
+      : undefined}"
   >
-    {#each weekStartsOnKeys as weekStartsOnKey, index (index)}
-      <option selected="{weekStartsOnKey === $weekStartsOn}" value="{weekStartsOnKey}">
-        {weekStartsOnKey}
-      </option>
-    {/each}
-  </select>
+    <Select.Input id="{weekStartsOnKey}" name="{weekStartsOnKey}" />
+
+    <Select.Trigger>
+      <Select.Value />
+    </Select.Trigger>
+
+    <Select.Content>
+      {#each weekStartsOnKeys as weekStartsOnKey, index (index)}
+        <Select.Item value="{weekStartsOnKey}">
+          {weekStartsOnKey}
+        </Select.Item>
+      {/each}
+    </Select.Content>
+  </Select.Root>
 </div>
 
 <hr class="my-4 border-y border-border" />

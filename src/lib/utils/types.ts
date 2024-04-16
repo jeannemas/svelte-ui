@@ -2,9 +2,11 @@ import type { SvelteComponent } from 'svelte';
 import type { Action } from 'svelte/action';
 import type { TransitionConfig } from 'svelte/transition';
 
-export type ComponentSlots<TComponent extends SvelteComponent> =
+export type ComponentSlots<TComponent extends SvelteComponent, TApplyPatch extends boolean = true> =
   TComponent extends SvelteComponent<Record<never, never>, Record<never, never>, infer TSlots>
-    ? PatchSlotsWithBuilderAction<TSlots>
+    ? true extends TApplyPatch
+      ? PatchSlotsWithBuilder<TSlots>
+      : TSlots
     : never;
 export type Transition = (node: Element, params?: unknown) => TransitionConfig;
 export type TransitionParams<T extends Transition> = Parameters<T>[1];
@@ -20,14 +22,16 @@ type Expand<T> = T extends object ? (T extends infer O ? { [K in keyof O]: O[K] 
  * > This is likely not portable.
  * > A type annotation is necessary.
  */
-type PatchSlotsWithBuilderAction<TSlots extends Record<string, Record<string, unknown>>> = {
+type PatchSlotsWithBuilder<TSlots extends Record<string, Record<string, unknown>>> = {
   [TSlotName in keyof TSlots]: TSlots[TSlotName] extends { builder: infer TBuilder }
     ? Expand<Omit<TSlots[TSlotName], 'builder'>> & {
-        builder: TBuilder extends { action: Action }
-          ? Expand<Omit<TBuilder, 'action'>> & {
-              action: Action;
-            }
-          : TBuilder;
+        builder: {
+          [TBuilderKey in keyof TBuilder]: TBuilderKey extends 'action'
+            ? Action // Prevents importing `import("@melt-ui/svelte/internal/types").MeltActionReturn`
+            : TBuilderKey extends 'data-orientation'
+              ? string // Prevents importing `import("@melt-ui/svelte/internal/types").Orientation`
+              : TBuilder[TBuilderKey];
+        };
       }
     : TSlots[TSlotName];
 };

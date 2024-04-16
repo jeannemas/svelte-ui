@@ -14,7 +14,7 @@
   } & Pick<CalendarPrimitive.Props<TMultiple>, 'onPlaceholderChange' | 'onValueChange'>;
   export type Props<TMultiple extends boolean = false> = Omit<
     CalendarPrimitive.Props<TMultiple>,
-    keyof Attributes | 'onPlaceholderChange' | 'onValueChange'
+    keyof Attributes | keyof Events<TMultiple>
   >;
   export type Slots<TMultiple extends boolean = false> = ComponentSlots<
     CalendarPrimitive.Root<TMultiple>
@@ -24,9 +24,10 @@
 <script generics="TMultiple extends boolean = false" lang="ts">
   type $$Events = CalendarPrimitive.Events;
   type $$Props = Attributes & TypedEvents & TypedProps;
-  type $$Slots = Slots<TMultiple>;
+  type $$Slots = TypedSlots;
   type TypedEvents = Events<TMultiple>;
   type TypedProps = Props<TMultiple>;
+  type TypedSlots = Slots<TMultiple>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let calendarLabel: TypedProps['calendarLabel'] = undefined;

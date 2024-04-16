@@ -5,7 +5,7 @@
 
   export type Attributes = Record<never, never>;
   export type Events = Pick<PopoverPrimitive.Props, 'onOpenChange' | 'onOutsideClick'>;
-  export type Props = Omit<PopoverPrimitive.Props, 'onOpenChange' | 'onOutsideClick'>;
+  export type Props = Omit<PopoverPrimitive.Props, keyof Events>;
   export type Slots = ComponentSlots<PopoverPrimitive.Root>;
 </script>
 

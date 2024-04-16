@@ -32,8 +32,9 @@
 >
   type $$Events = Record<never, never>;
   type $$Props = Attributes & Events & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = TypedSlots;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;

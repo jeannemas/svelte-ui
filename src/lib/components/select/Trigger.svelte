@@ -1,0 +1,50 @@
+<script context="module" lang="ts">
+  import { Select as SelectPrimitive } from 'bits-ui';
+  import ChevronDownIcon from 'lucide-svelte/icons/chevron-down';
+  import type { SvelteHTMLElements } from 'svelte/elements';
+
+  import { cn } from '$lib/utils/cn.js';
+  import type { ComponentSlots } from '$lib/utils/types.js';
+
+  export type Attributes = SvelteHTMLElements['button'];
+  export type Events = Record<never, never>;
+  export type Props = Omit<SelectPrimitive.TriggerProps, keyof Attributes>;
+  export type Slots = ComponentSlots<SelectPrimitive.Trigger>;
+</script>
+
+<script lang="ts">
+  type $$Events = SelectPrimitive.TriggerEvents;
+  type $$Props = Attributes & Events & Props;
+  type $$Slots = Slots;
+
+  export let asChild: Props['asChild'] = undefined;
+  export let el: Props['el'] = undefined;
+
+  $: attributes = $$restProps as Attributes;
+</script>
+
+<!-- <style lang="postcss">
+</style> -->
+
+<SelectPrimitive.Trigger
+  {...attributes}
+  asChild="{asChild}"
+  class="{cn(
+    'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+    'placeholder:text-muted-foreground',
+    'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+    'disabled:cursor-not-allowed disabled:opacity-50',
+    '[&>span]:line-clamp-1',
+    attributes.class,
+  )}"
+  el="{el}"
+  let:builder
+  on:click
+  on:keydown
+>
+  <slot builder="{builder}" />
+
+  <div>
+    <ChevronDownIcon class="h-4 w-4 opacity-50" />
+  </div>
+</SelectPrimitive.Trigger>

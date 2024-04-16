@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
   import Input, { type Variant } from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
+  import * as Select from '$lib/components/select/index.js';
 
   const disabledKey = 'disabled';
   const placeholderKey = 'placeholder';
@@ -71,25 +72,44 @@
 
   <Label for="{variantKey}">Variant</Label>
 
-  <select
-    id="{variantKey}"
-    name="{variantKey}"
-    value="{$variant}"
-    data-control
-    on:change="{({ currentTarget }) => {
+  <Select.Root
+    items="{variantKeys.map((variantKey) => ({
+      label: variantKey,
+      value: variantKey,
+    }))}"
+    onSelectedChange="{(selected) => {
       const url = new URL($page.url);
 
-      url.searchParams.set(variantKey, currentTarget.value);
+      if (selected) {
+        url.searchParams.set(variantKey, selected.value);
+      } else {
+        url.searchParams.delete(variantKey);
+      }
 
       goto(url);
     }}"
+    portal="{null}"
+    selected="{$variant !== undefined
+      ? {
+          label: $variant,
+          value: $variant,
+        }
+      : undefined}"
   >
-    {#each variantKeys as variantKey, index (index)}
-      <option selected="{variantKey === $variant}" value="{variantKey}">
-        {variantKey}
-      </option>
-    {/each}
-  </select>
+    <Select.Input id="{variantKey}" name="{variantKey}" />
+
+    <Select.Trigger>
+      <Select.Value />
+    </Select.Trigger>
+
+    <Select.Content>
+      {#each variantKeys as variantKey, index (index)}
+        <Select.Item value="{variantKey}">
+          {variantKey}
+        </Select.Item>
+      {/each}
+    </Select.Content>
+  </Select.Root>
 </div>
 
 <hr class="my-4 border-y border-border" />

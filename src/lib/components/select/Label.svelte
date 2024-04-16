@@ -1,24 +1,23 @@
 <script context="module" lang="ts">
-  import { Collapsible as CollapsiblePrimitive } from 'bits-ui';
+  import { Select as SelectPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
 
+  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   export type Attributes = SvelteHTMLElements['div'];
-  export type Events = Pick<CollapsiblePrimitive.Props, 'onOpenChange'>;
-  export type Props = Omit<CollapsiblePrimitive.Props, keyof Attributes | keyof Events>;
-  export type Slots = ComponentSlots<CollapsiblePrimitive.Root>;
+  export type Events = Record<never, never>;
+  export type Props = Omit<SelectPrimitive.LabelProps, keyof Attributes>;
+  export type Slots = ComponentSlots<SelectPrimitive.Label>;
 </script>
 
 <script lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = SelectPrimitive.LabelEvents;
   type $$Props = Attributes & Events & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
-  export let disabled: Props['disabled'] = undefined;
   export let el: Props['el'] = undefined;
-  export let open: Props['open'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -26,13 +25,13 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<CollapsiblePrimitive.Root
+<SelectPrimitive.Label
   {...attributes}
   asChild="{asChild}"
-  disabled="{disabled}"
+  class="{cn('py-1.5 pl-8 pr-2 text-sm font-semibold', attributes.class)}"
   el="{el}"
-  open="{open}"
   let:builder
+  on:click
 >
   <slot builder="{builder}" />
-</CollapsiblePrimitive.Root>
+</SelectPrimitive.Label>

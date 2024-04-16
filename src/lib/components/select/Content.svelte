@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
-  import { Popover as PopoverPrimitive } from 'bits-ui';
+  import { Select as SelectPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { scale } from 'svelte/transition';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import { cn } from '$lib/utils/cn.js';
@@ -13,48 +14,52 @@
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
   > = Omit<
-    PopoverPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
+    SelectPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
     keyof Attributes
   >;
   export type Slots<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = ComponentSlots<PopoverPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+  > = ComponentSlots<SelectPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 </script>
 
 <script
   generics="
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition
-    "
+    TTransitionOut extends Transition = Transition,
+  "
   lang="ts"
 >
-  type $$Events = Record<never, never>;
+  type $$Events = SelectPrimitive.ContentEvents;
   type $$Props = Attributes & Events & TypedProps;
   type $$Slots = TypedSlots;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
   type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;
 
   export let align: TypedProps['align'] = undefined;
-  export let asChild: TypedProps['asChild'] = undefined;
   export let alignOffset: TypedProps['alignOffset'] = undefined;
+  export let asChild: TypedProps['asChild'] = undefined;
   export let avoidCollisions: TypedProps['avoidCollisions'] = undefined;
   export let collisionBoundary: TypedProps['collisionBoundary'] = undefined;
   export let collisionPadding: TypedProps['collisionPadding'] = undefined;
   export let el: TypedProps['el'] = undefined;
   export let fitViewport: TypedProps['fitViewport'] = undefined;
-  export let inTransition: TypedProps['inTransition'] = undefined;
+  export let inTransition: TypedProps['inTransition'] = flyAndScale as TypedProps['inTransition'];
   export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
-  export let outTransition: TypedProps['outTransition'] = undefined;
-  export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
+  export let outTransition: TypedProps['outTransition'] = scale as TypedProps['outTransition'];
+  export let outTransitionConfig: TypedProps['outTransitionConfig'] = {
+    start: 0.95,
+    opacity: 0,
+    duration: 50,
+  };
   export let overlap: TypedProps['overlap'] = undefined;
   export let sameWidth: TypedProps['sameWidth'] = undefined;
   export let side: TypedProps['side'] = undefined;
-  export let sideOffset: TypedProps['sideOffset'] = undefined;
+  export let sideOffset: TypedProps['sideOffset'] = 4;
   export let strategy: TypedProps['strategy'] = undefined;
-  export let transition: TypedProps['transition'] = flyAndScale as TypedProps['transition'];
+  export let transition: TypedProps['transition'] = undefined;
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
   $: attributes = $$restProps as Attributes;
@@ -63,14 +68,14 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<PopoverPrimitive.Content
+<SelectPrimitive.Content
   {...attributes}
   align="{align}"
-  asChild="{asChild}"
   alignOffset="{alignOffset}"
+  asChild="{asChild}"
   avoidCollisions="{avoidCollisions}"
   class="{cn(
-    'z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
+    'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
     attributes.class,
   )}"
   collisionBoundary="{collisionBoundary}"
@@ -89,6 +94,10 @@
   transition="{transition}"
   transitionConfig="{transitionConfig}"
   let:builder
+  on:keydown
+  on:pointerleave
 >
-  <slot builder="{builder}" />
-</PopoverPrimitive.Content>
+  <div class="w-full p-1">
+    <slot builder="{builder}" />
+  </div>
+</SelectPrimitive.Content>
