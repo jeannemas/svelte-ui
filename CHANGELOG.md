@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.8.0
+
+### Minor Changes
+
+- f3e18a9: Fixed typings not being generated for some components
+
 ## 0.7.0
 
 ### Minor Changes
