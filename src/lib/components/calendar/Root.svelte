@@ -4,8 +4,8 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
 
   import { cn } from '$lib/utils/cn.js';
-
   import type { ComponentSlots } from '$lib/utils/types.js';
+
   import * as Calendar from './index.js';
 
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
