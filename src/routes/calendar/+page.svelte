@@ -7,6 +7,7 @@
   import * as Calendar from '$lib/components/calendar/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import Switch from '$lib/components/switch/index.js';
 
   const calendarLabelKey = 'calendarLabel';
   const disabledKey = 'disabled';
@@ -58,16 +59,14 @@
 <div data-form>
   <Label for="{disabledKey}">Disabled</Label>
 
-  <input
+  <Switch
     checked="{$disabled}"
     id="{disabledKey}"
     name="{disabledKey}"
-    type="checkbox"
-    data-control
-    on:change="{({ currentTarget }) => {
+    onCheckedChange="{(checked) => {
       const url = new URL($page.url);
 
-      if (currentTarget.checked) {
+      if (checked) {
         url.searchParams.set(disabledKey, '');
       } else {
         url.searchParams.delete(disabledKey);

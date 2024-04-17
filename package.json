@@ -75,6 +75,10 @@
       "types": "./dist/components/select/index.d.ts",
       "svelte": "./dist/components/select/index.js"
     },
+    "./components/switch": {
+      "types": "./dist/components/switch/index.d.ts",
+      "svelte": "./dist/components/switch/index.js"
+    },
     "./package.json": "./package.json",
     "./transition/flyAndScale": {
       "types": "./dist/transition/flyAndScale.d.ts",

@@ -6,6 +6,7 @@
   import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import Switch from '$lib/components/switch/index.js';
 
   const disabledKey = 'disabled';
   const sizeKey = 'size';
@@ -36,16 +37,14 @@
 <div data-form>
   <Label for="{disabledKey}">Disabled</Label>
 
-  <input
+  <Switch
     checked="{$disabled}"
     id="{disabledKey}"
     name="{disabledKey}"
-    type="checkbox"
-    data-control
-    on:change="{({ currentTarget }) => {
+    onCheckedChange="{(checked) => {
       const url = new URL($page.url);
 
-      if (currentTarget.checked) {
+      if (checked) {
         url.searchParams.set(disabledKey, '');
       } else {
         url.searchParams.delete(disabledKey);

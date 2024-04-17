@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
   import Container from '$lib/components/container/index.js';
   import Label from '$lib/components/label/index.js';
+  import Switch from '$lib/components/switch/index.js';
 
   const xAxisKey = 'xAxis';
   const yAxisKey = 'yAxis';
@@ -21,16 +22,14 @@
 <div data-form>
   <Label for="{xAxisKey}">X axis</Label>
 
-  <input
+  <Switch
     checked="{$xAxis}"
     id="{xAxisKey}"
     name="{xAxisKey}"
-    type="checkbox"
-    data-control
-    on:change="{({ currentTarget }) => {
+    onCheckedChange="{(checked) => {
       const url = new URL($page.url);
 
-      if (currentTarget.checked) {
+      if (checked) {
         url.searchParams.set(xAxisKey, '');
       } else {
         url.searchParams.delete(xAxisKey);
@@ -42,16 +41,14 @@
 
   <Label for="{yAxisKey}">Y axis</Label>
 
-  <input
+  <Switch
     checked="{$yAxis}"
     id="{yAxisKey}"
     name="{yAxisKey}"
-    type="checkbox"
-    data-control
-    on:change="{({ currentTarget }) => {
+    onCheckedChange="{(checked) => {
       const url = new URL($page.url);
 
-      if (currentTarget.checked) {
+      if (checked) {
         url.searchParams.set(yAxisKey, '');
       } else {
         url.searchParams.delete(yAxisKey);
