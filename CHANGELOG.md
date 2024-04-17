@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.10.0
+
+### Minor Changes
+
+- 7d90579: Added switch component
+
 ## 0.9.0
 
 ### Minor Changes
