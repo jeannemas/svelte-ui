@@ -8,6 +8,7 @@
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
+  import Textarea from '$lib/components/textarea/index.js';
 
   const calendarLabelKey = 'calendarLabel';
   const disabledKey = 'disabled';
@@ -78,7 +79,7 @@
 
   <Label for="{valueKey}">Value</Label>
 
-  <textarea
+  <Textarea
     class="font-mono"
     disabled
     id="{valueKey}"
@@ -86,8 +87,7 @@
     readonly
     rows="{10}"
     value="{JSON.stringify($value, null, 2)}"
-    data-control
-  ></textarea>
+  />
 
   <Label for="{weekdayFormatKey}">Weekday format</Label>
 

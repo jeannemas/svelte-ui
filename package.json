@@ -79,6 +79,10 @@
       "types": "./dist/components/switch/index.d.ts",
       "svelte": "./dist/components/switch/index.js"
     },
+    "./components/textarea": {
+      "types": "./dist/components/textarea/index.d.ts",
+      "svelte": "./dist/components/textarea/index.js"
+    },
     "./package.json": "./package.json",
     "./transition/flyAndScale": {
       "types": "./dist/transition/flyAndScale.d.ts",

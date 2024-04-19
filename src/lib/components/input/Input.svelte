@@ -2,6 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
 
   import { cn } from '$lib/utils/cn.js';
+  import type { ElementEvent } from '$lib/utils/types.js';
 
   export type Attributes = Omit<SvelteHTMLElements['input'], 'checked' | 'value'>;
   export type Events = Record<never, never>;
@@ -16,28 +17,24 @@
       };
   export type Slots = Record<never, never>;
   export type Variant = Props['variant'];
-
-  type FormInputEvent<TEvent extends Event = Event> = TEvent & {
-    currentTarget: EventTarget & HTMLInputElement;
-  };
 </script>
 
 <script lang="ts">
   type $$Events = {
-    blur: FormInputEvent<FocusEvent>;
-    change: FormInputEvent<Event>;
-    click: FormInputEvent<MouseEvent>;
-    focus: FormInputEvent<FocusEvent>;
-    focusin: FormInputEvent<FocusEvent>;
-    focusout: FormInputEvent<FocusEvent>;
-    keydown: FormInputEvent<KeyboardEvent>;
-    keypress: FormInputEvent<KeyboardEvent>;
-    keyup: FormInputEvent<KeyboardEvent>;
-    mouseover: FormInputEvent<MouseEvent>;
-    mouseenter: FormInputEvent<MouseEvent>;
-    mouseleave: FormInputEvent<MouseEvent>;
-    paste: FormInputEvent<ClipboardEvent>;
-    input: FormInputEvent<InputEvent>;
+    blur: ElementEvent<HTMLInputElement, FocusEvent>;
+    change: ElementEvent<HTMLInputElement, Event>;
+    click: ElementEvent<HTMLInputElement, MouseEvent>;
+    focus: ElementEvent<HTMLInputElement, FocusEvent>;
+    focusin: ElementEvent<HTMLInputElement, FocusEvent>;
+    focusout: ElementEvent<HTMLInputElement, FocusEvent>;
+    input: ElementEvent<HTMLInputElement, InputEvent>;
+    keydown: ElementEvent<HTMLInputElement, KeyboardEvent>;
+    keypress: ElementEvent<HTMLInputElement, KeyboardEvent>;
+    keyup: ElementEvent<HTMLInputElement, KeyboardEvent>;
+    mouseover: ElementEvent<HTMLInputElement, MouseEvent>;
+    mouseenter: ElementEvent<HTMLInputElement, MouseEvent>;
+    mouseleave: ElementEvent<HTMLInputElement, MouseEvent>;
+    paste: ElementEvent<HTMLInputElement, ClipboardEvent>;
   };
   type $$Props = Attributes & Events & Props;
   type $$Slots = Slots;

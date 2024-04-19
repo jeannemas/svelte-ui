@@ -8,6 +8,9 @@ export type ComponentSlots<TComponent extends SvelteComponent, TApplyPatch exten
       ? PatchSlotsWithBuilder<TSlots>
       : TSlots
     : never;
+export type ElementEvent<TElement extends HTMLElement, TEvent extends Event> = TEvent & {
+  currentTarget: EventTarget & TElement;
+};
 export type Transition = (node: Element, params?: unknown) => TransitionConfig;
 export type TransitionParams<T extends Transition> = Parameters<T>[1];
 
