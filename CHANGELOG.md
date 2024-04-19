@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.11.1
+
+### Patch Changes
+
+- cd30d3e: Adjusted typing of textarea props
+
 ## 0.11.0
 
 ### Minor Changes
