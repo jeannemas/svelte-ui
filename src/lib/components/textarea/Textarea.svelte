@@ -7,8 +7,8 @@
   export type Attributes = Omit<SvelteHTMLElements['textarea'], 'readonly' | 'value'>;
   export type Events = Record<never, never>;
   export type Props = {
-    readonly?: boolean;
-    value?: string;
+    readonly?: SvelteHTMLElements['textarea']['readonly'];
+    value?: Exclude<SvelteHTMLElements['textarea']['value'], number | string[]>;
   };
   export type Slots = Record<never, never>;
 </script>
