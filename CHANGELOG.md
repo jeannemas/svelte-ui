@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.11.0
+
+### Minor Changes
+
+- 31cd1d0: Added textarea component
+
 ## 0.10.0
 
 ### Minor Changes
