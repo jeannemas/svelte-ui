@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.12.0
+
+### Minor Changes
+
+- 1261104: Added form components
+
 ## 0.11.1
 
 ### Patch Changes
