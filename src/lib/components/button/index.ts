@@ -1,5 +1,9 @@
 export {
   default,
+  defaultSize,
+  defaultVariant,
+  sizes,
+  variantFactory,
   variants,
   type Attributes,
   type Events,

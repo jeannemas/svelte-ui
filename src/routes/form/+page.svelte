@@ -4,11 +4,11 @@
   import z from 'zod';
 
   import * as Form from '$lib/components/form/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import Input from '$lib/components/input/index.js';
 
   const adapter = zod(
     z.object({
-      disabled: z.boolean().default(false).optional(),
+      username: z.string().min(2).max(50),
     }),
   );
 </script>
@@ -25,19 +25,15 @@
 </style> -->
 
 <Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}">
+  <Form.Field name="username" superForm="{superForm}">
     <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+      <Form.Label>Placeholder</Form.Label>
 
-      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+      <Input {...attrs} variant="text" bind:value="{$superFormData.username}" />
     </Form.Control>
 
-    <Form.Description>Whether the switch is disabled.</Form.Description>
+    <Form.Description>This is your public display name.</Form.Description>
 
     <Form.FieldErrors />
   </Form.Field>
 </Form.Root>
-
-<hr class="my-4 border-y border-border" />
-
-<Switch {...$superFormData} />

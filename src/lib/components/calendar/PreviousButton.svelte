@@ -3,7 +3,7 @@
   import ChevronLeftIcon from 'lucide-svelte/icons/chevron-left';
   import type { SvelteHTMLElements } from 'svelte/elements';
 
-  import { variants } from '$lib/components/button/index.js';
+  import { variantFactory } from '$lib/components/button/index.js';
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
@@ -31,7 +31,7 @@
   {...attributes}
   asChild="{asChild}"
   class="{cn(
-    variants({ variant: 'outline' }),
+    variantFactory({ variant: 'outline' }),
     'h-7 w-7 bg-transparent p-0 opacity-50',
     'hover:opacity-100',
     attributes.class,

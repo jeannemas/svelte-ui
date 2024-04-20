@@ -10,6 +10,11 @@
 
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
   export type Events<TMultiple extends boolean = false> = {
+    /**
+     * Callback to be called when a day is clicked.
+     *
+     * @param day The clicked day.
+     */
     onDayClick?: (day: { date: DateValue; month: Month<DateValue> }) => unknown;
   } & Pick<CalendarPrimitive.Props<TMultiple>, 'onPlaceholderChange' | 'onValueChange'>;
   export type Props<TMultiple extends boolean = false> = Omit<
@@ -19,6 +24,13 @@
   export type Slots<TMultiple extends boolean = false> = ComponentSlots<
     CalendarPrimitive.Root<TMultiple>
   >;
+
+  export const weekStartsOn = [0, 1, 2, 3, 4, 5, 6] as const satisfies Props['weekStartsOn'][];
+  export const weekdayFormats = [
+    'long',
+    'narrow',
+    'short',
+  ] as const satisfies Props['weekdayFormat'][];
 </script>
 
 <script generics="TMultiple extends boolean = false" lang="ts">
@@ -49,8 +61,8 @@
   export let placeholder: TypedProps['placeholder'] = undefined;
   export let preventDeselect: TypedProps['preventDeselect'] = undefined;
   export let readonly: TypedProps['readonly'] = undefined;
-  export let weekdayFormat: TypedProps['weekdayFormat'] = 'short';
   export let weekStartsOn: TypedProps['weekStartsOn'] = undefined;
+  export let weekdayFormat: TypedProps['weekdayFormat'] = 'short';
   export let value: TypedProps['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
@@ -80,8 +92,8 @@
   pagedNavigation="{pagedNavigation}"
   preventDeselect="{preventDeselect}"
   readonly="{readonly}"
-  weekdayFormat="{weekdayFormat}"
   weekStartsOn="{weekStartsOn}"
+  weekdayFormat="{weekdayFormat}"
   bind:placeholder="{placeholder}"
   bind:value="{value}"
   let:builder

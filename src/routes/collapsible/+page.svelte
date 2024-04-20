@@ -1,38 +1,19 @@
 <script context="module" lang="ts">
-  import { derived } from 'svelte/store';
-
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
-
-  const openKey = 'open';
 </script>
 
 <script lang="ts">
-  const open = derived(page, ($page) => $page.url.searchParams.has(openKey));
+  let open = false;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Collapsible.Root
-  onOpenChange="{(open) => {
-    const url = new URL($page.url);
-
-    if (open) {
-      url.searchParams.set(openKey, '');
-    } else {
-      url.searchParams.delete(openKey);
-    }
-
-    goto(url);
-  }}"
-  open="{$open}"
->
+<Collapsible.Root bind:open="{open}">
   <Collapsible.Trigger asChild let:builder>
     <Button builders="{[builder]}">
-      {$open}
+      {builder['data-state']}
     </Button>
   </Collapsible.Trigger>
 

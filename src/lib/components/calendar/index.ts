@@ -84,6 +84,8 @@ export {
 } from './PreviousButton.svelte';
 export {
   default as Root,
+  weekStartsOn,
+  weekdayFormats,
   type Attributes as RootAttributes,
   type Events as RootEvents,
   type Props as RootProps,

@@ -1,65 +1,57 @@
 <script context="module" lang="ts">
-  import { derived } from 'svelte/store';
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import Label from '$lib/components/label/index.js';
+  import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
   import Textarea from '$lib/components/textarea/index.js';
 
-  const disabledKey = 'disabled';
-  const placeholderKey = 'placeholder';
+  const adapter = zod(
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      placeholder: z.string().default('').optional(),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  const disabled = derived(page, ($page) => $page.url.searchParams.has(disabledKey));
-  const placeholder = derived(
-    page,
-    ($page) =>
-      $page.url.searchParams.get(placeholderKey) ||
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  );
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
+  });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div data-form>
-  <Label for="{disabledKey}">Disabled</Label>
+<Form.Root superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Disabled</Form.Label>
 
-  <Switch
-    checked="{$disabled}"
-    id="{disabledKey}"
-    name="{disabledKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(disabledKey, '');
-      } else {
-        url.searchParams.delete(disabledKey);
-      }
+    <Form.Description>Whether the textarea is disabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{placeholderKey}">Placeholder</Label>
+  <Form.Field name="placeholder" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Placeholder</Form.Label>
 
-  <Textarea
-    id="{placeholderKey}"
-    name="{placeholderKey}"
-    value="{$placeholder}"
-    on:change="{({ currentTarget }) => {
-      const url = new URL($page.url);
+      <Textarea {...attrs} bind:value="{$superFormData.placeholder}" />
+    </Form.Control>
 
-      url.searchParams.set(placeholderKey, currentTarget.value);
+    <Form.Description>The textarea placeholder.</Form.Description>
 
-      goto(url);
-    }}"
-  />
-</div>
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
 
 <hr class="my-4 border-y border-border" />
 
-<Textarea disabled="{$disabled}" placeholder="{$placeholder}" />
+<Textarea {...$superFormData} />

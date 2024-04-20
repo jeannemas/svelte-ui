@@ -21,11 +21,11 @@
      */
     variant?: Variant;
   };
-  export type Size = NonNullable<VariantProps<typeof variants>['size']>;
+  export type Size = NonNullable<VariantProps<typeof variantFactory>['size']>;
   export type Slots = ComponentSlots<ButtonPrimitive.Root>;
-  export type Variant = NonNullable<VariantProps<typeof variants>['variant']>;
+  export type Variant = NonNullable<VariantProps<typeof variantFactory>['variant']>;
 
-  export const variants = tv({
+  export const variantFactory = tv({
     base: [
       'inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
@@ -56,6 +56,10 @@
       },
     },
   });
+  export const sizes = Object.keys(variantFactory.variants.size) as [Size, ...Size[]];
+  export const variants = Object.keys(variantFactory.variants.variant) as [Variant, ...Variant[]];
+  export const defaultSize = variantFactory.defaultVariants.size!;
+  export const defaultVariant = variantFactory.defaultVariants.variant!;
 </script>
 
 <script lang="ts">
@@ -76,7 +80,7 @@
   {...attributes}
   builders="{attributes.builders ?? []}"
   class="{cn(
-    variants({
+    variantFactory({
       class: attributes.class,
       size,
       variant,

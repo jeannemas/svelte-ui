@@ -8,15 +8,29 @@
   export type Events = Record<never, never>;
   export type Props =
     | {
+        /**
+         * The value of the input.
+         */
         value?: number;
+        /**
+         * The type of the input.
+         */
         variant: 'number';
       }
     | {
+        /**
+         * The value of the input.
+         */
         value?: string;
+        /**
+         * The type of the input.
+         */
         variant: 'text';
       };
   export type Slots = Record<never, never>;
   export type Variant = Props['variant'];
+
+  export const variants = ['number', 'text'] as const satisfies Variant[];
 </script>
 
 <script lang="ts">

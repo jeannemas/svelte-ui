@@ -1,63 +1,56 @@
 <script context="module" lang="ts">
-  import { derived } from 'svelte/store';
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
   import Container from '$lib/components/container/index.js';
-  import Label from '$lib/components/label/index.js';
+  import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
 
-  const xAxisKey = 'xAxis';
-  const yAxisKey = 'yAxis';
+  const adapter = zod(
+    z.object({
+      xAxis: z.boolean().default(false).optional(),
+      yAxis: z.boolean().default(false).optional(),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  const xAxis = derived(page, ($page) => $page.url.searchParams.has(xAxisKey));
-  const yAxis = derived(page, ($page) => $page.url.searchParams.has(yAxisKey));
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
+  });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div data-form>
-  <Label for="{xAxisKey}">X axis</Label>
+<Form.Root superForm="{superForm}">
+  <Form.Field name="xAxis" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>X axis</Form.Label>
 
-  <Switch
-    checked="{$xAxis}"
-    id="{xAxisKey}"
-    name="{xAxisKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.xAxis}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(xAxisKey, '');
-      } else {
-        url.searchParams.delete(xAxisKey);
-      }
+    <Form.Description>Whether the x-axis is enabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{yAxisKey}">Y axis</Label>
+  <Form.Field name="yAxis" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Y axis</Form.Label>
 
-  <Switch
-    checked="{$yAxis}"
-    id="{yAxisKey}"
-    name="{yAxisKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.yAxis}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(yAxisKey, '');
-      } else {
-        url.searchParams.delete(yAxisKey);
-      }
+    <Form.Description>Whether the y-axis is enabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
-</div>
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
 
 <hr class="my-4 border-y border-border" />
 
@@ -67,7 +60,7 @@
   Aliquid autem dolorem magni.
 </p>
 
-<Container class="bg-slate-300 transition-all duration-75" xAxis="{$xAxis}" yAxis="{$yAxis}">
+<Container {...$superFormData} class="bg-slate-300 transition-all duration-75">
   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam sapiente nisi omnis temporibus
   veritatis nihil eligendi impedit similique quo, neque sequi voluptate, ipsum optio odit repellat
   ipsam quidem delectus libero.

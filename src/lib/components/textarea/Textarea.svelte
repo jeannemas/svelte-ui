@@ -7,7 +7,15 @@
   export type Attributes = Omit<SvelteHTMLElements['textarea'], 'readonly' | 'value'>;
   export type Events = Record<never, never>;
   export type Props = {
+    /**
+     * Whether the textarea is read-only.
+     *
+     * @default false
+     */
     readonly?: SvelteHTMLElements['textarea']['readonly'];
+    /**
+     * The value of the textarea.
+     */
     value?: Exclude<SvelteHTMLElements['textarea']['value'], number | string[]>;
   };
   export type Slots = Record<never, never>;

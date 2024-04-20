@@ -37,7 +37,11 @@
     <ul>
       {#each routesArray as route, index (index)}
         <li>
-          <a class="block p-2 font-mono underline-offset-4 hover:underline" href="{route}">
+          <a
+            class="block p-2 font-mono underline-offset-4 hover:underline"
+            class:underline="{$page.url.pathname === route}"
+            href="{route}"
+          >
             {route}
           </a>
         </li>

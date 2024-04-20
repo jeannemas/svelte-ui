@@ -16,7 +16,7 @@
     <Button builders="{[builder]}" variant="outline">Open</Button>
   </Popover.Trigger>
 
-  <Popover.Content class="w-80">
+  <Popover.Content>
     <div class="grid gap-4">
       <div class="space-y-2">
         <h4 class="font-medium leading-none">Dimensions</h4>

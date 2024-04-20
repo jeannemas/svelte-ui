@@ -2,7 +2,7 @@
   import { Calendar as CalendarPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
 
-  import { variants } from '$lib/components/button/index.js';
+  import { variantFactory } from '$lib/components/button/index.js';
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
@@ -32,7 +32,7 @@
   {...attributes}
   asChild="{asChild}"
   class="{cn(
-    variants({ variant: 'ghost' }),
+    variantFactory({ variant: 'ghost' }),
 
     'h-9 w-9 p-0 font-normal ',
     '[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent-foreground',

@@ -1,116 +1,100 @@
 <script context="module" lang="ts">
-  import { derived } from 'svelte/store';
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import Input, { type Variant } from '$lib/components/input/index.js';
-  import Label from '$lib/components/label/index.js';
+  import * as Form from '$lib/components/form/index.js';
+  import Input, { variants } from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
 
-  const disabledKey = 'disabled';
-  const placeholderKey = 'placeholder';
-  const variantKey = 'variant';
-  const variantKeys = ['number', 'text'];
+  const adapter = zod(
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      placeholder: z.string().default('').optional(),
+      variant: z.enum(variants).default('text'),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  const disabled = derived(page, ($page) => $page.url.searchParams.has(disabledKey));
-  const placeholder = derived(
-    page,
-    ($page) =>
-      $page.url.searchParams.get(placeholderKey) ||
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  );
-  const variant = derived(page, ($page) => {
-    const variant = $page.url.searchParams.get(variantKey);
-
-    return variant && variantKeys.includes(variant) ? (variant as Variant) : 'text';
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
   });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div data-form>
-  <Label for="{disabledKey}">Disabled</Label>
+<Form.Root superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Disabled</Form.Label>
 
-  <Switch
-    checked="{$disabled}"
-    id="{disabledKey}"
-    name="{disabledKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(disabledKey, '');
-      } else {
-        url.searchParams.delete(disabledKey);
-      }
+    <Form.Description>Whether the input is disabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{placeholderKey}">Placeholder</Label>
+  <Form.Field name="placeholder" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Placeholder</Form.Label>
 
-  <Input
-    id="{placeholderKey}"
-    name="{placeholderKey}"
-    type="text"
-    value="{$placeholder}"
-    variant="text"
-    on:change="{({ currentTarget }) => {
-      const url = new URL($page.url);
+      <Input {...attrs} variant="text" bind:value="{$superFormData.placeholder}" />
+    </Form.Control>
 
-      url.searchParams.set(placeholderKey, currentTarget.value);
+    <Form.Description>The input placeholder.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{variantKey}">Variant</Label>
+  <Form.Field name="variant" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Variant</Form.Label>
 
-  <Select.Root
-    items="{variantKeys.map((variantKey) => ({
-      label: variantKey,
-      value: variantKey,
-    }))}"
-    onSelectedChange="{(selected) => {
-      const url = new URL($page.url);
+      <Select.Root
+        items="{variants.map((variant) => ({
+          label: variant,
+          value: variant,
+        }))}"
+        onSelectedChange="{(selected) => {
+          $superFormData.variant = selected?.value ?? 'text';
+        }}"
+        portal="{null}"
+        selected="{$superFormData.variant !== undefined
+          ? {
+              label: $superFormData.variant,
+              value: $superFormData.variant,
+            }
+          : undefined}"
+      >
+        <Select.Input {...attrs} />
 
-      if (selected) {
-        url.searchParams.set(variantKey, selected.value);
-      } else {
-        url.searchParams.delete(variantKey);
-      }
+        <Select.Trigger>
+          <Select.Value />
+        </Select.Trigger>
 
-      goto(url);
-    }}"
-    portal="{null}"
-    selected="{$variant !== undefined
-      ? {
-          label: $variant,
-          value: $variant,
-        }
-      : undefined}"
-  >
-    <Select.Input id="{variantKey}" name="{variantKey}" />
+        <Select.Content>
+          {#each variants as variant, index (index)}
+            <Select.Item value="{variant}">
+              {variant}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Form.Control>
 
-    <Select.Trigger>
-      <Select.Value />
-    </Select.Trigger>
+    <Form.Description>The variant of the input.</Form.Description>
 
-    <Select.Content>
-      {#each variantKeys as variantKey, index (index)}
-        <Select.Item value="{variantKey}">
-          {variantKey}
-        </Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
-</div>
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
 
 <hr class="my-4 border-y border-border" />
 
-<Input disabled="{$disabled}" placeholder="{$placeholder}" variant="{$variant}" />
+<Input {...$superFormData} />

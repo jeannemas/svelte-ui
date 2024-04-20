@@ -1,144 +1,134 @@
 <script context="module" lang="ts">
-  import { derived } from 'svelte/store';
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import Button, { variants, type Size, type Variant } from '$lib/components/button/index.js';
-  import Label from '$lib/components/label/index.js';
+  import Button, {
+    defaultSize,
+    defaultVariant,
+    sizes,
+    variants,
+  } from '$lib/components/button/index.js';
+  import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
 
-  const disabledKey = 'disabled';
-  const sizeKey = 'size';
-  const sizeKeys = Object.keys(variants.variants.size);
-  const variantKey = 'variant';
-  const variantKeys = Object.keys(variants.variants.variant);
+  const adapter = zod(
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      size: z.enum(sizes).default(defaultSize).optional(),
+      variant: z.enum(variants).default(defaultVariant).optional(),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  const disabled = derived(page, ($page) => $page.url.searchParams.has(disabledKey));
-  const size = derived(page, ($page) => {
-    const size = $page.url.searchParams.get(sizeKey);
-
-    return size && sizeKeys.includes(size) ? (size as Size) : variants.defaultVariants.size;
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
   });
-  const variant = derived(page, ($page) => {
-    const variant = $page.url.searchParams.get(variantKey);
-
-    return variant && variantKeys.includes(variant)
-      ? (variant as Variant)
-      : variants.defaultVariants.variant;
-  });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div data-form>
-  <Label for="{disabledKey}">Disabled</Label>
+<Form.Root superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Disabled</Form.Label>
 
-  <Switch
-    checked="{$disabled}"
-    id="{disabledKey}"
-    name="{disabledKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(disabledKey, '');
-      } else {
-        url.searchParams.delete(disabledKey);
-      }
+    <Form.Description>Whether the button is disabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{sizeKey}">Size</Label>
+  <Form.Field name="size" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Size</Form.Label>
 
-  <Select.Root
-    items="{sizeKeys.map((sizeKey) => ({
-      label: sizeKey,
-      value: sizeKey,
-    }))}"
-    onSelectedChange="{(selected) => {
-      const url = new URL($page.url);
+      <Select.Root
+        items="{sizes.map((size) => ({
+          label: size,
+          value: size,
+        }))}"
+        onSelectedChange="{(selected) => {
+          $superFormData.size = selected?.value;
+        }}"
+        portal="{null}"
+        selected="{$superFormData.size !== undefined
+          ? {
+              label: $superFormData.size,
+              value: $superFormData.size,
+            }
+          : undefined}"
+      >
+        <Select.Input {...attrs} />
 
-      if (selected) {
-        url.searchParams.set(sizeKey, selected.value);
-      } else {
-        url.searchParams.delete(sizeKey);
-      }
+        <Select.Trigger>
+          <Select.Value />
+        </Select.Trigger>
 
-      goto(url);
-    }}"
-    portal="{null}"
-    selected="{$size !== undefined
-      ? {
-          label: $size,
-          value: $size,
-        }
-      : undefined}"
-  >
-    <Select.Input id="{sizeKey}" name="{sizeKey}" />
+        <Select.Content>
+          {#each sizes as size, index (index)}
+            <Select.Item value="{size}">
+              {size}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Form.Control>
 
-    <Select.Trigger>
-      <Select.Value />
-    </Select.Trigger>
+    <Form.Description>The size of the button.</Form.Description>
 
-    <Select.Content>
-      {#each sizeKeys as sizeKey, index (index)}
-        <Select.Item value="{sizeKey}">
-          {sizeKey}
-        </Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{variantKey}">Variant</Label>
+  <Form.Field name="variant" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Variant</Form.Label>
 
-  <Select.Root
-    items="{variantKeys.map((variantKey) => ({
-      label: variantKey,
-      value: variantKey,
-    }))}"
-    onSelectedChange="{(selected) => {
-      const url = new URL($page.url);
+      <Select.Root
+        items="{variants.map((variant) => ({
+          label: variant,
+          value: variant,
+        }))}"
+        onSelectedChange="{(selected) => {
+          $superFormData.variant = selected?.value;
+        }}"
+        portal="{null}"
+        selected="{$superFormData.variant !== undefined
+          ? {
+              label: $superFormData.variant,
+              value: $superFormData.variant,
+            }
+          : undefined}"
+      >
+        <Select.Input {...attrs} />
 
-      if (selected) {
-        url.searchParams.set(variantKey, selected.value);
-      } else {
-        url.searchParams.delete(variantKey);
-      }
+        <Select.Trigger>
+          <Select.Value />
+        </Select.Trigger>
 
-      goto(url);
-    }}"
-    portal="{null}"
-    selected="{$variant !== undefined
-      ? {
-          label: $variant,
-          value: $variant,
-        }
-      : undefined}"
-  >
-    <Select.Input id="{variantKey}" name="{variantKey}" />
+        <Select.Content>
+          {#each variants as variant, index (index)}
+            <Select.Item value="{variant}">
+              {variant}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Form.Control>
 
-    <Select.Trigger>
-      <Select.Value />
-    </Select.Trigger>
+    <Form.Description>The variant of the button.</Form.Description>
 
-    <Select.Content>
-      {#each variantKeys as variantKey, index (index)}
-        <Select.Item value="{variantKey}">
-          {variantKey}
-        </Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
-</div>
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
 
 <hr class="my-4 border-y border-border" />
 
-<Button disabled="{$disabled}" size="{$size}" variant="{$variant}">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-</Button>
+<Button {...$superFormData}>Lorem ipsum</Button>

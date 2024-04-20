@@ -1,195 +1,140 @@
 <script context="module" lang="ts">
-  import { parseDate } from '@internationalized/date';
-  import { derived } from 'svelte/store';
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
   import * as Calendar from '$lib/components/calendar/index.js';
-  import Label from '$lib/components/label/index.js';
+  import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
-  import Textarea from '$lib/components/textarea/index.js';
 
-  const calendarLabelKey = 'calendarLabel';
-  const disabledKey = 'disabled';
-  const valueKey = 'value';
-  const weekdayFormatKey = 'weekdayFormat';
-  const weekdayFormatKeys = ['long', 'narrow', 'short'];
-  const weekStartsOnKey = 'weekStartsOn';
-  const weekStartsOnKeys = [0, 1, 2, 3, 4, 5, 6];
+  const adapter = zod(
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow').optional(),
+      weekStartsOn: z
+        .union([
+          z.literal(0),
+          z.literal(1),
+          z.literal(2),
+          z.literal(3),
+          z.literal(4),
+          z.literal(5),
+          z.literal(6),
+        ])
+        .default(0)
+        .optional(),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  const calendarLabel = derived(
-    page,
-    ($page) => $page.url.searchParams.get(calendarLabelKey) ?? undefined,
-  );
-  const disabled = derived(page, ($page) => $page.url.searchParams.has(disabledKey));
-  const value = derived(page, ($page) => {
-    if (!$page.url.searchParams.has(valueKey)) {
-      return undefined;
-    }
-
-    const value = $page.url.searchParams.get(valueKey)!;
-
-    try {
-      return parseDate(value);
-    } catch {
-      return undefined;
-    }
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
   });
-  const weekdayFormat = derived(page, ($page) => {
-    const weekdayFormat = $page.url.searchParams.get(weekdayFormatKey);
-
-    return weekdayFormat && weekdayFormatKeys.includes(weekdayFormat)
-      ? (weekdayFormat as Calendar.RootProps['weekdayFormat'])
-      : 'narrow';
-  });
-  const weekStartsOn = derived(page, ($page) => {
-    const weekStartsOn = Number($page.url.searchParams.get(weekStartsOnKey));
-
-    return weekStartsOn && weekStartsOnKeys.includes(weekStartsOn)
-      ? (weekStartsOn as Calendar.RootProps['weekStartsOn'])
-      : 0;
-  });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div data-form>
-  <Label for="{disabledKey}">Disabled</Label>
+<Form.Root superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Disabled</Form.Label>
 
-  <Switch
-    checked="{$disabled}"
-    id="{disabledKey}"
-    name="{disabledKey}"
-    onCheckedChange="{(checked) => {
-      const url = new URL($page.url);
+      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+    </Form.Control>
 
-      if (checked) {
-        url.searchParams.set(disabledKey, '');
-      } else {
-        url.searchParams.delete(disabledKey);
-      }
+    <Form.Description>Whether the calendar is disabled.</Form.Description>
 
-      goto(url);
-    }}"
-  />
+    <Form.FieldErrors />
+  </Form.Field>
 
-  <Label for="{valueKey}">Value</Label>
+  <Form.Field name="weekStartsOn" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Week starts on</Form.Label>
 
-  <Textarea
-    class="font-mono"
-    disabled
-    id="{valueKey}"
-    name="{valueKey}"
-    readonly
-    rows="{10}"
-    value="{JSON.stringify($value, null, 2)}"
-  />
+      <Select.Root
+        items="{Calendar.weekStartsOn.map((weekStartsOn) => ({
+          label: weekStartsOn.toString(),
+          value: weekStartsOn,
+        }))}"
+        onSelectedChange="{(selected) => {
+          $superFormData.weekStartsOn = selected?.value;
+        }}"
+        portal="{null}"
+        selected="{$superFormData.weekStartsOn !== undefined
+          ? {
+              label: $superFormData.weekStartsOn.toString(),
+              value: $superFormData.weekStartsOn,
+            }
+          : undefined}"
+      >
+        <Select.Input {...attrs} />
 
-  <Label for="{weekdayFormatKey}">Weekday format</Label>
+        <Select.Trigger>
+          <Select.Value />
+        </Select.Trigger>
 
-  <Select.Root
-    items="{weekdayFormatKeys.map((weekdayFormatKey) => ({
-      label: weekdayFormatKey,
-      value: weekdayFormatKey,
-    }))}"
-    onSelectedChange="{(selected) => {
-      const url = new URL($page.url);
+        <Select.Content>
+          {#each Calendar.weekStartsOn as weekStartsOn, index (index)}
+            <Select.Item value="{weekStartsOn}">
+              {weekStartsOn}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Form.Control>
 
-      if (selected) {
-        url.searchParams.set(weekdayFormatKey, selected.value);
-      } else {
-        url.searchParams.delete(weekdayFormatKey);
-      }
+    <Form.Description>The index of the first day of the week.</Form.Description>
 
-      goto(url);
-    }}"
-    portal="{null}"
-    selected="{$weekdayFormat !== undefined
-      ? {
-          label: $weekdayFormat,
-          value: $weekdayFormat,
-        }
-      : undefined}"
-  >
-    <Select.Input id="{weekdayFormatKey}" name="{weekdayFormatKey}" />
+    <Form.FieldErrors />
+  </Form.Field>
 
-    <Select.Trigger>
-      <Select.Value />
-    </Select.Trigger>
+  <Form.Field name="weekdayFormat" superForm="{superForm}">
+    <Form.Control let:attrs>
+      <Form.Label>Weekday format</Form.Label>
 
-    <Select.Content>
-      {#each weekdayFormatKeys as weekdayFormatKey, index (index)}
-        <Select.Item value="{weekdayFormatKey}">
-          {weekdayFormatKey}
-        </Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
+      <Select.Root
+        items="{Calendar.weekdayFormats.map((weekdayFormat) => ({
+          label: weekdayFormat,
+          value: weekdayFormat,
+        }))}"
+        onSelectedChange="{(selected) => {
+          $superFormData.weekdayFormat = selected?.value;
+        }}"
+        portal="{null}"
+        selected="{$superFormData.weekdayFormat !== undefined
+          ? {
+              label: $superFormData.weekdayFormat,
+              value: $superFormData.weekdayFormat,
+            }
+          : undefined}"
+      >
+        <Select.Input {...attrs} />
 
-  <Label for="{weekStartsOnKey}">Week starts on</Label>
+        <Select.Trigger>
+          <Select.Value />
+        </Select.Trigger>
 
-  <Select.Root
-    items="{weekStartsOnKeys.map((weekStartsOnKey) => ({
-      label: weekStartsOnKey.toString(),
-      value: weekStartsOnKey,
-    }))}"
-    onSelectedChange="{(selected) => {
-      const url = new URL($page.url);
+        <Select.Content>
+          {#each Calendar.weekdayFormats as weekdayFormat, index (index)}
+            <Select.Item value="{weekdayFormat}">
+              {weekdayFormat}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Form.Control>
 
-      if (selected) {
-        url.searchParams.set(weekStartsOnKey, selected.value.toString());
-      } else {
-        url.searchParams.delete(weekStartsOnKey);
-      }
+    <Form.Description>The format of the weekdays.</Form.Description>
 
-      goto(url);
-    }}"
-    portal="{null}"
-    selected="{$weekStartsOn !== undefined
-      ? {
-          label: $weekStartsOn.toString(),
-          value: $weekStartsOn,
-        }
-      : undefined}"
-  >
-    <Select.Input id="{weekStartsOnKey}" name="{weekStartsOnKey}" />
-
-    <Select.Trigger>
-      <Select.Value />
-    </Select.Trigger>
-
-    <Select.Content>
-      {#each weekStartsOnKeys as weekStartsOnKey, index (index)}
-        <Select.Item value="{weekStartsOnKey}">
-          {weekStartsOnKey}
-        </Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
-</div>
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
 
 <hr class="my-4 border-y border-border" />
 
-<Calendar.Root
-  calendarLabel="{$calendarLabel}"
-  class="inline-block rounded-md border border-border"
-  disabled="{$disabled}"
-  onValueChange="{(value) => {
-    const url = new URL($page.url);
-
-    if (!value) {
-      url.searchParams.delete(valueKey);
-    } else {
-      url.searchParams.set(valueKey, value.toString());
-    }
-
-    goto(url);
-  }}"
-  value="{$value}"
-  weekdayFormat="{$weekdayFormat}"
-  weekStartsOn="{$weekStartsOn}"
-/>
+<Calendar.Root {...$superFormData} class="inline-block rounded-md border border-border" />
