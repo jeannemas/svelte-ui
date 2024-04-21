@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.13.0
+
+### Minor Changes
+
+- 90cab12: Added tooltip and separator components
+
 ## 0.12.0
 
 ### Minor Changes
