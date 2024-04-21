@@ -5,13 +5,19 @@
 
   import * as Calendar from '$lib/components/calendar/index.js';
   import * as Form from '$lib/components/form/index.js';
+  import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
     z.object({
       disabled: z.boolean().default(false).optional(),
-      weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow').optional(),
+      fixedWeeks: z.boolean().default(false).optional(),
+      numberOfMonths: z.number().int().min(1).default(1).optional(),
+      pagedNavigation: z.boolean().default(false).optional(),
+      preventDeselect: z.boolean().default(false).optional(),
+      readonly: z.boolean().default(false).optional(),
       weekStartsOn: z
         .union([
           z.literal(0),
@@ -24,6 +30,7 @@
         ])
         .default(0)
         .optional(),
+      weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow').optional(),
     }),
   );
 </script>
@@ -40,19 +47,113 @@
 </style> -->
 
 <Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Disabled</Form.Label>
 
-      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
     </Form.Control>
 
-    <Form.Description>Whether the calendar is disabled.</Form.Description>
+    <Form.Description>
+      Whether the calendar is disabled. When true, the user will not be able to focus or select
+      dates.
+    </Form.Description>
 
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="weekStartsOn" superForm="{superForm}">
+  <Form.Field name="fixedWeeks" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Fixed weeks</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.fixedWeeks}" />
+    </Form.Control>
+
+    <Form.Description>
+      Display 6 weeks per month, regardless the month's number of weeks. This is useful for
+      displaying a consistent calendar, where the size of the calendar doesn't change month to
+      month.
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="numberOfMonths" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Number of months</Form.Label>
+
+      <Input
+        {...attrs}
+        {...constraints}
+        variant="number"
+        bind:value="{$superFormData.numberOfMonths}"
+      />
+    </Form.Control>
+
+    <Form.Description>
+      Determines the number of months to display on the calendar simultaneously.
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="pagedNavigation" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Paged navigation</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.pagedNavigation}" />
+    </Form.Control>
+
+    <Form.Description>
+      <p>Applicable only when numberOfMonths is greater than 1.</p>
+
+      <p>
+        Controls whether to use paged navigation for the next and previous buttons in the date
+        picker. With paged navigation set to true, clicking the next/prev buttons changes all months
+        in view. When set to false, it shifts the view by a single month.
+      </p>
+
+      <p>
+        For example, with pagedNavigation set to true and 2 months displayed (January and February),
+        clicking the next button changes the view to March and April. If pagedNavigation is false,
+        the view shifts to February and March.
+      </p>
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="preventDeselect" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Prevent deselect</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventDeselect}" />
+    </Form.Control>
+
+    <Form.Description>
+      Prevent deselecting the selected date(s), which would set the value to undefined. You can use
+      this to ensure a date is always selected in certain situations.
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="readonly" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Readonly</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.readonly}" />
+    </Form.Control>
+
+    <Form.Description>
+      Whether the calendar is readonly. When true, the user will be able to focus and navigate the
+      calendar, but will not be able to select dates.
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="weekStartsOn" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Week starts on</Form.Label>
 
@@ -72,7 +173,7 @@
             }
           : undefined}"
       >
-        <Select.Input {...attrs} />
+        <Select.Input {...attrs} {...constraints} />
 
         <Select.Trigger>
           <Select.Value />
@@ -88,12 +189,15 @@
       </Select.Root>
     </Form.Control>
 
-    <Form.Description>The index of the first day of the week.</Form.Description>
+    <Form.Description>
+      The day of the week to start the calendar on, which must be a number between 0 and 6, where 0
+      is Sunday and 6 is Saturday.
+    </Form.Description>
 
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="weekdayFormat" superForm="{superForm}">
+  <Form.Field name="weekdayFormat" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Weekday format</Form.Label>
 
@@ -113,7 +217,7 @@
             }
           : undefined}"
       >
-        <Select.Input {...attrs} />
+        <Select.Input {...attrs} {...constraints} />
 
         <Select.Trigger>
           <Select.Value />
@@ -129,12 +233,33 @@
       </Select.Root>
     </Form.Control>
 
-    <Form.Description>The format of the weekdays.</Form.Description>
+    <Form.Description>
+      How the string representation of the weekdays provided via the weekdays state store should be
+      formatted.
+
+      <ul class="list-inside list-disc">
+        <li>"long": "Sunday", "Monday", "Tuesday", etc.</li>
+
+        <li>"short": "Sun", "Mon", "Tue", etc.</li>
+
+        <li>"narrow": "S", "M", "T", etc.</li>
+      </ul>
+    </Form.Description>
 
     <Form.FieldErrors />
   </Form.Field>
 </Form.Root>
 
-<hr class="my-4 border-y border-border" />
+<Separator />
 
-<Calendar.Root {...$superFormData} class="inline-block rounded-md border border-border" />
+<Calendar.Root
+  class="inline-block rounded-md border border-border"
+  disabled="{$superFormData.disabled}"
+  fixedWeeks="{$superFormData.fixedWeeks}"
+  numberOfMonths="{$superFormData.numberOfMonths}"
+  pagedNavigation="{$superFormData.pagedNavigation}"
+  preventDeselect="{$superFormData.preventDeselect}"
+  readonly="{$superFormData.readonly}"
+  weekStartsOn="{$superFormData.weekStartsOn}"
+  weekdayFormat="{$superFormData.weekdayFormat}"
+/>

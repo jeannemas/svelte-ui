@@ -11,13 +11,7 @@
 
 <script lang="ts">
   const title = derived(page, ($page) => {
-    const { id } = $page.route;
-
-    if (!id) {
-      return 'Home';
-    }
-
-    const str = id.replaceAll(/[^\w]/g, ' ').split(' ').filter(Boolean).join(' ');
+    const str = $page.route.id!.replaceAll(/[^\w]/g, ' ').split(' ').filter(Boolean).join(' ');
 
     return str.charAt(0).toUpperCase() + str.slice(1);
   });

@@ -11,6 +11,7 @@
   } from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -34,11 +35,11 @@
 </style> -->
 
 <Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Disabled</Form.Label>
 
-      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
     </Form.Control>
 
     <Form.Description>Whether the button is disabled.</Form.Description>
@@ -46,7 +47,7 @@
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="size" superForm="{superForm}">
+  <Form.Field name="size" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Size</Form.Label>
 
@@ -66,7 +67,7 @@
             }
           : undefined}"
       >
-        <Select.Input {...attrs} />
+        <Select.Input {...attrs} {...constraints} />
 
         <Select.Trigger>
           <Select.Value />
@@ -87,7 +88,7 @@
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="variant" superForm="{superForm}">
+  <Form.Field name="variant" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Variant</Form.Label>
 
@@ -107,7 +108,7 @@
             }
           : undefined}"
       >
-        <Select.Input {...attrs} />
+        <Select.Input {...attrs} {...constraints} />
 
         <Select.Trigger>
           <Select.Value />
@@ -129,6 +130,12 @@
   </Form.Field>
 </Form.Root>
 
-<hr class="my-4 border-y border-border" />
+<Separator />
 
-<Button {...$superFormData}>Lorem ipsum</Button>
+<Button
+  disabled="{$superFormData.disabled}"
+  size="{$superFormData.size}"
+  variant="{$superFormData.variant}"
+>
+  Lorem ipsum
+</Button>

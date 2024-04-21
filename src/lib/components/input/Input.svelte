@@ -13,7 +13,7 @@
          */
         value?: number;
         /**
-         * The type of the input.
+         * The variant of the input.
          */
         variant: 'number';
       }
@@ -23,7 +23,7 @@
          */
         value?: string;
         /**
-         * The type of the input.
+         * The variant of the input.
          */
         variant: 'text';
       };

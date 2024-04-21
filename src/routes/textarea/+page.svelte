@@ -4,6 +4,7 @@
   import z from 'zod';
 
   import * as Form from '$lib/components/form/index.js';
+  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
   import Textarea from '$lib/components/textarea/index.js';
 
@@ -11,6 +12,7 @@
     z.object({
       disabled: z.boolean().default(false).optional(),
       placeholder: z.string().default('').optional(),
+      readonly: z.boolean().default(false).optional(),
     }),
   );
 </script>
@@ -27,11 +29,11 @@
 </style> -->
 
 <Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Disabled</Form.Label>
 
-      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
     </Form.Control>
 
     <Form.Description>Whether the textarea is disabled.</Form.Description>
@@ -39,19 +41,35 @@
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="placeholder" superForm="{superForm}">
+  <Form.Field name="placeholder" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Placeholder</Form.Label>
 
-      <Textarea {...attrs} bind:value="{$superFormData.placeholder}" />
+      <Textarea {...attrs} {...constraints} bind:value="{$superFormData.placeholder}" />
     </Form.Control>
 
     <Form.Description>The textarea placeholder.</Form.Description>
 
     <Form.FieldErrors />
   </Form.Field>
+
+  <Form.Field name="readonly" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Readonly</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.readonly}" />
+    </Form.Control>
+
+    <Form.Description>Whether the textarea is read-only.</Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
 </Form.Root>
 
-<hr class="my-4 border-y border-border" />
+<Separator />
 
-<Textarea {...$superFormData} />
+<Textarea
+  disabled="{$superFormData.disabled}"
+  placeholder="{$superFormData.placeholder}"
+  readonly="{$superFormData.readonly}"
+/>

@@ -6,6 +6,7 @@
   import * as Form from '$lib/components/form/index.js';
   import Input, { variants } from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -29,11 +30,11 @@
 </style> -->
 
 <Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Disabled</Form.Label>
 
-      <Switch {...attrs} bind:checked="{$superFormData.disabled}" />
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
     </Form.Control>
 
     <Form.Description>Whether the input is disabled.</Form.Description>
@@ -41,11 +42,11 @@
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="placeholder" superForm="{superForm}">
+  <Form.Field name="placeholder" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Placeholder</Form.Label>
 
-      <Input {...attrs} variant="text" bind:value="{$superFormData.placeholder}" />
+      <Input {...attrs} {...constraints} variant="text" bind:value="{$superFormData.placeholder}" />
     </Form.Control>
 
     <Form.Description>The input placeholder.</Form.Description>
@@ -53,7 +54,7 @@
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field name="variant" superForm="{superForm}">
+  <Form.Field name="variant" superForm="{superForm}" let:constraints>
     <Form.Control let:attrs>
       <Form.Label>Variant</Form.Label>
 
@@ -73,7 +74,7 @@
             }
           : undefined}"
       >
-        <Select.Input {...attrs} />
+        <Select.Input {...attrs} {...constraints} />
 
         <Select.Trigger>
           <Select.Value />
@@ -95,6 +96,10 @@
   </Form.Field>
 </Form.Root>
 
-<hr class="my-4 border-y border-border" />
+<Separator />
 
-<Input {...$superFormData} />
+<Input
+  disabled="{$superFormData.disabled}"
+  placeholder="{$superFormData.placeholder}"
+  variant="{$superFormData.variant}"
+/>

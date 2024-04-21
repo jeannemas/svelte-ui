@@ -1,19 +1,67 @@
 <script context="module" lang="ts">
+  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
+  import z from 'zod';
+
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
+  import * as Form from '$lib/components/form/index.js';
+  import Separator from '$lib/components/separator/index.js';
+  import Switch from '$lib/components/switch/index.js';
+
+  const adapter = zod(
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      open: z.boolean().default(false).optional(),
+    }),
+  );
 </script>
 
 <script lang="ts">
-  let open = false;
+  const superForm = createSuperForm(defaults(adapter), {
+    SPA: true,
+    validators: adapter,
+  });
+  const { form: superFormData } = superForm;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Collapsible.Root bind:open="{open}">
+<Form.Root superForm="{superForm}">
+  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Disabled</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+    </Form.Control>
+
+    <Form.Description>
+      Whether the collapsible is disabled which prevents it from being opened.
+    </Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field name="open" superForm="{superForm}" let:constraints>
+    <Form.Control let:attrs>
+      <Form.Label>Open</Form.Label>
+
+      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+    </Form.Control>
+
+    <Form.Description>The open state of the collapsible.</Form.Description>
+
+    <Form.FieldErrors />
+  </Form.Field>
+</Form.Root>
+
+<Separator />
+
+<Collapsible.Root disabled="{$superFormData.disabled}" bind:open="{$superFormData.open}">
   <Collapsible.Trigger asChild let:builder>
     <Button builders="{[builder]}">
-      {builder['data-state']}
+      State: {builder['data-state']}
     </Button>
   </Collapsible.Trigger>
 
