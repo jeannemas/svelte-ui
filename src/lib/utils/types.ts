@@ -2,17 +2,31 @@ import type { SvelteComponent } from 'svelte';
 import type { Action } from 'svelte/action';
 import type { TransitionConfig } from 'svelte/transition';
 
+/**
+ * Extracts the slots of a component.
+ *
+ * @param TComponent The component to extract the slots from.
+ * @param TApplyPatch Whether to apply the patch to the slots.
+ */
 export type ComponentSlots<TComponent extends SvelteComponent, TApplyPatch extends boolean = true> =
   TComponent extends SvelteComponent<Record<never, never>, Record<never, never>, infer TSlots>
     ? true extends TApplyPatch
       ? PatchSlotsWithBuilder<TSlots>
       : TSlots
     : never;
+/**
+ * Represents an event of an element.
+ *
+ * @param TElement The type of the element.
+ * @param TEvent The type of the event.
+ */
 export type ElementEvent<TElement extends HTMLElement, TEvent extends Event> = TEvent & {
   currentTarget: EventTarget & TElement;
 };
+/**
+ * A transition function.
+ */
 export type Transition = (node: Element, params?: unknown) => TransitionConfig;
-export type TransitionParams<T extends Transition> = Parameters<T>[1];
 
 /**
  * Expands the type of an object.

@@ -1,10 +1,18 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
-
+  /**
+   * The attributes of the container component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the container component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the container component.
+   */
   export type Props = {
     /**
      * Whether to add horizontal padding.
@@ -23,9 +31,27 @@
      */
     yAxis?: boolean;
   };
+  /**
+   * The slots of the container component.
+   */
   export type Slots = {
     default: Record<never, never>;
   };
+
+  /**
+   * The styles of the container.
+   */
+  export const styles = tv({
+    base: ['w-full'],
+    variants: {
+      xAxis: {
+        true: ['mx-auto max-w-7xl px-2', 'sm:px-4', 'md:px-6', 'lg:px-8'],
+      },
+      yAxis: {
+        true: ['py-2', 'sm:py-4', 'md:py-6', 'lg:py-8'],
+      },
+    },
+  });
 </script>
 
 <script lang="ts">
@@ -44,12 +70,11 @@
 
 <div
   {...attributes}
-  class="{cn(
-    'w-full',
-    xAxis && ['mx-auto max-w-7xl px-2', 'sm:px-4', 'md:px-6', 'lg:px-8'],
-    yAxis && ['py-2', 'sm:py-4', 'md:py-6', 'lg:py-8'],
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+    xAxis,
+    yAxis,
+  })}"
 >
   <slot />
 </div>

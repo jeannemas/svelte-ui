@@ -3,9 +3,21 @@
 
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the tooltip root.
+   */
   export type Attributes = Record<never, never>;
+  /**
+   * The Svelte 5 like events of the tooltip root.
+   */
   export type Events = Pick<TooltipPrimitive.Props, 'onOpenChange'>;
+  /**
+   * The props of the tooltip root.
+   */
   export type Props = Omit<TooltipPrimitive.Props, keyof Events>;
+  /**
+   * The slots of the tooltip root.
+   */
   export type Slots = ComponentSlots<TooltipPrimitive.Root>;
 </script>
 

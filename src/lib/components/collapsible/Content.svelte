@@ -2,11 +2,21 @@
   import { Collapsible as CollapsiblePrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { slide } from 'svelte/transition';
+  import { tv } from 'tailwind-variants';
 
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the collapsible content component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the collapsible content component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the collapsible content component.
+   */
   export type Props<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
@@ -15,11 +25,21 @@
     CollapsiblePrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
     keyof Attributes
   >;
+  /**
+   * The slots of the collapsible content component.
+   */
   export type Slots<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
   > = ComponentSlots<CollapsiblePrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+
+  /**
+   * The styles of the collapsible content.
+   */
+  export const styles = tv({
+    base: [],
+  });
 </script>
 
 <script
@@ -56,6 +76,9 @@
 <CollapsiblePrimitive.Content
   {...attributes}
   asChild="{asChild}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   inTransition="{inTransition}"
   inTransitionConfig="{inTransitionConfig}"

@@ -3,11 +3,20 @@
 
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the select root component.
+   */
   export type Attributes = Record<never, never>;
+  /**
+   * The Svelte 5 like events of the select root component.
+   */
   export type Events<TItem, TMultiple extends boolean = false> = Pick<
     SelectPrimitive.Props<TItem, TMultiple>,
     'onOpenChange' | 'onOutsideClick' | 'onSelectedChange'
   >;
+  /**
+   * The props of the select root component.
+   */
   export type Props<TItem, TMultiple extends boolean = false> = Omit<
     SelectPrimitive.Props<TItem, TMultiple>,
     | keyof Attributes
@@ -18,6 +27,9 @@
     | 'scrollAlignment'
     | 'typeahead'
   >;
+  /**
+   * The slots of the select root component.
+   */
   export type Slots<TItem, TMultiple extends boolean = false> = ComponentSlots<
     SelectPrimitive.Root<TItem, TMultiple>
   >;

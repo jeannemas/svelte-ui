@@ -3,9 +3,21 @@
 
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the Control component.
+   */
   export type Attributes = Record<never, never>;
+  /**
+   * The Svelte 5 like events of the Control component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the Control component.
+   */
   export type Props = ControlProps;
+  /**
+   * The slots of the Control component.
+   */
   export type Slots = ComponentSlots<Control>;
 </script>
 

@@ -1,11 +1,20 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ElementEvent } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the textarea component.
+   */
   export type Attributes = Omit<SvelteHTMLElements['textarea'], 'readonly' | 'value'>;
+  /**
+   * The Svelte 5 like events of the textarea component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the textarea component.
+   */
   export type Props = {
     /**
      * Whether the textarea is read-only.
@@ -18,7 +27,22 @@
      */
     value?: Exclude<SvelteHTMLElements['textarea']['value'], number | string[]>;
   };
+  /**
+   * The slots of the textarea component.
+   */
   export type Slots = Record<never, never>;
+
+  /**
+   * The styles of the textarea.
+   */
+  export const styles = tv({
+    base: [
+      'flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+      'placeholder:text-muted-foreground',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+      'disabled:cursor-not-allowed disabled:opacity-50',
+    ],
+  });
 </script>
 
 <script lang="ts">
@@ -52,13 +76,9 @@
 
 <textarea
   {...attributes}
-  class="{cn(
-    'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
-    'placeholder:text-muted-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   readonly="{readonly}"
   bind:value="{value}"
   on:blur

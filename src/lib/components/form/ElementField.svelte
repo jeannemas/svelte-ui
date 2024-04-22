@@ -2,25 +2,40 @@
   import { ElementField, type ElementFieldProps, type ElementFieldSlotProps } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import type { FormPathLeaves } from 'sveltekit-superforms';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
-
+  /**
+   * The attributes of the element field component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the element field component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the element field component.
+   */
   export type Props<T extends Record<string, unknown>, U extends FormPathLeaves<T>> = Omit<
     ElementFieldProps<T, U>,
     'form'
   > & {
     superForm: ElementFieldProps<T, U>['form'];
   };
-  export type Slots<
-    T extends Record<string, unknown>,
-    U extends FormPathLeaves<T>,
-  > = /* ComponentSlots<ElementField<T, U>> */ {
+  /**
+   * The slots of the element field component.
+   */
+  export type Slots<T extends Record<string, unknown>, U extends FormPathLeaves<T>> = {
     default: Omit<ElementFieldSlotProps<T, U>, 'value'> & {
       value: unknown; // Should be `PrimitiveFromIndex<T, U>`, not `T[U]`
     };
   };
+
+  /**
+   * The styles of the element field.
+   */
+  export const styles = tv({
+    base: ['space-y-2'],
+  });
 </script>
 
 <script generics="T extends Record<string, unknown>, U extends FormPathLeaves<T>" lang="ts">
@@ -40,7 +55,12 @@
 </style> -->
 
 <ElementField form="{superForm}" name="{name}" let:constraints let:errors let:tainted let:value>
-  <div {...attributes} class="{cn('space-y-2', attributes.class)}">
+  <div
+    {...attributes}
+    class="{styles({
+      class: attributes.class,
+    })}"
+  >
     <slot constraints="{constraints ?? {}}" errors="{errors}" tainted="{tainted}" value="{value}" />
   </div>
 </ElementField>

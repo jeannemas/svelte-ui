@@ -1,13 +1,33 @@
 <script context="module" lang="ts">
   import { Popover as PopoverPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the popover trigger component.
+   */
   export type Attributes = SvelteHTMLElements['button'];
+  /**
+   * The Svelte 5 like events of the popover trigger component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the popover trigger component.
+   */
   export type Props = Omit<PopoverPrimitive.TriggerProps, keyof Attributes>;
+  /**
+   * The slots of the popover trigger component.
+   */
   export type Slots = ComponentSlots<PopoverPrimitive.Trigger>;
+
+  /**
+   * The styles of the popover trigger.
+   */
+  export const styles = tv({
+    base: [],
+  });
 </script>
 
 <script lang="ts">
@@ -24,6 +44,14 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<PopoverPrimitive.Trigger {...attributes} asChild="{asChild}" el="{el}" let:builder>
+<PopoverPrimitive.Trigger
+  {...attributes}
+  asChild="{asChild}"
+  class="{styles({
+    class: attributes.class,
+  })}"
+  el="{el}"
+  let:builder
+>
   <slot builder="{builder}" />
 </PopoverPrimitive.Trigger>

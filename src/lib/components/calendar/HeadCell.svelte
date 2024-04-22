@@ -1,14 +1,33 @@
 <script context="module" lang="ts">
   import { Calendar as CalendarPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the head cell component.
+   */
   export type Attributes = SvelteHTMLElements['th'];
+  /**
+   * The Svelte 5 like events of the head cell component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the head cell component.
+   */
   export type Props = Omit<CalendarPrimitive.HeadCellProps, keyof Attributes>;
+  /**
+   * The slots of the head cell component.
+   */
   export type Slots = ComponentSlots<CalendarPrimitive.HeadCell>;
+
+  /**
+   * The styles of the head cell.
+   */
+  export const styles = tv({
+    base: ['w-9 rounded-md text-[0.8rem] font-normal text-muted-foreground'],
+  });
 </script>
 
 <script lang="ts">
@@ -28,7 +47,9 @@
 <CalendarPrimitive.HeadCell
   {...attributes}
   asChild="{asChild}"
-  class="{cn('w-9 rounded-md text-[0.8rem] font-normal text-muted-foreground', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:attrs
 >

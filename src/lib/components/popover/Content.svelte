@@ -1,13 +1,22 @@
 <script context="module" lang="ts">
   import { Popover as PopoverPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the popover content component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the popover content component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the popover content component.
+   */
   export type Props<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
@@ -16,11 +25,23 @@
     PopoverPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
     keyof Attributes
   >;
+  /**
+   * The slots of the popover content component.
+   */
   export type Slots<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
   > = ComponentSlots<PopoverPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+
+  /**
+   * The styles of the popover content.
+   */
+  export const styles = tv({
+    base: [
+      'z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
+    ],
+  });
 </script>
 
 <script
@@ -69,10 +90,9 @@
   asChild="{asChild}"
   alignOffset="{alignOffset}"
   avoidCollisions="{avoidCollisions}"
-  class="{cn(
-    'z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   collisionBoundary="{collisionBoundary}"
   collisionPadding="{collisionPadding}"
   el="{el}"

@@ -1,5 +1,6 @@
 export {
   default as Content,
+  styles as contentStyles,
   type Attributes as ContentAttributes,
   type Events as ContentEvents,
   type Props as ContentProps,
@@ -7,6 +8,7 @@ export {
 } from './Content.svelte';
 export {
   default as Group,
+  styles as groupStyles,
   type Attributes as GroupAttributes,
   type Events as GroupEvents,
   type Props as GroupProps,
@@ -14,6 +16,7 @@ export {
 } from './Group.svelte';
 export {
   default as Input,
+  styles as inputStyles,
   type Attributes as InputAttributes,
   type Events as InputEvents,
   type Props as InputProps,
@@ -21,6 +24,7 @@ export {
 } from './Input.svelte';
 export {
   default as Item,
+  styles as itemStyles,
   type Attributes as ItemAttributes,
   type Events as ItemEvents,
   type Props as ItemProps,
@@ -28,6 +32,7 @@ export {
 } from './Item.svelte';
 export {
   default as Label,
+  styles as labelStyles,
   type Attributes as LabelAttributes,
   type Events as LabelEvents,
   type Props as LabelProps,
@@ -42,6 +47,7 @@ export {
 } from './Root.svelte';
 export {
   default as Separator,
+  styles as separatorStyles,
   type Attributes as SeparatorAttributes,
   type Events as SeparatorEvents,
   type Props as SeparatorProps,
@@ -49,6 +55,7 @@ export {
 } from './Separator.svelte';
 export {
   default as Trigger,
+  styles as triggerStyles,
   type Attributes as TriggerAttributes,
   type Events as TriggerEvents,
   type Props as TriggerProps,
@@ -56,6 +63,7 @@ export {
 } from './Trigger.svelte';
 export {
   default as Value,
+  styles as valueStyles,
   type Attributes as ValueAttributes,
   type Events as ValueEvents,
   type Props as ValueProps,

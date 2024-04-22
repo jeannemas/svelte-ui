@@ -3,9 +3,21 @@
 
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the popover component.
+   */
   export type Attributes = Record<never, never>;
+  /**
+   * The Svelte 5 like events of the popover component.
+   */
   export type Events = Pick<PopoverPrimitive.Props, 'onOpenChange' | 'onOutsideClick'>;
+  /**
+   * The props of the popover component.
+   */
   export type Props = Omit<PopoverPrimitive.Props, keyof Events>;
+  /**
+   * The slots of the popover component.
+   */
   export type Slots = ComponentSlots<PopoverPrimitive.Root>;
 </script>
 

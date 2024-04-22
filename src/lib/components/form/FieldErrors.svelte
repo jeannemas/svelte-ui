@@ -1,16 +1,36 @@
 <script context="module" lang="ts">
   import { FieldErrors, type FieldErrorsProps } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the FieldErrors component.
+   */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'id'>;
+  /**
+   * The Svelte 5 like events of the FieldErrors component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the FieldErrors component.
+   */
   export type Props = Omit<FieldErrorsProps, keyof Attributes> & {
     errorClasses?: string | null;
   };
+  /**
+   * The slots of the FieldErrors component.
+   */
   export type Slots = ComponentSlots<FieldErrors>;
+
+  /**
+   * The styles of the FieldErrors.
+   */
+  export const styles = tv({
+    base: ['text-sm font-medium text-destructive'],
+  });
 </script>
 
 <script lang="ts">
@@ -32,7 +52,9 @@
 <FieldErrors
   {...attributes}
   asChild="{asChild}"
-  class="{cn('text-sm font-medium text-destructive', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   id="{id}"
   let:errorAttrs

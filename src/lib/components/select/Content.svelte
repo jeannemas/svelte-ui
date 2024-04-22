@@ -2,13 +2,22 @@
   import { Select as SelectPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { scale } from 'svelte/transition';
+  import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the select content component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the select content component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the select content component.
+   */
   export type Props<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
@@ -17,11 +26,23 @@
     SelectPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
     keyof Attributes
   >;
+  /**
+   * The slots of the select content component.
+   */
   export type Slots<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
   > = ComponentSlots<SelectPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+
+  /**
+   * The styles of the select content.
+   */
+  export const styles = tv({
+    base: [
+      'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
+    ],
+  });
 </script>
 
 <script
@@ -74,10 +95,9 @@
   alignOffset="{alignOffset}"
   asChild="{asChild}"
   avoidCollisions="{avoidCollisions}"
-  class="{cn(
-    'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   collisionBoundary="{collisionBoundary}"
   collisionPadding="{collisionPadding}"
   el="{el}"

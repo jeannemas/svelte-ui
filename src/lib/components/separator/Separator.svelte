@@ -1,17 +1,57 @@
 <script context="module" lang="ts">
   import { Separator as SeparatorPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv, type VariantProps } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the separator component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the separator component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The orientation of the separator component.
+   */
+  export type Orientation = NonNullable<VariantProps<typeof styles>['orientation']>;
+  /**
+   * The props of the separator component.
+   */
   export type Props = Omit<SeparatorPrimitive.Props, keyof Attributes>;
+  /**
+   * The slots of the separator component.
+   */
   export type Slots = ComponentSlots<SeparatorPrimitive.Root>;
 
-  export const defaultOrientation = 'horizontal' as const;
-  export const orientations = ['horizontal', 'vertical'] as const satisfies Props['orientation'][];
+  /**
+   * The styles of the separator.
+   */
+  export const styles = tv({
+    base: ['shrink-0 bg-border'],
+    defaultVariants: {
+      orientation: 'horizontal',
+    },
+    variants: {
+      orientation: {
+        horizontal: ['my-4 h-[1px] w-full'],
+        vertical: ['mx-4 h-full w-[1px]'],
+      },
+    },
+  });
+  /**
+   * The default orientation of the separator.
+   */
+  export const defaultOrientation = styles.defaultVariants.orientation!;
+  /**
+   * The orientations of the separator.
+   */
+  export const orientations = Object.keys(styles.variants.orientation) as [
+    Orientation,
+    ...Orientation[],
+  ];
 </script>
 
 <script lang="ts">
@@ -33,11 +73,10 @@
 <SeparatorPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{cn(
-    'shrink-0 bg-border',
-    orientation === 'horizontal' ? 'my-4 h-[1px] w-full' : 'mx-4 h-full w-[1px]',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+    orientation,
+  })}"
   decorative="{decorative}"
   el="{el}"
   orientation="{orientation}"

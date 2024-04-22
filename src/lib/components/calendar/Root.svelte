@@ -2,13 +2,19 @@
   import type { DateValue } from '@internationalized/date';
   import { Calendar as CalendarPrimitive, type Month } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   import * as Calendar from './index.js';
 
+  /**
+   * The attributes of the calendar component.
+   */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
+  /**
+   * The Svelte 5 like events of the calendar component.
+   */
   export type Events<TMultiple extends boolean = false> = {
     /**
      * Callback to be called when a day is clicked.
@@ -17,15 +23,33 @@
      */
     onDayClick?: (day: { date: DateValue; month: Month<DateValue> }) => unknown;
   } & Pick<CalendarPrimitive.Props<TMultiple>, 'onPlaceholderChange' | 'onValueChange'>;
+  /**
+   * The props of the calendar component.
+   */
   export type Props<TMultiple extends boolean = false> = Omit<
     CalendarPrimitive.Props<TMultiple>,
     keyof Attributes | keyof Events<TMultiple>
   >;
+  /**
+   * The slots of the calendar component.
+   */
   export type Slots<TMultiple extends boolean = false> = ComponentSlots<
     CalendarPrimitive.Root<TMultiple>
   >;
 
+  /**
+   * The styles of the calendar.
+   */
+  export const styles = tv({
+    base: ['p-3'],
+  });
+  /**
+   * The week starts on values.
+   */
   export const weekStartsOn = [0, 1, 2, 3, 4, 5, 6] as const satisfies Props['weekStartsOn'][];
+  /**
+   * The weekday format values.
+   */
   export const weekdayFormats = [
     'long',
     'narrow',
@@ -75,7 +99,9 @@
   {...attributes}
   asChild="{asChild}"
   calendarLabel="{calendarLabel}"
-  class="{cn('p-3', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   disabled="{disabled}"
   el="{el}"
   fixedWeeks="{fixedWeeks}"

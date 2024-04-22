@@ -2,15 +2,39 @@
   import { Calendar as CalendarPrimitive } from 'bits-ui';
   import ChevronRightIcon from 'lucide-svelte/icons/chevron-right';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { variantFactory } from '$lib/components/button/index.js';
-  import { cn } from '$lib/utils/cn.js';
+  import { styles as buttonStyles } from '$lib/components/button/index.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the next button component.
+   */
   export type Attributes = SvelteHTMLElements['button'];
+  /**
+   * The Svelte 5 like events of the next button component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the next button component.
+   */
   export type Props = Omit<CalendarPrimitive.NextButtonProps, keyof Attributes>;
+  /**
+   * The slots of the next button component.
+   */
   export type Slots = ComponentSlots<CalendarPrimitive.NextButton>;
+
+  /**
+   * The styles of the next button.
+   */
+  export const styles = tv({
+    base: [
+      buttonStyles({ variant: 'outline' }),
+
+      'h-7 w-7 bg-transparent p-0 opacity-50',
+      'hover:opacity-100',
+    ],
+  });
 </script>
 
 <script lang="ts">
@@ -30,12 +54,9 @@
 <CalendarPrimitive.NextButton
   {...attributes}
   asChild="{asChild}"
-  class="{cn(
-    variantFactory({ variant: 'outline' }),
-    'h-7 w-7 bg-transparent p-0 opacity-50',
-    'hover:opacity-100',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:builder
   on:click

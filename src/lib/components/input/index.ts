@@ -1,5 +1,6 @@
 export {
   default,
+  styles,
   variants,
   type Attributes,
   type Events,

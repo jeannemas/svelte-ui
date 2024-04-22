@@ -1,13 +1,22 @@
 <script context="module" lang="ts">
   import { Tooltip as TooltipPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the tooltip content.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the tooltip content.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the tooltip content.
+   */
   export type Props<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
@@ -16,11 +25,23 @@
     TooltipPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
     keyof Attributes
   >;
+  /**
+   * The slots of the tooltip content.
+   */
   export type Slots<
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
   > = ComponentSlots<TooltipPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+
+  /**
+   * The styles of the tooltip content.
+   */
+  export const styles = tv({
+    base: [
+      'z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md',
+    ],
+  });
 </script>
 
 <script
@@ -72,10 +93,9 @@
   alignOffset="{alignOffset}"
   asChild="{asChild}"
   avoidCollisions="{avoidCollisions}"
-  class="{cn(
-    'z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   collisionBoundary="{collisionBoundary}"
   collisionPadding="{collisionPadding}"
   el="{el}"

@@ -1,14 +1,33 @@
 <script context="module" lang="ts">
   import { Calendar as CalendarPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the heading component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the heading component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the heading component.
+   */
   export type Props = Omit<CalendarPrimitive.HeadingProps, keyof Attributes>;
+  /**
+   * The slots of the heading component.
+   */
   export type Slots = ComponentSlots<CalendarPrimitive.Heading>;
+
+  /**
+   * The styles of the heading.
+   */
+  export const styles = tv({
+    base: ['text-sm font-medium'],
+  });
 </script>
 
 <script lang="ts">
@@ -28,7 +47,9 @@
 <CalendarPrimitive.Heading
   {...attributes}
   asChild="{asChild}"
-  class="{cn('text-sm font-medium', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:builder
   let:headingValue

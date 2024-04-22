@@ -1,14 +1,36 @@
 <script context="module" lang="ts">
   import { Label as LabelPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the label component.
+   */
   export type Attributes = SvelteHTMLElements['label'];
+  /**
+   * The Svelte 5 like events of the label component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the label component.
+   */
   export type Props = Omit<LabelPrimitive.Props, keyof Attributes>;
+  /**
+   * The slots of the label component.
+   */
   export type Slots = ComponentSlots<LabelPrimitive.Root>;
+
+  /**
+   * The styles of the label.
+   */
+  export const styles = tv({
+    base: [
+      'text-sm font-medium leading-none',
+      'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+    ],
+  });
 </script>
 
 <script lang="ts">
@@ -28,11 +50,9 @@
 <LabelPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{cn(
-    'text-sm font-medium leading-none',
-    'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:builder
   on:mousedown

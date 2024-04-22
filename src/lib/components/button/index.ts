@@ -3,7 +3,7 @@ export {
   defaultSize,
   defaultVariant,
   sizes,
-  variantFactory,
+  styles,
   variants,
   type Attributes,
   type Events,

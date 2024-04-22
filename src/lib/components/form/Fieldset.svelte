@@ -2,21 +2,40 @@
   import { Fieldset, type FieldsetProps } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import type { FormPath } from 'sveltekit-superforms';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the fieldset component.
+   */
   export type Attributes = Omit<SvelteHTMLElements['fieldset'], 'form'>;
+  /**
+   * The Svelte 5 like events of the fieldset component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the fieldset component.
+   */
   export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
     FieldsetProps<T, U>,
     keyof Attributes
   > & {
     name: U;
   };
+  /**
+   * The slots of the fieldset component.
+   */
   export type Slots<T extends Record<string, unknown>, U extends FormPath<T>> = ComponentSlots<
     Fieldset<T, U>
   >;
+
+  /**
+   * The styles of the fieldset.
+   */
+  export const styles = tv({
+    base: ['space-y-2'],
+  });
 </script>
 
 <script generics="T extends Record<string, unknown>, U extends FormPath<T>" lang="ts">
@@ -40,7 +59,9 @@
 <Fieldset
   {...attributes}
   asChild="{asChild}"
-  class="{cn('space-y-2', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   form="{form}"
   name="{name}"

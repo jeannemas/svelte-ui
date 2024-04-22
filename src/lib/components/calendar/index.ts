@@ -1,5 +1,6 @@
 export {
   default as Cell,
+  styles as cellStyles,
   type Attributes as CellAttributes,
   type Events as CellEvents,
   type Props as CellProps,
@@ -7,6 +8,7 @@ export {
 } from './Cell.svelte';
 export {
   default as Day,
+  styles as dayStyles,
   type Attributes as DayAttributes,
   type Events as DayEvents,
   type Props as DayProps,
@@ -14,6 +16,7 @@ export {
 } from './Day.svelte';
 export {
   default as Grid,
+  styles as gridStyles,
   type Attributes as GridAttributes,
   type Events as GridEvents,
   type Props as GridProps,
@@ -21,6 +24,7 @@ export {
 } from './Grid.svelte';
 export {
   default as GridBody,
+  styles as gridBodyStyles,
   type Attributes as GridBodyAttributes,
   type Events as GridBodyEvents,
   type Props as GridBodyProps,
@@ -28,6 +32,7 @@ export {
 } from './GridBody.svelte';
 export {
   default as GridHead,
+  styles as gridHeadStyles,
   type Attributes as GridHeadAttributes,
   type Events as GridHeadEvents,
   type Props as GridHeadProps,
@@ -35,6 +40,7 @@ export {
 } from './GridHead.svelte';
 export {
   default as GridRow,
+  styles as gridRowStyles,
   type Attributes as GridRowAttributes,
   type Events as GridRowEvents,
   type Props as GridRowProps,
@@ -42,6 +48,7 @@ export {
 } from './GridRow.svelte';
 export {
   default as HeadCell,
+  styles as headCellStyles,
   type Attributes as HeadCellAttributes,
   type Events as HeadCellEvents,
   type Props as HeadCellProps,
@@ -49,6 +56,7 @@ export {
 } from './HeadCell.svelte';
 export {
   default as Header,
+  styles as headerStyles,
   type Attributes as HeaderAttributes,
   type Events as HeaderEvents,
   type Props as HeaderProps,
@@ -56,6 +64,7 @@ export {
 } from './Header.svelte';
 export {
   default as Heading,
+  styles as headingStyles,
   type Attributes as HeadingAttributes,
   type Events as HeadingEvents,
   type Props as HeadingProps,
@@ -63,6 +72,7 @@ export {
 } from './Heading.svelte';
 export {
   default as Months,
+  styles as monthsStyles,
   type Attributes as MonthsAttributes,
   type Events as MonthsEvents,
   type Props as MonthsProps,
@@ -70,6 +80,7 @@ export {
 } from './Months.svelte';
 export {
   default as NextButton,
+  styles as nextButtonStyles,
   type Attributes as NextButtonAttributes,
   type Events as NextButtonEvents,
   type Props as NextButtonProps,
@@ -77,6 +88,7 @@ export {
 } from './NextButton.svelte';
 export {
   default as PreviousButton,
+  styles as previousButtonStyles,
   type Attributes as PreviousButtonAttributes,
   type Events as PreviousButtonEvents,
   type Props as PreviousButtonProps,
@@ -84,6 +96,7 @@ export {
 } from './PreviousButton.svelte';
 export {
   default as Root,
+  styles as rootStyles,
   weekStartsOn,
   weekdayFormats,
   type Attributes as RootAttributes,

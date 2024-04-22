@@ -2,14 +2,37 @@
   import { Select as SelectPrimitive } from 'bits-ui';
   import CheckIcon from 'lucide-svelte/icons/check';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the select item component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the select item component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the select item component.
+   */
   export type Props = Omit<SelectPrimitive.ItemProps, keyof Attributes>;
+  /**
+   * The slots of the select item component.
+   */
   export type Slots = ComponentSlots<SelectPrimitive.Item>;
+
+  /**
+   * The styles of the select item.
+   */
+  export const styles = tv({
+    base: [
+      'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
+      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
+    ],
+  });
 </script>
 
 <script lang="ts">
@@ -32,12 +55,9 @@
 <SelectPrimitive.Item
   {...attributes}
   asChild="{asChild}"
-  class="{cn(
-    'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
-    'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-    'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   disabled="{disabled}"
   el="{el}"
   label="{label}"

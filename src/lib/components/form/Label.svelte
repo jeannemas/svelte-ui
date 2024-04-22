@@ -1,22 +1,41 @@
 <script context="module" lang="ts">
   import { getFormControl, type LabelAttrs } from 'formsnap';
   import type { Readable } from 'svelte/store';
+  import { tv } from 'tailwind-variants';
 
   import Label, {
     type Attributes as LabelAttributes,
     type Props as LabelProps,
   } from '$lib/components/label/index.js';
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the label component.
+   */
   export type Attributes = LabelAttributes;
+  /**
+   * The Svelte 5 like events of the label component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the label component.
+   */
   export type Props = LabelProps;
+  /**
+   * The slots of the label component.
+   */
   export type Slots = {
     default: ComponentSlots<Label>['default'] & {
       labelAttrs: Readable<LabelAttrs>;
     };
   };
+
+  /**
+   * The styles of the label.
+   */
+  export const styles = tv({
+    base: ['data-[fs-error]:text-destructive'],
+  });
 </script>
 
 <script lang="ts">
@@ -39,7 +58,9 @@
   {...attributes}
   {...$labelAttrs}
   asChild="{asChild}"
-  class="{cn('data-[fs-error]:text-destructive', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:builder
 >

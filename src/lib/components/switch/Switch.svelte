@@ -1,14 +1,40 @@
 <script context="module" lang="ts">
   import { Switch as SwitchPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the switch component.
+   */
   export type Attributes = Omit<SvelteHTMLElements['button'], 'disabled' | 'name' | 'value'>;
+  /**
+   * The Svelte 5 like events of the switch component.
+   */
   export type Events = Pick<SwitchPrimitive.Props, 'onCheckedChange'>;
+  /**
+   * The props of the switch component.
+   */
   export type Props = Omit<SwitchPrimitive.Props, keyof Attributes | keyof Events>;
+  /**
+   * The slots of the switch component.
+   */
   export type Slots = ComponentSlots<SwitchPrimitive.Root>;
+
+  /**
+   * The styles of the switch.
+   */
+  export const styles = tv({
+    base: [
+      'peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+      'disabled:cursor-not-allowed disabled:opacity-50',
+      'data-[state=checked]:bg-primary',
+      'data-[state=unchecked]:bg-input',
+    ],
+  });
 </script>
 
 <script lang="ts">
@@ -36,14 +62,9 @@
 <SwitchPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{cn(
-    'peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-    'data-[state=checked]:bg-primary',
-    'data-[state=unchecked]:bg-input',
-    attributes.class,
-  )}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   disabled="{disabled}"
   el="{el}"
   includeInput="{includeInput}"

@@ -1,5 +1,6 @@
 export {
   default as Content,
+  styles as contentStyles,
   type Attributes as ContentAttributes,
   type Events as ContentEvents,
   type Props as ContentProps,
@@ -7,6 +8,7 @@ export {
 } from './Content.svelte';
 export {
   default as Root,
+  styles as rootStyles,
   type Attributes as RootAttributes,
   type Events as RootEvents,
   type Props as RootProps,
@@ -14,6 +16,7 @@ export {
 } from './Root.svelte';
 export {
   default as Trigger,
+  styles as triggerStyles,
   type Attributes as TriggerAttributes,
   type Events as TriggerEvents,
   type Props as TriggerProps,

@@ -2,11 +2,19 @@
   import { Button as ButtonPrimitive } from 'bits-ui';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the button component.
+   */
   export type Attributes = ButtonPrimitive.Props;
+  /**
+   * The Svelte 5 like events of the button component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the button component.
+   */
   export type Props = {
     /**
      * The size of the button.
@@ -21,13 +29,25 @@
      */
     variant?: Variant;
   };
-  export type Size = NonNullable<VariantProps<typeof variantFactory>['size']>;
+  /**
+   * The size of the button component.
+   */
+  export type Size = NonNullable<VariantProps<typeof styles>['size']>;
+  /**
+   * The slots of the button component.
+   */
   export type Slots = ComponentSlots<ButtonPrimitive.Root>;
-  export type Variant = NonNullable<VariantProps<typeof variantFactory>['variant']>;
+  /**
+   * The variant of the button component.
+   */
+  export type Variant = NonNullable<VariantProps<typeof styles>['variant']>;
 
-  export const variantFactory = tv({
+  /**
+   * The styles of the button.
+   */
+  export const styles = tv({
     base: [
-      'inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-colors',
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
     ],
@@ -37,9 +57,9 @@
     },
     variants: {
       size: {
-        circular: 'h-10 w-10 rounded-full aspect-square',
+        circular: 'aspect-square h-10 w-10 rounded-full',
         default: 'h-10 px-4 py-2',
-        icon: 'h-10 w-10 aspect-square',
+        icon: 'aspect-square h-10 w-10',
         lg: 'h-11 rounded-md px-8',
         sm: 'h-9 rounded-md px-3',
       },
@@ -56,10 +76,22 @@
       },
     },
   });
-  export const sizes = Object.keys(variantFactory.variants.size) as [Size, ...Size[]];
-  export const variants = Object.keys(variantFactory.variants.variant) as [Variant, ...Variant[]];
-  export const defaultSize = variantFactory.defaultVariants.size!;
-  export const defaultVariant = variantFactory.defaultVariants.variant!;
+  /**
+   * The default size of the button.
+   */
+  export const defaultSize = styles.defaultVariants.size!;
+  /**
+   * The default variant of the button.
+   */
+  export const defaultVariant = styles.defaultVariants.variant!;
+  /**
+   * The sizes of the button.
+   */
+  export const sizes = Object.keys(styles.variants.size) as [Size, ...Size[]];
+  /**
+   * The variants of the button.
+   */
+  export const variants = Object.keys(styles.variants.variant) as [Variant, ...Variant[]];
 </script>
 
 <script lang="ts">
@@ -79,13 +111,11 @@
 <ButtonPrimitive.Root
   {...attributes}
   builders="{attributes.builders ?? []}"
-  class="{cn(
-    variantFactory({
-      class: attributes.class,
-      size,
-      variant,
-    }),
-  )}"
+  class="{styles({
+    class: attributes.class,
+    size,
+    variant,
+  })}"
   on:click
   on:keydown
 >

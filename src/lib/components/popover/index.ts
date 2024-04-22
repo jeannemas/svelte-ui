@@ -1,5 +1,6 @@
 export {
   default as Close,
+  styles as closeStyles,
   type Attributes as CloseAttributes,
   type Events as CloseEvents,
   type Props as CloseProps,
@@ -7,6 +8,7 @@ export {
 } from './Close.svelte';
 export {
   default as Content,
+  styles as contentStyles,
   type Attributes as ContentAttributes,
   type Events as ContentEvents,
   type Props as ContentProps,
@@ -21,6 +23,7 @@ export {
 } from './Root.svelte';
 export {
   default as Trigger,
+  styles as triggerStyles,
   type Attributes as TriggerAttributes,
   type Events as TriggerEvents,
   type Props as TriggerProps,

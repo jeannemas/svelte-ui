@@ -1,14 +1,33 @@
 <script context="module" lang="ts">
   import { Select as SelectPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentSlots } from '$lib/utils/types.js';
 
+  /**
+   * The attributes of the select label component.
+   */
   export type Attributes = SvelteHTMLElements['div'];
+  /**
+   * The Svelte 5 like events of the select label component.
+   */
   export type Events = Record<never, never>;
+  /**
+   * The props of the select label component.
+   */
   export type Props = Omit<SelectPrimitive.LabelProps, keyof Attributes>;
+  /**
+   * The slots of the select label component.
+   */
   export type Slots = ComponentSlots<SelectPrimitive.Label>;
+
+  /**
+   * The styles of the select label.
+   */
+  export const styles = tv({
+    base: ['py-1.5 pl-8 pr-2 text-sm font-semibold'],
+  });
 </script>
 
 <script lang="ts">
@@ -28,7 +47,9 @@
 <SelectPrimitive.Label
   {...attributes}
   asChild="{asChild}"
-  class="{cn('py-1.5 pl-8 pr-2 text-sm font-semibold', attributes.class)}"
+  class="{styles({
+    class: attributes.class,
+  })}"
   el="{el}"
   let:builder
   on:click
