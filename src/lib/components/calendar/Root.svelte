@@ -13,23 +13,19 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
   /**
-   * The Svelte 5 like events of the calendar component.
+   * The props of the calendar component.
    */
-  export type Events<TMultiple extends boolean = false> = {
+  export type Props<TMultiple extends boolean = false> = Omit<
+    CalendarPrimitive.Props<TMultiple>,
+    keyof Attributes
+  > & {
     /**
      * Callback to be called when a day is clicked.
      *
      * @param day The clicked day.
      */
     onDayClick?: (day: { date: DateValue; month: Month<DateValue> }) => unknown;
-  } & Pick<CalendarPrimitive.Props<TMultiple>, 'onPlaceholderChange' | 'onValueChange'>;
-  /**
-   * The props of the calendar component.
-   */
-  export type Props<TMultiple extends boolean = false> = Omit<
-    CalendarPrimitive.Props<TMultiple>,
-    keyof Attributes | keyof Events<TMultiple>
-  >;
+  };
   /**
    * The slots of the calendar component.
    */
@@ -59,9 +55,8 @@
 
 <script generics="TMultiple extends boolean = false" lang="ts">
   type $$Events = CalendarPrimitive.Events;
-  type $$Props = Attributes & TypedEvents & TypedProps;
+  type $$Props = Attributes & TypedProps;
   type $$Slots = TypedSlots;
-  type TypedEvents = Events<TMultiple>;
   type TypedProps = Props<TMultiple>;
   type TypedSlots = Slots<TMultiple>;
 
@@ -78,9 +73,9 @@
   export let minValue: TypedProps['minValue'] = undefined;
   export let multiple: TypedProps['multiple'] = undefined;
   export let numberOfMonths: TypedProps['numberOfMonths'] = undefined;
-  export let onDayClick: TypedEvents['onDayClick'] = undefined;
-  export let onPlaceholderChange: TypedEvents['onPlaceholderChange'] = undefined;
-  export let onValueChange: TypedEvents['onValueChange'] = undefined;
+  export let onDayClick: TypedProps['onDayClick'] = undefined;
+  export let onPlaceholderChange: TypedProps['onPlaceholderChange'] = undefined;
+  export let onValueChange: TypedProps['onValueChange'] = undefined;
   export let pagedNavigation: TypedProps['pagedNavigation'] = undefined;
   export let placeholder: TypedProps['placeholder'] = undefined;
   export let preventDeselect: TypedProps['preventDeselect'] = undefined;

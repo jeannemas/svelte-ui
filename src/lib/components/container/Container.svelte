@@ -7,10 +7,6 @@
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The Svelte 5 like events of the container component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the container component.
    */
   export type Props = {
@@ -56,7 +52,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let xAxis: Props['xAxis'] = undefined;

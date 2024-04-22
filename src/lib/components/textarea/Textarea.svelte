@@ -9,10 +9,6 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['textarea'], 'readonly' | 'value'>;
   /**
-   * The Svelte 5 like events of the textarea component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the textarea component.
    */
   export type Props = {
@@ -60,7 +56,7 @@
     mouseleave: ElementEvent<HTMLTextAreaElement, MouseEvent>;
     paste: ElementEvent<HTMLTextAreaElement, ClipboardEvent>;
   };
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   // Workaround for https://github.com/sveltejs/svelte/issues/9305

@@ -6,7 +6,6 @@ export {
   styles,
   variants,
   type Attributes,
-  type Events,
   type Props,
   type Size,
   type Slots,

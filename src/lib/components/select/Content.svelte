@@ -12,10 +12,6 @@
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The Svelte 5 like events of the select content component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the select content component.
    */
   export type Props<
@@ -54,7 +50,7 @@
   lang="ts"
 >
   type $$Events = SelectPrimitive.ContentEvents;
-  type $$Props = Attributes & Events & TypedProps;
+  type $$Props = Attributes & TypedProps;
   type $$Slots = TypedSlots;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
   type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;

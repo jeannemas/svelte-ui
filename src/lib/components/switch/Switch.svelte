@@ -11,13 +11,9 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['button'], 'disabled' | 'name' | 'value'>;
   /**
-   * The Svelte 5 like events of the switch component.
-   */
-  export type Events = Pick<SwitchPrimitive.Props, 'onCheckedChange'>;
-  /**
    * The props of the switch component.
    */
-  export type Props = Omit<SwitchPrimitive.Props, keyof Attributes | keyof Events>;
+  export type Props = Omit<SwitchPrimitive.Props, keyof Attributes>;
   /**
    * The slots of the switch component.
    */
@@ -39,7 +35,7 @@
 
 <script lang="ts">
   type $$Events = SwitchPrimitive.Events;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
@@ -49,7 +45,7 @@
   export let includeInput: Props['includeInput'] = undefined;
   export let inputAttrs: Props['inputAttrs'] = undefined;
   export let name: Props['name'] = undefined;
-  export let onCheckedChange: Events['onCheckedChange'] = undefined;
+  export let onCheckedChange: Props['onCheckedChange'] = undefined;
   export let required: Props['required'] = undefined;
   export let value: Props['value'] = undefined;
 

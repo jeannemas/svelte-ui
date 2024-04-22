@@ -8,10 +8,6 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['form'], 'method'>;
   /**
-   * The Svelte 5 like events of the form root component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the form root component.
    */
   export type Props = {
@@ -43,7 +39,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let debug: Props['debug'] = undefined;

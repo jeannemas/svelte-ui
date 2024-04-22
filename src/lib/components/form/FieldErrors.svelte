@@ -11,10 +11,6 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'id'>;
   /**
-   * The Svelte 5 like events of the FieldErrors component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the FieldErrors component.
    */
   export type Props = Omit<FieldErrorsProps, keyof Attributes> & {
@@ -35,7 +31,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

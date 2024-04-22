@@ -4,7 +4,6 @@ export {
   orientations,
   styles,
   type Attributes,
-  type Events,
   type Orientation,
   type Props,
   type Slots,

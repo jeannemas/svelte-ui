@@ -14,10 +14,6 @@
    */
   export type Attributes = LabelAttributes;
   /**
-   * The Svelte 5 like events of the label component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the label component.
    */
   export type Props = LabelProps;
@@ -40,7 +36,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

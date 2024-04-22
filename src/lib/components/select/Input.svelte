@@ -11,10 +11,6 @@
    */
   export type Attributes = SvelteHTMLElements['input'];
   /**
-   * The Svelte 5 like events of the select input component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the select input component.
    */
   export type Props = Omit<SelectPrimitive.InputProps, keyof Attributes>;
@@ -33,7 +29,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

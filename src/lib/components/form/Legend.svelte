@@ -10,10 +10,6 @@
    */
   export type Attributes = SvelteHTMLElements['legend'];
   /**
-   * The Svelte 5 like events of the legend component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the legend component.
    */
   export type Props = Omit<LegendProps, keyof Attributes>;
@@ -32,7 +28,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

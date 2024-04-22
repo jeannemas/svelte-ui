@@ -11,10 +11,6 @@
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The Svelte 5 like events of the day component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the day component.
    */
   export type Props = Omit<CalendarPrimitive.DayProps, keyof Attributes>;
@@ -49,7 +45,7 @@
 
 <script lang="ts">
   type $$Events = CalendarPrimitive.DayEvents;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

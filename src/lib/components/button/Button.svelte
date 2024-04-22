@@ -9,10 +9,6 @@
    */
   export type Attributes = ButtonPrimitive.Props;
   /**
-   * The Svelte 5 like events of the button component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the button component.
    */
   export type Props = {
@@ -96,7 +92,7 @@
 
 <script lang="ts">
   type $$Events = ButtonPrimitive.Events;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let size: Props['size'] = undefined;

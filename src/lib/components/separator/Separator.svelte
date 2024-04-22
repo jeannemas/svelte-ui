@@ -10,10 +10,6 @@
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The Svelte 5 like events of the separator component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The orientation of the separator component.
    */
   export type Orientation = NonNullable<VariantProps<typeof styles>['orientation']>;
@@ -56,7 +52,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

@@ -10,10 +10,6 @@
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The Svelte 5 like events of the popover close component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the popover close component.
    */
   export type Props = Omit<PopoverPrimitive.CloseProps, keyof Attributes>;
@@ -32,7 +28,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;

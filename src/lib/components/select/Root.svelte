@@ -8,19 +8,11 @@
    */
   export type Attributes = Record<never, never>;
   /**
-   * The Svelte 5 like events of the select root component.
-   */
-  export type Events<TItem, TMultiple extends boolean = false> = Pick<
-    SelectPrimitive.Props<TItem, TMultiple>,
-    'onOpenChange' | 'onOutsideClick' | 'onSelectedChange'
-  >;
-  /**
    * The props of the select root component.
    */
   export type Props<TItem, TMultiple extends boolean = false> = Omit<
     SelectPrimitive.Props<TItem, TMultiple>,
     | keyof Attributes
-    | keyof Events<TItem, TMultiple>
 
     // The following props are not supported in the root component
     | 'highlightOnHover'
@@ -37,9 +29,8 @@
 
 <script generics="TItem, TMultiple extends boolean = false" lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & TypedEvents & TypedProps;
+  type $$Props = Attributes & TypedProps;
   type $$Slots = TypedSlots;
-  type TypedEvents = Events<TItem, TMultiple>;
   type TypedProps = Props<TItem, TMultiple>;
   type TypedSlots = Slots<TItem, TMultiple>;
 
@@ -50,6 +41,9 @@
   export let loop: TypedProps['loop'] = undefined;
   export let multiple: TypedProps['multiple'] = undefined;
   export let name: TypedProps['name'] = undefined;
+  export let onOpenChange: TypedProps['onOpenChange'] = undefined;
+  export let onOutsideClick: TypedProps['onOutsideClick'] = undefined;
+  export let onSelectedChange: TypedProps['onSelectedChange'] = undefined;
   export let open: TypedProps['open'] = undefined;
   export let portal: TypedProps['portal'] = undefined;
   export let preventScroll: TypedProps['preventScroll'] = undefined;
@@ -71,6 +65,9 @@
   loop="{loop}"
   multiple="{multiple}"
   name="{name}"
+  onOpenChange="{onOpenChange}"
+  onOutsideClick="{onOutsideClick}"
+  onSelectedChange="{onSelectedChange}"
   portal="{portal}"
   preventScroll="{preventScroll}"
   required="{required}"

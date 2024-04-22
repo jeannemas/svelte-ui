@@ -10,13 +10,9 @@
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The Svelte 5 like events of the collapsible root component.
-   */
-  export type Events = Pick<CollapsiblePrimitive.Props, 'onOpenChange'>;
-  /**
    * The props of the collapsible root component.
    */
-  export type Props = Omit<CollapsiblePrimitive.Props, keyof Attributes | keyof Events>;
+  export type Props = Omit<CollapsiblePrimitive.Props, keyof Attributes>;
   /**
    * The slots of the collapsible root component.
    */
@@ -32,13 +28,14 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
   export let disabled: Props['disabled'] = undefined;
   export let el: Props['el'] = undefined;
   export let open: Props['open'] = undefined;
+  export let onOpenChange: Props['onOpenChange'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -54,7 +51,8 @@
   })}"
   disabled="{disabled}"
   el="{el}"
-  open="{open}"
+  onOpenChange="{onOpenChange}"
+  bind:open="{open}"
   let:builder
 >
   <slot builder="{builder}" />

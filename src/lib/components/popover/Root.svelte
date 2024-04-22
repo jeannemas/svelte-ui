@@ -8,13 +8,9 @@
    */
   export type Attributes = Record<never, never>;
   /**
-   * The Svelte 5 like events of the popover component.
-   */
-  export type Events = Pick<PopoverPrimitive.Props, 'onOpenChange' | 'onOutsideClick'>;
-  /**
    * The props of the popover component.
    */
-  export type Props = Omit<PopoverPrimitive.Props, keyof Events>;
+  export type Props = PopoverPrimitive.Props;
   /**
    * The slots of the popover component.
    */
@@ -23,15 +19,15 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let closeFocus: Props['closeFocus'] = undefined;
   export let closeOnEscape: Props['closeOnEscape'] = undefined;
   export let closeOnOutsideClick: Props['closeOnOutsideClick'] = undefined;
   export let disableFocusTrap: Props['disableFocusTrap'] = undefined;
-  export let onOpenChange: Events['onOpenChange'] = undefined;
-  export let onOutsideClick: Events['onOutsideClick'] = undefined;
+  export let onOpenChange: Props['onOpenChange'] = undefined;
+  export let onOutsideClick: Props['onOutsideClick'] = undefined;
   export let open: Props['open'] = undefined;
   export let openFocus: Props['openFocus'] = undefined;
   export let preventScroll: Props['preventScroll'] = undefined;

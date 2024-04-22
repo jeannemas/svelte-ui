@@ -8,10 +8,6 @@
    */
   export type Attributes = Record<never, never>;
   /**
-   * The Svelte 5 like events of the Control component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the Control component.
    */
   export type Props = ControlProps;
@@ -23,7 +19,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let id: Props['id'] = undefined;

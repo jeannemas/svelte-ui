@@ -11,10 +11,6 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['fieldset'], 'form'>;
   /**
-   * The Svelte 5 like events of the fieldset component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the fieldset component.
    */
   export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
@@ -40,7 +36,7 @@
 
 <script generics="T extends Record<string, unknown>, U extends FormPath<T>" lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & TypedProps;
+  type $$Props = Attributes & TypedProps;
   type $$Slots = TypedSlots;
   type TypedProps = Props<T, U>;
   type TypedSlots = Slots<T, U>;

@@ -3,7 +3,6 @@ export {
   styles,
   variants,
   type Attributes,
-  type Events,
   type Props,
   type Slots,
   type Variant,

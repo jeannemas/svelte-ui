@@ -8,13 +8,9 @@
    */
   export type Attributes = Record<never, never>;
   /**
-   * The Svelte 5 like events of the tooltip root.
-   */
-  export type Events = Pick<TooltipPrimitive.Props, 'onOpenChange'>;
-  /**
    * The props of the tooltip root.
    */
-  export type Props = Omit<TooltipPrimitive.Props, keyof Events>;
+  export type Props = TooltipPrimitive.Props;
   /**
    * The slots of the tooltip root.
    */
@@ -23,7 +19,7 @@
 
 <script lang="ts">
   type $$Events = Record<never, never>;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let closeDelay: Props['closeDelay'] = 0;
@@ -31,6 +27,7 @@
   export let closeOnPointerDown: Props['closeOnPointerDown'] = undefined;
   export let disableHoverableContent: Props['disableHoverableContent'] = undefined;
   export let group: Props['group'] = undefined;
+  export let onOpenChange: Props['onOpenChange'] = undefined;
   export let open: Props['open'] = undefined;
   export let openDelay: Props['openDelay'] = 0;
   export let portal: Props['portal'] = undefined;
@@ -47,6 +44,7 @@
   closeOnPointerDown="{closeOnPointerDown}"
   disableHoverableContent="{disableHoverableContent}"
   group="{group}"
+  onOpenChange="{onOpenChange}"
   openDelay="{openDelay}"
   portal="{portal}"
   bind:open="{open}"

@@ -12,10 +12,6 @@
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The Svelte 5 like events of the next button component.
-   */
-  export type Events = Record<never, never>;
-  /**
    * The props of the next button component.
    */
   export type Props = Omit<CalendarPrimitive.NextButtonProps, keyof Attributes>;
@@ -39,7 +35,7 @@
 
 <script lang="ts">
   type $$Events = CalendarPrimitive.NextButtonEvents;
-  type $$Props = Attributes & Events & Props;
+  type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
