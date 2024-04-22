@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.14.0
+
+### Minor Changes
+
+- 9d0a8df: Simplified exports by removing Events types
+
 ## 0.13.1
 
 ### Patch Changes
