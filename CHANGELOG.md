@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.15.0
+
+### Minor Changes
+
+- d30cf98: Added table components
+
 ## 0.14.0
 
 ### Minor Changes
