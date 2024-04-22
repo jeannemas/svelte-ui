@@ -91,6 +91,10 @@
       "types": "./dist/components/switch/index.d.ts",
       "svelte": "./dist/components/switch/index.js"
     },
+    "./components/table": {
+      "types": "./dist/components/table/index.d.ts",
+      "svelte": "./dist/components/table/index.js"
+    },
     "./components/textarea": {
       "types": "./dist/components/textarea/index.d.ts",
       "svelte": "./dist/components/textarea/index.js"
