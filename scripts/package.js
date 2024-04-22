@@ -9,7 +9,6 @@
 // @ts-check
 
 import { existsSync, readFileSync } from 'node:fs';
-// @ts-expect-error This module can only be referenced with ECMAScript imports/exports by turning on the 'allowSyntheticDefaultImports' flag and referencing its default export.
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { preprocess } from 'svelte/compiler';
@@ -59,7 +58,7 @@ await buildPackage({
  *
  * @param {Options} options
  */
-export async function buildPackage(options) {
+async function buildPackage(options) {
   // Prepare the validator
   const { analyse_code, validate } = createValidator(options);
 
@@ -67,7 +66,6 @@ export async function buildPackage(options) {
 
   validate();
 }
-
 /**
  * Generates a map to which we add the transformed code of Svelte files
  * early on when we first need to look at the file contents and can read
@@ -292,7 +290,7 @@ async function doBuild(options, analyse_code) {
  * @param {Record<string, string>} alias
  * @param {File[]} files
  */
-export async function emit_dts(input, output, cwd, alias, files) {
+async function emit_dts(input, output, cwd, alias, files) {
   const tmp = `${output}/__package_types_tmp__`;
 
   rimraf(tmp);
@@ -345,23 +343,15 @@ async function emitDts(config) {
   const program = ts.createProgram(filenames, options, host);
   const result = program.emit();
 
-  if (result.diagnostics.length === 0) {
-    console.info('Generated d.ts files successfully.');
+  if (result.emitSkipped) {
+    console.error('Failed to generate d.ts files');
 
-    return;
+    await saveEmitResult(result);
+
+    process.exit(1);
   }
 
-  for (const diagnostic of result.diagnostics) {
-    if (!diagnostic.file) {
-      continue;
-    }
-
-    console.error(
-      `File "${diagnostic.file.fileName}" had the following issue:\n`,
-      diagnostic.messageText,
-      '\n',
-    );
-  }
+  console.info('Generated d.ts files successfully.');
 }
 /**
  * @param {string} filePath
@@ -601,6 +591,26 @@ async function process_file(input, output, file, preprocessor, aliases, tsconfig
   }
 }
 /**
+ * Save the emit result.
+ *
+ * @param {import('typescript').EmitResult} result
+ */
+async function saveEmitResult(result) {
+  for (const diagnostic of result.diagnostics) {
+    if (!diagnostic.file) {
+      continue;
+    }
+
+    console.error(
+      `File "${diagnostic.file.fileName}" had the following issue:\n`,
+      diagnostic.messageText,
+      '\n',
+      diagnostic.file.text,
+      '\n',
+    );
+  }
+}
+/**
  * @param {string} filePath
  */
 function toRealSvelteFilepath(filePath) {
@@ -613,7 +623,7 @@ function toRealSvelteFilepath(filePath) {
  * @param {string} filename
  * @param {string} source
  */
-export async function transpile_ts(tsconfig, filename, source) {
+async function transpile_ts(tsconfig, filename, source) {
   const options = load_tsconfig(tsconfig, filename, ts);
   // transpileModule treats NodeNext as CommonJS because it doesn't read the package.json. Therefore we need to override it.
   // Also see https://github.com/microsoft/TypeScript/issues/53022 (the filename workaround doesn't work).
