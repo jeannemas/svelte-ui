@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.13.1
+
+### Patch Changes
+
+- 3514136: Extracted component styles
+
 ## 0.13.0
 
 ### Minor Changes
