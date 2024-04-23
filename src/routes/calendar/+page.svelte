@@ -158,7 +158,7 @@
       <Form.Label>Week starts on</Form.Label>
 
       <Select.Root
-        items="{Calendar.weekStartsOn.map((weekStartsOn) => ({
+        items="{Calendar.rootWeekStartsOn.map((weekStartsOn) => ({
           label: weekStartsOn.toString(),
           value: weekStartsOn,
         }))}"
@@ -180,7 +180,7 @@
         </Select.Trigger>
 
         <Select.Content>
-          {#each Calendar.weekStartsOn as weekStartsOn, index (index)}
+          {#each Calendar.rootWeekStartsOn as weekStartsOn, index (index)}
             <Select.Item value="{weekStartsOn}">
               {weekStartsOn}
             </Select.Item>
@@ -202,7 +202,7 @@
       <Form.Label>Weekday format</Form.Label>
 
       <Select.Root
-        items="{Calendar.weekdayFormats.map((weekdayFormat) => ({
+        items="{Calendar.rootWeekdayFormats.map((weekdayFormat) => ({
           label: weekdayFormat,
           value: weekdayFormat,
         }))}"
@@ -224,7 +224,7 @@
         </Select.Trigger>
 
         <Select.Content>
-          {#each Calendar.weekdayFormats as weekdayFormat, index (index)}
+          {#each Calendar.rootWeekdayFormats as weekdayFormat, index (index)}
             <Select.Item value="{weekdayFormat}">
               {weekdayFormat}
             </Select.Item>

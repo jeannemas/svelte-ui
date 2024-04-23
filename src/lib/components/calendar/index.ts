@@ -63,8 +63,11 @@ export {
 } from './Heading.svelte';
 export {
   default as Months,
+  breakpoints as monthsBreakpoints,
+  defaultBreakpoint as monthsDefaultBreakpoint,
   styles as monthsStyles,
   type Attributes as MonthsAttributes,
+  type Breakpoint as MonthsBreakpoint,
   type Props as MonthsProps,
   type Slots as MonthsSlots,
 } from './Months.svelte';
@@ -85,8 +88,8 @@ export {
 export {
   default as Root,
   styles as rootStyles,
-  weekStartsOn,
-  weekdayFormats,
+  weekStartsOn as rootWeekStartsOn,
+  weekdayFormats as rootWeekdayFormats,
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,

@@ -103,6 +103,10 @@
       "types": "./dist/components/tooltip/index.d.ts",
       "svelte": "./dist/components/tooltip/index.js"
     },
+    "./components/top-navigation": {
+      "types": "./dist/components/top-navigation/index.d.ts",
+      "svelte": "./dist/components/top-navigation/index.js"
+    },
     "./package.json": "./package.json",
     "./prettierrc": "./.prettierrc",
     "./transition/flyAndScale": {
