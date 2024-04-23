@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.16.1
+
+### Patch Changes
+
+- fb4b247: Added card component
+
 ## 0.16.0
 
 ### Minor Changes
