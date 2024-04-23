@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.16.0
+
+### Minor Changes
+
+- 99a2328: Added top-navigation component
+
 ## 0.15.0
 
 ### Minor Changes
