@@ -55,6 +55,10 @@
       "types": "./dist/components/calendar/index.d.ts",
       "svelte": "./dist/components/calendar/index.js"
     },
+    "./components/card": {
+      "types": "./dist/components/card/index.d.ts",
+      "svelte": "./dist/components/card/index.js"
+    },
     "./components/collapsible": {
       "types": "./dist/components/collapsible/index.d.ts",
       "svelte": "./dist/components/collapsible/index.js"
