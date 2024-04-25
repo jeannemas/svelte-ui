@@ -24,6 +24,10 @@ export type ElementEvent<TElement extends HTMLElement, TEvent extends Event> = T
   currentTarget: EventTarget & TElement;
 };
 /**
+ * The heading level.
+ */
+export type HeadingLevel = `h${1 | 2 | 3 | 4 | 5 | 6}`;
+/**
  * A transition function.
  */
 export type Transition = (node: Element, params?: unknown) => TransitionConfig;

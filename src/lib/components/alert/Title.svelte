@@ -7,16 +7,16 @@
   /**
    * The attributes of the title component.
    */
-  export type Attributes<THeadingLevel extends HeadingLevel = 'h3'> =
+  export type Attributes<THeadingLevel extends HeadingLevel = 'h5'> =
     SvelteHTMLElements[THeadingLevel];
   /**
    * The props of the title component.
    */
-  export type Props<THeadingLevel extends HeadingLevel = 'h3'> = {
+  export type Props<THeadingLevel extends HeadingLevel = 'h5'> = {
     /**
      * The heading level.
      */
-    tag?: THeadingLevel;
+    level?: THeadingLevel;
   };
   /**
    * The slots of the title component.
@@ -29,18 +29,18 @@
    * The styles of the title component.
    */
   export const styles = tv({
-    base: ['text-lg font-semibold leading-none tracking-tight'],
+    base: ['mb-1 font-medium leading-none tracking-tight'],
   });
 </script>
 
-<script generics="THeadingLevel extends HeadingLevel = 'h3'" lang="ts">
+<script generics="THeadingLevel extends HeadingLevel = 'h5'" lang="ts">
   type $$Events = Record<never, never>;
   type $$Props = TypedAttributes & TypedProps;
   type $$Slots = Slots;
   type TypedAttributes = Attributes<THeadingLevel>;
   type TypedProps = Props<THeadingLevel>;
 
-  export let tag: TypedProps['tag'] = 'h3' as TypedProps['tag'];
+  export let level: TypedProps['level'] = 'h5' as TypedProps['level'];
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -49,7 +49,7 @@
 </style> -->
 
 <svelte:element
-  this="{tag}"
+  this="{level}"
   {...attributes}
   class="{styles({
     class: attributes.class,
