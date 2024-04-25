@@ -47,6 +47,10 @@
     "vitest": "^1.2.0"
   },
   "exports": {
+    "./components/alert": {
+      "types": "./dist/components/alert/index.d.ts",
+      "svelte": "./dist/components/alert/index.js"
+    },
     "./components/button": {
       "types": "./dist/components/button/index.d.ts",
       "svelte": "./dist/components/button/index.js"
