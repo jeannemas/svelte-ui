@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.16.2
+
+### Patch Changes
+
+- 7208129: Added action component
+
 ## 0.16.1
 
 ### Patch Changes
