@@ -4,7 +4,7 @@ export {
   type Attributes as DescriptionAttributes,
   type Props as DescriptionProps,
   type Slots as DescriptionSlots,
-} from './Description.svelte';
+} from './AlertDescription.svelte';
 export {
   default as Root,
   defaultVariant,
@@ -14,11 +14,11 @@ export {
   type Props as RootProps,
   type Slots as RootSlots,
   type Variant,
-} from './Root.svelte';
+} from './AlertRoot.svelte';
 export {
   default as Title,
   styles as titleStyles,
   type Attributes as TitleAttributes,
   type Props as TitleProps,
   type Slots as TitleSlots,
-} from './Title.svelte';
+} from './AlertTitle.svelte';

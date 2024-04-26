@@ -4,17 +4,17 @@ export {
   type Attributes as ContentAttributes,
   type Props as ContentProps,
   type Slots as ContentSlots,
-} from './Content.svelte';
+} from './TooltipContent.svelte';
 export {
   default as Root,
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
-} from './Root.svelte';
+} from './TooltipRoot.svelte';
 export {
   default as Trigger,
   styles as triggerStyles,
   type Attributes as TriggerAttributes,
   type Props as TriggerProps,
   type Slots as TriggerSlots,
-} from './Trigger.svelte';
+} from './TooltipTrigger.svelte';

@@ -4,63 +4,63 @@ export {
   type Attributes as CellAttributes,
   type Props as CellProps,
   type Slots as CellSlots,
-} from './Cell.svelte';
+} from './CalendarCell.svelte';
 export {
   default as Day,
   styles as dayStyles,
   type Attributes as DayAttributes,
   type Props as DayProps,
   type Slots as DaySlots,
-} from './Day.svelte';
+} from './CalendarDay.svelte';
 export {
   default as Grid,
   styles as gridStyles,
   type Attributes as GridAttributes,
   type Props as GridProps,
   type Slots as GridSlots,
-} from './Grid.svelte';
+} from './CalendarGrid.svelte';
 export {
   default as GridBody,
   styles as gridBodyStyles,
   type Attributes as GridBodyAttributes,
   type Props as GridBodyProps,
   type Slots as GridBodySlots,
-} from './GridBody.svelte';
+} from './CalendarGridBody.svelte';
 export {
   default as GridHead,
   styles as gridHeadStyles,
   type Attributes as GridHeadAttributes,
   type Props as GridHeadProps,
   type Slots as GridHeadSlots,
-} from './GridHead.svelte';
+} from './CalendarGridHead.svelte';
 export {
   default as GridRow,
   styles as gridRowStyles,
   type Attributes as GridRowAttributes,
   type Props as GridRowProps,
   type Slots as GridRowSlots,
-} from './GridRow.svelte';
+} from './CalendarGridRow.svelte';
 export {
   default as HeadCell,
   styles as headCellStyles,
   type Attributes as HeadCellAttributes,
   type Props as HeadCellProps,
   type Slots as HeadCellSlots,
-} from './HeadCell.svelte';
+} from './CalendarHeadCell.svelte';
 export {
   default as Header,
   styles as headerStyles,
   type Attributes as HeaderAttributes,
   type Props as HeaderProps,
   type Slots as HeaderSlots,
-} from './Header.svelte';
+} from './CalendarHeader.svelte';
 export {
   default as Heading,
   styles as headingStyles,
   type Attributes as HeadingAttributes,
   type Props as HeadingProps,
   type Slots as HeadingSlots,
-} from './Heading.svelte';
+} from './CalendarHeading.svelte';
 export {
   default as Months,
   breakpoints as monthsBreakpoints,
@@ -70,21 +70,21 @@ export {
   type Breakpoint as MonthsBreakpoint,
   type Props as MonthsProps,
   type Slots as MonthsSlots,
-} from './Months.svelte';
+} from './CalendarMonths.svelte';
 export {
   default as NextButton,
   styles as nextButtonStyles,
   type Attributes as NextButtonAttributes,
   type Props as NextButtonProps,
   type Slots as NextButtonSlots,
-} from './NextButton.svelte';
+} from './CalendarNextButton.svelte';
 export {
   default as PreviousButton,
   styles as previousButtonStyles,
   type Attributes as PreviousButtonAttributes,
   type Props as PreviousButtonProps,
   type Slots as PreviousButtonSlots,
-} from './PreviousButton.svelte';
+} from './CalendarPreviousButton.svelte';
 export {
   default as Root,
   styles as rootStyles,
@@ -93,4 +93,4 @@ export {
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
-} from './Root.svelte';
+} from './CalendarRoot.svelte';

@@ -4,53 +4,53 @@ export {
   type Attributes as BodyAttributes,
   type Props as BodyProps,
   type Slots as BodySlots,
-} from './Body.svelte';
+} from './TableBody.svelte';
 export {
   default as Caption,
   styles as captionStyles,
   type Attributes as CaptionAttributes,
   type Props as CaptionProps,
   type Slots as CaptionSlots,
-} from './Caption.svelte';
+} from './TableCaption.svelte';
 export {
   default as Cell,
   styles as cellStyles,
   type Attributes as CellAttributes,
   type Props as CellProps,
   type Slots as CellSlots,
-} from './Cell.svelte';
+} from './TableCell.svelte';
 export {
   default as Footer,
   styles as footerStyles,
   type Attributes as FooterAttributes,
   type Props as FooterProps,
   type Slots as FooterSlots,
-} from './Footer.svelte';
+} from './TableFooter.svelte';
 export {
   default as Head,
   styles as headStyles,
   type Attributes as HeadAttributes,
   type Props as HeadProps,
   type Slots as HeadSlots,
-} from './Head.svelte';
+} from './TableHead.svelte';
 export {
   default as Header,
   styles as headerStyles,
   type Attributes as HeaderAttributes,
   type Props as HeaderProps,
   type Slots as HeaderSlots,
-} from './Header.svelte';
+} from './TableHeader.svelte';
 export {
   default as Root,
   styles as rootStyles,
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
-} from './Root.svelte';
+} from './TableRoot.svelte';
 export {
   default as Row,
   styles as rowStyles,
   type Attributes as RowAttributes,
   type Props as RowProps,
   type Slots as RowSlots,
-} from './Row.svelte';
+} from './TableRow.svelte';
