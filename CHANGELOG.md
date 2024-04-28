@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.1
+
+### Patch Changes
+
+- 36ca26a: Fixed symlinks not working as expected
+
 ## 0.17.0
 
 ### Minor Changes
