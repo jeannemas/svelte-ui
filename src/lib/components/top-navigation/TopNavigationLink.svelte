@@ -2,14 +2,16 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   import { buttonStyles, type RootProps } from './index.js';
 
   /**
-   * The attributes for the link element.
+   * The attributes for the link.
    */
   export type Attributes = Omit<SvelteHTMLElements['a'], 'href'>;
   /**
-   * The props for the link element.
+   * The props for the link.
    */
   export type Props = Pick<RootProps, 'breakpoint'> & {
     /**
@@ -22,18 +24,18 @@
     isActive?: boolean;
   };
   /**
-   * The slots for the link element.
+   * The slots for the link.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the link element.
+   * The styles for the link.
    */
   export const styles = tv({
-    base: ['data-[active=true]:border-primary'],
-    extend: buttonStyles,
+    ...buttonStyles,
+    base: [...buttonStyles.base, 'data-[active=true]:border-primary'],
   });
 </script>
 

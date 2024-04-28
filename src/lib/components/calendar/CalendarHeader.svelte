@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the header component.
+   * The attributes of the header.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the header component.
+   * The props of the header.
    */
   export type Props = Omit<CalendarPrimitive.HeaderProps, keyof Attributes>;
   /**
-   * The slots of the header component.
+   * The slots of the header.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.Header>;
 

@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes for the table cell component.
+   * The attributes for the cell.
    */
   export type Attributes = SvelteHTMLElements['td'];
   /**
-   * The props for the table cell component.
+   * The props for the cell.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots for the table cell component.
+   * The slots for the cell.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the table cell component.
+   * The styles for the cell.
    */
   export const styles = tv({
     base: ['p-4 align-middle', '[&:has([role=checkbox])]:pr-0'],

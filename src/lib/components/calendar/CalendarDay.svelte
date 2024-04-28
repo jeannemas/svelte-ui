@@ -7,15 +7,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the day component.
+   * The attributes of the day.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the day component.
+   * The props of the day.
    */
   export type Props = Omit<CalendarPrimitive.DayProps, keyof Attributes>;
   /**
-   * The slots of the day component.
+   * The slots of the day.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.Day>;
 

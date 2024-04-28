@@ -7,15 +7,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the switch component.
+   * The attributes of the switch.
    */
   export type Attributes = Omit<SvelteHTMLElements['button'], 'disabled' | 'name' | 'value'>;
   /**
-   * The props of the switch component.
+   * The props of the switch.
    */
   export type Props = Omit<SwitchPrimitive.Props, keyof Attributes>;
   /**
-   * The slots of the switch component.
+   * The slots of the switch.
    */
   export type Slots = ComponentSlots<SwitchPrimitive.Root>;
 

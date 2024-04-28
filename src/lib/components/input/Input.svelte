@@ -5,11 +5,11 @@
   import type { ElementEvent } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the input component.
+   * The attributes of the input.
    */
   export type Attributes = Omit<SvelteHTMLElements['input'], 'checked' | 'value'>;
   /**
-   * The props of the input component.
+   * The props of the input.
    */
   export type Props =
     | {
@@ -33,11 +33,11 @@
         variant: 'text';
       };
   /**
-   * The slots of the input component.
+   * The slots of the input.
    */
   export type Slots = Record<never, never>;
   /**
-   * The variant of the input component.
+   * The variant of the input.
    */
   export type Variant = Props['variant'];
 

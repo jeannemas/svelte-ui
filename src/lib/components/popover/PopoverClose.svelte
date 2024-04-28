@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the popover close component.
+   * The attributes of the close.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the popover close component.
+   * The props of the close.
    */
   export type Props = Omit<PopoverPrimitive.CloseProps, keyof Attributes>;
   /**
-   * The slots of the popover close component.
+   * The slots of the close.
    */
   export type Slots = ComponentSlots<PopoverPrimitive.Close>;
 
   /**
-   * The styles of the popover close.
+   * The styles of the close.
    */
   export const styles = tv({
     base: [],

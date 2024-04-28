@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the popover trigger component.
+   * The attributes of the trigger.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the popover trigger component.
+   * The props of the trigger.
    */
   export type Props = Omit<PopoverPrimitive.TriggerProps, keyof Attributes>;
   /**
-   * The slots of the popover trigger component.
+   * The slots of the trigger.
    */
   export type Slots = ComponentSlots<PopoverPrimitive.Trigger>;
 
   /**
-   * The styles of the popover trigger.
+   * The styles of the trigger.
    */
   export const styles = tv({
     base: [],

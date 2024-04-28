@@ -6,19 +6,19 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the separator component.
+   * The attributes of the separator.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The orientation of the separator component.
+   * The orientation of the separator.
    */
   export type Orientation = NonNullable<VariantProps<typeof styles>['orientation']>;
   /**
-   * The props of the separator component.
+   * The props of the separator.
    */
   export type Props = Omit<SeparatorPrimitive.Props, keyof Attributes>;
   /**
-   * The slots of the separator component.
+   * The slots of the separator.
    */
   export type Slots = ComponentSlots<SeparatorPrimitive.Root>;
 

@@ -7,20 +7,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select input component.
+   * The attributes of the input.
    */
   export type Attributes = SvelteHTMLElements['input'];
   /**
-   * The props of the select input component.
+   * The props of the input.
    */
   export type Props = Omit<SelectPrimitive.InputProps, keyof Attributes>;
   /**
-   * The slots of the select input component.
+   * The slots of the input.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Input>;
 
   /**
-   * The styles of the select input.
+   * The styles of the input.
    */
   export const styles = tv({
     base: [],

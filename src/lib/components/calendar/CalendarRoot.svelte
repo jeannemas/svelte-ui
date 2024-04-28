@@ -9,11 +9,11 @@
   import * as Calendar from './index.js';
 
   /**
-   * The attributes of the calendar component.
+   * The attributes of the calendar.
    */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
   /**
-   * The props of the calendar component.
+   * The props of the calendar.
    */
   export type Props<TMultiple extends boolean = false> = Omit<
     CalendarPrimitive.Props<TMultiple>,
@@ -27,7 +27,7 @@
     onDayClick?: (day: { date: DateValue; month: Month<DateValue> }) => unknown;
   };
   /**
-   * The slots of the calendar component.
+   * The slots of the calendar.
    */
   export type Slots<TMultiple extends boolean = false> = ComponentSlots<
     CalendarPrimitive.Root<TMultiple>

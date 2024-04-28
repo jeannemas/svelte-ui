@@ -7,22 +7,22 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the FieldErrors component.
+   * The attributes of the field errors.
    */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'id'>;
   /**
-   * The props of the FieldErrors component.
+   * The props of the field errors.
    */
   export type Props = Omit<FieldErrorsProps, keyof Attributes> & {
     errorClasses?: string | null;
   };
   /**
-   * The slots of the FieldErrors component.
+   * The slots of the field errors.
    */
   export type Slots = ComponentSlots<FieldErrors>;
 
   /**
-   * The styles of the FieldErrors.
+   * The styles of the field errors.
    */
   export const styles = tv({
     base: ['text-sm font-medium text-destructive'],

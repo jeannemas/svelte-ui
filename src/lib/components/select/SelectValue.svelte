@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select value component.
+   * The attributes of the value.
    */
   export type Attributes = Omit<SvelteHTMLElements['span'], 'placeholder'>;
   /**
-   * The props of the select value component.
+   * The props of the value.
    */
   export type Props = Omit<SelectPrimitive.ValueProps, keyof Attributes>;
   /**
-   * The slots of the select value component.
+   * The slots of the value.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Value>;
 
   /**
-   * The styles of the select value.
+   * The styles of the value.
    */
   export const styles = tv({
     base: [],

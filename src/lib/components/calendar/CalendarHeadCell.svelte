@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the head cell component.
+   * The attributes of the head cell.
    */
   export type Attributes = SvelteHTMLElements['th'];
   /**
-   * The props of the head cell component.
+   * The props of the head cell.
    */
   export type Props = Omit<CalendarPrimitive.HeadCellProps, keyof Attributes>;
   /**
-   * The slots of the head cell component.
+   * The slots of the head cell.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.HeadCell>;
 

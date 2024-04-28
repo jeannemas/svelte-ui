@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes for the table header component.
+   * The attributes for the header.
    */
   export type Attributes = SvelteHTMLElements['thead'];
   /**
-   * The props for the table header component.
+   * The props for the header.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots for the table header component.
+   * The slots for the header.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the table header component.
+   * The styles for the header.
    */
   export const styles = tv({
     base: ['[&_tr]:border-b'],

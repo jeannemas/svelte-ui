@@ -8,15 +8,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the previous button component.
+   * The attributes of the previous button.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the previous button component.
+   * The props of the previous button.
    */
   export type Props = Omit<CalendarPrimitive.PrevButtonProps, keyof Attributes>;
   /**
-   * The slots of the previous button component.
+   * The slots of the previous button.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.PrevButton>;
 

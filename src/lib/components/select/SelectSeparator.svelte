@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select separator component.
+   * The attributes of the separator.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the select separator component.
+   * The props of the separator.
    */
   export type Props = Omit<SelectPrimitive.SeparatorProps, keyof Attributes>;
   /**
-   * The slots of the select separator component.
+   * The slots of the separator.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Separator>;
 
   /**
-   * The styles of the select separator.
+   * The styles of the separator.
    */
   export const styles = tv({
     base: ['-mx-1 my-1 h-px bg-muted'],

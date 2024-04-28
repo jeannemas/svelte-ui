@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the legend component.
+   * The attributes of the legend.
    */
   export type Attributes = SvelteHTMLElements['legend'];
   /**
-   * The props of the legend component.
+   * The props of the legend.
    */
   export type Props = Omit<LegendProps, keyof Attributes>;
   /**
-   * The slots of the legend component.
+   * The slots of the legend.
    */
   export type Slots = ComponentSlots<Legend>;
 

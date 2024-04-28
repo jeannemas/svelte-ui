@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the cell component.
+   * The attributes of the cell.
    */
   export type Attributes = SvelteHTMLElements['td'];
   /**
-   * The props of the cell component.
+   * The props of the cell.
    */
   export type Props = Omit<CalendarPrimitive.CellProps, keyof Attributes>;
   /**
-   * The slots of the cell component.
+   * The slots of the cell.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.Cell>;
 

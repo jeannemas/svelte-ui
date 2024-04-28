@@ -7,11 +7,11 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the fieldset component.
+   * The attributes of the fieldset.
    */
   export type Attributes = Omit<SvelteHTMLElements['fieldset'], 'form'>;
   /**
-   * The props of the fieldset component.
+   * The props of the fieldset.
    */
   export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
     FieldsetProps<T, U>,
@@ -20,7 +20,7 @@
     name: U;
   };
   /**
-   * The slots of the fieldset component.
+   * The slots of the fieldset.
    */
   export type Slots<T extends Record<string, unknown>, U extends FormPath<T>> = ComponentSlots<
     Fieldset<T, U>

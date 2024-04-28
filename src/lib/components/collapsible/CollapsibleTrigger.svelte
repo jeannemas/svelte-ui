@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the collapsible trigger component.
+   * The attributes of the trigger.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the collapsible trigger component.
+   * The props of the trigger.
    */
   export type Props = Omit<CollapsiblePrimitive.TriggerProps, keyof Attributes>;
   /**
-   * The slots of the collapsible trigger component.
+   * The slots of the trigger.
    */
   export type Slots = ComponentSlots<CollapsiblePrimitive.Trigger>;
 
   /**
-   * The styles of the collapsible trigger.
+   * The styles of the trigger.
    */
   export const styles = tv({
     base: [],

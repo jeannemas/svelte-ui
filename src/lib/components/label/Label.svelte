@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the label component.
+   * The attributes of the label.
    */
   export type Attributes = SvelteHTMLElements['label'];
   /**
-   * The props of the label component.
+   * The props of the label.
    */
   export type Props = Omit<LabelPrimitive.Props, keyof Attributes>;
   /**
-   * The slots of the label component.
+   * The slots of the label.
    */
   export type Slots = ComponentSlots<LabelPrimitive.Root>;
 

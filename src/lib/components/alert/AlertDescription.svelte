@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the description component.
+   * The attributes of the description.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the description component.
+   * The props of the description.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots of the description component.
+   * The slots of the description.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles of the description component.
+   * The styles of the description.
    */
   export const styles = tv({
     base: ['text-sm', '[&_p]:leading-relaxed'],

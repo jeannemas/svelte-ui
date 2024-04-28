@@ -4,23 +4,23 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select root component.
+   * The attributes of the root.
    */
   export type Attributes = Record<never, never>;
   /**
-   * The props of the select root component.
+   * The props of the root.
    */
   export type Props<TItem, TMultiple extends boolean = false> = Omit<
     SelectPrimitive.Props<TItem, TMultiple>,
     | keyof Attributes
 
-    // The following props are not supported in the root component
+    // The following props are not supported in the root
     | 'highlightOnHover'
     | 'scrollAlignment'
     | 'typeahead'
   >;
   /**
-   * The slots of the select root component.
+   * The slots of the root.
    */
   export type Slots<TItem, TMultiple extends boolean = false> = ComponentSlots<
     SelectPrimitive.Root<TItem, TMultiple>

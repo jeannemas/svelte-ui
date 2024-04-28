@@ -2,25 +2,27 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes for the table row component.
+   * The attributes for the row.
    */
   export type Attributes = SvelteHTMLElements['tr'] & {
     'data-state'?: unknown;
   };
   /**
-   * The props for the table row component.
+   * The props for the row.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots for the table row component.
+   * The slots for the row.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the table row component.
+   * The styles for the row.
    */
   export const styles = tv({
     base: ['border-b transition-colors', 'hover:bg-muted/50', 'data-[state=selected]:bg-muted'],

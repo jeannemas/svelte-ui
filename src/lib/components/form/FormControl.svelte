@@ -4,15 +4,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the Control component.
+   * The attributes of the control.
    */
   export type Attributes = Record<never, never>;
   /**
-   * The props of the Control component.
+   * The props of the control.
    */
   export type Props = ControlProps;
   /**
-   * The slots of the Control component.
+   * The slots of the control.
    */
   export type Slots = ComponentSlots<Control>;
 </script>

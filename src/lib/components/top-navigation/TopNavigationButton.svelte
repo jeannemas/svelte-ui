@@ -2,25 +2,27 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   import type { RootProps } from './index.js';
 
   /**
-   * The attributes for the button element.
+   * The attributes for the button.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props for the button element.
+   * The props for the button.
    */
   export type Props = Pick<RootProps, 'breakpoint'>;
   /**
-   * The slots for the button element.
+   * The slots for the button.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the button element.
+   * The styles for the button.
    */
   export const styles = tv({
     base: [

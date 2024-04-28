@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select label component.
+   * The attributes of the label.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the select label component.
+   * The props of the label.
    */
   export type Props = Omit<SelectPrimitive.LabelProps, keyof Attributes>;
   /**
-   * The slots of the select label component.
+   * The slots of the label.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Label>;
 
   /**
-   * The styles of the select label.
+   * The styles of the label.
    */
   export const styles = tv({
     base: ['py-1.5 pl-8 pr-2 text-sm font-semibold'],

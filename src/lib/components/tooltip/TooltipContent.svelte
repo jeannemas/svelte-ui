@@ -7,11 +7,11 @@
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the tooltip content.
+   * The attributes of the content.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the tooltip content.
+   * The props of the content.
    */
   export type Props<
     TTransition extends Transition = Transition,
@@ -22,7 +22,7 @@
     keyof Attributes
   >;
   /**
-   * The slots of the tooltip content.
+   * The slots of the content.
    */
   export type Slots<
     TTransition extends Transition = Transition,
@@ -31,7 +31,7 @@
   > = ComponentSlots<TooltipPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
-   * The styles of the tooltip content.
+   * The styles of the content.
    */
   export const styles = tv({
     base: [

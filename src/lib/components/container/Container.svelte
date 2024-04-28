@@ -2,12 +2,14 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the container component.
+   * The attributes of the container.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the container component.
+   * The props of the container.
    */
   export type Props = {
     /**
@@ -24,10 +26,10 @@
     yAxis?: boolean;
   };
   /**
-   * The slots of the container component.
+   * The slots of the container.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**

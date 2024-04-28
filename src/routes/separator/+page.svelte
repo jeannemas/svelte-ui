@@ -71,7 +71,7 @@
 <Separator />
 
 <div
-  class="flex h-5 items-center text-sm"
+  class="flex h-5 items-center justify-evenly text-sm"
   class:flex-col="{$superFormData.orientation === 'horizontal'}"
   class:flex-row="{$superFormData.orientation === 'vertical'}"
 >

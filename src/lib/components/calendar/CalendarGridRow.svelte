@@ -6,15 +6,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the grid row component.
+   * The attributes of the grid row.
    */
   export type Attributes = SvelteHTMLElements['tr'];
   /**
-   * The props of the grid row component.
+   * The props of the grid row.
    */
   export type Props = Omit<CalendarPrimitive.GridRowProps, keyof Attributes>;
   /**
-   * The slots of the grid row component.
+   * The slots of the grid row.
    */
   export type Slots = ComponentSlots<CalendarPrimitive.GridRow>;
 

@@ -2,12 +2,14 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the root component.
+   * The attributes of the root.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the root component.
+   * The props of the root.
    */
   export type Props = {
     /**
@@ -18,18 +20,18 @@
     variant?: Variant;
   };
   /**
-   * The slots of the root component.
+   * The slots of the root.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
   /**
-   * The variant of the root component.
+   * The variant of the root.
    */
   export type Variant = NonNullable<VariantProps<typeof styles>['variant']>;
 
   /**
-   * The styles of the root component.
+   * The styles of the root.
    */
   export const styles = tv({
     base: [

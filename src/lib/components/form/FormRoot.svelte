@@ -3,12 +3,14 @@
   import SuperDebug, { type SuperForm } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the form root component.
+   * The attributes of the root.
    */
   export type Attributes = Omit<SvelteHTMLElements['form'], 'method'>;
   /**
-   * The props of the form root component.
+   * The props of the root.
    */
   export type Props = {
     /**
@@ -23,14 +25,14 @@
     superForm: Pick<SuperForm<Record<string, unknown>>, 'enhance' | 'form'>;
   };
   /**
-   * The slots of the form root component.
+   * The slots of the root.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles of the form root.
+   * The styles of the root.
    */
   export const styles = tv({
     base: [],

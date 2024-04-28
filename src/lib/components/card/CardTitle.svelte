@@ -2,15 +2,15 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { HeadingLevel } from '$lib/utils/types.js';
+  import type { HeadingLevel, Slot } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the title component.
+   * The attributes of the title.
    */
   export type Attributes<THeadingLevel extends HeadingLevel = 'h3'> =
     SvelteHTMLElements[THeadingLevel];
   /**
-   * The props of the title component.
+   * The props of the title.
    */
   export type Props<THeadingLevel extends HeadingLevel = 'h3'> = {
     /**
@@ -19,14 +19,14 @@
     tag?: THeadingLevel;
   };
   /**
-   * The slots of the title component.
+   * The slots of the title.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles of the title component.
+   * The styles of the title.
    */
   export const styles = tv({
     base: ['text-lg font-semibold leading-none tracking-tight'],

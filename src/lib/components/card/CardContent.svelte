@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the content component.
+   * The attributes of the content.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the content component.
+   * The props of the content.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots of the content component.
+   * The slots of the content.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles of the content component.
+   * The styles of the content.
    */
   export const styles = tv({
     base: ['p-6 pt-0'],

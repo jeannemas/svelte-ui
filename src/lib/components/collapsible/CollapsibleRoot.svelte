@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the collapsible root component.
+   * The attributes of the root.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the collapsible root component.
+   * The props of the root.
    */
   export type Props = Omit<CollapsiblePrimitive.Props, keyof Attributes>;
   /**
-   * The slots of the collapsible root component.
+   * The slots of the root.
    */
   export type Slots = ComponentSlots<CollapsiblePrimitive.Root>;
 
   /**
-   * The styles of the collapsible root.
+   * The styles of the root.
    */
   export const styles = tv({
     base: [],

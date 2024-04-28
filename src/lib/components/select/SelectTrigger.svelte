@@ -7,20 +7,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select trigger component.
+   * The attributes of the trigger.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the select trigger component.
+   * The props of the trigger.
    */
   export type Props = Omit<SelectPrimitive.TriggerProps, keyof Attributes>;
   /**
-   * The slots of the select trigger component.
+   * The slots of the trigger.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Trigger>;
 
   /**
-   * The styles of the select trigger.
+   * The styles of the trigger.
    */
   export const styles = tv({
     base: [

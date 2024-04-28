@@ -8,11 +8,11 @@
   import type { ComponentSlots, Transition } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select content component.
+   * The attributes of the content.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the select content component.
+   * The props of the content.
    */
   export type Props<
     TTransition extends Transition = Transition,
@@ -23,7 +23,7 @@
     keyof Attributes
   >;
   /**
-   * The slots of the select content component.
+   * The slots of the content.
    */
   export type Slots<
     TTransition extends Transition = Transition,
@@ -32,7 +32,7 @@
   > = ComponentSlots<SelectPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
-   * The styles of the select content.
+   * The styles of the content.
    */
   export const styles = tv({
     base: [

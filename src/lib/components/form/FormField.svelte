@@ -4,12 +4,14 @@
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the field component.
+   * The attributes of the field.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the field component.
+   * The props of the field.
    */
   export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
     FieldProps<T, U>,
@@ -18,12 +20,14 @@
     superForm: FieldProps<T, U>['form'];
   };
   /**
-   * The slots of the field component.
+   * The slots of the field.
    */
   export type Slots<T extends Record<string, unknown>, U extends FormPath<T>> = {
-    default: Omit<FieldSlotProps<T, U>, 'value'> & {
-      value: unknown;
-    };
+    default: Slot<
+      Omit<FieldSlotProps<T, U>, 'value'> & {
+        value: unknown;
+      }
+    >;
   };
 
   /**

@@ -7,23 +7,25 @@
     type Attributes as LabelAttributes,
     type Props as LabelProps,
   } from '$lib/components/label/index.js';
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Slot } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the label component.
+   * The attributes of the label.
    */
   export type Attributes = LabelAttributes;
   /**
-   * The props of the label component.
+   * The props of the label.
    */
   export type Props = LabelProps;
   /**
-   * The slots of the label component.
+   * The slots of the label.
    */
   export type Slots = {
-    default: ComponentSlots<Label>['default'] & {
-      labelAttrs: Readable<LabelAttrs>;
-    };
+    default: Slot<
+      ComponentSlots<Label>['default'] & {
+        labelAttrs: Readable<LabelAttrs>;
+      }
+    >;
   };
 
   /**

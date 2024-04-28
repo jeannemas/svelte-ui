@@ -5,11 +5,11 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the button component.
+   * The attributes of the button.
    */
   export type Attributes = ButtonPrimitive.Props;
   /**
-   * The props of the button component.
+   * The props of the button.
    */
   export type Props = {
     /**
@@ -26,15 +26,15 @@
     variant?: Variant;
   };
   /**
-   * The size of the button component.
+   * The size of the button.
    */
   export type Size = NonNullable<VariantProps<typeof styles>['size']>;
   /**
-   * The slots of the button component.
+   * The slots of the button.
    */
   export type Slots = ComponentSlots<ButtonPrimitive.Root>;
   /**
-   * The variant of the button component.
+   * The variant of the button.
    */
   export type Variant = NonNullable<VariantProps<typeof styles>['variant']>;
 

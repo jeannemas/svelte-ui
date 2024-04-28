@@ -5,11 +5,11 @@
   import type { ElementEvent } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the textarea component.
+   * The attributes of the textarea.
    */
   export type Attributes = Omit<SvelteHTMLElements['textarea'], 'readonly' | 'value'>;
   /**
-   * The props of the textarea component.
+   * The props of the textarea.
    */
   export type Props = {
     /**
@@ -24,7 +24,7 @@
     value?: Exclude<SvelteHTMLElements['textarea']['value'], number | string[]>;
   };
   /**
-   * The slots of the textarea component.
+   * The slots of the textarea.
    */
   export type Slots = Record<never, never>;
 

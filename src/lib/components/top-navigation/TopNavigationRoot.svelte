@@ -7,21 +7,22 @@
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import Container from '$lib/components/container/index.js';
+  import type { Slot } from '$lib/utils/types.js';
 
   /**
-   * The attributes for the root element.
+   * The attributes for the root.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The breakpoint of the root element.
+   * The breakpoint of the root.
    */
   export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
   /**
-   * The props for the root element.
+   * The props for the root.
    */
   export type Props = {
     /**
-     * The breakpoint of the root element.
+     * The breakpoint of the root.
      *
      * @default 'lg'
      */
@@ -32,14 +33,14 @@
     open?: boolean;
   };
   /**
-   * The slots for the root element.
+   * The slots for the root.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the root element.
+   * The styles for the root.
    */
   export const styles = tv({
     base: ['bg-background text-foreground shadow'],
@@ -91,14 +92,14 @@
     },
   });
   /**
-   * The breakpoints of the root element.
+   * The breakpoints of the root.
    */
   export const breakpoints = Object.keys(styles.variants.breakpoint) as [
     Breakpoint,
     ...Breakpoint[],
   ];
   /**
-   * The default breakpoint of the root element.
+   * The default breakpoint of the root.
    */
   export const defaultBreakpoint = styles.defaultVariants.breakpoint!;
 </script>

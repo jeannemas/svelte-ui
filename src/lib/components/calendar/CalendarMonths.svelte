@@ -2,16 +2,18 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the months component.
+   * The attributes of the months.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The breakpoint of the months component.
+   * The breakpoint of the months.
    */
   export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
   /**
-   * The props of the months component.
+   * The props of the months.
    */
   export type Props = {
     /**
@@ -22,10 +24,10 @@
     breakpoint?: Breakpoint;
   };
   /**
-   * The slots of the months component.
+   * The slots of the months.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**

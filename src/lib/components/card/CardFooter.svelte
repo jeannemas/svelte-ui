@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes of the footer component.
+   * The attributes of the footer.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the footer component.
+   * The props of the footer.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots of the footer component.
+   * The slots of the footer.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles of the footer component.
+   * The styles of the footer.
    */
   export const styles = tv({
     base: ['flex items-center p-6 pt-0'],

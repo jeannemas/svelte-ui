@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the select group component.
+   * The attributes of the group.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the select group component.
+   * The props of the group.
    */
   export type Props = Omit<SelectPrimitive.GroupProps, keyof Attributes>;
   /**
-   * The slots of the select group component.
+   * The slots of the group.
    */
   export type Slots = ComponentSlots<SelectPrimitive.Group>;
 
   /**
-   * The styles of the select group.
+   * The styles of the group.
    */
   export const styles = tv({
     base: [],

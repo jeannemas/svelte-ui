@@ -4,15 +4,15 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the tooltip root.
+   * The attributes of the root.
    */
   export type Attributes = Record<never, never>;
   /**
-   * The props of the tooltip root.
+   * The props of the root.
    */
   export type Props = TooltipPrimitive.Props;
   /**
-   * The slots of the tooltip root.
+   * The slots of the root.
    */
   export type Slots = ComponentSlots<TooltipPrimitive.Root>;
 </script>

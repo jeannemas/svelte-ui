@@ -6,20 +6,20 @@
   import type { ComponentSlots } from '$lib/utils/types.js';
 
   /**
-   * The attributes of the tooltip trigger.
+   * The attributes of the trigger.
    */
   export type Attributes = SvelteHTMLElements['button'];
   /**
-   * The props of the tooltip trigger.
+   * The props of the trigger.
    */
   export type Props = Omit<TooltipPrimitive.TriggerProps, keyof Attributes>;
   /**
-   * The slots of the tooltip trigger.
+   * The slots of the trigger.
    */
   export type Slots = ComponentSlots<TooltipPrimitive.Trigger>;
 
   /**
-   * The styles of the tooltip trigger.
+   * The styles of the trigger.
    */
   export const styles = tv({
     base: [],

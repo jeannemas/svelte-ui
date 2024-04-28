@@ -2,23 +2,25 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   /**
-   * The attributes for the table component.
+   * The attributes for the root.
    */
   export type Attributes = SvelteHTMLElements['table'];
   /**
-   * The props for the table component.
+   * The props for the root.
    */
   export type Props = Record<never, never>;
   /**
-   * The slots for the table component.
+   * The slots for the root.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the table component.
+   * The styles for the root.
    */
   export const styles = tv({
     base: ['w-full caption-bottom text-sm'],

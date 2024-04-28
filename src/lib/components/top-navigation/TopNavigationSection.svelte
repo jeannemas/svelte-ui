@@ -2,25 +2,27 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import type { Slot } from '$lib/utils/types.js';
+
   import type { RootProps } from './index.js';
 
   /**
-   * The attributes for the section element.
+   * The attributes for the section.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props for the section element.
+   * The props for the section.
    */
   export type Props = Pick<RootProps, 'breakpoint'>;
   /**
-   * The slots for the section element.
+   * The slots for the section.
    */
   export type Slots = {
-    default: Record<never, never>;
+    default: Slot;
   };
 
   /**
-   * The styles for the section element.
+   * The styles for the section.
    */
   export const styles = tv({
     base: ['space-y-1', 'lg:flex lg:gap-x-2 lg:space-y-0'],
