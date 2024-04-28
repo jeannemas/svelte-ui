@@ -12,8 +12,8 @@ importers:
         specifier: ^3.5.2
         version: 3.5.2
       '@melt-ui/svelte':
-        specifier: ^0.77.0
-        version: 0.77.0(svelte@4.2.12)
+        specifier: ^0.76.2
+        version: 0.76.2(svelte@4.2.12)
       bits-ui:
         specifier: ^0.21.3
         version: 0.21.3(svelte@4.2.12)
@@ -433,11 +433,6 @@ packages:
 
   '@melt-ui/svelte@0.76.2':
     resolution: {integrity: sha512-7SbOa11tXUS95T3fReL+dwDs5FyJtCEqrqG3inRziDws346SYLsxOQ6HmX+4BkIsQh1R8U3XNa+EMmdMt38lMA==}
-    peerDependencies:
-      svelte: '>=3 <5'
-
-  '@melt-ui/svelte@0.77.0':
-    resolution: {integrity: sha512-/Ttn+UkfNK+kM7LgnE7x/w6rrtaTApRQ/zQ4xIYi17sYlEpak2lNmacke2DfJ1Uj8rpF6OvUEjZCrMl3QWP2nQ==}
     peerDependencies:
       svelte: '>=3 <5'
 
@@ -3156,16 +3151,6 @@ snapshots:
       read-yaml-file: 1.1.0
 
   '@melt-ui/svelte@0.76.2(svelte@4.2.12)':
-    dependencies:
-      '@floating-ui/core': 1.6.0
-      '@floating-ui/dom': 1.6.3
-      '@internationalized/date': 3.5.2
-      dequal: 2.0.3
-      focus-trap: 7.5.4
-      nanoid: 5.0.7
-      svelte: 4.2.12
-
-  '@melt-ui/svelte@0.77.0(svelte@4.2.12)':
     dependencies:
       '@floating-ui/core': 1.6.0
       '@floating-ui/dom': 1.6.3

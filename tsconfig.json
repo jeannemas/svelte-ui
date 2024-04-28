@@ -6,7 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "preserveSymlinks": true,
+    // "preserveSymlinks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

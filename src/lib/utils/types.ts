@@ -1,3 +1,4 @@
+import '@melt-ui/svelte';
 import type { SvelteComponent } from 'svelte';
 import type { TransitionConfig } from 'svelte/transition';
 
