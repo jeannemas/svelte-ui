@@ -1,5 +1,15 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.0
+
+### Minor Changes
+
+- 880e490: Added alert-dialog component
+
+### Patch Changes
+
+- 97bbc4a: Renamed internal svelte files to improve debug experience
+
 ## 0.16.2
 
 ### Patch Changes
