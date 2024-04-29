@@ -56,6 +56,10 @@
       "types": "./dist/components/alert-dialog/index.d.ts",
       "svelte": "./dist/components/alert-dialog/index.js"
     },
+    "./components/breadcrumb": {
+      "types": "./dist/components/breadcrumb/index.d.ts",
+      "svelte": "./dist/components/breadcrumb/index.js"
+    },
     "./components/button": {
       "types": "./dist/components/button/index.d.ts",
       "svelte": "./dist/components/button/index.js"

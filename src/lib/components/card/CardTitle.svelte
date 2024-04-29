@@ -42,7 +42,7 @@
 
   export let tag: TypedProps['tag'] = 'h3' as TypedProps['tag'];
 
-  $: attributes = $$restProps as Attributes;
+  $: attributes = $$restProps as TypedAttributes;
 </script>
 
 <!-- <style lang="postcss">

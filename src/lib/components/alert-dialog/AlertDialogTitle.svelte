@@ -37,7 +37,7 @@
   export let el: Props['el'] = undefined;
   export let level: Props['level'] = 'h3' as Props['level'];
 
-  $: attributes = $$restProps as Attributes;
+  $: attributes = $$restProps as TypedAttributes;
 </script>
 
 <!-- <style lang="postcss">

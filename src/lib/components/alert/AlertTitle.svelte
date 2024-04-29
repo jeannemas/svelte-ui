@@ -42,7 +42,7 @@
 
   export let level: TypedProps['level'] = 'h5' as TypedProps['level'];
 
-  $: attributes = $$restProps as Attributes;
+  $: attributes = $$restProps as TypedAttributes;
 </script>
 
 <!-- <style lang="postcss">
