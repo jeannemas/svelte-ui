@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.2
+
+### Patch Changes
+
+- 2b80783: Added breadcrumb component
+
 ## 0.17.1
 
 ### Patch Changes
