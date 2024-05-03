@@ -1,6 +1,8 @@
-import '@melt-ui/svelte';
+import '@melt-ui/svelte'; // We need to manually import MeltUI to prevent package resolution issues.
 import type { SvelteComponent } from 'svelte';
 import type { TransitionConfig } from 'svelte/transition';
+
+export type { ComponentEvents, ComponentProps } from 'svelte';
 
 /**
  * Extracts the slots of a component.
@@ -21,9 +23,13 @@ export type ElementEvent<TElement extends HTMLElement, TEvent extends Event> = T
   currentTarget: EventTarget & TElement;
 };
 /**
- * Represents an empty slot.
+ * Represents empty events.
  */
-export type EmptySlot = Record<never, never>;
+export type EmptyEvents = EmptyObject;
+/**
+ * Represents an empty object.
+ */
+export type EmptyObject = Record<never, never>;
 /**
  * The heading level.
  */
@@ -31,9 +37,9 @@ export type HeadingLevel = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 /**
  * Represents a slot.
  *
- * @default {EmptySlot}
+ * @default {EmptyObject}
  */
-export type Slot<TSlot extends Record<string, unknown> = EmptySlot> = TSlot;
+export type Slot<TSlot extends Record<string, unknown> = EmptyObject> = TSlot;
 /**
  * A transition function.
  */
