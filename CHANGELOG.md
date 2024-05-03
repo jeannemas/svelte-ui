@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.3
+
+### Patch Changes
+
+- 2e9568e: Added tabs component
+
 ## 0.17.2
 
 ### Patch Changes
