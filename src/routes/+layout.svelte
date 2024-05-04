@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import { ModeWatcher } from 'mode-watcher';
   import { derived } from 'svelte/store';
 
   import { afterNavigate } from '$app/navigation';
@@ -39,6 +40,9 @@
     SvelteUI | {$title}
   </title>
 </svelte:head>
+
+<!-- TODO we currently only default to light mode -->
+<ModeWatcher defaultMode="light" track="{false}" />
 
 <div class="grid grid-cols-1 lg:min-h-screen lg:grid-cols-[auto_1fr]">
   <aside class="hidden border-r border-border p-2 lg:block">

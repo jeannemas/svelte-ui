@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import { Tooltip as TooltipPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the root.
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

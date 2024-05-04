@@ -4,7 +4,7 @@
   import { tv } from 'tailwind-variants';
 
   import { castAsAny } from '$lib/utils/internal.js';
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the input.
@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

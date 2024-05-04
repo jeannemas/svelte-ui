@@ -4,7 +4,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   import * as Calendar from './index.js';
 
@@ -54,11 +54,10 @@
 </script>
 
 <script generics="TMultiple extends boolean = false" lang="ts">
-  type $$Events = CalendarPrimitive.Events;
+  type $$Events = Events<CalendarPrimitive.Events>;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<TMultiple>;
   type TypedProps = Props<TMultiple>;
-  type TypedSlots = Slots<TMultiple>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let calendarLabel: TypedProps['calendarLabel'] = undefined;

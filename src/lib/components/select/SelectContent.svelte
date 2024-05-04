@@ -5,7 +5,7 @@
   import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import type { ComponentSlots, Transition } from '$lib/utils/types.js';
+  import type { ComponentSlots, ElementEvent, Events, Transition } from '$lib/utils/types.js';
 
   /**
    * The attributes of the content.
@@ -49,11 +49,14 @@
   "
   lang="ts"
 >
-  type $$Events = SelectPrimitive.ContentEvents;
+  type $$Events = Events<
+    Omit<SelectPrimitive.ContentEvents, 'keydown'> & {
+      keydown: ElementEvent<HTMLDivElement, KeyboardEvent>; // TODO change once bits-ui is updated
+    }
+  >;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;
 
   export let align: TypedProps['align'] = undefined;
   export let alignOffset: TypedProps['alignOffset'] = undefined;

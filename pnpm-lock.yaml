@@ -26,6 +26,12 @@ importers:
       lucide-svelte:
         specifier: ^0.368.0
         version: 0.368.0(svelte@4.2.12)
+      mode-watcher:
+        specifier: ^0.3.0
+        version: 0.3.0(svelte@4.2.12)
+      svelte-sonner:
+        specifier: ^0.3.22
+        version: 0.3.22(svelte@4.2.12)
       sveltekit-superforms:
         specifier: ^2.12.5
         version: 2.12.5(@sveltejs/kit@2.5.5(@sveltejs/vite-plugin-svelte@3.0.2(svelte@4.2.12)(vite@5.2.8(@types/node@12.20.55)))(svelte@4.2.12)(vite@5.2.8(@types/node@12.20.55)))(@types/json-schema@7.0.15)(esbuild@0.20.2)(svelte@4.2.12)
@@ -1747,6 +1753,11 @@ packages:
   mlly@1.6.1:
     resolution: {integrity: sha512-vLgaHvaeunuOXHSmEbZ9izxPx3USsk8KCQ8iC+aTlp5sKRSoZvwhHh5L9VbKSaVC6sJDqbyohIS76E2VmHIPAA==}
 
+  mode-watcher@0.3.0:
+    resolution: {integrity: sha512-k8jjuTx94HaaRKWO6JDf8wL761hFatrTIHJKl+E+3JWcnv+GnMBH062zcLsy0lbCI3n7RZxxHaWi66auFnUO4g==}
+    peerDependencies:
+      svelte: ^4.0.0
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -2446,6 +2457,11 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  svelte-sonner@0.3.22:
+    resolution: {integrity: sha512-1AEBl7rTP4oeMAmBmkcvoHNOwB8gPzz73RYApcY8pyDwbjBewU8ATnXV8N42omV1sQvtSX/X0o5A1nfkN3T6cg==}
+    peerDependencies:
+      svelte: '>=3 <5'
 
   svelte2tsx@0.7.6:
     resolution: {integrity: sha512-awHvYsakyiGjRqqSOhb2F+qJ6lUT9klQe0UQofAcdHNaKKeDHA8kEZ8zYKGG3BiDPurKYMGvH5/lZ+jeIoG7yQ==}
@@ -4615,6 +4631,10 @@ snapshots:
       pkg-types: 1.0.3
       ufo: 1.5.3
 
+  mode-watcher@0.3.0(svelte@4.2.12):
+    dependencies:
+      svelte: 4.2.12
+
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
@@ -5264,6 +5284,10 @@ snapshots:
       postcss: 8.4.38
       postcss-load-config: 5.0.3(jiti@1.21.0)(postcss@8.4.38)
       typescript: 5.4.4
+
+  svelte-sonner@0.3.22(svelte@4.2.12):
+    dependencies:
+      svelte: 4.2.12
 
   svelte2tsx@0.7.6(svelte@4.2.12)(typescript@5.4.4):
     dependencies:

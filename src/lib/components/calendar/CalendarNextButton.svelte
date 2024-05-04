@@ -5,7 +5,7 @@
   import { tv } from 'tailwind-variants';
 
   import { styles as buttonStyles } from '$lib/components/button/index.js';
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the next button.
@@ -34,7 +34,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = CalendarPrimitive.NextButtonEvents;
+  type $$Events = Events<CalendarPrimitive.NextButtonEvents>;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

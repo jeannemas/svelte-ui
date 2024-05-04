@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { Slot } from '$lib/utils/types.js';
+  import type { Events, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the header.
@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

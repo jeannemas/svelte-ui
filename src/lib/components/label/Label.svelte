@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the label.
@@ -30,7 +30,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = LabelPrimitive.Events;
+  type $$Events = Events<LabelPrimitive.Events>;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

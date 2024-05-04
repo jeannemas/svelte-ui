@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, HeadingLevel } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events, HeadingLevel } from '$lib/utils/types.js';
 
   /**
    * The attributes of the title.
@@ -28,7 +28,7 @@
 </script>
 
 <script generics="THeadingLevel extends HeadingLevel = 'h3'" lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = TypedAttributes & Props;
   type $$Slots = Slots;
   type TypedAttributes = Attributes<THeadingLevel>;

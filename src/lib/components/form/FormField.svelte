@@ -4,7 +4,7 @@
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { Slot } from '$lib/utils/types.js';
+  import type { Events, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the field.
@@ -39,11 +39,10 @@
 </script>
 
 <script generics="T extends Record<string, unknown>, U extends FormPath<T>" lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<T, U>;
   type TypedProps = Props<T, U>;
-  type TypedSlots = Slots<T, U>;
 
   export let name: TypedProps['name'];
   export let superForm: TypedProps['superForm'];

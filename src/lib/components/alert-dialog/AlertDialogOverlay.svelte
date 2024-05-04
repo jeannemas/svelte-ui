@@ -4,7 +4,7 @@
   import { fade } from 'svelte/transition';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Transition } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events, Transition } from '$lib/utils/types.js';
 
   /**
    * The attributes of the overlay.
@@ -46,11 +46,10 @@
   "
   lang="ts"
 >
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;

@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import { Select as SelectPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the root.
@@ -28,11 +28,10 @@
 </script>
 
 <script generics="TItem, TMultiple extends boolean = false" lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<TItem, TMultiple>;
   type TypedProps = Props<TItem, TMultiple>;
-  type TypedSlots = Slots<TItem, TMultiple>;
 
   export let closeOnEscape: TypedProps['closeOnEscape'] = undefined;
   export let closeOnOutsideClick: TypedProps['closeOnOutsideClick'] = undefined;

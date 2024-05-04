@@ -11,6 +11,8 @@
     "clsx": "^2.1.0",
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.368.0",
+    "mode-watcher": "^0.3.0",
+    "svelte-sonner": "^0.3.22",
     "sveltekit-superforms": "^2.12.5",
     "tailwind-merge": "^2.2.2",
     "tailwind-variants": "^0.2.1",
@@ -103,6 +105,10 @@
     "./components/separator": {
       "types": "./dist/components/separator/index.d.ts",
       "svelte": "./dist/components/separator/index.js"
+    },
+    "./components/sonner": {
+      "types": "./dist/components/sonner/index.d.ts",
+      "svelte": "./dist/components/sonner/index.js"
     },
     "./components/switch": {
       "types": "./dist/components/switch/index.d.ts",

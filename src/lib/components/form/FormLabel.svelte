@@ -7,7 +7,7 @@
     type Attributes as LabelAttributes,
     type Props as LabelProps,
   } from '$lib/components/label/index.js';
-  import type { ComponentSlots, Slot } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the label.
@@ -37,7 +37,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

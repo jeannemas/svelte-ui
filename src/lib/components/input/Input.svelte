@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ElementEvent } from '$lib/utils/types.js';
+  import type { ElementEvent, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the input.
@@ -60,7 +60,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = {
+  type $$Events = Events<{
     blur: ElementEvent<HTMLInputElement, FocusEvent>;
     change: ElementEvent<HTMLInputElement, Event>;
     click: ElementEvent<HTMLInputElement, MouseEvent>;
@@ -75,7 +75,7 @@
     mouseenter: ElementEvent<HTMLInputElement, MouseEvent>;
     mouseleave: ElementEvent<HTMLInputElement, MouseEvent>;
     paste: ElementEvent<HTMLInputElement, ClipboardEvent>;
-  };
+  }>;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

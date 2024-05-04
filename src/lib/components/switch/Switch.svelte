@@ -4,7 +4,7 @@
   import { tv } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
-  import type { ComponentSlots } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events } from '$lib/utils/types.js';
 
   /**
    * The attributes of the switch.
@@ -34,7 +34,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = SwitchPrimitive.Events;
+  type $$Events = Events<SwitchPrimitive.Events>;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

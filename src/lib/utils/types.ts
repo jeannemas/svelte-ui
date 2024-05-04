@@ -31,6 +31,10 @@ export type EmptyEvents = EmptyObject;
  */
 export type EmptyObject = Record<never, never>;
 /**
+ * Represents an events object.
+ */
+export type Events<TEvents extends Record<string, Event> = EmptyEvents> = TEvents;
+/**
  * The heading level.
  */
 export type HeadingLevel = `h${1 | 2 | 3 | 4 | 5 | 6}`;

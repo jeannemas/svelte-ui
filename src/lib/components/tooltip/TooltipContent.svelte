@@ -4,7 +4,7 @@
   import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import type { ComponentSlots, Transition } from '$lib/utils/types.js';
+  import type { ComponentSlots, Events, Transition } from '$lib/utils/types.js';
 
   /**
    * The attributes of the content.
@@ -48,11 +48,10 @@
   "
   lang="ts"
 >
-  type $$Events = Record<never, never>;
+  type $$Events = Events;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = TypedSlots;
+  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedSlots = Slots<TTransition, TTransitionIn, TTransitionOut>;
 
   export let align: TypedProps['align'] = undefined;
   export let alignOffset: TypedProps['alignOffset'] = undefined;
