@@ -18,7 +18,7 @@
    */
   export type Slots = {
     default: Omit<ComponentSlots<PaginationPrimitive.Root>['default'], 'pages'> & {
-      currentPage: number | undefined;
+      currentPage: number;
       pages: PageItem[];
     };
   };
@@ -70,6 +70,6 @@
     })}"
     use:builder.action
   >
-    <slot builder="{builder}" currentPage="{currentPage}" pages="{pages}" range="{range}" />
+    <slot builder="{builder}" currentPage="{currentPage ?? 1}" pages="{pages}" range="{range}" />
   </nav>
 </PaginationPrimitive.Root>
