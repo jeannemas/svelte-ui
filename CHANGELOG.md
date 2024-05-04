@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.6
+
+### Patch Changes
+
+- 7590cdb: Fixed pagination currentPage slot property typing
+
 ## 0.17.5
 
 ### Patch Changes
