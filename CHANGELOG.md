@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.5
+
+### Patch Changes
+
+- 9d0ffd3: Added pagination component
+
 ## 0.17.4
 
 ### Patch Changes
