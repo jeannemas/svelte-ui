@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.4
+
+### Patch Changes
+
+- be79515: Added sonner component + improved components typing
+
 ## 0.17.3
 
 ### Patch Changes
