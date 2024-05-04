@@ -76,6 +76,7 @@
   decorative="{decorative}"
   el="{el}"
   orientation="{orientation}"
+  data-orientation="{orientation}"
   let:builder
 >
   <slot builder="{builder}" />

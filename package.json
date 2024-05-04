@@ -12,6 +12,7 @@
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.368.0",
     "mode-watcher": "^0.3.0",
+    "svelte-legos": "^0.2.2",
     "svelte-sonner": "^0.3.22",
     "sveltekit-superforms": "^2.12.5",
     "tailwind-merge": "^2.2.2",
@@ -93,6 +94,10 @@
     "./components/label": {
       "types": "./dist/components/label/index.d.ts",
       "svelte": "./dist/components/label/index.js"
+    },
+    "./components/pagination": {
+      "types": "./dist/components/pagination/index.d.ts",
+      "svelte": "./dist/components/pagination/index.js"
     },
     "./components/popover": {
       "types": "./dist/components/popover/index.d.ts",

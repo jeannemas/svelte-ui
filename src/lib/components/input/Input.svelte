@@ -95,6 +95,7 @@
     class="{styles({
       class: attributes.class,
     })}"
+    data-variant="{variant}"
     bind:value="{value}"
     on:blur
     on:change
@@ -118,6 +119,7 @@
     class="{styles({
       class: attributes.class,
     })}"
+    data-variant="{variant}"
     bind:value="{value}"
     on:blur
     on:change

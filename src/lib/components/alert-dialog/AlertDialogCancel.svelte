@@ -92,6 +92,8 @@
     size,
     variant,
   })}"
+  data-size="{size}"
+  data-variant="{variant}"
   el="{el}"
   let:builder
   on:click

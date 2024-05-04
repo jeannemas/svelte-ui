@@ -22,7 +22,7 @@
    * The styles of the root.
    */
   export const styles = tv({
-    base: [],
+    base: [] as string[],
   });
 </script>
 

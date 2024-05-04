@@ -84,6 +84,7 @@
     variant,
   })}"
   role="alert"
+  data-variant="{variant}"
 >
   <slot />
 </div>

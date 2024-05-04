@@ -112,6 +112,8 @@
     size,
     variant,
   })}"
+  data-size="{size}"
+  data-variant="{variant}"
   on:click
   on:keydown
 >

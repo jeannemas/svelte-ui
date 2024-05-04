@@ -61,6 +61,7 @@
     breakpoint,
     class: attributes.class,
   })}"
+  data-breakpoint="{breakpoint}"
 >
   <slot />
 </button>

@@ -34,7 +34,7 @@
    * The styles of the collapsible.
    */
   export const styles = tv({
-    base: [],
+    base: [] as string[],
   });
 </script>
 

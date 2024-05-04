@@ -23,7 +23,7 @@
    * The styles of the input.
    */
   export const styles = tv({
-    base: [],
+    base: [] as string[],
   });
 </script>
 

@@ -22,7 +22,7 @@
    * The styles of the close.
    */
   export const styles = tv({
-    base: [],
+    base: [] as string[],
   });
 </script>
 

@@ -29,6 +29,9 @@ importers:
       mode-watcher:
         specifier: ^0.3.0
         version: 0.3.0(svelte@4.2.12)
+      svelte-legos:
+        specifier: ^0.2.2
+        version: 0.2.2(svelte@4.2.12)
       svelte-sonner:
         specifier: ^0.3.22
         version: 0.3.22(svelte@4.2.12)
@@ -884,6 +887,9 @@ packages:
 
   caniuse-lite@1.0.30001605:
     resolution: {integrity: sha512-nXwGlFWo34uliI9z3n6Qc0wZaf7zaZWA1CPZ169La5mV3I/gem7bst0vr5XQH5TJXZIMfDeZyOrZnSlVzKxxHQ==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   chai@4.4.1:
     resolution: {integrity: sha512-13sOfMv2+DWduEU+/xbun3LScLoqN17nBeTLUsmDfKdoiC1fr0n9PU4guu4AhRcOVFk/sW8LyZWHuhWtQZiF+g==}
@@ -2130,6 +2136,13 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
+  prism-svelte@0.5.0:
+    resolution: {integrity: sha512-db91Bf3pRGKDPz1lAqLFSJXeW13mulUJxhycysFpfXV5MIK7RgWWK2E5aPAa71s8TCzQUXxF5JOV42/iOs6QkA==}
+
+  prismjs@1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
+
   property-expr@2.0.6:
     resolution: {integrity: sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==}
 
@@ -2420,6 +2433,11 @@ packages:
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       svelte: ^3.19.0 || ^4.0.0
+
+  svelte-legos@0.2.2:
+    resolution: {integrity: sha512-HTVkCIqhrxdy+OpXjxGr/4xIJEGv4d2cRQwTjm0SYfLw/YF1I1l/TQR59nb2WvjccnO8TNFNTvAWP5pgXQnU+w==}
+    peerDependencies:
+      svelte: ^4.0.0
 
   svelte-preprocess@5.1.3:
     resolution: {integrity: sha512-xxAkmxGHT+J/GourS5mVJeOXZzne1FR5ljeOUAMXUkfEhkLEllRreXpbl3dIYJlcJRfL1LO1uIAPpBpBfiqGPw==}
@@ -3650,6 +3668,8 @@ snapshots:
     optional: true
 
   caniuse-lite@1.0.30001605: {}
+
+  canvas-confetti@1.9.3: {}
 
   chai@4.4.1:
     dependencies:
@@ -4918,6 +4938,10 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.2.0
 
+  prism-svelte@0.5.0: {}
+
+  prismjs@1.29.0: {}
+
   property-expr@2.0.6:
     optional: true
 
@@ -5270,6 +5294,13 @@ snapshots:
 
   svelte-hmr@0.15.3(svelte@4.2.12):
     dependencies:
+      svelte: 4.2.12
+
+  svelte-legos@0.2.2(svelte@4.2.12):
+    dependencies:
+      canvas-confetti: 1.9.3
+      prism-svelte: 0.5.0
+      prismjs: 1.29.0
       svelte: 4.2.12
 
   svelte-preprocess@5.1.3(postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.12)(typescript@5.4.4):

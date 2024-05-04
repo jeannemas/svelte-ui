@@ -89,6 +89,8 @@
     variant,
   })}"
   el="{el}"
+  data-size="{size}"
+  data-variant="{variant}"
   let:builder
   on:click
   on:keydown

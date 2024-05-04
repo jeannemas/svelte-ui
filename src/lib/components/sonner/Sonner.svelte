@@ -177,6 +177,9 @@
     },
   }}"
   visibleToasts="{visibleToasts}"
+  data-dir="{dir}"
+  data-position="{position}"
+  data-theme="{theme}"
 >
   <!-- <slot name="loading-icon" slot="loading-icon">
     <Loader visible="{toast.type === 'loading'}" />

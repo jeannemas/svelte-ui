@@ -22,7 +22,7 @@
    * The styles of the portal.
    */
   export const styles = tv({
-    base: [],
+    base: [] as string[],
   });
 </script>
 

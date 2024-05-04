@@ -62,6 +62,7 @@
   })}"
   href="{href}"
   data-active="{isActive}"
+  data-breakpoint="{breakpoint}"
 >
   <slot />
 </a>

@@ -74,6 +74,7 @@
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
+  export let breakpoint: Props['breakpoint'] = undefined;
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
@@ -88,8 +89,10 @@
   <ol
     {...attributes}
     class="{styles({
+      breakpoint,
       class: attributes.class,
     })}"
+    data-breakpoint="{breakpoint}"
     bind:this="{el}"
   >
     <slot />

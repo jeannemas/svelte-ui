@@ -127,6 +127,8 @@
     viewport: 'desktop',
   })}"
   xAxis
+  data-breakpoint="{breakpoint}"
+  data-viewport="desktop"
 >
   <div class="flex h-16 flex-row justify-between">
     <slot />
@@ -141,6 +143,8 @@
     class: attributes.class,
     viewport: 'mobile',
   })}"
+  data-breakpoint="{breakpoint}"
+  data-viewport="mobile"
   bind:open="{open}"
 >
   <Collapsible.Trigger asChild let:builder>
