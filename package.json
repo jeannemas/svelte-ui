@@ -83,6 +83,10 @@
       "types": "./dist/components/container/index.d.ts",
       "svelte": "./dist/components/container/index.js"
     },
+    "./components/dropdown-menu": {
+      "types": "./dist/components/dropdown-menu/index.d.ts",
+      "svelte": "./dist/components/dropdown-menu/index.js"
+    },
     "./components/form": {
       "types": "./dist/components/form/index.d.ts",
       "svelte": "./dist/components/form/index.js"

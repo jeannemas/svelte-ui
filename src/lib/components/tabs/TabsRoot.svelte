@@ -32,8 +32,8 @@
     },
     variants: {
       orientation: {
-        horizontal: [],
-        vertical: [],
+        horizontal: [] as string[],
+        vertical: [] as string[],
       },
     },
   });

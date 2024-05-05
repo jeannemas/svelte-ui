@@ -81,9 +81,9 @@
     },
     variants: {
       breakpoint: {
-        sm: [],
-        md: [],
-        lg: [],
+        sm: [] as string[],
+        md: [] as string[],
+        lg: [] as string[],
       },
       viewport: {
         desktop: ['hidden'],

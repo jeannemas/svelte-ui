@@ -9,21 +9,28 @@
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Separator from '$lib/components/separator/index.js';
-  import Sonner, { dirs, positions, themes } from '$lib/components/sonner/index.js';
+  import Sonner, {
+    defaultDir,
+    defaultPosition,
+    defaultTheme,
+    dirs,
+    positions,
+    themes,
+  } from '$lib/components/sonner/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
     z.object({
       closeButton: z.boolean().default(false).optional(),
-      dir: z.enum(dirs).default('auto').optional(),
+      dir: z.enum(dirs).default(defaultDir).optional(),
       duration: z.number().int().default(4000).optional(),
       expand: z.boolean().default(false).optional(),
       gap: z.number().int().default(14).optional(),
       invert: z.boolean().default(false).optional(),
       offset: z.number().int().default(32).optional(),
-      position: z.enum(positions).default('bottom-right').optional(),
+      position: z.enum(positions).default(defaultPosition).optional(),
       richColors: z.boolean().default(false).optional(),
-      theme: z.enum(themes).default('light').optional(),
+      theme: z.enum(themes).default(defaultTheme).optional(),
       visibleToasts: z.number().int().default(3).optional(),
     }),
   );
