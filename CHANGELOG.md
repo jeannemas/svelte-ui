@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.7
+
+### Patch Changes
+
+- bf0a644: Added dropdown-menu component
+
 ## 0.17.6
 
 ### Patch Changes
