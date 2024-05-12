@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.9
+
+### Patch Changes
+
+- 6f67863: Fixed missing types
+
 ## 0.17.8
 
 ### Patch Changes
