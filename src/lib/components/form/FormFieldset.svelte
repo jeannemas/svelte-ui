@@ -1,10 +1,12 @@
 <script context="module" lang="ts">
-  import { Fieldset, type FieldsetProps } from 'formsnap';
+  import { Fieldset } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { AnyObject, ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive<T extends AnyObject, U extends FormPath<T>> = ComponentInfo<Fieldset<T, U>>;
 
   /**
    * The attributes of the fieldset.
@@ -13,8 +15,8 @@
   /**
    * The props of the fieldset.
    */
-  export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
-    FieldsetProps<T, U>,
+  export type Props<T extends AnyObject, U extends FormPath<T>> = Omit<
+    Primitive<T, U>['props'],
     keyof Attributes
   > & {
     name: U;
@@ -22,9 +24,7 @@
   /**
    * The slots of the fieldset.
    */
-  export type Slots<T extends Record<string, unknown>, U extends FormPath<T>> = ComponentSlots<
-    Fieldset<T, U>
-  >;
+  export type Slots<T extends AnyObject, U extends FormPath<T>> = Primitive<T, U>['slots'];
 
   /**
    * The styles of the fieldset.
@@ -34,8 +34,8 @@
   });
 </script>
 
-<script generics="T extends Record<string, unknown>, U extends FormPath<T>" lang="ts">
-  type $$Events = Events;
+<script generics="T extends AnyObject, U extends FormPath<T>" lang="ts">
+  type $$Events = Primitive<T, U>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<T, U>;
   type TypedProps = Props<T, U>;

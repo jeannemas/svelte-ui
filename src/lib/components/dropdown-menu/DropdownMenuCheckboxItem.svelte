@@ -4,7 +4,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<DropdownMenuPrimitive.CheckboxItem>;
 
   /**
    * The attributes of the checkbox item.
@@ -13,11 +15,11 @@
   /**
    * The props of the checkbox item.
    */
-  export type Props = Omit<DropdownMenuPrimitive.CheckboxItemProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the checkbox item.
    */
-  export type Slots = ComponentSlots<DropdownMenuPrimitive.CheckboxItem>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the checkbox item.
@@ -32,7 +34,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<DropdownMenuPrimitive.CheckboxItemEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

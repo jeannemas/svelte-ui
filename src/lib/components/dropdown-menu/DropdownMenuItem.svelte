@@ -2,12 +2,14 @@
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<DropdownMenuPrimitive.Item>;
 
   /**
    * The attributes of the item.
    */
-  export type Attributes = DropdownMenuPrimitive.ItemProps;
+  export type Attributes = Primitive['props'];
   /**
    * The inset of the item.
    */
@@ -21,7 +23,7 @@
   /**
    * The slots of the item.
    */
-  export type Slots = ComponentSlots<DropdownMenuPrimitive.Item>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the item.
@@ -52,7 +54,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<DropdownMenuPrimitive.ItemEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

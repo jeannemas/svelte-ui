@@ -1,10 +1,12 @@
 <script context="module" lang="ts">
-  import { FieldErrors, type FieldErrorsProps } from 'formsnap';
+  import { FieldErrors } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<FieldErrors>;
 
   /**
    * The attributes of the field errors.
@@ -13,13 +15,13 @@
   /**
    * The props of the field errors.
    */
-  export type Props = Omit<FieldErrorsProps, keyof Attributes> & {
+  export type Props = Omit<Primitive['props'], keyof Attributes> & {
     errorClasses?: string | null;
   };
   /**
    * The slots of the field errors.
    */
-  export type Slots = ComponentSlots<FieldErrors>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the field errors.
@@ -30,7 +32,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

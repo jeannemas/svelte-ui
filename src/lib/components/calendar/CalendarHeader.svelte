@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<CalendarPrimitive.Header>;
 
   /**
    * The attributes of the header.
@@ -12,11 +14,11 @@
   /**
    * The props of the header.
    */
-  export type Props = Omit<CalendarPrimitive.HeaderProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the header.
    */
-  export type Slots = ComponentSlots<CalendarPrimitive.Header>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the header.
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

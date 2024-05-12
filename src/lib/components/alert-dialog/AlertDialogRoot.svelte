@@ -1,24 +1,26 @@
 <script context="module" lang="ts">
   import { AlertDialog as AlertDialogPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<AlertDialogPrimitive.Root>;
 
   /**
    * The attributes of the root.
    */
-  export type Attributes = Record<never, never>;
+  export type Attributes = EmptyObject;
   /**
    * The props of the root.
    */
-  export type Props = AlertDialogPrimitive.Props;
+  export type Props = Primitive['props'];
   /**
    * The slots of the root.
    */
-  export type Slots = ComponentSlots<AlertDialogPrimitive.Root>;
+  export type Slots = Primitive['slots'];
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

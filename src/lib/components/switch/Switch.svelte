@@ -4,7 +4,9 @@
   import { tv } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<SwitchPrimitive.Root>;
 
   /**
    * The attributes of the switch.
@@ -13,18 +15,18 @@
   /**
    * The props of the switch.
    */
-  export type Props = Omit<SwitchPrimitive.Props, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the switch.
    */
-  export type Slots = ComponentSlots<SwitchPrimitive.Root>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the switch.
    */
   export const styles = tv({
     base: [
-      'peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
+      'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
       'disabled:cursor-not-allowed disabled:opacity-50',
       'data-[state=checked]:bg-primary',
@@ -34,7 +36,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<SwitchPrimitive.Events>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

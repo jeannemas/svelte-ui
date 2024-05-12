@@ -4,7 +4,9 @@
   import { tv, type VariantProps } from 'tailwind-variants';
 
   import { styles as buttonStyles } from '$lib/components/button/index.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<AlertDialogPrimitive.Cancel>;
 
   /**
    * The attributes of the cancel.
@@ -13,7 +15,7 @@
   /**
    * The props of the cancel.
    */
-  export type Props = Omit<AlertDialogPrimitive.CancelProps, keyof Attributes> & {
+  export type Props = Omit<Primitive['props'], keyof Attributes> & {
     /**
      * The size of the cancel.
      *
@@ -34,7 +36,7 @@
   /**
    * The slots of the cancel.
    */
-  export type Slots = ComponentSlots<AlertDialogPrimitive.Cancel>;
+  export type Slots = Primitive['slots'];
   /**
    * The variant of the cancel.
    */
@@ -69,7 +71,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<AlertDialogPrimitive.CancelEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

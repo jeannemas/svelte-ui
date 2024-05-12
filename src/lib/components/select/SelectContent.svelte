@@ -5,7 +5,13 @@
   import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import type { ComponentSlots, ElementEvent, Events, Transition } from '$lib/utils/types.js';
+  import type { ComponentInfo, ElementEvent, Transition } from '$lib/utils/types.js';
+
+  type Primitive<
+    TTransition extends Transition = Transition,
+    TTransitionIn extends Transition = Transition,
+    TTransitionOut extends Transition = Transition,
+  > = ComponentInfo<SelectPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
    * The attributes of the content.
@@ -18,10 +24,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = Omit<
-    SelectPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
-    keyof Attributes
-  >;
+  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
   /**
    * The slots of the content.
    */
@@ -29,14 +32,14 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = ComponentSlots<SelectPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
 
   /**
    * The styles of the content.
    */
   export const styles = tv({
     base: [
-      'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
+      'relative z-50 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
     ],
   });
 </script>
@@ -49,11 +52,9 @@
   "
   lang="ts"
 >
-  type $$Events = Events<
-    Omit<SelectPrimitive.ContentEvents, 'keydown'> & {
-      keydown: ElementEvent<HTMLDivElement, KeyboardEvent>; // TODO change once bits-ui is updated
-    }
-  >;
+  type $$Events = Omit<Primitive['events'], 'keydown'> & {
+    keydown: ElementEvent<HTMLDivElement, KeyboardEvent>; // TODO change once bits-ui is updated
+  };
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;

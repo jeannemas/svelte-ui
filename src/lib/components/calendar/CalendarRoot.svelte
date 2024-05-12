@@ -4,9 +4,24 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
 
-  import * as Calendar from './index.js';
+  import Cell from './CalendarCell.svelte';
+  import Day from './CalendarDay.svelte';
+  import Grid from './CalendarGrid.svelte';
+  import GridBody from './CalendarGridBody.svelte';
+  import GridHead from './CalendarGridHead.svelte';
+  import GridRow from './CalendarGridRow.svelte';
+  import HeadCell from './CalendarHeadCell.svelte';
+  import Header from './CalendarHeader.svelte';
+  import Heading from './CalendarHeading.svelte';
+  import Months from './CalendarMonths.svelte';
+  import NextButton from './CalendarNextButton.svelte';
+  import PreviousButton from './CalendarPreviousButton.svelte';
+
+  type Primitive<TMultiple extends boolean = false> = ComponentInfo<
+    CalendarPrimitive.Root<TMultiple>
+  >;
 
   /**
    * The attributes of the calendar.
@@ -16,7 +31,7 @@
    * The props of the calendar.
    */
   export type Props<TMultiple extends boolean = false> = Omit<
-    CalendarPrimitive.Props<TMultiple>,
+    Primitive<TMultiple>['props'],
     keyof Attributes
   > & {
     /**
@@ -29,9 +44,7 @@
   /**
    * The slots of the calendar.
    */
-  export type Slots<TMultiple extends boolean = false> = ComponentSlots<
-    CalendarPrimitive.Root<TMultiple>
-  >;
+  export type Slots<TMultiple extends boolean = false> = Primitive<TMultiple>['slots'];
 
   /**
    * The styles of the calendar.
@@ -54,7 +67,7 @@
 </script>
 
 <script generics="TMultiple extends boolean = false" lang="ts">
-  type $$Events = Events<CalendarPrimitive.Events>;
+  type $$Events = Primitive<TMultiple>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TMultiple>;
   type TypedProps = Props<TMultiple>;
@@ -122,33 +135,33 @@
   on:keydown
 >
   <slot builder="{builder}" months="{months}" weekdays="{weekdays}">
-    <Calendar.Header>
-      <Calendar.PreviousButton />
+    <Header>
+      <PreviousButton />
 
-      <Calendar.Heading />
+      <Heading />
 
-      <Calendar.NextButton />
-    </Calendar.Header>
+      <NextButton />
+    </Header>
 
-    <Calendar.Months>
+    <Months>
       {#each months as month}
-        <Calendar.Grid>
-          <Calendar.GridHead>
-            <Calendar.GridRow class="flex">
+        <Grid>
+          <GridHead>
+            <GridRow class="flex">
               {#each weekdays as weekday}
-                <Calendar.HeadCell>
+                <HeadCell>
                   {weekday.slice(0, 2)}
-                </Calendar.HeadCell>
+                </HeadCell>
               {/each}
-            </Calendar.GridRow>
-          </Calendar.GridHead>
+            </GridRow>
+          </GridHead>
 
-          <Calendar.GridBody>
+          <GridBody>
             {#each month.weeks as weekDates}
-              <Calendar.GridRow class="mt-2 w-full">
+              <GridRow class="mt-2 w-full">
                 {#each weekDates as date}
-                  <Calendar.Cell date="{date}">
-                    <Calendar.Day
+                  <Cell date="{date}">
+                    <Day
                       date="{date}"
                       month="{month.value}"
                       on:click="{() =>
@@ -157,13 +170,13 @@
                           month,
                         })}"
                     />
-                  </Calendar.Cell>
+                  </Cell>
                 {/each}
-              </Calendar.GridRow>
+              </GridRow>
             {/each}
-          </Calendar.GridBody>
-        </Calendar.Grid>
+          </GridBody>
+        </Grid>
       {/each}
-    </Calendar.Months>
+    </Months>
   </slot>
 </CalendarPrimitive.Root>

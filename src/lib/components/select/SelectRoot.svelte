@@ -1,17 +1,21 @@
 <script context="module" lang="ts">
   import { Select as SelectPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive<TItem, TMultiple extends boolean = false> = ComponentInfo<
+    SelectPrimitive.Root<TItem, TMultiple>
+  >;
 
   /**
    * The attributes of the root.
    */
-  export type Attributes = Record<never, never>;
+  export type Attributes = EmptyObject;
   /**
    * The props of the root.
    */
   export type Props<TItem, TMultiple extends boolean = false> = Omit<
-    SelectPrimitive.Props<TItem, TMultiple>,
+    Primitive<TItem, TMultiple>['props'],
     | keyof Attributes
 
     // The following props are not supported in the root
@@ -22,13 +26,14 @@
   /**
    * The slots of the root.
    */
-  export type Slots<TItem, TMultiple extends boolean = false> = ComponentSlots<
-    SelectPrimitive.Root<TItem, TMultiple>
-  >;
+  export type Slots<TItem, TMultiple extends boolean = false> = Primitive<
+    TItem,
+    TMultiple
+  >['slots'];
 </script>
 
 <script generics="TItem, TMultiple extends boolean = false" lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive<TItem, TMultiple>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TItem, TMultiple>;
   type TypedProps = Props<TItem, TMultiple>;

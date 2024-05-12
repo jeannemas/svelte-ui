@@ -2,12 +2,14 @@
   import { Button as ButtonPrimitive } from 'bits-ui';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<ButtonPrimitive.Root>;
 
   /**
    * The attributes of the button.
    */
-  export type Attributes = ButtonPrimitive.Props;
+  export type Attributes = Primitive['props'];
   /**
    * The props of the button.
    */
@@ -32,7 +34,7 @@
   /**
    * The slots of the button.
    */
-  export type Slots = ComponentSlots<ButtonPrimitive.Root>;
+  export type Slots = Primitive['slots'];
   /**
    * The variant of the button.
    */
@@ -91,7 +93,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<ButtonPrimitive.Events>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -2,13 +2,12 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, HeadingLevel, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, HeadingLevel, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the title.
    */
-  export type Attributes<THeadingLevel extends HeadingLevel = 'h3'> =
-    SvelteHTMLElements[THeadingLevel];
+  export type Attributes = SvelteHTMLElements[HeadingLevel];
   /**
    * The props of the title.
    */
@@ -16,7 +15,7 @@
     /**
      * The heading level.
      */
-    tag?: THeadingLevel;
+    level?: THeadingLevel;
   };
   /**
    * The slots of the title.
@@ -34,22 +33,21 @@
 </script>
 
 <script generics="THeadingLevel extends HeadingLevel = 'h3'" lang="ts">
-  type $$Events = Events;
-  type $$Props = TypedAttributes & TypedProps;
+  type $$Events = EmptyObject;
+  type $$Props = Attributes & TypedProps;
   type $$Slots = Slots;
-  type TypedAttributes = Attributes<THeadingLevel>;
   type TypedProps = Props<THeadingLevel>;
 
-  export let tag: TypedProps['tag'] = 'h3' as TypedProps['tag'];
+  export let level: TypedProps['level'] = 'h3' as TypedProps['level'];
 
-  $: attributes = $$restProps as TypedAttributes;
+  $: attributes = $$restProps as Attributes;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
 <svelte:element
-  this="{tag}"
+  this="{level}"
   {...attributes}
   class="{styles({
     class: attributes.class,

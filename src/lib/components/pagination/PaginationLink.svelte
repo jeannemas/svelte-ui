@@ -7,7 +7,9 @@
     styles as buttonStyles,
     type Props as ButtonProps,
   } from '$lib/components/button/index.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<PaginationPrimitive.Page>;
 
   /**
    * The attributes of the link.
@@ -16,14 +18,14 @@
   /**
    * The props of the link.
    */
-  export type Props = Omit<PaginationPrimitive.PageProps, keyof Attributes> &
+  export type Props = Omit<Primitive['props'], keyof Attributes> &
     Omit<ButtonProps, 'variant'> & {
       isActive?: boolean;
     };
   /**
    * The slots of the link.
    */
-  export type Slots = ComponentSlots<PaginationPrimitive.Page>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the link.
@@ -34,7 +36,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<PaginationPrimitive.PageEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ElementEvent, Events } from '$lib/utils/types.js';
+  import type { ElementEvent, EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the textarea.
@@ -26,7 +26,7 @@
   /**
    * The slots of the textarea.
    */
-  export type Slots = Record<never, never>;
+  export type Slots = EmptyObject;
 
   /**
    * The styles of the textarea.
@@ -42,7 +42,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<{
+  type $$Events = {
     blur: ElementEvent<HTMLTextAreaElement, FocusEvent>;
     change: ElementEvent<HTMLTextAreaElement, Event>;
     click: ElementEvent<HTMLTextAreaElement, MouseEvent>;
@@ -55,7 +55,7 @@
     mouseenter: ElementEvent<HTMLTextAreaElement, MouseEvent>;
     mouseleave: ElementEvent<HTMLTextAreaElement, MouseEvent>;
     paste: ElementEvent<HTMLTextAreaElement, ClipboardEvent>;
-  }>;
+  };
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

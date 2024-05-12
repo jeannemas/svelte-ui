@@ -5,7 +5,9 @@
   import { tv } from 'tailwind-variants';
 
   import { styles as buttonStyles } from '$lib/components/button/index.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<CalendarPrimitive.NextButton>;
 
   /**
    * The attributes of the next button.
@@ -14,11 +16,11 @@
   /**
    * The props of the next button.
    */
-  export type Props = Omit<CalendarPrimitive.NextButtonProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the next button.
    */
-  export type Slots = ComponentSlots<CalendarPrimitive.NextButton>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the next button.
@@ -34,7 +36,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<CalendarPrimitive.NextButtonEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

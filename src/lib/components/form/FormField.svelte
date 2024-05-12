@@ -1,10 +1,13 @@
 <script context="module" lang="ts">
-  import { Field, type FieldProps, type FieldSlotProps } from 'formsnap';
+  import { Field } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import { castAsAny } from '$lib/utils/internal.js';
+  import type { AnyObject, ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive<T extends AnyObject, U extends FormPath<T>> = ComponentInfo<Field<T, U>>;
 
   /**
    * The attributes of the field.
@@ -13,21 +16,20 @@
   /**
    * The props of the field.
    */
-  export type Props<T extends Record<string, unknown>, U extends FormPath<T>> = Omit<
-    FieldProps<T, U>,
+  export type Props<T extends AnyObject, U extends FormPath<T>> = Omit<
+    Primitive<T, U>['props'],
     'form'
   > & {
-    superForm: FieldProps<T, U>['form'];
+    superForm: Primitive<T, U>['props']['form'];
   };
   /**
    * The slots of the field.
    */
-  export type Slots<T extends Record<string, unknown>, U extends FormPath<T>> = {
-    default: Slot<
-      Omit<FieldSlotProps<T, U>, 'value'> & {
-        value: unknown;
-      }
-    >;
+  export type Slots<T extends AnyObject, U extends FormPath<T>> = {
+    default: Omit<Primitive<T, U>['slots']['default'], 'value'> & {
+      // Manual omission to prevent infinite loop while compiling the package
+      value: unknown;
+    };
   };
 
   /**
@@ -38,8 +40,8 @@
   });
 </script>
 
-<script generics="T extends Record<string, unknown>, U extends FormPath<T>" lang="ts">
-  type $$Events = Events;
+<script generics="T extends AnyObject, U extends FormPath<T>" lang="ts">
+  type $$Events = EmptyObject;
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<T, U>;
   type TypedProps = Props<T, U>;
@@ -60,6 +62,11 @@
       class: attributes.class,
     })}"
   >
-    <slot constraints="{constraints ?? {}}" errors="{errors}" tainted="{tainted}" value="{value}" />
+    <slot
+      constraints="{castAsAny(constraints)}"
+      errors="{errors}"
+      tainted="{tainted}"
+      value="{value}"
+    />
   </div>
 </Field>

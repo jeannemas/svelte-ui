@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<PopoverPrimitive.Trigger>;
 
   /**
    * The attributes of the trigger.
@@ -12,11 +14,11 @@
   /**
    * The props of the trigger.
    */
-  export type Props = Omit<PopoverPrimitive.TriggerProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the trigger.
    */
-  export type Slots = ComponentSlots<PopoverPrimitive.Trigger>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the trigger.
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
@@ -48,6 +50,8 @@
   })}"
   el="{el}"
   let:builder
+  on:click
+  on:keydown
 >
   <slot builder="{builder}" />
 </PopoverPrimitive.Trigger>

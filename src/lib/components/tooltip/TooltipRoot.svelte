@@ -1,24 +1,26 @@
 <script context="module" lang="ts">
   import { Tooltip as TooltipPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<TooltipPrimitive.Root>;
 
   /**
    * The attributes of the root.
    */
-  export type Attributes = Record<never, never>;
+  export type Attributes = EmptyObject;
   /**
    * The props of the root.
    */
-  export type Props = TooltipPrimitive.Props;
+  export type Props = Primitive['props'];
   /**
    * The slots of the root.
    */
-  export type Slots = ComponentSlots<TooltipPrimitive.Root>;
+  export type Slots = Primitive['slots'];
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -1,9 +1,11 @@
 <script context="module" lang="ts">
-  import { Toaster, type ToasterProps } from 'svelte-sonner';
+  import { Toaster } from 'svelte-sonner';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<Toaster>;
 
   /**
    * The attributes of the sonner.
@@ -20,11 +22,11 @@
   /**
    * The props of the sonner.
    */
-  export type Props = Omit<ToasterProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the sonner.
    */
-  export type Slots = /* ComponentSlots<Toaster> */ Record<never, never>;
+  export type Slots = /* Primitive['slots'] */ EmptyObject;
   /**
    * The theme of the sonner.
    */
@@ -115,7 +117,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

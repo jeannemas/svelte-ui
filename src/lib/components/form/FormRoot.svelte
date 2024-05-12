@@ -3,7 +3,7 @@
   import SuperDebug, { type SuperForm } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the root.
@@ -22,7 +22,7 @@
     /**
      * The SuperForm instance to use.
      */
-    superForm: Pick<SuperForm<Record<string, unknown>>, 'enhance' | 'form'>;
+    superForm: Pick<SuperForm<AnyObject>, 'enhance' | 'form'>;
   };
   /**
    * The slots of the root.
@@ -40,7 +40,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -6,8 +6,9 @@
   import Label, {
     type Attributes as LabelAttributes,
     type Props as LabelProps,
+    type Slots as LabelSlots,
   } from '$lib/components/label/index.js';
-  import type { ComponentSlots, Events, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the label.
@@ -22,7 +23,7 @@
    */
   export type Slots = {
     default: Slot<
-      ComponentSlots<Label>['default'] & {
+      LabelSlots['default'] & {
         labelAttrs: Readable<LabelAttrs>;
       }
     >;
@@ -37,7 +38,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

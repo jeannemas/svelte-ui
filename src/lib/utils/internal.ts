@@ -1,3 +1,5 @@
+import type { AnyObject } from './types.js';
+
 /**
  * Casts the given value to any type.
  *
@@ -23,7 +25,7 @@ export function castAsAny(value: unknown): any {
  *
  * @private
  */
-export function omit<TObject extends Record<string, unknown>, TKeys extends (keyof TObject)[]>(
+export function omit<TObject extends AnyObject, TKeys extends (keyof TObject)[]>(
   object: TObject,
   keys: TKeys,
 ): Omit<TObject, TKeys[number]> {

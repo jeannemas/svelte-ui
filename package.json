@@ -7,16 +7,16 @@
   "dependencies": {
     "@internationalized/date": "^3.5.2",
     "@melt-ui/svelte": "^0.76.2",
-    "bits-ui": "^0.21.3",
+    "bits-ui": "^0.21.7",
     "clsx": "^2.1.0",
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.368.0",
     "mode-watcher": "^0.3.0",
-    "svelte-legos": "^0.2.2",
     "svelte-sonner": "^0.3.22",
     "sveltekit-superforms": "^2.12.5",
     "tailwind-merge": "^2.2.2",
     "tailwind-variants": "^0.2.1",
+    "vaul-svelte": "^0.3.0",
     "zod": "^3.22.5"
   },
   "description": "A collection of Svelte components and related utilities that I use in my projects.",
@@ -82,6 +82,14 @@
     "./components/container": {
       "types": "./dist/components/container/index.d.ts",
       "svelte": "./dist/components/container/index.js"
+    },
+    "./components/dialog": {
+      "types": "./dist/components/dialog/index.d.ts",
+      "svelte": "./dist/components/dialog/index.js"
+    },
+    "./components/drawer": {
+      "types": "./dist/components/drawer/index.d.ts",
+      "svelte": "./dist/components/drawer/index.js"
     },
     "./components/dropdown-menu": {
       "types": "./dist/components/dropdown-menu/index.d.ts",

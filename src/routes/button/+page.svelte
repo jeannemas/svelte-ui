@@ -15,11 +15,13 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      disabled: z.boolean().default(false).optional(),
-      size: z.enum(sizes).default(defaultSize).optional(),
-      variant: z.enum(variants).default(defaultVariant).optional(),
-    }),
+    z
+      .object({
+        disabled: z.boolean().default(false),
+        size: z.enum(sizes).default(defaultSize),
+        variant: z.enum(variants).default(defaultVariant),
+      })
+      .partial(),
   );
 </script>
 

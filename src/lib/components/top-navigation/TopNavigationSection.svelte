@@ -2,9 +2,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import type { RootProps } from './index.js';
+  import type { Props as RootProps } from './TopNavigationRoot.svelte';
 
   /**
    * The attributes for the section.
@@ -40,7 +40,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

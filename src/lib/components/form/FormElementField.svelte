@@ -1,10 +1,15 @@
 <script context="module" lang="ts">
-  import { ElementField, type ElementFieldProps, type ElementFieldSlotProps } from 'formsnap';
+  import { ElementField } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import type { FormPathLeaves } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import { castAsAny } from '$lib/utils/internal.js';
+  import type { AnyObject, ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive<T extends AnyObject, U extends FormPathLeaves<T>> = ComponentInfo<
+    ElementField<T, U>
+  >;
 
   /**
    * The attributes of the element field.
@@ -13,21 +18,20 @@
   /**
    * The props of the element field.
    */
-  export type Props<T extends Record<string, unknown>, U extends FormPathLeaves<T>> = Omit<
-    ElementFieldProps<T, U>,
+  export type Props<T extends AnyObject, U extends FormPathLeaves<T>> = Omit<
+    Primitive<T, U>['props'],
     'form'
   > & {
-    superForm: ElementFieldProps<T, U>['form'];
+    superForm: Primitive<T, U>['props']['form'];
   };
   /**
    * The slots of the element field.
    */
-  export type Slots<T extends Record<string, unknown>, U extends FormPathLeaves<T>> = {
-    default: Slot<
-      Omit<ElementFieldSlotProps<T, U>, 'value'> & {
-        value: unknown; // Should be `PrimitiveFromIndex<T, U>`, not `T[U]`
-      }
-    >;
+  export type Slots<T extends AnyObject, U extends FormPathLeaves<T>> = {
+    default: Omit<Primitive<T, U>['slots']['default'], 'value'> & {
+      // Manual omission to prevent infinite loop while compiling the package
+      value: unknown;
+    };
   };
 
   /**
@@ -38,8 +42,8 @@
   });
 </script>
 
-<script generics="T extends Record<string, unknown>, U extends FormPathLeaves<T>" lang="ts">
-  type $$Events = Events;
+<script generics="T extends AnyObject, U extends FormPathLeaves<T>" lang="ts">
+  type $$Events = Primitive<T, U>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<T, U>;
   type TypedProps = Props<T, U>;
@@ -60,6 +64,11 @@
       class: attributes.class,
     })}"
   >
-    <slot constraints="{constraints ?? {}}" errors="{errors}" tainted="{tainted}" value="{value}" />
+    <slot
+      constraints="{castAsAny(constraints)}"
+      errors="{errors}"
+      tainted="{tainted}"
+      value="{value}"
+    />
   </div>
 </ElementField>

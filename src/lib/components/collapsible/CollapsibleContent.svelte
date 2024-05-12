@@ -4,7 +4,13 @@
   import { slide } from 'svelte/transition';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events, Transition } from '$lib/utils/types.js';
+  import type { ComponentInfo, Transition } from '$lib/utils/types.js';
+
+  type Primitive<
+    TTransition extends Transition = Transition,
+    TTransitionIn extends Transition = Transition,
+    TTransitionOut extends Transition = Transition,
+  > = ComponentInfo<CollapsiblePrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
    * The attributes of the content.
@@ -17,10 +23,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = Omit<
-    CollapsiblePrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
-    keyof Attributes
-  >;
+  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
   /**
    * The slots of the content.
    */
@@ -28,7 +31,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = ComponentSlots<CollapsiblePrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
 
   /**
    * The styles of the collapsible.
@@ -46,7 +49,7 @@
     "
   lang="ts"
 >
-  type $$Events = Events;
+  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;

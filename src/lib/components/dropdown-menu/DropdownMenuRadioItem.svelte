@@ -4,7 +4,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<DropdownMenuPrimitive.RadioItem>;
 
   /**
    * The attributes of the radio item.
@@ -13,11 +15,11 @@
   /**
    * The props of the radio item.
    */
-  export type Props = Omit<DropdownMenuPrimitive.RadioItemProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the radio item.
    */
-  export type Slots = ComponentSlots<DropdownMenuPrimitive.RadioItem>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the radio item.
@@ -32,7 +34,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<DropdownMenuPrimitive.RadioItemEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -4,7 +4,13 @@
   import { fade } from 'svelte/transition';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events, Transition } from '$lib/utils/types.js';
+  import type { ComponentInfo, Transition } from '$lib/utils/types.js';
+
+  type Primitive<
+    TTransition extends Transition = Transition,
+    TTransitionIn extends Transition = Transition,
+    TTransitionOut extends Transition = Transition,
+  > = ComponentInfo<AlertDialogPrimitive.Overlay<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
    * The attributes of the overlay.
@@ -17,10 +23,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = Omit<
-    AlertDialogPrimitive.OverlayProps<TTransition, TTransitionIn, TTransitionOut>,
-    keyof Attributes
-  >;
+  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
   /**
    * The slots of the overlay.
    */
@@ -28,7 +31,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = ComponentSlots<AlertDialogPrimitive.Overlay<TTransition, TTransitionIn, TTransitionOut>>;
+  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
 
   /**
    * The styles of the overlay.
@@ -46,19 +49,19 @@
   "
   lang="ts"
 >
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
 
-  export let asChild: Props['asChild'] = undefined;
-  export let el: Props['el'] = undefined;
-  export let inTransition: Props['inTransition'] = undefined;
-  export let inTransitionConfig: Props['inTransitionConfig'] = undefined;
-  export let outTransition: Props['outTransition'] = undefined;
-  export let outTransitionConfig: Props['outTransitionConfig'] = undefined;
-  export let transition: Props['transition'] = fade as Props['transition'];
-  export let transitionConfig: Props['transitionConfig'] = {
+  export let asChild: TypedProps['asChild'] = undefined;
+  export let el: TypedProps['el'] = undefined;
+  export let inTransition: TypedProps['inTransition'] = undefined;
+  export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
+  export let outTransition: TypedProps['outTransition'] = undefined;
+  export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
+  export let transition: TypedProps['transition'] = fade as TypedProps['transition'];
+  export let transitionConfig: TypedProps['transitionConfig'] = {
     duration: 150,
   };
 

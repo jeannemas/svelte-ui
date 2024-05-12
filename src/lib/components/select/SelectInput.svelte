@@ -4,7 +4,9 @@
   import { tv } from 'tailwind-variants';
 
   import { castAsAny } from '$lib/utils/internal.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<SelectPrimitive.Input>;
 
   /**
    * The attributes of the input.
@@ -13,11 +15,11 @@
   /**
    * The props of the input.
    */
-  export type Props = Omit<SelectPrimitive.InputProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the input.
    */
-  export type Slots = ComponentSlots<SelectPrimitive.Input>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the input.
@@ -28,7 +30,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -1,24 +1,26 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<DropdownMenuPrimitive.Sub>;
 
   /**
    * The attributes of the sub.
    */
-  export type Attributes = Record<never, never>;
+  export type Attributes = EmptyObject;
   /**
    * The props of the sub.
    */
-  export type Props = DropdownMenuPrimitive.SubProps;
+  export type Props = Primitive['props'];
   /**
    * The slots of the sub.
    */
-  export type Slots = ComponentSlots<DropdownMenuPrimitive.Sub>;
+  export type Slots = Primitive['slots'];
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

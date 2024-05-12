@@ -11,27 +11,28 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      disabled: z.boolean().default(false).optional(),
-      fixedWeeks: z.boolean().default(false).optional(),
-      numberOfMonths: z.number().int().min(1).default(1).optional(),
-      pagedNavigation: z.boolean().default(false).optional(),
-      preventDeselect: z.boolean().default(false).optional(),
-      readonly: z.boolean().default(false).optional(),
-      weekStartsOn: z
-        .union([
-          z.literal(0),
-          z.literal(1),
-          z.literal(2),
-          z.literal(3),
-          z.literal(4),
-          z.literal(5),
-          z.literal(6),
-        ])
-        .default(0)
-        .optional(),
-      weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow').optional(),
-    }),
+    z
+      .object({
+        disabled: z.boolean().default(false),
+        fixedWeeks: z.boolean().default(false),
+        numberOfMonths: z.number().int().min(1).default(1),
+        pagedNavigation: z.boolean().default(false),
+        preventDeselect: z.boolean().default(false),
+        readonly: z.boolean().default(false),
+        weekStartsOn: z
+          .union([
+            z.literal(0),
+            z.literal(1),
+            z.literal(2),
+            z.literal(3),
+            z.literal(4),
+            z.literal(5),
+            z.literal(6),
+          ])
+          .default(0),
+        weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow'),
+      })
+      .partial(),
   );
 </script>
 

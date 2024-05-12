@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<PaginationPrimitive.Root>;
 
   /**
    * The attributes of the root.
@@ -12,12 +14,12 @@
   /**
    * The props of the root.
    */
-  export type Props = Omit<PaginationPrimitive.Props, keyof Attributes | 'asChild'>;
+  export type Props = Omit<Primitive['props'], keyof Attributes | 'asChild'>;
   /**
    * The slots of the root.
    */
   export type Slots = {
-    default: Omit<ComponentSlots<PaginationPrimitive.Root>['default'], 'pages'> & {
+    default: Omit<Primitive['slots']['default'], 'pages'> & {
       currentPage: number;
       pages: PageItem[];
     };
@@ -32,7 +34,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<PaginationPrimitive.Events>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

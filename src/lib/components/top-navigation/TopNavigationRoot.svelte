@@ -7,7 +7,7 @@
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import Container from '$lib/components/container/index.js';
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes for the root.
@@ -105,7 +105,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

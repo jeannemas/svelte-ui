@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes for the root.
@@ -11,7 +11,7 @@
   /**
    * The props for the root.
    */
-  export type Props = Record<never, never>;
+  export type Props = EmptyObject;
   /**
    * The slots for the root.
    */
@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

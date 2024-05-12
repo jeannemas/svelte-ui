@@ -9,10 +9,12 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      xAxis: z.boolean().default(false).optional(),
-      yAxis: z.boolean().default(false).optional(),
-    }),
+    z
+      .object({
+        xAxis: z.boolean().default(false),
+        yAxis: z.boolean().default(false),
+      })
+      .partial(),
   );
 </script>
 

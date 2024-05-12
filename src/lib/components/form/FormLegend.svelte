@@ -1,9 +1,11 @@
 <script context="module" lang="ts">
-  import { Legend, type LegendProps } from 'formsnap';
+  import { Legend } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<Legend>;
 
   /**
    * The attributes of the legend.
@@ -12,11 +14,11 @@
   /**
    * The props of the legend.
    */
-  export type Props = Omit<LegendProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the legend.
    */
-  export type Slots = ComponentSlots<Legend>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the legend.
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

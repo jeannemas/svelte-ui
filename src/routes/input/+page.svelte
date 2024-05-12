@@ -10,11 +10,13 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      disabled: z.boolean().default(false).optional(),
-      placeholder: z.string().default('').optional(),
-      variant: z.enum(variants).default('text'),
-    }),
+    z
+      .object({
+        disabled: z.boolean().default(false),
+        placeholder: z.string().default(''),
+        variant: z.enum(variants).default('text'),
+      })
+      .partial(),
   );
 </script>
 
@@ -64,7 +66,7 @@
           value: variant,
         }))}"
         onSelectedChange="{(selected) => {
-          $superFormData.variant = selected?.value ?? 'text';
+          $superFormData.variant = selected?.value;
         }}"
         portal="{null}"
         selected="{$superFormData.variant !== undefined
@@ -101,5 +103,5 @@
 <Input
   disabled="{$superFormData.disabled}"
   placeholder="{$superFormData.placeholder}"
-  variant="{$superFormData.variant}"
+  variant="{$superFormData.variant ?? 'text'}"
 />

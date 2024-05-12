@@ -11,12 +11,14 @@
   import * as Pagination from '$lib/components/pagination/index.js';
 
   const adapter = zod(
-    z.object({
-      count: z.number().int().min(0).default(20),
-      perPage: z.number().int().min(1).default(10).optional(),
-      page: z.number().int().min(1).default(1).optional(),
-      siblingCount: z.number().int().min(1).default(1).optional(),
-    }),
+    z
+      .object({
+        count: z.number().int().min(0).default(20),
+        perPage: z.number().int().min(1).default(10),
+        page: z.number().int().min(1).default(1),
+        siblingCount: z.number().int().min(1).default(1),
+      })
+      .partial(),
   );
 </script>
 
@@ -115,7 +117,7 @@
 <Separator />
 
 <Pagination.Root
-  count="{$superFormData.count}"
+  count="{$superFormData.count ?? 0}"
   perPage="{$superFormData.perPage}"
   siblingCount="{$superFormData.siblingCount}"
   bind:page="{$superFormData.page}"

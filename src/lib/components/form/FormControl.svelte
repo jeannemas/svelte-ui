@@ -1,24 +1,26 @@
 <script context="module" lang="ts">
-  import { Control, type ControlProps } from 'formsnap';
+  import { Control } from 'formsnap';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<Control>;
 
   /**
    * The attributes of the control.
    */
-  export type Attributes = Record<never, never>;
+  export type Attributes = EmptyObject;
   /**
    * The props of the control.
    */
-  export type Props = ControlProps;
+  export type Props = Primitive['props'];
   /**
    * The slots of the control.
    */
-  export type Slots = ComponentSlots<Control>;
+  export type Slots = Primitive['slots'];
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

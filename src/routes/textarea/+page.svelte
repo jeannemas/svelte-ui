@@ -9,11 +9,13 @@
   import Textarea from '$lib/components/textarea/index.js';
 
   const adapter = zod(
-    z.object({
-      disabled: z.boolean().default(false).optional(),
-      placeholder: z.string().default('').optional(),
-      readonly: z.boolean().default(false).optional(),
-    }),
+    z
+      .object({
+        disabled: z.boolean().default(false),
+        placeholder: z.string().default(''),
+        readonly: z.boolean().default(false),
+      })
+      .partial(),
   );
 </script>
 

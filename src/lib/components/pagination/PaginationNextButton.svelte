@@ -5,7 +5,9 @@
   import { tv } from 'tailwind-variants';
 
   import Button from '$lib/components/button/index.js';
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<PaginationPrimitive.NextButton>;
 
   /**
    * The attributes of the next button.
@@ -14,11 +16,11 @@
   /**
    * The props of the next button.
    */
-  export type Props = Omit<PaginationPrimitive.NextButtonProps, keyof Attributes | 'asChild'>;
+  export type Props = Omit<Primitive['props'], keyof Attributes | 'asChild'>;
   /**
    * The slots of the next button.
    */
-  export type Slots = ComponentSlots<PaginationPrimitive.NextButton>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the next button.
@@ -29,7 +31,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<PaginationPrimitive.NextButtonEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

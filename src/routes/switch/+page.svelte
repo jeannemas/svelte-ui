@@ -8,10 +8,12 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      checked: z.boolean().default(false).optional(),
-      disabled: z.boolean().default(false).optional(),
-    }),
+    z
+      .object({
+        checked: z.boolean().default(false),
+        disabled: z.boolean().default(false),
+      })
+      .partial(),
   );
 </script>
 

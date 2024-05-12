@@ -4,7 +4,13 @@
   import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
-  import type { ComponentSlots, Events, Transition } from '$lib/utils/types.js';
+  import type { ComponentInfo, Transition } from '$lib/utils/types.js';
+
+  type Primitive<
+    TTransition extends Transition = Transition,
+    TTransitionIn extends Transition = Transition,
+    TTransitionOut extends Transition = Transition,
+  > = ComponentInfo<DropdownMenuPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
 
   /**
    * The attributes of the content.
@@ -17,10 +23,7 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = Omit<
-    DropdownMenuPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>,
-    keyof Attributes
-  >;
+  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
   /**
    * The slots of the content.
    */
@@ -28,14 +31,14 @@
     TTransition extends Transition = Transition,
     TTransitionIn extends Transition = Transition,
     TTransitionOut extends Transition = Transition,
-  > = ComponentSlots<DropdownMenuPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
 
   /**
    * The styles of the content.
    */
   export const styles = tv({
     base: [
-      'z-50 min-w-[8rem] rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+      'z-50 min-w-32 rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
       'focus:outline-none',
     ],
   });
@@ -49,7 +52,7 @@
   "
   lang="ts"
 >
-  type $$Events = Events<DropdownMenuPrimitive.ContentEvents>;
+  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
   type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;

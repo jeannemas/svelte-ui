@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { Events, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   /**
    * The attributes of the root.
@@ -37,7 +37,7 @@
     base: [
       'relative w-full rounded-lg border p-4',
       '[&:has(svg)]:pl-11',
-      '[&>svg+div]:translate-y-[-3px]',
+      '[&>svg+div]:-translate-y-[3px]',
       '[&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
     ],
     defaultVariants: {
@@ -65,7 +65,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

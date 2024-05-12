@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<SelectPrimitive.Label>;
 
   /**
    * The attributes of the label.
@@ -12,11 +14,11 @@
   /**
    * The props of the label.
    */
-  export type Props = Omit<SelectPrimitive.LabelProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the label.
    */
-  export type Slots = ComponentSlots<SelectPrimitive.Label>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the label.
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<SelectPrimitive.LabelEvents>;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

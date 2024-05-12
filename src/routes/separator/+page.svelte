@@ -8,9 +8,11 @@
   import Separator, { defaultOrientation, orientations } from '$lib/components/separator/index.js';
 
   const adapter = zod(
-    z.object({
-      orientation: z.enum(orientations).default(defaultOrientation).optional(),
-    }),
+    z
+      .object({
+        orientation: z.enum(orientations).default(defaultOrientation),
+      })
+      .partial(),
   );
 </script>
 

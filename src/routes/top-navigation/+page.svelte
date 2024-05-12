@@ -10,12 +10,11 @@
   import * as TopNavigation from '$lib/components/top-navigation/index.js';
 
   const adapter = zod(
-    z.object({
-      breakpoint: z
-        .enum(TopNavigation.breakpoints)
-        .default(TopNavigation.defaultBreakpoint)
-        .optional(),
-    }),
+    z
+      .object({
+        breakpoint: z.enum(TopNavigation.breakpoints).default(TopNavigation.defaultBreakpoint),
+      })
+      .partial(),
   );
 </script>
 

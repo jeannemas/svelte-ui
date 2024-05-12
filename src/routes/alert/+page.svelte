@@ -10,9 +10,11 @@
   import Separator from '$lib/components/separator/index.js';
 
   const adapter = zod(
-    z.object({
-      variant: z.enum(Alert.variants).default(Alert.defaultVariant).optional(),
-    }),
+    z
+      .object({
+        variant: z.enum(Alert.variants).default(Alert.defaultVariant),
+      })
+      .partial(),
   );
 </script>
 

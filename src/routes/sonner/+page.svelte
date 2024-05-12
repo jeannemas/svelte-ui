@@ -20,19 +20,21 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      closeButton: z.boolean().default(false).optional(),
-      dir: z.enum(dirs).default(defaultDir).optional(),
-      duration: z.number().int().default(4000).optional(),
-      expand: z.boolean().default(false).optional(),
-      gap: z.number().int().default(14).optional(),
-      invert: z.boolean().default(false).optional(),
-      offset: z.number().int().default(32).optional(),
-      position: z.enum(positions).default(defaultPosition).optional(),
-      richColors: z.boolean().default(false).optional(),
-      theme: z.enum(themes).default(defaultTheme).optional(),
-      visibleToasts: z.number().int().default(3).optional(),
-    }),
+    z
+      .object({
+        closeButton: z.boolean().default(false),
+        dir: z.enum(dirs).default(defaultDir),
+        duration: z.number().int().default(4000),
+        expand: z.boolean().default(false),
+        gap: z.number().int().default(14),
+        invert: z.boolean().default(false),
+        offset: z.number().int().default(32),
+        position: z.enum(positions).default(defaultPosition),
+        richColors: z.boolean().default(false),
+        theme: z.enum(themes).default(defaultTheme),
+        visibleToasts: z.number().int().default(3),
+      })
+      .partial(),
   );
 </script>
 

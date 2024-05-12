@@ -3,7 +3,9 @@
 /**
  * This script is a modified version of the `package` script from the SvelteKit package.
  *
- * It's purpose is to log emitted diagnostics when generating d.ts files, in order to be able to debug issues with the generated types.
+ * It's purpose is to log emitted diagnostics when generating `.d.ts` files, in order to be able to debug issues with the generated types.
+ *
+ * Usage: `node scripts/package.js`
  */
 
 // @ts-check
@@ -15,6 +17,7 @@ import { preprocess } from 'svelte/compiler';
 import { svelte2tsx } from 'svelte2tsx';
 import ts from 'typescript';
 
+// Those imports needs to be relative to the script file and manully resolved since they resolve to internal components that are not exposed by the package.
 import { load_config as loadConfig } from '../node_modules/@sveltejs/package/src/config.js';
 import {
   copy,
@@ -602,11 +605,7 @@ async function saveEmitResult(result) {
     }
 
     console.error(
-      `File "${diagnostic.file.fileName}" had the following issue:\n`,
-      diagnostic.messageText,
-      '\n',
-      diagnostic.file.text,
-      '\n',
+      `- File "${diagnostic.file.fileName}" had the following issue: ${diagnostic.messageText}`,
     );
   }
 }

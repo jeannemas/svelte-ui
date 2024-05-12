@@ -5,13 +5,28 @@ import type { TransitionConfig } from 'svelte/transition';
 export type { ComponentEvents, ComponentProps } from 'svelte';
 
 /**
- * Extracts the slots of a component.
- *
- * @param TComponent The component to extract the slots from.
+ * Represents any object.
  */
-export type ComponentSlots<TComponent extends SvelteComponent> =
-  TComponent extends SvelteComponent<Record<never, never>, Record<never, never>, infer TSlots>
-    ? TSlots
+export type AnyObject = ObjectOf<unknown>;
+/**
+ * Extracts the informations of a component.
+ */
+export type ComponentInfo<TComponent extends SvelteComponent> =
+  TComponent extends SvelteComponent<infer TProps, infer TEvents, infer TSlots>
+    ? {
+        /**
+         * The events of the component.
+         */
+        events: TEvents;
+        /**
+         * The props of the component.
+         */
+        props: TProps;
+        /**
+         * The slots of the component.
+         */
+        slots: TSlots;
+      }
     : never;
 /**
  * Represents an event of an element.
@@ -23,27 +38,23 @@ export type ElementEvent<TElement extends HTMLElement, TEvent extends Event> = T
   currentTarget: EventTarget & TElement;
 };
 /**
- * Represents empty events.
- */
-export type EmptyEvents = EmptyObject;
-/**
  * Represents an empty object.
  */
 export type EmptyObject = Record<never, never>;
-/**
- * Represents an events object.
- */
-export type Events<TEvents extends Record<string, Event> = EmptyEvents> = TEvents;
 /**
  * The heading level.
  */
 export type HeadingLevel = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 /**
+ * Represents an object of values.
+ */
+export type ObjectOf<TValue, TKey extends string | number | symbol = string> = Record<TKey, TValue>;
+/**
  * Represents a slot.
  *
- * @default {EmptyObject}
+ * @default EmptyObject
  */
-export type Slot<TSlot extends Record<string, unknown> = EmptyObject> = TSlot;
+export type Slot<TSlot extends AnyObject = EmptyObject> = TSlot;
 /**
  * A transition function.
  */

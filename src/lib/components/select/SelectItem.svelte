@@ -4,7 +4,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, ElementEvent, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo, ElementEvent } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<SelectPrimitive.Item>;
 
   /**
    * The attributes of the item.
@@ -13,11 +15,11 @@
   /**
    * The props of the item.
    */
-  export type Props = Omit<SelectPrimitive.ItemProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the item.
    */
-  export type Slots = ComponentSlots<SelectPrimitive.Item>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the item.
@@ -32,15 +34,13 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events<
-    Omit<SelectPrimitive.ItemEvents, 'focusin' | 'focusout' | 'keydown' | 'pointerleave'> & {
-      // TODO change once bits-ui is updated
-      focusin: ElementEvent<HTMLDivElement, FocusEvent>;
-      focusout: ElementEvent<HTMLDivElement, FocusEvent>;
-      keydown: ElementEvent<HTMLDivElement, KeyboardEvent>;
-      pointerleave: ElementEvent<HTMLDivElement, PointerEvent>;
-    }
-  >;
+  type $$Events = Omit<Primitive['events'], 'focusin' | 'focusout' | 'keydown' | 'pointerleave'> & {
+    // TODO change once bits-ui is updated
+    focusin: ElementEvent<HTMLDivElement, FocusEvent>;
+    focusout: ElementEvent<HTMLDivElement, FocusEvent>;
+    keydown: ElementEvent<HTMLDivElement, KeyboardEvent>;
+    pointerleave: ElementEvent<HTMLDivElement, PointerEvent>;
+  };
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

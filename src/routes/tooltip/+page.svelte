@@ -11,14 +11,16 @@
   import * as Tooltip from '$lib/components/tooltip/index.js';
 
   const adapter = zod(
-    z.object({
-      closeDelay: z.number().min(0).default(0).optional(),
-      closeOnEscape: z.boolean().default(false).optional(),
-      closeOnPointerDown: z.boolean().default(false).optional(),
-      disableHoverableContent: z.boolean().default(false).optional(),
-      open: z.boolean().default(false).optional(),
-      openDelay: z.number().min(0).default(0).optional(),
-    }),
+    z
+      .object({
+        closeDelay: z.number().min(0).default(0),
+        closeOnEscape: z.boolean().default(false),
+        closeOnPointerDown: z.boolean().default(false),
+        disableHoverableContent: z.boolean().default(false),
+        open: z.boolean().default(false),
+        openDelay: z.number().min(0).default(0),
+      })
+      .partial(),
   );
 </script>
 

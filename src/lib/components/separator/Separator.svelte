@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<SeparatorPrimitive.Root>;
 
   /**
    * The attributes of the separator.
@@ -16,11 +18,11 @@
   /**
    * The props of the separator.
    */
-  export type Props = Omit<SeparatorPrimitive.Props, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the separator.
    */
-  export type Slots = ComponentSlots<SeparatorPrimitive.Root>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the separator.
@@ -32,8 +34,8 @@
     },
     variants: {
       orientation: {
-        horizontal: ['my-4 h-[1px] w-full'],
-        vertical: ['mx-4 h-full w-[1px]'],
+        horizontal: ['my-4 h-px w-full'],
+        vertical: ['mx-4 h-full w-px'],
       },
     },
   });
@@ -51,7 +53,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

@@ -25,17 +25,19 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z.object({
-      closeOnEscape: z.boolean().default(true).optional(),
-      closeOnItemClick: z.boolean().default(true).optional(),
-      closeOnOutsideClick: z.boolean().default(true).optional(),
-      dir: z.enum(DropdownMenu.rootDirs).default(DropdownMenu.rootDefaultDir).optional(),
-      disableFocusFirstItem: z.boolean().default(false).optional(),
-      loop: z.boolean().default(false).optional(),
-      open: z.boolean().default(false).optional(),
-      preventScroll: z.boolean().default(true).optional(),
-      typeahead: z.boolean().default(true).optional(),
-    }),
+    z
+      .object({
+        closeOnEscape: z.boolean().default(true),
+        closeOnItemClick: z.boolean().default(true),
+        closeOnOutsideClick: z.boolean().default(true),
+        dir: z.enum(DropdownMenu.rootDirs).default(DropdownMenu.rootDefaultDir),
+        disableFocusFirstItem: z.boolean().default(false),
+        loop: z.boolean().default(false),
+        open: z.boolean().default(false),
+        preventScroll: z.boolean().default(true),
+        typeahead: z.boolean().default(true),
+      })
+      .partial(),
   );
 </script>
 

@@ -1,6 +1,8 @@
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
+import type { ObjectOf } from '$lib/utils/types.js';
+
 type FlyAndScaleParams = {
   duration?: number;
   start?: number;
@@ -73,7 +75,7 @@ function scaleConversion(value: number, fromScale: Scale, toScale: Scale) {
  * @param style The style object to convert.
  * @returns The style string.
  */
-function styleToString(style: Record<string, number | string | undefined>) {
+function styleToString(style: ObjectOf<number | string | undefined>) {
   const parts: string[] = [];
 
   for (const key in style) {

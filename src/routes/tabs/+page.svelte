@@ -14,11 +14,13 @@
   import * as Tabs from '$lib/components/tabs/index.js';
 
   const adapter = zod(
-    z.object({
-      activateOnFocus: z.boolean().default(true).optional(),
-      loop: z.boolean().default(false).optional(),
-      orientation: z.enum(Tabs.rootOrientations).default(Tabs.rootDefaultOrientation).optional(),
-    }),
+    z
+      .object({
+        activateOnFocus: z.boolean().default(true),
+        loop: z.boolean().default(false),
+        orientation: z.enum(Tabs.rootOrientations).default(Tabs.rootDefaultOrientation),
+      })
+      .partial(),
   );
 </script>
 

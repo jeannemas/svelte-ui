@@ -1,9 +1,11 @@
 <script context="module" lang="ts">
-  import { Description, type DescriptionProps } from 'formsnap';
+  import { Description } from 'formsnap';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { ComponentSlots, Events } from '$lib/utils/types.js';
+  import type { ComponentInfo } from '$lib/utils/types.js';
+
+  type Primitive = ComponentInfo<Description>;
 
   /**
    * The attributes of the description.
@@ -12,11 +14,11 @@
   /**
    * The props of the description.
    */
-  export type Props = Omit<DescriptionProps, keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the description.
    */
-  export type Slots = ComponentSlots<Description>;
+  export type Slots = Primitive['slots'];
 
   /**
    * The styles of the description.
@@ -27,7 +29,7 @@
 </script>
 
 <script lang="ts">
-  type $$Events = Events;
+  type $$Events = Primitive['events'];
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 

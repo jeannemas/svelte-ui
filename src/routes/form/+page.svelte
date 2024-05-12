@@ -9,9 +9,11 @@
   import Switch from '$lib/components/switch/index.js';
 
   const adapter1 = zod(
-    z.object({
-      debug: z.boolean().default(false).optional(),
-    }),
+    z
+      .object({
+        debug: z.boolean().default(false),
+      })
+      .partial(),
   );
   const adapter2 = zod(
     z.object({
