@@ -5,7 +5,7 @@
   import { tv } from 'tailwind-variants';
 
   import { castAsAny } from '$lib/utils/internal.js';
-  import type { AnyObject, ComponentInfo } from '$lib/utils/types.js';
+  import type { AnyObject, ComponentInfo, ObjectOf } from '$lib/utils/types.js';
 
   type Primitive<T extends AnyObject, U extends FormPathLeaves<T>> = ComponentInfo<
     ElementField<T, U>
@@ -28,8 +28,9 @@
    * The slots of the element field.
    */
   export type Slots<T extends AnyObject, U extends FormPathLeaves<T>> = {
-    default: Omit<Primitive<T, U>['slots']['default'], 'value'> & {
-      // Manual omission to prevent infinite loop while compiling the package
+    default: Omit<Primitive<T, U>['slots']['default'], 'constraints' | 'value'> & {
+      // Manual omissions to prevent infinite loop while compiling the package
+      constraints: ObjectOf<unknown>;
       value: unknown;
     };
   };
