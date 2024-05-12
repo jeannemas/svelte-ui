@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.8
+
+### Patch Changes
+
+- 9acb1e8: Added dialog and drawer components
+
 ## 0.17.7
 
 ### Patch Changes
