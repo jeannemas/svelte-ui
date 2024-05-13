@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.10
+
+### Patch Changes
+
+- a1d6278: Added command component
+
 ## 0.17.9
 
 ### Patch Changes
