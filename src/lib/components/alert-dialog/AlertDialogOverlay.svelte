@@ -7,10 +7,12 @@
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<AlertDialogPrimitive.Overlay<TTransition, TTransitionIn, TTransitionOut>>;
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    AlertDialogPrimitive.Overlay<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>
+  >;
 
   /**
    * The attributes of the overlay.
@@ -20,18 +22,21 @@
    * The props of the overlay.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
+  > = Omit<
+    Primitive<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>['props'],
+    keyof Attributes
+  >;
   /**
    * The slots of the overlay.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
+  > = Primitive<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>['slots'];
 
   /**
    * The styles of the overlay.
@@ -43,16 +48,16 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
   type $$Events = Primitive['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
+  type TypedProps = Props<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;

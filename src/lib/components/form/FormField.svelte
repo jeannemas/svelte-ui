@@ -7,7 +7,9 @@
   import { castAsAny } from '$lib/utils/internal.js';
   import type { AnyObject, ComponentInfo, EmptyObject, ObjectOf } from '$lib/utils/types.js';
 
-  type Primitive<T extends AnyObject, U extends FormPath<T>> = ComponentInfo<Field<T, U>>;
+  type Primitive<TObject extends AnyObject, TPath extends FormPath<TObject>> = ComponentInfo<
+    Field<TObject, TPath>
+  >;
 
   /**
    * The attributes of the field.
@@ -16,17 +18,17 @@
   /**
    * The props of the field.
    */
-  export type Props<T extends AnyObject, U extends FormPath<T>> = Omit<
-    Primitive<T, U>['props'],
+  export type Props<TObject extends AnyObject, TPath extends FormPath<TObject>> = Omit<
+    Primitive<TObject, TPath>['props'],
     'form'
   > & {
-    superForm: Primitive<T, U>['props']['form'];
+    superForm: Primitive<TObject, TPath>['props']['form'];
   };
   /**
    * The slots of the field.
    */
-  export type Slots<T extends AnyObject, U extends FormPath<T>> = {
-    default: Omit<Primitive<T, U>['slots']['default'], 'constraints' | 'value'> & {
+  export type Slots<TObject extends AnyObject, TPath extends FormPath<TObject>> = {
+    default: Omit<Primitive<TObject, TPath>['slots']['default'], 'constraints' | 'value'> & {
       // Manual omissions to prevent infinite loop while compiling the package
       constraints: ObjectOf<unknown>;
       value: unknown;
@@ -41,11 +43,11 @@
   });
 </script>
 
-<script generics="T extends AnyObject, U extends FormPath<T>" lang="ts">
+<script generics="TObject extends AnyObject, TPath extends FormPath<TObject>" lang="ts">
   type $$Events = EmptyObject;
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<T, U>;
-  type TypedProps = Props<T, U>;
+  type $$Slots = Slots<TObject, TPath>;
+  type TypedProps = Props<TObject, TPath>;
 
   export let name: TypedProps['name'];
   export let superForm: TypedProps['superForm'];

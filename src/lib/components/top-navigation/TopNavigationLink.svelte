@@ -4,8 +4,8 @@
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import { styles as buttonStyles } from './TopNavigationButton.svelte';
-  import type { Props as RootProps } from './TopNavigationRoot.svelte';
+  import { styles as topNavigationButtonStyles } from './TopNavigationButton.svelte';
+  import type { Props as TopNavigationRootProps } from './TopNavigationRoot.svelte';
 
   /**
    * The attributes for the link.
@@ -14,7 +14,7 @@
   /**
    * The props for the link.
    */
-  export type Props = Pick<RootProps, 'breakpoint'> & {
+  export type Props = Pick<TopNavigationRootProps, 'breakpoint'> & {
     /**
      * The URL of the link.
      */
@@ -35,8 +35,8 @@
    * The styles for the link.
    */
   export const styles = tv({
-    ...buttonStyles,
-    base: [...buttonStyles.base, 'data-[active=true]:border-primary'],
+    ...topNavigationButtonStyles,
+    base: [...topNavigationButtonStyles.base, 'data-[active=true]:border-primary'],
   });
 </script>
 

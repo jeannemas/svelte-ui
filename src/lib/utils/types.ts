@@ -59,3 +59,44 @@ export type Slot<TSlot extends AnyObject = EmptyObject> = TSlot;
  * A transition function.
  */
 export type Transition = (node: Element, params?: unknown) => TransitionConfig;
+/**
+ * The configuration to pass to a transition function.
+ */
+export type TransitionParams<T extends Transition> = Parameters<T>[1];
+/**
+ * The transition props.
+ */
+export type TransitionProps<
+  TTransition extends Transition = Transition,
+  TTransitionIn extends Transition = Transition,
+  TTransitionOut extends Transition = Transition,
+> = {
+  /**
+   * A transition function to use during both the in and out transitions.
+   */
+  transition?: TTransition;
+  /**
+   * The configuration to pass to the `transition` function.
+   */
+  transitionConfig?: TransitionParams<NoInfer<TTransition>>;
+  /**
+   * A transition function to use during the in transition.
+   *
+   * If provided, this will override the `transition` function.
+   */
+  inTransition?: TTransitionIn;
+  /**
+   * The configuration to pass to the `inTransition` function.
+   */
+  inTransitionConfig?: TransitionParams<NoInfer<TTransitionIn>>;
+  /**
+   * A transition function to use during the out transition.
+   *
+   * If provided, this will override the `transition` function.
+   */
+  outTransition?: TTransitionOut;
+  /**
+   * The configuration to pass to the `outTransition` function.
+   */
+  outTransitionConfig?: TransitionParams<NoInfer<TTransitionOut>>;
+};

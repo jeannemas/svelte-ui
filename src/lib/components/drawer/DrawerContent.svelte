@@ -6,16 +6,24 @@
 
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
-  import DrawerOverlay from './DrawerOverlay.svelte';
-  import DrawerPortal from './DrawerPortal.svelte';
+  import DrawerOverlay, {
+    type Attributes as DrawerOverlayAttributes,
+    type Props as DrawerOverlayProps,
+  } from './DrawerOverlay.svelte';
+  import DrawerPortal, {
+    type Attributes as DrawerPortalAttributes,
+    type Props as DrawerPortalProps,
+  } from './DrawerPortal.svelte';
 
   // TODO remove comment once VaulSvelte typings are fixed
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<DrawerPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    DrawerPrimitive.Content<TContentTransition, TContentTransitionIn, TContentTransitionOut>
+  >;
 
   /**
    * The attributes of the content.
@@ -25,21 +33,30 @@
    * The props of the content.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
   > = Omit<
-    DialogPrimitive.ContentProps<TTransition, TTransitionIn, TTransitionOut>, // TODO change to Primitive<TTransition, TTransitionIn, TTransitionOut>['props'] once VaulSvelte typings are fixed
+    DialogPrimitive.ContentProps<TContentTransition, TContentTransitionIn, TContentTransitionOut>, // TODO change to Primitive<TContentTransition, TTranTContentTransitionInsitionIn, TContentTransitionOut>['props'] once VaulSvelte typings are fixed
     keyof Attributes
-  >;
+  > & {
+    overlayAttributesAndProps?: DrawerOverlayAttributes &
+      DrawerOverlayProps<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
+    portalAttributesAndProps?: DrawerPortalAttributes & DrawerPortalProps;
+  };
   /**
    * The slots of the content.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<DialogPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>['slots']; // TODO change to Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'] once VaulSvelte typings are fixed
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    DialogPrimitive.Content<TContentTransition, TContentTransitionIn, TContentTransitionOut>
+  >['slots']; // TODO change to Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['slots'] once VaulSvelte typings are fixed
 
   /**
    * The styles of the content.
@@ -53,16 +70,26 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
-  type $$Events = DialogPrimitive.ContentEvents; // TODO change to Primitive<TTransition, TTransitionIn, TTransitionOut>['events'] once VaulSvelte typings are fixed
+  type $$Events = DialogPrimitive.ContentEvents; // TODO change to Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['events'] once VaulSvelte typings are fixed
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
+  type TypedProps = Props<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut,
+    TOverlayTransition,
+    TOverlayTransitionIn,
+    TOverlayTransitionOut
+  >;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;
@@ -70,6 +97,8 @@
   export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
   export let outTransition: TypedProps['outTransition'] = undefined;
   export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
+  export let overlayAttributesAndProps: TypedProps['overlayAttributesAndProps'] = undefined;
+  export let portalAttributesAndProps: TypedProps['portalAttributesAndProps'] = undefined;
   export let transition: TypedProps['transition'] = undefined;
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
@@ -79,8 +108,8 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<DrawerPortal>
-  <DrawerOverlay />
+<DrawerPortal {...portalAttributesAndProps}>
+  <DrawerOverlay {...overlayAttributesAndProps} />
 
   <DrawerPrimitive.Content
     {...attributes}

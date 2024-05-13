@@ -7,15 +7,26 @@
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
-  import DialogClose from './DialogClose.svelte';
-  import DialogOverlay from './DialogOverlay.svelte';
-  import DialogPortal from './DialogPortal.svelte';
+  import DialogClose, {
+    type Attributes as DialogCloseAttributes,
+    type Props as DialogCloseProps,
+  } from './DialogClose.svelte';
+  import DialogOverlay, {
+    type Attributes as DialogOverlayAttributes,
+    type Props as DialogOverlayProps,
+  } from './DialogOverlay.svelte';
+  import DialogPortal, {
+    type Attributes as DialogPortalAttributes,
+    type Props as DialogPortalProps,
+  } from './DialogPortal.svelte';
 
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<DialogPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    DialogPrimitive.Content<TContentTransition, TContentTransitionIn, TContentTransitionOut>
+  >;
 
   /**
    * The attributes of the content.
@@ -25,18 +36,29 @@
    * The props of the content.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
+  > = Omit<
+    Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['props'],
+    keyof Attributes
+  > & {
+    closeAttributesAndProps?: DialogCloseAttributes & DialogCloseProps;
+    overlayAttributesAndProps?: DialogOverlayAttributes &
+      DialogOverlayProps<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
+    portalAttributesAndProps?: DialogPortalAttributes & DialogPortalProps;
+  };
   /**
    * The slots of the content.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['slots'];
 
   /**
    * The styles of the content.
@@ -52,23 +74,40 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
-  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
+  type $$Events = Primitive<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut
+  >['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
+  type TypedProps = Props<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut,
+    TOverlayTransition,
+    TOverlayTransitionIn,
+    TOverlayTransitionOut
+  >;
 
   export let asChild: TypedProps['asChild'] = undefined;
+  export let closeAttributesAndProps: TypedProps['closeAttributesAndProps'] = undefined;
   export let el: TypedProps['el'] = undefined;
   export let inTransition: TypedProps['inTransition'] = undefined;
   export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
   export let outTransition: TypedProps['outTransition'] = undefined;
   export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
+  export let overlayAttributesAndProps: TypedProps['overlayAttributesAndProps'] = undefined;
+  export let portalAttributesAndProps: TypedProps['portalAttributesAndProps'] = undefined;
   export let transition: TypedProps['transition'] = flyAndScale as TypedProps['transition'];
   export let transitionConfig: TypedProps['transitionConfig'] = {
     duration: 200,
@@ -80,8 +119,8 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<DialogPortal>
-  <DialogOverlay />
+<DialogPortal {...portalAttributesAndProps}>
+  <DialogOverlay {...overlayAttributesAndProps} />
 
   <DialogPrimitive.Content
     {...attributes}
@@ -107,7 +146,7 @@
   >
     <slot builder="{builder}" />
 
-    <DialogClose>
+    <DialogClose {...closeAttributesAndProps}>
       <X class="h-4 w-4" />
 
       <span class="sr-only">Close</span>

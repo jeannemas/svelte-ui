@@ -4,7 +4,7 @@
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import type { Props as RootProps } from './TopNavigationRoot.svelte';
+  import type { Props as TopNavigationRootProps } from './TopNavigationRoot.svelte';
 
   /**
    * The attributes for the button.
@@ -13,7 +13,7 @@
   /**
    * The props for the button.
    */
-  export type Props = Pick<RootProps, 'breakpoint'>;
+  export type Props = Pick<TopNavigationRootProps, 'breakpoint'>;
   /**
    * The slots for the button.
    */

@@ -6,7 +6,9 @@
 
   import type { AnyObject, ComponentInfo } from '$lib/utils/types.js';
 
-  type Primitive<T extends AnyObject, U extends FormPath<T>> = ComponentInfo<Fieldset<T, U>>;
+  type Primitive<TObject extends AnyObject, TPath extends FormPath<TObject>> = ComponentInfo<
+    Fieldset<TObject, TPath>
+  >;
 
   /**
    * The attributes of the fieldset.
@@ -15,16 +17,19 @@
   /**
    * The props of the fieldset.
    */
-  export type Props<T extends AnyObject, U extends FormPath<T>> = Omit<
-    Primitive<T, U>['props'],
+  export type Props<TObject extends AnyObject, TPath extends FormPath<TObject>> = Omit<
+    Primitive<TObject, TPath>['props'],
     keyof Attributes
   > & {
-    name: U;
+    name: TPath;
   };
   /**
    * The slots of the fieldset.
    */
-  export type Slots<T extends AnyObject, U extends FormPath<T>> = Primitive<T, U>['slots'];
+  export type Slots<TObject extends AnyObject, TPath extends FormPath<TObject>> = Primitive<
+    TObject,
+    TPath
+  >['slots'];
 
   /**
    * The styles of the fieldset.
@@ -34,11 +39,11 @@
   });
 </script>
 
-<script generics="T extends AnyObject, U extends FormPath<T>" lang="ts">
-  type $$Events = Primitive<T, U>['events'];
+<script generics="TObject extends AnyObject, TPath extends FormPath<TObject>" lang="ts">
+  type $$Events = Primitive<TObject, TPath>['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<T, U>;
-  type TypedProps = Props<T, U>;
+  type $$Slots = Slots<TObject, TPath>;
+  type TypedProps = Props<TObject, TPath>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;

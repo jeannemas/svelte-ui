@@ -7,10 +7,12 @@
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<PopoverPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    PopoverPrimitive.Content<TContentTransition, TContentTransitionIn, TContentTransitionOut>
+  >;
 
   /**
    * The attributes of the content.
@@ -20,18 +22,21 @@
    * The props of the content.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = Omit<
+    Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['props'],
+    keyof Attributes
+  >;
   /**
    * The slots of the content.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['slots'];
 
   /**
    * The styles of the content.
@@ -45,16 +50,20 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition
-    "
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  "
   lang="ts"
 >
-  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
+  type $$Events = Primitive<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut
+  >['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
+  type TypedProps = Props<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
 
   export let align: TypedProps['align'] = undefined;
   export let asChild: TypedProps['asChild'] = undefined;

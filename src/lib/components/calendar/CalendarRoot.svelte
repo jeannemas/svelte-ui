@@ -4,20 +4,57 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
+  import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
-  import Cell from './CalendarCell.svelte';
-  import Day from './CalendarDay.svelte';
-  import Grid from './CalendarGrid.svelte';
-  import GridBody from './CalendarGridBody.svelte';
-  import GridHead from './CalendarGridHead.svelte';
-  import GridRow from './CalendarGridRow.svelte';
-  import HeadCell from './CalendarHeadCell.svelte';
-  import Header from './CalendarHeader.svelte';
-  import Heading from './CalendarHeading.svelte';
-  import Months from './CalendarMonths.svelte';
-  import NextButton from './CalendarNextButton.svelte';
-  import PreviousButton from './CalendarPreviousButton.svelte';
+  import CalendarCell, {
+    type Attributes as CalendarCellAttributes,
+    type Props as CalendarCellProps,
+  } from './CalendarCell.svelte';
+  import CalendarDay, {
+    type Attributes as CalendarDayAttributes,
+    type Props as CalendarDayProps,
+  } from './CalendarDay.svelte';
+  import CalendarGrid, {
+    type Attributes as CalendarGridAttributes,
+    type Props as CalendarGridProps,
+  } from './CalendarGrid.svelte';
+  import CalendarGridBody, {
+    type Attributes as CalendarGridBodyAttributes,
+    type Props as CalendarGridBodyProps,
+  } from './CalendarGridBody.svelte';
+  import CalendarGridHead, {
+    type Attributes as CalendarGridHeadAttributes,
+    type Props as CalendarGridHeadProps,
+  } from './CalendarGridHead.svelte';
+  import CalendarGridRow, {
+    type Attributes as CalendarGridRowAttributes,
+    type Props as CalendarGridRowProps,
+  } from './CalendarGridRow.svelte';
+  import CalendarHeadCell, {
+    type Attributes as CalendarHeadCellAttributes,
+    type Props as CalendarHeadCellProps,
+  } from './CalendarHeadCell.svelte';
+  import CalendarHeader, {
+    type Attributes as CalendarHeaderAttributes,
+    type Props as CalendarHeaderProps,
+  } from './CalendarHeader.svelte';
+  import CalendarHeading, {
+    type Attributes as CalendarHeadingAttributes,
+    type Props as CalendarHeadingProps,
+  } from './CalendarHeading.svelte';
+  import CalendarMonths, {
+    type Attributes as CalendarMonthsAttributes,
+    type Props as CalendarMonthsProps,
+  } from './CalendarMonths.svelte';
+  import CalendarNextButton, {
+    type Attributes as CalendarNextButtonAttributes,
+    type Props as CalendarNextButtonProps,
+  } from './CalendarNextButton.svelte';
+  import CalendarPreviousButton, {
+    type Attributes as CalendarPreviousButtonAttributes,
+    type Props as CalendarPreviousButtonProps,
+  } from './CalendarPreviousButton.svelte';
 
   type Primitive<TMultiple extends boolean = false> = ComponentInfo<
     CalendarPrimitive.Root<TMultiple>
@@ -40,6 +77,20 @@
      * @param day The clicked day.
      */
     onDayClick?: (day: { date: DateValue; month: Month<DateValue> }) => unknown;
+  } & {
+    cellAttributesAndProps?: CalendarCellAttributes & CalendarCellProps;
+    dayAttributesAndProps?: CalendarDayAttributes & CalendarDayProps;
+    gridAttributesAndProps?: CalendarGridAttributes & CalendarGridProps;
+    gridBodyAttributesAndProps?: CalendarGridBodyAttributes & CalendarGridBodyProps;
+    gridHeadAttributesAndProps?: CalendarGridHeadAttributes & CalendarGridHeadProps;
+    gridRowAttributesAndProps?: CalendarGridRowAttributes & CalendarGridRowProps;
+    headCellAttributesAndProps?: CalendarHeadCellAttributes & CalendarHeadCellProps;
+    headerAttributesAndProps?: CalendarHeaderAttributes & CalendarHeaderProps;
+    headingAttributesAndProps?: CalendarHeadingAttributes & CalendarHeadingProps;
+    monthsAttributesAndProps?: CalendarMonthsAttributes & CalendarMonthsProps;
+    nextButtonAttributesAndProps?: CalendarNextButtonAttributes & CalendarNextButtonProps;
+    previousButtonAttributesAndProps?: CalendarPreviousButtonAttributes &
+      CalendarPreviousButtonProps;
   };
   /**
    * The slots of the calendar.
@@ -74,16 +125,27 @@
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let calendarLabel: TypedProps['calendarLabel'] = undefined;
+  export let cellAttributesAndProps: TypedProps['cellAttributesAndProps'] = undefined;
+  export let dayAttributesAndProps: TypedProps['dayAttributesAndProps'] = undefined;
   export let disabled: TypedProps['disabled'] = undefined;
   export let el: TypedProps['el'] = undefined;
   export let fixedWeeks: TypedProps['fixedWeeks'] = undefined;
+  export let gridAttributesAndProps: TypedProps['gridAttributesAndProps'] = undefined;
+  export let gridBodyAttributesAndProps: TypedProps['gridBodyAttributesAndProps'] = undefined;
+  export let gridHeadAttributesAndProps: TypedProps['gridHeadAttributesAndProps'] = undefined;
+  export let gridRowAttributesAndProps: TypedProps['gridRowAttributesAndProps'] = undefined;
+  export let headCellAttributesAndProps: TypedProps['headCellAttributesAndProps'] = undefined;
+  export let headerAttributesAndProps: TypedProps['headerAttributesAndProps'] = undefined;
+  export let headingAttributesAndProps: TypedProps['headingAttributesAndProps'] = undefined;
   export let initialFocus: TypedProps['initialFocus'] = undefined;
   export let isDateDisabled: TypedProps['isDateDisabled'] = undefined;
   export let isDateUnavailable: TypedProps['isDateUnavailable'] = undefined;
   export let locale: TypedProps['locale'] = undefined;
   export let maxValue: TypedProps['maxValue'] = undefined;
   export let minValue: TypedProps['minValue'] = undefined;
+  export let monthsAttributesAndProps: TypedProps['monthsAttributesAndProps'] = undefined;
   export let multiple: TypedProps['multiple'] = undefined;
+  export let nextButtonAttributesAndProps: TypedProps['nextButtonAttributesAndProps'] = undefined;
   export let numberOfMonths: TypedProps['numberOfMonths'] = undefined;
   export let onDayClick: TypedProps['onDayClick'] = undefined;
   export let onPlaceholderChange: TypedProps['onPlaceholderChange'] = undefined;
@@ -91,6 +153,8 @@
   export let pagedNavigation: TypedProps['pagedNavigation'] = undefined;
   export let placeholder: TypedProps['placeholder'] = undefined;
   export let preventDeselect: TypedProps['preventDeselect'] = undefined;
+  export let previousButtonAttributesAndProps: TypedProps['previousButtonAttributesAndProps'] =
+    undefined;
   export let readonly: TypedProps['readonly'] = undefined;
   export let weekStartsOn: TypedProps['weekStartsOn'] = undefined;
   export let weekdayFormat: TypedProps['weekdayFormat'] = 'short';
@@ -135,33 +199,40 @@
   on:keydown
 >
   <slot builder="{builder}" months="{months}" weekdays="{weekdays}">
-    <Header>
-      <PreviousButton />
+    <CalendarHeader {...headerAttributesAndProps}>
+      <CalendarPreviousButton {...previousButtonAttributesAndProps} />
 
-      <Heading />
+      <CalendarHeading {...headingAttributesAndProps} />
 
-      <NextButton />
-    </Header>
+      <CalendarNextButton {...nextButtonAttributesAndProps} />
+    </CalendarHeader>
 
-    <Months>
+    <CalendarMonths {...monthsAttributesAndProps}>
       {#each months as month}
-        <Grid>
-          <GridHead>
-            <GridRow class="flex">
+        <CalendarGrid {...gridAttributesAndProps}>
+          <CalendarGridHead {...gridHeadAttributesAndProps}>
+            <CalendarGridRow
+              {...gridRowAttributesAndProps}
+              class="{cn('flex', gridRowAttributesAndProps?.class)}"
+            >
               {#each weekdays as weekday}
-                <HeadCell>
+                <CalendarHeadCell {...headCellAttributesAndProps}>
                   {weekday.slice(0, 2)}
-                </HeadCell>
+                </CalendarHeadCell>
               {/each}
-            </GridRow>
-          </GridHead>
+            </CalendarGridRow>
+          </CalendarGridHead>
 
-          <GridBody>
+          <CalendarGridBody {...gridBodyAttributesAndProps}>
             {#each month.weeks as weekDates}
-              <GridRow class="mt-2 w-full">
+              <CalendarGridRow
+                {...gridRowAttributesAndProps}
+                class="{cn('mt-2 w-full', gridRowAttributesAndProps?.class)}"
+              >
                 {#each weekDates as date}
-                  <Cell date="{date}">
-                    <Day
+                  <CalendarCell {...cellAttributesAndProps} date="{date}">
+                    <CalendarDay
+                      {...dayAttributesAndProps}
                       date="{date}"
                       month="{month.value}"
                       on:click="{() =>
@@ -170,13 +241,13 @@
                           month,
                         })}"
                     />
-                  </Cell>
+                  </CalendarCell>
                 {/each}
-              </GridRow>
+              </CalendarGridRow>
             {/each}
-          </GridBody>
-        </Grid>
+          </CalendarGridBody>
+        </CalendarGrid>
       {/each}
-    </Months>
+    </CalendarMonths>
   </slot>
 </CalendarPrimitive.Root>

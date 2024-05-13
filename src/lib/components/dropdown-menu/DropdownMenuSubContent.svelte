@@ -7,10 +7,16 @@
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<DropdownMenuPrimitive.SubContent<TTransition, TTransitionIn, TTransitionOut>>;
+    TSubContentTransition extends Transition = Transition,
+    TSubContentTransitionIn extends Transition = Transition,
+    TSubContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    DropdownMenuPrimitive.SubContent<
+      TSubContentTransition,
+      TSubContentTransitionIn,
+      TSubContentTransitionOut
+    >
+  >;
 
   /**
    * The attributes of the sub content.
@@ -20,18 +26,21 @@
    * The props of the sub content.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
+    TSubContentTransition extends Transition = Transition,
+    TSubContentTransitionIn extends Transition = Transition,
+    TSubContentTransitionOut extends Transition = Transition,
+  > = Omit<
+    Primitive<TSubContentTransition, TSubContentTransitionIn, TSubContentTransitionOut>['props'],
+    keyof Attributes
+  >;
   /**
    * The slots of the sub content.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
+    TSubContentTransition extends Transition = Transition,
+    TSubContentTransitionIn extends Transition = Transition,
+    TSubContentTransitionOut extends Transition = Transition,
+  > = Primitive<TSubContentTransition, TSubContentTransitionIn, TSubContentTransitionOut>['slots'];
 
   /**
    * The styles of the sub content.
@@ -46,16 +55,20 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TSubContentTransition extends Transition = Transition,
+    TSubContentTransitionIn extends Transition = Transition,
+    TSubContentTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
-  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
+  type $$Events = Primitive<
+    TSubContentTransition,
+    TSubContentTransitionIn,
+    TSubContentTransitionOut
+  >['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TSubContentTransition, TSubContentTransitionIn, TSubContentTransitionOut>;
+  type TypedProps = Props<TSubContentTransition, TSubContentTransitionIn, TSubContentTransitionOut>;
 
   export let align: TypedProps['align'] = undefined;
   export let asChild: TypedProps['asChild'] = undefined;

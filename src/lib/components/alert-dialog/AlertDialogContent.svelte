@@ -6,14 +6,22 @@
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
-  import Overlay from './AlertDialogOverlay.svelte';
-  import Portal from './AlertDialogPortal.svelte';
+  import AlertDialogOverlay, {
+    type Attributes as AlertDialogOverlayAttributes,
+    type Props as AlertDialogOverlayProps,
+  } from './AlertDialogOverlay.svelte';
+  import AlertDialogPortal, {
+    type Attributes as AlertDialogPortalAttributes,
+    type Props as AlertDialogPortalProps,
+  } from './AlertDialogPortal.svelte';
 
   type Primitive<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = ComponentInfo<AlertDialogPrimitive.Content<TTransition, TTransitionIn, TTransitionOut>>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = ComponentInfo<
+    AlertDialogPrimitive.Content<TContentTransition, TContentTransitionIn, TContentTransitionOut>
+  >;
 
   /**
    * The attributes of the content.
@@ -23,18 +31,28 @@
    * The props of the content.
    */
   export type Props<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Omit<Primitive<TTransition, TTransitionIn, TTransitionOut>['props'], keyof Attributes>;
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
+  > = Omit<
+    Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['props'],
+    keyof Attributes
+  > & {
+    overlayAttributesAndProps?: AlertDialogOverlayAttributes &
+      AlertDialogOverlayProps<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
+    portalAttributesAndProps?: AlertDialogPortalAttributes & AlertDialogPortalProps;
+  };
   /**
    * The slots of the content.
    */
   export type Slots<
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
-  > = Primitive<TTransition, TTransitionIn, TTransitionOut>['slots'];
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+  > = Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['slots'];
 
   /**
    * The styles of the content.
@@ -48,16 +66,30 @@
 
 <script
   generics="
-    TTransition extends Transition = Transition,
-    TTransitionIn extends Transition = Transition,
-    TTransitionOut extends Transition = Transition,
+    TContentTransition extends Transition = Transition,
+    TContentTransitionIn extends Transition = Transition,
+    TContentTransitionOut extends Transition = Transition,
+    TOverlayTransition extends Transition = Transition,
+    TOverlayTransitionIn extends Transition = Transition,
+    TOverlayTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
-  type $$Events = Primitive<TTransition, TTransitionIn, TTransitionOut>['events'];
+  type $$Events = Primitive<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut
+  >['events'];
   type $$Props = Attributes & TypedProps;
-  type $$Slots = Slots<TTransition, TTransitionIn, TTransitionOut>;
-  type TypedProps = Props<TTransition, TTransitionIn, TTransitionOut>;
+  type $$Slots = Slots<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
+  type TypedProps = Props<
+    TContentTransition,
+    TContentTransitionIn,
+    TContentTransitionOut,
+    TOverlayTransition,
+    TOverlayTransitionIn,
+    TOverlayTransitionOut
+  >;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;
@@ -65,6 +97,8 @@
   export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
   export let outTransition: TypedProps['outTransition'] = undefined;
   export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
+  export let overlayAttributesAndProps: TypedProps['overlayAttributesAndProps'] = undefined;
+  export let portalAttributesAndProps: TypedProps['portalAttributesAndProps'] = undefined;
   export let transition: TypedProps['transition'] = flyAndScale as TypedProps['transition'];
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
@@ -74,8 +108,8 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Portal>
-  <Overlay />
+<AlertDialogPortal {...portalAttributesAndProps}>
+  <AlertDialogOverlay {...overlayAttributesAndProps} />
 
   <AlertDialogPrimitive.Content
     {...attributes}
@@ -101,4 +135,4 @@
   >
     <slot builder="{builder}" />
   </AlertDialogPrimitive.Content>
-</Portal>
+</AlertDialogPortal>
