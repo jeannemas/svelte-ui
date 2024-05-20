@@ -3,11 +3,11 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Calendar from '$lib/components/calendar/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -47,220 +47,222 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disabled</Form.Label>
 
-    <Form.Description>
-      Whether the calendar is disabled. When true, the user will not be able to focus or select
-      dates.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether the calendar is disabled. When true, the user will not be able to focus or
+            select dates.
+          </Form.Description>
 
-  <Form.Field name="fixedWeeks" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Fixed weeks</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.fixedWeeks}" />
-    </Form.Control>
+        <Form.Field name="fixedWeeks" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Fixed weeks</Form.Label>
 
-    <Form.Description>
-      Display 6 weeks per month, regardless the month's number of weeks. This is useful for
-      displaying a consistent calendar, where the size of the calendar doesn't change month to
-      month.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.fixedWeeks}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Display 6 weeks per month, regardless the month's number of weeks. This is useful for
+            displaying a consistent calendar, where the size of the calendar doesn't change month to
+            month.
+          </Form.Description>
 
-  <Form.Field name="numberOfMonths" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Number of months</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        variant="number"
-        bind:value="{$superFormData.numberOfMonths}"
-      />
-    </Form.Control>
+        <Form.Field name="numberOfMonths" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Number of months</Form.Label>
 
-    <Form.Description>
-      Determines the number of months to display on the calendar simultaneously.
-    </Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              variant="number"
+              bind:value="{$superFormData.numberOfMonths}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Determines the number of months to display on the calendar simultaneously.
+          </Form.Description>
 
-  <Form.Field name="pagedNavigation" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Paged navigation</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.pagedNavigation}" />
-    </Form.Control>
+        <Form.Field name="pagedNavigation" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Paged navigation</Form.Label>
 
-    <Form.Description>
-      <p>Applicable only when numberOfMonths is greater than 1.</p>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.pagedNavigation}" />
+          </Form.Control>
 
-      <p>
-        Controls whether to use paged navigation for the next and previous buttons in the date
-        picker. With paged navigation set to true, clicking the next/prev buttons changes all months
-        in view. When set to false, it shifts the view by a single month.
-      </p>
+          <Form.Description>
+            <p>Applicable only when numberOfMonths is greater than 1.</p>
 
-      <p>
-        For example, with pagedNavigation set to true and 2 months displayed (January and February),
-        clicking the next button changes the view to March and April. If pagedNavigation is false,
-        the view shifts to February and March.
-      </p>
-    </Form.Description>
+            <p>
+              Controls whether to use paged navigation for the next and previous buttons in the date
+              picker. With paged navigation set to true, clicking the next/prev buttons changes all
+              months in view. When set to false, it shifts the view by a single month.
+            </p>
 
-    <Form.FieldErrors />
-  </Form.Field>
+            <p>
+              For example, with pagedNavigation set to true and 2 months displayed (January and
+              February), clicking the next button changes the view to March and April. If
+              pagedNavigation is false, the view shifts to February and March.
+            </p>
+          </Form.Description>
 
-  <Form.Field name="preventDeselect" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Prevent deselect</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventDeselect}" />
-    </Form.Control>
+        <Form.Field name="preventDeselect" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Prevent deselect</Form.Label>
 
-    <Form.Description>
-      Prevent deselecting the selected date(s), which would set the value to undefined. You can use
-      this to ensure a date is always selected in certain situations.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventDeselect}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Prevent deselecting the selected date(s), which would set the value to undefined. You
+            can use this to ensure a date is always selected in certain situations.
+          </Form.Description>
 
-  <Form.Field name="readonly" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Readonly</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.readonly}" />
-    </Form.Control>
+        <Form.Field name="readonly" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Readonly</Form.Label>
 
-    <Form.Description>
-      Whether the calendar is readonly. When true, the user will be able to focus and navigate the
-      calendar, but will not be able to select dates.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.readonly}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether the calendar is readonly. When true, the user will be able to focus and navigate
+            the calendar, but will not be able to select dates.
+          </Form.Description>
 
-  <Form.Field name="weekStartsOn" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Week starts on</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{Calendar.rootWeekStartsOn.map((weekStartsOn) => ({
-          label: weekStartsOn.toString(),
-          value: weekStartsOn,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.weekStartsOn = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.weekStartsOn !== undefined
-          ? {
-              label: $superFormData.weekStartsOn.toString(),
-              value: $superFormData.weekStartsOn,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="weekStartsOn" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Week starts on</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{Calendar.rootWeekStartsOn.map((weekStartsOn) => ({
+                label: weekStartsOn.toString(),
+                value: weekStartsOn,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.weekStartsOn = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.weekStartsOn !== undefined
+                ? {
+                    label: $superFormData.weekStartsOn.toString(),
+                    value: $superFormData.weekStartsOn,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each Calendar.rootWeekStartsOn as weekStartsOn, index (index)}
-            <Select.Item value="{weekStartsOn}">
-              {weekStartsOn}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>
-      The day of the week to start the calendar on, which must be a number between 0 and 6, where 0
-      is Sunday and 6 is Saturday.
-    </Form.Description>
+              <Select.Content>
+                {#each Calendar.rootWeekStartsOn as weekStartsOn, index (index)}
+                  <Select.Item value="{weekStartsOn}">
+                    {weekStartsOn}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            The day of the week to start the calendar on, which must be a number between 0 and 6,
+            where 0 is Sunday and 6 is Saturday.
+          </Form.Description>
 
-  <Form.Field name="weekdayFormat" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Weekday format</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{Calendar.rootWeekdayFormats.map((weekdayFormat) => ({
-          label: weekdayFormat,
-          value: weekdayFormat,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.weekdayFormat = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.weekdayFormat !== undefined
-          ? {
-              label: $superFormData.weekdayFormat,
-              value: $superFormData.weekdayFormat,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="weekdayFormat" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Weekday format</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{Calendar.rootWeekdayFormats.map((weekdayFormat) => ({
+                label: weekdayFormat,
+                value: weekdayFormat,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.weekdayFormat = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.weekdayFormat !== undefined
+                ? {
+                    label: $superFormData.weekdayFormat,
+                    value: $superFormData.weekdayFormat,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each Calendar.rootWeekdayFormats as weekdayFormat, index (index)}
-            <Select.Item value="{weekdayFormat}">
-              {weekdayFormat}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>
-      How the string representation of the weekdays provided via the weekdays state store should be
-      formatted.
+              <Select.Content>
+                {#each Calendar.rootWeekdayFormats as weekdayFormat, index (index)}
+                  <Select.Item value="{weekdayFormat}">
+                    {weekdayFormat}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-      <ul class="list-inside list-disc">
-        <li>"long": "Sunday", "Monday", "Tuesday", etc.</li>
+          <Form.Description>
+            How the string representation of the weekdays provided via the weekdays state store
+            should be formatted.
 
-        <li>"short": "Sun", "Mon", "Tue", etc.</li>
+            <ul class="list-inside list-disc">
+              <li>"long": "Sunday", "Monday", "Tuesday", etc.</li>
 
-        <li>"narrow": "S", "M", "T", etc.</li>
-      </ul>
-    </Form.Description>
+              <li>"short": "Sun", "Mon", "Tue", etc.</li>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+              <li>"narrow": "S", "M", "T", etc.</li>
+            </ul>
+          </Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Calendar.Root
-  class="inline-block rounded-md border border-border"
-  disabled="{$superFormData.disabled}"
-  fixedWeeks="{$superFormData.fixedWeeks}"
-  numberOfMonths="{$superFormData.numberOfMonths}"
-  pagedNavigation="{$superFormData.pagedNavigation}"
-  preventDeselect="{$superFormData.preventDeselect}"
-  readonly="{$superFormData.readonly}"
-  weekStartsOn="{$superFormData.weekStartsOn}"
-  weekdayFormat="{$superFormData.weekdayFormat}"
-/>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
+
+    <Accordion.Content>
+      <Calendar.Root {...$superFormData} class="rounded-md border border-border" />
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

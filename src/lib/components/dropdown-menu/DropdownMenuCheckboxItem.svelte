@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import Check from 'lucide-svelte/icons/check';
+  import CheckIcon from 'lucide-svelte/icons/check';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -72,7 +72,7 @@
 >
   <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
     <DropdownMenuPrimitive.CheckboxIndicator>
-      <Check class="h-4 w-4" />
+      <CheckIcon class="h-4 w-4" />
     </DropdownMenuPrimitive.CheckboxIndicator>
   </span>
 

@@ -1,10 +1,10 @@
 <script context="module" lang="ts">
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Card from '$lib/components/card/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
 
   const frameworks = [
     {
@@ -32,48 +32,62 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Separator />
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-<Card.Root>
-  <Card.Header>
-    <Card.Title>Create project</Card.Title>
+    <Accordion.Content>
+      <!--  -->
+    </Accordion.Content>
+  </Accordion.Item>
 
-    <Card.Description>Deploy your new project in one-click.</Card.Description>
-  </Card.Header>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Card.Content>
-    <form>
-      <div class="grid w-full items-center gap-4">
-        <div class="flex flex-col space-y-1.5">
-          <Label for="name">Name</Label>
+    <Accordion.Content>
+      <Card.Root>
+        <Card.Header>
+          <Card.Title>Create project</Card.Title>
 
-          <Input id="name" placeholder="Name of your project" variant="text" />
-        </div>
+          <Card.Description>Deploy your new project in one-click.</Card.Description>
+        </Card.Header>
 
-        <div class="flex flex-col space-y-1.5">
-          <Label for="framework">Framework</Label>
+        <Card.Content>
+          <form>
+            <div class="grid w-full items-center gap-4">
+              <div class="flex flex-col space-y-1.5">
+                <Label for="name">Name</Label>
 
-          <Select.Root>
-            <Select.Trigger id="framework">
-              <Select.Value placeholder="Select" />
-            </Select.Trigger>
+                <Input id="name" placeholder="Name of your project" variant="text" />
+              </div>
 
-            <Select.Content>
-              {#each frameworks as framework}
-                <Select.Item value="{framework.value}" label="{framework.label}">
-                  {framework.label}
-                </Select.Item>
-              {/each}
-            </Select.Content>
-          </Select.Root>
-        </div>
-      </div>
-    </form>
-  </Card.Content>
+              <div class="flex flex-col space-y-1.5">
+                <Label for="framework">Framework</Label>
 
-  <Card.Footer class="flex justify-between">
-    <Button variant="outline">Cancel</Button>
+                <Select.Root>
+                  <Select.Trigger id="framework">
+                    <Select.Value placeholder="Select" />
+                  </Select.Trigger>
 
-    <Button>Deploy</Button>
-  </Card.Footer>
-</Card.Root>
+                  <Select.Content>
+                    {#each frameworks as framework}
+                      <Select.Item value="{framework.value}" label="{framework.label}">
+                        {framework.label}
+                      </Select.Item>
+                    {/each}
+                  </Select.Content>
+                </Select.Root>
+              </div>
+            </div>
+          </form>
+        </Card.Content>
+
+        <Card.Footer class="flex justify-between">
+          <Button variant="outline">Cancel</Button>
+
+          <Button>Deploy</Button>
+        </Card.Footer>
+      </Card.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

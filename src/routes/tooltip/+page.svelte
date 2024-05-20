@@ -3,10 +3,10 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
   import * as Tooltip from '$lib/components/tooltip/index.js';
 
@@ -35,109 +35,122 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="closeDelay" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close delay</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="decimal"
-        step="{0.05}"
-        variant="number"
-        bind:value="{$superFormData.closeDelay}"
-      />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="closeDelay" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close delay</Form.Label>
 
-    <Form.Description>The tooltip close delay (in ms).</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="decimal"
+              step="{0.05}"
+              variant="number"
+              bind:value="{$superFormData.closeDelay}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The tooltip close delay (in ms).</Form.Description>
 
-  <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on escape</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-    </Form.Control>
+        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on escape</Form.Label>
 
-    <Form.Description>Whether to close the tooltip on escape.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether to close the tooltip on escape.</Form.Description>
 
-  <Form.Field name="closeOnPointerDown" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on pointer down</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnPointerDown}" />
-    </Form.Control>
+        <Form.Field name="closeOnPointerDown" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on pointer down</Form.Label>
 
-    <Form.Description>Whether to close the tooltip on pointer down.</Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.closeOnPointerDown}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether to close the tooltip on pointer down.</Form.Description>
 
-  <Form.Field name="disableHoverableContent" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disable hoverable content</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disableHoverableContent}" />
-    </Form.Control>
+        <Form.Field name="disableHoverableContent" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disable hoverable content</Form.Label>
 
-    <Form.Description>Whether to disbale the hoverable content.</Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.disableHoverableContent}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether to disbale the hoverable content.</Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>Whether to open the tooltip.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether to open the tooltip.</Form.Description>
 
-  <Form.Field name="openDelay" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open delay</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="decimal"
-        step="{0.05}"
-        variant="number"
-        bind:value="{$superFormData.openDelay}"
-      />
-    </Form.Control>
+        <Form.Field name="openDelay" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open delay</Form.Label>
 
-    <Form.Description>The tooltip open delay (in ms).</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="decimal"
+              step="{0.05}"
+              variant="number"
+              bind:value="{$superFormData.openDelay}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The tooltip open delay (in ms).</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Tooltip.Root
-  closeDelay="{$superFormData.closeDelay}"
-  closeOnEscape="{$superFormData.closeOnEscape}"
-  closeOnPointerDown="{$superFormData.closeOnPointerDown}"
-  disableHoverableContent="{$superFormData.disableHoverableContent}"
-  openDelay="{$superFormData.openDelay}"
-  bind:open="{$superFormData.open}"
->
-  <Tooltip.Trigger asChild let:builder>
-    <Button builders="{[builder]}" variant="outline">Hover</Button>
-  </Tooltip.Trigger>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Tooltip.Content>
-    <p>Add to library</p>
-  </Tooltip.Content>
-</Tooltip.Root>
+    <Accordion.Content>
+      <Tooltip.Root {...$superFormData} bind:open="{$superFormData.open}">
+        <Tooltip.Trigger asChild let:builder>
+          <Button builders="{[builder]}" variant="outline">Hover</Button>
+        </Tooltip.Trigger>
+
+        <Tooltip.Content>
+          <p>Add to library</p>
+        </Tooltip.Content>
+      </Tooltip.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

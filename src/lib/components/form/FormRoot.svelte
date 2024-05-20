@@ -62,8 +62,8 @@
   use:superForm.enhance
 >
   <slot />
-</form>
 
-{#if debug}
-  <SuperDebug collapsible data="{superForm.form}" status="{false}" />
-{/if}
+  {#if debug}
+    <SuperDebug collapsible data="{superForm.form}" status="{false}" />
+  {/if}
+</form>

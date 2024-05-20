@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import Ellipsis from 'lucide-svelte/icons/ellipsis';
+  import EllipsisIcon from 'lucide-svelte/icons/ellipsis';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -47,7 +47,7 @@
   aria-hidden="true"
 >
   <slot>
-    <Ellipsis class="h-4 w-4" />
+    <EllipsisIcon class="h-4 w-4" />
 
     <span class="sr-only">More pages</span>
   </slot>

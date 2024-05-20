@@ -3,6 +3,7 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button, {
     defaultSize,
     defaultVariant,
@@ -11,7 +12,6 @@
   } from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -36,108 +36,114 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disabled</Form.Label>
 
-    <Form.Description>Whether the button is disabled.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether the button is disabled.</Form.Description>
 
-  <Form.Field name="size" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Size</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{sizes.map((size) => ({
-          label: size,
-          value: size,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.size = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.size !== undefined
-          ? {
-              label: $superFormData.size,
-              value: $superFormData.size,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="size" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Size</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{sizes.map((size) => ({
+                label: size,
+                value: size,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.size = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.size !== undefined
+                ? {
+                    label: $superFormData.size,
+                    value: $superFormData.size,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each sizes as size, index (index)}
-            <Select.Item value="{size}">
-              {size}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The size of the button.</Form.Description>
+              <Select.Content>
+                {#each sizes as size, index (index)}
+                  <Select.Item value="{size}">
+                    {size}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The size of the button.</Form.Description>
 
-  <Form.Field name="variant" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Variant</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{variants.map((variant) => ({
-          label: variant,
-          value: variant,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.variant = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.variant !== undefined
-          ? {
-              label: $superFormData.variant,
-              value: $superFormData.variant,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="variant" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Variant</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{variants.map((variant) => ({
+                label: variant,
+                value: variant,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.variant = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.variant !== undefined
+                ? {
+                    label: $superFormData.variant,
+                    value: $superFormData.variant,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each variants as variant, index (index)}
-            <Select.Item value="{variant}">
-              {variant}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The variant of the button.</Form.Description>
+              <Select.Content>
+                {#each variants as variant, index (index)}
+                  <Select.Item value="{variant}">
+                    {variant}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The variant of the button.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Button
-  disabled="{$superFormData.disabled}"
-  size="{$superFormData.size}"
-  variant="{$superFormData.variant}"
->
-  Lorem ipsum
-</Button>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
+
+    <Accordion.Content>
+      <Button {...$superFormData}>Lorem ipsum</Button>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

@@ -4,7 +4,6 @@
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import { castAsAny } from '$lib/utils/internal.js';
   import type { AnyObject, ComponentInfo, EmptyObject, ObjectOf } from '$lib/utils/types.js';
 
   type Primitive<TObject extends AnyObject, TPath extends FormPath<TObject>> = ComponentInfo<
@@ -30,7 +29,7 @@
   export type Slots<TObject extends AnyObject, TPath extends FormPath<TObject>> = {
     default: Omit<Primitive<TObject, TPath>['slots']['default'], 'constraints' | 'value'> & {
       // Manual omissions to prevent infinite loop while compiling the package
-      constraints: ObjectOf<unknown>;
+      constraints?: ObjectOf<unknown>;
       value: unknown;
     };
   };
@@ -65,11 +64,6 @@
       class: attributes.class,
     })}"
   >
-    <slot
-      constraints="{castAsAny(constraints)}"
-      errors="{errors}"
-      tainted="{tainted}"
-      value="{value}"
-    />
+    <slot constraints="{constraints}" errors="{errors}" tainted="{tainted}" value="{value}" />
   </div>
 </Field>

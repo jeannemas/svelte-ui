@@ -5,7 +5,7 @@
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   import { styles as topNavigationButtonStyles } from './TopNavigationButton.svelte';
-  import type { Props as TopNavigationRootProps } from './TopNavigationRoot.svelte';
+  import { getTopNavigationContext, hasTopNavigationContext } from './context.js';
 
   /**
    * The attributes for the link.
@@ -14,15 +14,15 @@
   /**
    * The props for the link.
    */
-  export type Props = Pick<TopNavigationRootProps, 'breakpoint'> & {
+  export type Props = {
+    /**
+     * Whether the link is active.
+     */
+    active?: boolean;
     /**
      * The URL of the link.
      */
     href: string;
-    /**
-     * Whether the link is active.
-     */
-    isActive?: boolean;
   };
   /**
    * The slots for the link.
@@ -35,8 +35,16 @@
    * The styles for the link.
    */
   export const styles = tv({
-    ...topNavigationButtonStyles,
-    base: [...topNavigationButtonStyles.base, 'data-[active=true]:border-primary'],
+    base: [...topNavigationButtonStyles.base],
+    defaultVariants: {
+      ...topNavigationButtonStyles.defaultVariants,
+    },
+    variants: {
+      ...topNavigationButtonStyles.variants,
+      active: {
+        true: ['border-primary'],
+      },
+    },
   });
 </script>
 
@@ -45,11 +53,14 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let breakpoint: Props['breakpoint'] = undefined;
+  export let active: Props['active'] = undefined;
   export let href: Props['href'];
-  export let isActive: Props['isActive'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  $: breakpoint = hasTopNavigationContext()
+    ? getTopNavigationContext().breakpoint
+    : styles.defaultVariants.breakpoint;
 </script>
 
 <!-- <style lang="postcss">
@@ -58,11 +69,12 @@
 <a
   {...attributes}
   class="{styles({
+    active,
     breakpoint,
     class: attributes.class,
   })}"
   href="{href}"
-  data-active="{isActive}"
+  data-active="{active}"
   data-breakpoint="{breakpoint}"
 >
   <slot />

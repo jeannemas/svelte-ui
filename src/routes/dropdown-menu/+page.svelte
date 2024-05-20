@@ -1,27 +1,27 @@
 <script context="module" lang="ts">
-  import CirclePlus from 'lucide-svelte/icons/circle-plus';
-  import Cloud from 'lucide-svelte/icons/cloud';
-  import CreditCard from 'lucide-svelte/icons/credit-card';
-  import Github from 'lucide-svelte/icons/github';
-  import Keyboard from 'lucide-svelte/icons/keyboard';
-  import LifeBuoy from 'lucide-svelte/icons/life-buoy';
-  import LogOut from 'lucide-svelte/icons/log-out';
-  import Mail from 'lucide-svelte/icons/mail';
-  import MessageSquare from 'lucide-svelte/icons/message-square';
-  import Plus from 'lucide-svelte/icons/plus';
-  import Settings from 'lucide-svelte/icons/settings';
-  import User from 'lucide-svelte/icons/user';
-  import UserPlus from 'lucide-svelte/icons/user-plus';
-  import Users from 'lucide-svelte/icons/users';
+  import CirclePlusIcon from 'lucide-svelte/icons/circle-plus';
+  import CloudIcon from 'lucide-svelte/icons/cloud';
+  import CreditCardIcon from 'lucide-svelte/icons/credit-card';
+  import GithubIcon from 'lucide-svelte/icons/github';
+  import KeyboardIcon from 'lucide-svelte/icons/keyboard';
+  import LifeBuoyIcon from 'lucide-svelte/icons/life-buoy';
+  import LogOutIcon from 'lucide-svelte/icons/log-out';
+  import MailIcon from 'lucide-svelte/icons/mail';
+  import MessageSquareIcon from 'lucide-svelte/icons/message-square';
+  import PlusIcon from 'lucide-svelte/icons/plus';
+  import SettingsIcon from 'lucide-svelte/icons/settings';
+  import UserIcon from 'lucide-svelte/icons/user';
+  import UserPlusIcon from 'lucide-svelte/icons/user-plus';
+  import UsersIcon from 'lucide-svelte/icons/users';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as DropdownMenu from '$lib/components/dropdown-menu/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -52,284 +52,300 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on escape</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on escape</Form.Label>
 
-    <Form.Description>
-      Whether or not to close the menu when the escape key is pressed.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not to close the menu when the escape key is pressed.
+          </Form.Description>
 
-  <Form.Field name="closeOnItemClick" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on item click</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnItemClick}" />
-    </Form.Control>
+        <Form.Field name="closeOnItemClick" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on item click</Form.Label>
 
-    <Form.Description>
-      Whether or not to close the menu when an internal item is clicked.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnItemClick}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not to close the menu when an internal item is clicked.
+          </Form.Description>
 
-  <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on outside click</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnOutsideClick}" />
-    </Form.Control>
+        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on outside click</Form.Label>
 
-    <Form.Description>
-      Whether or not to close the menu when a click occurs outside of it.
-    </Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.closeOnOutsideClick}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not to close the menu when a click occurs outside of it.
+          </Form.Description>
 
-  <Form.Field name="dir" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Direction</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{DropdownMenu.rootDirs.map((dir) => ({
-          label: dir,
-          value: dir,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.dir = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.dir !== undefined
-          ? {
-              label: $superFormData.dir,
-              value: $superFormData.dir,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="dir" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Direction</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{DropdownMenu.rootDirs.map((dir) => ({
+                label: dir,
+                value: dir,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.dir = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.dir !== undefined
+                ? {
+                    label: $superFormData.dir,
+                    value: $superFormData.dir,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each DropdownMenu.rootDirs as dir, index (index)}
-            <Select.Item value="{dir}">
-              {dir}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The direction of the text in the dropdown menu.</Form.Description>
+              <Select.Content>
+                {#each DropdownMenu.rootDirs as dir, index (index)}
+                  <Select.Item value="{dir}">
+                    {dir}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The direction of the text in the dropdown menu.</Form.Description>
 
-  <Form.Field name="disableFocusFirstItem" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disable focus first item</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disableFocusFirstItem}" />
-    </Form.Control>
+        <Form.Field name="disableFocusFirstItem" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disable focus first item</Form.Label>
 
-    <Form.Description>Optionally prevent focusing the first item in the menu.</Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.disableFocusFirstItem}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description
+            >Optionally prevent focusing the first item in the menu.</Form.Description
+          >
 
-  <Form.Field name="loop" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Loop</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-    </Form.Control>
+        <Form.Field name="loop" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Loop</Form.Label>
 
-    <Form.Description>Whether or not to loop the menu navigation.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether or not to loop the menu navigation.</Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>
-      The open state of the context menu. You can bind this to a boolean value to programmatically
-      control the open state.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            The open state of the context menu. You can bind this to a boolean value to
+            programmatically control the open state.
+          </Form.Description>
 
-  <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Prevent scroll</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-    </Form.Control>
+        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Prevent scroll</Form.Label>
 
-    <Form.Description>Whether or not to prevent scrolling when the menu is open.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description
+            >Whether or not to prevent scrolling when the menu is open.</Form.Description
+          >
 
-  <Form.Field name="typeahead" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Typeahead</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.typeahead}" />
-    </Form.Control>
+        <Form.Field name="typeahead" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Typeahead</Form.Label>
 
-    <Form.Description>Whether to use typeahead to automatically focus elements.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.typeahead}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description
+            >Whether to use typeahead to automatically focus elements.</Form.Description
+          >
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<DropdownMenu.Root
-  closeOnEscape="{$superFormData.closeOnEscape}"
-  closeOnItemClick="{$superFormData.closeOnItemClick}"
-  closeOnOutsideClick="{$superFormData.closeOnOutsideClick}"
-  dir="{$superFormData.dir}"
-  disableFocusFirstItem="{$superFormData.disableFocusFirstItem}"
-  loop="{$superFormData.loop}"
-  preventScroll="{$superFormData.preventScroll}"
-  typeahead="{$superFormData.typeahead}"
-  bind:open="{$superFormData.open}"
->
-  <DropdownMenu.Trigger asChild let:builder>
-    <Button builders="{[builder]}" variant="outline">Open</Button>
-  </DropdownMenu.Trigger>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <DropdownMenu.Content class="w-56">
-    <DropdownMenu.Label>My Account</DropdownMenu.Label>
+    <Accordion.Content>
+      <DropdownMenu.Root {...$superFormData} bind:open="{$superFormData.open}">
+        <DropdownMenu.Trigger asChild let:builder>
+          <Button builders="{[builder]}" variant="outline">Open</Button>
+        </DropdownMenu.Trigger>
 
-    <DropdownMenu.Separator />
+        <DropdownMenu.Content class="w-56">
+          <DropdownMenu.Label>My Account</DropdownMenu.Label>
 
-    <DropdownMenu.Group>
-      <DropdownMenu.Item>
-        <User class="mr-2 h-4 w-4" />
+          <DropdownMenu.Separator />
 
-        <span>Profile</span>
+          <DropdownMenu.Group>
+            <DropdownMenu.Item>
+              <UserIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
-      </DropdownMenu.Item>
+              <span>Profile</span>
 
-      <DropdownMenu.Item>
-        <CreditCard class="mr-2 h-4 w-4" />
+              <DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
 
-        <span>Billing</span>
+            <DropdownMenu.Item>
+              <CreditCardIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
-      </DropdownMenu.Item>
+              <span>Billing</span>
 
-      <DropdownMenu.Item>
-        <Settings class="mr-2 h-4 w-4" />
+              <DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
 
-        <span>Settings</span>
+            <DropdownMenu.Item>
+              <SettingsIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
-      </DropdownMenu.Item>
+              <span>Settings</span>
 
-      <DropdownMenu.Item>
-        <Keyboard class="mr-2 h-4 w-4" />
+              <DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
 
-        <span>Keyboard shortcuts</span>
+            <DropdownMenu.Item>
+              <KeyboardIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.Shortcut>⌘K</DropdownMenu.Shortcut>
-      </DropdownMenu.Item>
-    </DropdownMenu.Group>
+              <span>Keyboard shortcuts</span>
 
-    <DropdownMenu.Separator />
+              <DropdownMenu.Shortcut>⌘K</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
+          </DropdownMenu.Group>
 
-    <DropdownMenu.Group>
-      <DropdownMenu.Item>
-        <Users class="mr-2 h-4 w-4" />
+          <DropdownMenu.Separator />
 
-        <span>Team</span>
-      </DropdownMenu.Item>
+          <DropdownMenu.Group>
+            <DropdownMenu.Item>
+              <UsersIcon class="mr-2 h-4 w-4" />
 
-      <DropdownMenu.Sub>
-        <DropdownMenu.SubTrigger>
-          <UserPlus class="mr-2 h-4 w-4" />
+              <span>Team</span>
+            </DropdownMenu.Item>
 
-          <span>Invite users</span>
-        </DropdownMenu.SubTrigger>
+            <DropdownMenu.Sub>
+              <DropdownMenu.SubTrigger>
+                <UserPlusIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.SubContent>
+                <span>Invite users</span>
+              </DropdownMenu.SubTrigger>
+
+              <DropdownMenu.SubContent>
+                <DropdownMenu.Item>
+                  <MailIcon class="mr-2 h-4 w-4" />
+
+                  <span>Email</span>
+                </DropdownMenu.Item>
+
+                <DropdownMenu.Item>
+                  <MessageSquareIcon class="mr-2 h-4 w-4" />
+
+                  <span>Message</span>
+                </DropdownMenu.Item>
+
+                <DropdownMenu.Item>
+                  <CirclePlusIcon class="mr-2 h-4 w-4" />
+
+                  <span>More...</span>
+                </DropdownMenu.Item>
+              </DropdownMenu.SubContent>
+            </DropdownMenu.Sub>
+
+            <DropdownMenu.Item>
+              <PlusIcon class="mr-2 h-4 w-4" />
+
+              <span>New Team</span>
+
+              <DropdownMenu.Shortcut>⌘+T</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
+          </DropdownMenu.Group>
+
+          <DropdownMenu.Separator />
+
           <DropdownMenu.Item>
-            <Mail class="mr-2 h-4 w-4" />
+            <GithubIcon class="mr-2 h-4 w-4" />
 
-            <span>Email</span>
+            <span>GitHub</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Item>
-            <MessageSquare class="mr-2 h-4 w-4" />
+            <LifeBuoyIcon class="mr-2 h-4 w-4" />
 
-            <span>Message</span>
+            <span>Support</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Item>
-            <CirclePlus class="mr-2 h-4 w-4" />
+            <CloudIcon class="mr-2 h-4 w-4" />
 
-            <span>More...</span>
+            <span>API</span>
           </DropdownMenu.Item>
-        </DropdownMenu.SubContent>
-      </DropdownMenu.Sub>
 
-      <DropdownMenu.Item>
-        <Plus class="mr-2 h-4 w-4" />
+          <DropdownMenu.Separator />
 
-        <span>New Team</span>
+          <DropdownMenu.Item>
+            <LogOutIcon class="mr-2 h-4 w-4" />
 
-        <DropdownMenu.Shortcut>⌘+T</DropdownMenu.Shortcut>
-      </DropdownMenu.Item>
-    </DropdownMenu.Group>
+            <span>Log out</span>
 
-    <DropdownMenu.Separator />
-
-    <DropdownMenu.Item>
-      <Github class="mr-2 h-4 w-4" />
-
-      <span>GitHub</span>
-    </DropdownMenu.Item>
-
-    <DropdownMenu.Item>
-      <LifeBuoy class="mr-2 h-4 w-4" />
-
-      <span>Support</span>
-    </DropdownMenu.Item>
-
-    <DropdownMenu.Item>
-      <Cloud class="mr-2 h-4 w-4" />
-
-      <span>API</span>
-    </DropdownMenu.Item>
-
-    <DropdownMenu.Separator />
-
-    <DropdownMenu.Item>
-      <LogOut class="mr-2 h-4 w-4" />
-
-      <span>Log out</span>
-
-      <DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
-    </DropdownMenu.Item>
-  </DropdownMenu.Content>
-</DropdownMenu.Root>
+            <DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

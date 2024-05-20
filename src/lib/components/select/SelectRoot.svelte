@@ -32,7 +32,13 @@
   >['slots'];
 </script>
 
-<script generics="TItem, TMultiple extends boolean = false" lang="ts">
+<script
+  generics="
+    TItem,
+    TMultiple extends boolean = false,
+  "
+  lang="ts"
+>
   type $$Events = Primitive<TItem, TMultiple>['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TItem, TMultiple>;

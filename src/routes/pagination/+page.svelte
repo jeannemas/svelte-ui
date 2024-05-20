@@ -1,24 +1,22 @@
 <script context="module" lang="ts">
-  import Separator from '$lib/components/separator/index.js';
-  import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-  import ChevronRight from 'lucide-svelte/icons/chevron-right';
+  import ChevronLeftIcon from 'lucide-svelte/icons/chevron-left';
+  import ChevronRightIcon from 'lucide-svelte/icons/chevron-right';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Pagination from '$lib/components/pagination/index.js';
 
   const adapter = zod(
-    z
-      .object({
-        count: z.number().int().min(0).default(20),
-        perPage: z.number().int().min(1).default(10),
-        page: z.number().int().min(1).default(1),
-        siblingCount: z.number().int().min(1).default(1),
-      })
-      .partial(),
+    z.object({
+      count: z.number().int().min(0).default(20),
+      perPage: z.number().int().min(1).default(10).optional(),
+      page: z.number().int().min(1).default(1).optional(),
+      siblingCount: z.number().int().min(1).default(1).optional(),
+    }),
   );
 </script>
 
@@ -33,126 +31,138 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="count" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Count</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="numeric"
-        step="{1}"
-        variant="number"
-        bind:value="{$superFormData.count}"
-      />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="count" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Count</Form.Label>
 
-    <Form.Description>The total number of items to be paginated.</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="numeric"
+              step="{1}"
+              variant="number"
+              bind:value="{$superFormData.count}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The total number of items to be paginated.</Form.Description>
 
-  <Form.Field name="perPage" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Per page</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="numeric"
-        step="{1}"
-        variant="number"
-        bind:value="{$superFormData.perPage}"
-      />
-    </Form.Control>
+        <Form.Field name="perPage" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Per page</Form.Label>
 
-    <Form.Description>Number of items per page.</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="numeric"
+              step="{1}"
+              variant="number"
+              bind:value="{$superFormData.perPage}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Number of items per page.</Form.Description>
 
-  <Form.Field name="page" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Page</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="numeric"
-        step="{1}"
-        variant="number"
-        bind:value="{$superFormData.page}"
-      />
-    </Form.Control>
+        <Form.Field name="page" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Page</Form.Label>
 
-    <Form.Description>
-      The selected page. This updates as the users selects new pages. You can bind this to a value
-      to programmatically control the value state.
-    </Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="numeric"
+              step="{1}"
+              variant="number"
+              bind:value="{$superFormData.page}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            The selected page. This updates as the users selects new pages. You can bind this to a
+            value to programmatically control the value state.
+          </Form.Description>
 
-  <Form.Field name="siblingCount" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Sibling count</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input
-        {...attrs}
-        {...constraints}
-        inputmode="numeric"
-        step="{1}"
-        variant="number"
-        bind:value="{$superFormData.siblingCount}"
-      />
-    </Form.Control>
+        <Form.Field name="siblingCount" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Sibling count</Form.Label>
 
-    <Form.Description>Number of visible items before and after the current page.</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              inputmode="numeric"
+              step="{1}"
+              variant="number"
+              bind:value="{$superFormData.siblingCount}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description
+            >Number of visible items before and after the current page.</Form.Description
+          >
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Pagination.Root
-  count="{$superFormData.count ?? 0}"
-  perPage="{$superFormData.perPage}"
-  siblingCount="{$superFormData.siblingCount}"
-  bind:page="{$superFormData.page}"
-  let:pages
-  let:currentPage
->
-  <Pagination.Content>
-    <Pagination.Item>
-      <Pagination.PreviousButton>
-        <ChevronLeft class="h-4 w-4" />
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-        <span class="hidden sm:block">Previous</span>
-      </Pagination.PreviousButton>
-    </Pagination.Item>
+    <Accordion.Content>
+      <Pagination.Root
+        {...$superFormData}
+        bind:page="{$superFormData.page}"
+        let:pages
+        let:currentPage
+      >
+        <Pagination.Content>
+          <Pagination.Item>
+            <Pagination.PreviousButton>
+              <ChevronLeftIcon class="h-4 w-4" />
 
-    {#each pages as page (page.key)}
-      {#if page.type === 'ellipsis'}
-        <Pagination.Item>
-          <Pagination.Ellipsis />
-        </Pagination.Item>
-      {:else}
-        <Pagination.Item>
-          <Pagination.Link isActive="{currentPage === page.value}" page="{page}">
-            {page.value}
-          </Pagination.Link>
-        </Pagination.Item>
-      {/if}
-    {/each}
+              <span class="hidden sm:block">Previous</span>
+            </Pagination.PreviousButton>
+          </Pagination.Item>
 
-    <Pagination.Item>
-      <Pagination.NextButton>
-        <span class="hidden sm:block">Next</span>
+          {#each pages as page (page.key)}
+            {#if page.type === 'ellipsis'}
+              <Pagination.Item>
+                <Pagination.Ellipsis />
+              </Pagination.Item>
+            {:else}
+              <Pagination.Item>
+                <Pagination.Link isActive="{currentPage === page.value}" page="{page}">
+                  {page.value}
+                </Pagination.Link>
+              </Pagination.Item>
+            {/if}
+          {/each}
 
-        <ChevronRight class="h-4 w-4" />
-      </Pagination.NextButton>
-    </Pagination.Item>
-  </Pagination.Content>
-</Pagination.Root>
+          <Pagination.Item>
+            <Pagination.NextButton>
+              <span class="hidden sm:block">Next</span>
+
+              <ChevronRightIcon class="h-4 w-4" />
+            </Pagination.NextButton>
+          </Pagination.Item>
+        </Pagination.Content>
+      </Pagination.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

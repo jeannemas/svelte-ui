@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import ChevronRight from 'lucide-svelte/icons/chevron-right';
+  import ChevronRightIcon from 'lucide-svelte/icons/chevron-right';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -63,7 +63,7 @@
     bind:this="{el}"
   >
     <slot>
-      <ChevronRight />
+      <ChevronRightIcon />
     </slot>
   </li>
 {/if}

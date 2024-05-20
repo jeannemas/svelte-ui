@@ -3,10 +3,10 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -30,46 +30,58 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disabled</Form.Label>
 
-    <Form.Description>
-      Whether the collapsible is disabled which prevents it from being opened.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether the collapsible is disabled which prevents it from being opened.
+          </Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>The open state of the collapsible.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The open state of the collapsible.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Collapsible.Root disabled="{$superFormData.disabled}" bind:open="{$superFormData.open}">
-  <Collapsible.Trigger asChild let:builder>
-    <Button builders="{[builder]}">
-      State: {builder['data-state']}
-    </Button>
-  </Collapsible.Trigger>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Collapsible.Content class="bg-slate-300">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quo velit facilis illum placeat
-    numquam consectetur culpa ab laboriosam aliquid! Facere, consequatur ex maiores dolorum aut
-    commodi quis nostrum impedit?
-  </Collapsible.Content>
-</Collapsible.Root>
+    <Accordion.Content>
+      <Collapsible.Root {...superFormData} bind:open="{$superFormData.open}">
+        <Collapsible.Trigger asChild let:builder>
+          <Button builders="{[builder]}">
+            State: {builder['data-state']}
+          </Button>
+        </Collapsible.Trigger>
+
+        <Collapsible.Content class="bg-slate-300">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quo velit facilis illum
+          placeat numquam consectetur culpa ab laboriosam aliquid! Facere, consequatur ex maiores
+          dolorum aut commodi quis nostrum impedit?
+        </Collapsible.Content>
+      </Collapsible.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

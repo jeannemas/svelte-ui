@@ -46,7 +46,13 @@
    * The styles of the action.
    */
   export const styles = tv({
-    ...buttonStyles,
+    base: [...buttonStyles.base],
+    defaultVariants: {
+      ...buttonStyles.defaultVariants,
+    },
+    variants: {
+      ...buttonStyles.variants,
+    },
   });
   /**
    * The default size of the action.

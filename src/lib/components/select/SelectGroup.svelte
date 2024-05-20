@@ -24,7 +24,7 @@
    * The styles of the group.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
   });
 </script>
 

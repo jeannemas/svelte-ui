@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import ChevronRight from 'lucide-svelte/icons/chevron-right';
+  import ChevronRightIcon from 'lucide-svelte/icons/chevron-right';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv, type VariantProps } from 'tailwind-variants';
 
@@ -92,5 +92,5 @@
 >
   <slot builder="{builder}" />
 
-  <ChevronRight class="ml-auto h-4 w-4" />
+  <ChevronRightIcon class="ml-auto h-4 w-4" />
 </DropdownMenuPrimitive.SubTrigger>

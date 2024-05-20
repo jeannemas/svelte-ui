@@ -31,7 +31,13 @@
    * The styles of the link.
    */
   export const styles = tv({
-    ...buttonStyles,
+    base: [...buttonStyles.base],
+    defaultVariants: {
+      ...buttonStyles.defaultVariants,
+    },
+    variants: {
+      ...buttonStyles.variants,
+    },
   });
 </script>
 

@@ -4,9 +4,9 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -37,118 +37,131 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on escape</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on escape</Form.Label>
 
-    <Form.Description>
-      Whether or not to close the listbox menu when the user presses the escape key.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not to close the listbox menu when the user presses the escape key.
+          </Form.Description>
 
-  <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on outside click</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnOutsideClick}" />
-    </Form.Control>
+        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on outside click</Form.Label>
 
-    <Form.Description>
-      Whether or not to close the listbox menu when the user clicks outside of the listbox.
-    </Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.closeOnOutsideClick}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not to close the listbox menu when the user clicks outside of the listbox.
+          </Form.Description>
 
-  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-    </Form.Control>
+        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disabled</Form.Label>
 
-    <Form.Description>Whether the select is disabled.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether the select is disabled.</Form.Description>
 
-  <Form.Field name="loop" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Loop</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-    </Form.Control>
+        <Form.Field name="loop" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Loop</Form.Label>
 
-    <Form.Description>
-      Whether or not the listbox should loop through the list when the end or beginning is reached.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not the listbox should loop through the list when the end or beginning is
+            reached.
+          </Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>The open state of the select menu.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The open state of the select menu.</Form.Description>
 
-  <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Prevent scroll</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-    </Form.Control>
+        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Prevent scroll</Form.Label>
 
-    <Form.Description>
-      Whether or not to prevent scrolling the page when the listbox menu is open.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>
+            Whether or not to prevent scrolling the page when the listbox menu is open.
+          </Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Select.Root
-  closeOnEscape="{$superFormData.closeOnEscape}"
-  closeOnOutsideClick="{$superFormData.closeOnOutsideClick}"
-  disabled="{$superFormData.disabled}"
-  items="{fruits.map((fruit) => ({
-    label: fruit,
-    value: fruit,
-  }))}"
-  loop="{$superFormData.loop}"
-  onSelectedChange="{(selected) => {
-    selectedFruit = selected;
-  }}"
-  portal="{null}"
-  preventScroll="{$superFormData.preventScroll}"
-  selected="{selectedFruit}"
-  bind:open="{$superFormData.open}"
->
-  <Select.Input id="fruit" name="fruit" />
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Select.Trigger>
-    <Select.Value placeholder="Select a fruit" />
-  </Select.Trigger>
+    <Accordion.Content>
+      <Select.Root
+        {...$superFormData}
+        items="{fruits.map((fruit) => ({
+          label: fruit,
+          value: fruit,
+        }))}"
+        onSelectedChange="{(selected) => {
+          selectedFruit = selected;
+        }}"
+        portal="{null}"
+        selected="{selectedFruit}"
+        bind:open="{$superFormData.open}"
+      >
+        <Select.Input id="fruit" name="fruit" />
 
-  <Select.Content>
-    {#each fruits as fruit, index (index)}
-      <Select.Item value="{fruit}">
-        {fruit}
-      </Select.Item>
-    {/each}
-  </Select.Content>
-</Select.Root>
+        <Select.Trigger>
+          <Select.Value placeholder="Select a fruit" />
+        </Select.Trigger>
+
+        <Select.Content>
+          {#each fruits as fruit, index (index)}
+            <Select.Item value="{fruit}">
+              {fruit}
+            </Select.Item>
+          {/each}
+        </Select.Content>
+      </Select.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

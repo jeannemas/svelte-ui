@@ -4,9 +4,9 @@
   import z from 'zod';
 
   import { afterNavigate } from '$app/navigation';
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import * as TopNavigation from '$lib/components/top-navigation/index.js';
 
   const adapter = zod(
@@ -40,57 +40,67 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="breakpoint" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Breakpoint</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Select.Root
-        items="{TopNavigation.breakpoints.map((breakpoint) => ({
-          label: breakpoint,
-          value: breakpoint,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.breakpoint = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.breakpoint !== undefined
-          ? {
-              label: $superFormData.breakpoint,
-              value: $superFormData.breakpoint,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="breakpoint" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Breakpoint</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{TopNavigation.breakpoints.map((breakpoint) => ({
+                label: breakpoint,
+                value: breakpoint,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.breakpoint = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.breakpoint !== undefined
+                ? {
+                    label: $superFormData.breakpoint,
+                    value: $superFormData.breakpoint,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each TopNavigation.breakpoints as breakpoint, index (index)}
-            <Select.Item value="{breakpoint}">
-              {breakpoint}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The breakpoint of the navigation.</Form.Description>
+              <Select.Content>
+                {#each TopNavigation.breakpoints as breakpoint, index (index)}
+                  <Select.Item value="{breakpoint}">
+                    {breakpoint}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The breakpoint of the navigation.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<TopNavigation.Root breakpoint="{$superFormData.breakpoint}" bind:open="{open}">
-  <TopNavigation.Section breakpoint="{$superFormData.breakpoint}">
-    <TopNavigation.Button breakpoint="{$superFormData.breakpoint}">Button</TopNavigation.Button>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-    <TopNavigation.Link breakpoint="{$superFormData.breakpoint}" href="https://www.example.com/">
-      Link
-    </TopNavigation.Link>
-  </TopNavigation.Section>
-</TopNavigation.Root>
+    <Accordion.Content>
+      <TopNavigation.Root {...$superFormData} bind:open="{open}">
+        <TopNavigation.Section>
+          <TopNavigation.Button>Button</TopNavigation.Button>
+
+          <TopNavigation.Link href="https://www.example.com/">Link</TopNavigation.Link>
+        </TopNavigation.Section>
+      </TopNavigation.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

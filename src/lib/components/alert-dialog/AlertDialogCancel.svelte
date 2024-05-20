@@ -46,10 +46,13 @@
    * The styles of the cancel.
    */
   export const styles = tv({
-    ...buttonStyles,
+    base: [...buttonStyles.base],
     defaultVariants: {
       ...buttonStyles.defaultVariants,
       variant: 'outline',
+    },
+    variants: {
+      ...buttonStyles.variants,
     },
   });
   /**

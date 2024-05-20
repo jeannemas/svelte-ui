@@ -4,7 +4,7 @@
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import type { Props as TopNavigationRootProps } from './TopNavigationRoot.svelte';
+  import { getTopNavigationContext, hasTopNavigationContext } from './context.js';
 
   /**
    * The attributes for the button.
@@ -13,7 +13,7 @@
   /**
    * The props for the button.
    */
-  export type Props = Pick<TopNavigationRootProps, 'breakpoint'>;
+  export type Props = EmptyObject;
   /**
    * The slots for the button.
    */
@@ -47,9 +47,11 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let breakpoint: Props['breakpoint'] = undefined;
-
   $: attributes = $$restProps as Attributes;
+
+  $: breakpoint = hasTopNavigationContext()
+    ? getTopNavigationContext().breakpoint
+    : styles.defaultVariants.breakpoint;
 </script>
 
 <!-- <style lang="postcss">

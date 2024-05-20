@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { Command as CommandPrimitive } from 'cmdk-sv';
-  import Search from 'lucide-svelte/icons/search';
+  import SearchIcon from 'lucide-svelte/icons/search';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -49,7 +49,7 @@
 </style> -->
 
 <div class="flex items-center border-b px-2" data-cmdk-input-wrapper="">
-  <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
+  <SearchIcon class="mr-2 h-4 w-4 shrink-0 opacity-50" />
 
   <CommandPrimitive.Input
     {...attributes}

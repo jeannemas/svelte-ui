@@ -9,7 +9,7 @@
 
   import '../app.pcss';
 
-  const routesArray = Object.keys(route_meta_data);
+  const routesArray = Object.keys(route_meta_data).sort();
 </script>
 
 <script lang="ts">
@@ -45,12 +45,12 @@
 <ModeWatcher defaultMode="light" track="{false}" />
 
 <div class="grid grid-cols-1 lg:min-h-screen lg:grid-cols-[auto_1fr]">
-  <aside class="hidden border-r border-border p-2 lg:block">
+  <aside class="hidden border-r border-border p-1 lg:block">
     <ul>
       {#each routesArray as route, index (index)}
         <li>
           <a
-            class="block p-2 font-mono underline-offset-4 hover:underline"
+            class="block p-1 font-mono underline-offset-4 hover:underline"
             class:underline="{$page.url.pathname === route}"
             href="{route}"
           >
@@ -65,9 +65,9 @@
     <TopNavigation.Section>
       {#each routesArray as route, index (index)}
         <TopNavigation.Link
+          active="{$page.url.pathname === route}"
           class="font-mono"
           href="{route}"
-          isActive="{$page.url.pathname === route}"
         >
           {route}
         </TopNavigation.Link>
@@ -76,14 +76,10 @@
   </TopNavigation.Root>
 
   <div>
-    <header class="flex flex-row items-center justify-between gap-x-2 border-b border-border p-2">
+    <header class="border-b border-border p-2">
       <h1 class="text-xl font-bold">
         {$title}
       </h1>
-
-      <h3 class="text-md font-medium">
-        {$page.status}
-      </h3>
     </header>
 
     <main class="p-2">

@@ -3,10 +3,10 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as AlertDialog from '$lib/components/alert-dialog/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -31,88 +31,100 @@
 
 <!-- <style lang="postcss">
 </style> -->
-<Form.Root superForm="{superForm}">
-  <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on escape</Form.Label>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-    </Form.Control>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-    <Form.Description>
-      Whether or not to close the alert dialog when the escape key is pressed.
-    </Form.Description>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on escape</Form.Label>
 
-    <Form.FieldErrors />
-  </Form.Field>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
+          </Form.Control>
 
-  <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on outside click</Form.Label>
+          <Form.Description>
+            Whether or not to close the alert dialog when the escape key is pressed.
+          </Form.Description>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnOutsideClick}" />
-    </Form.Control>
+          <Form.FieldErrors />
+        </Form.Field>
 
-    <Form.Description>
-      Whether or not to close the alert dialog when the escape key is pressed.
-    </Form.Description>
+        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on outside click</Form.Label>
 
-    <Form.FieldErrors />
-  </Form.Field>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.closeOnOutsideClick}"
+            />
+          </Form.Control>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.Description>
+            Whether or not to close the alert dialog when the escape key is pressed.
+          </Form.Description>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+          <Form.FieldErrors />
+        </Form.Field>
 
-    <Form.Description>The open state of the alert dialog.</Form.Description>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.FieldErrors />
-  </Form.Field>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-  <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Prevent scroll</Form.Label>
+          <Form.Description>The open state of the alert dialog.</Form.Description>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-    </Form.Control>
+          <Form.FieldErrors />
+        </Form.Field>
 
-    <Form.Description>
-      Whether or not to prevent scrolling when the alert dialog is open.
-    </Form.Description>
+        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Prevent scroll</Form.Label>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
+          </Form.Control>
 
-<Separator />
+          <Form.Description>
+            Whether or not to prevent scrolling when the alert dialog is open.
+          </Form.Description>
 
-<AlertDialog.Root
-  closeOnEscape="{$superFormData.closeOnEscape}"
-  closeOnOutsideClick="{$superFormData.closeOnOutsideClick}"
-  preventScroll="{$superFormData.preventScroll}"
-  bind:open="{$superFormData.open}"
->
-  <AlertDialog.Trigger asChild let:builder>
-    <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
-  </AlertDialog.Trigger>
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-  <AlertDialog.Content>
-    <AlertDialog.Header>
-      <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-      <AlertDialog.Description>
-        This action cannot be undone. This will permanently delete your account and remove your data
-        from our servers.
-      </AlertDialog.Description>
-    </AlertDialog.Header>
+    <Accordion.Content>
+      <AlertDialog.Root {...$superFormData} bind:open="{$superFormData.open}">
+        <AlertDialog.Trigger asChild let:builder>
+          <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
+        </AlertDialog.Trigger>
 
-    <AlertDialog.Footer>
-      <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+        <AlertDialog.Content>
+          <AlertDialog.Header>
+            <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
 
-      <AlertDialog.Action>Continue</AlertDialog.Action>
-    </AlertDialog.Footer>
-  </AlertDialog.Content>
-</AlertDialog.Root>
+            <AlertDialog.Description>
+              This action cannot be undone. This will permanently delete your account and remove
+              your data from our servers.
+            </AlertDialog.Description>
+          </AlertDialog.Header>
+
+          <AlertDialog.Footer>
+            <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+
+            <AlertDialog.Action>Continue</AlertDialog.Action>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

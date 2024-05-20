@@ -58,7 +58,8 @@ export type Slot<TSlot extends AnyObject = EmptyObject> = TSlot;
 /**
  * A transition function.
  */
-export type Transition = (node: Element, params?: unknown) => TransitionConfig;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Transition = (node: Element, params?: any) => TransitionConfig;
 /**
  * The configuration to pass to a transition function.
  */

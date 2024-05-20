@@ -3,9 +3,9 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter1 = zod(
@@ -38,34 +38,51 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm1}">
-  <Form.Field name="debug" superForm="{superForm1}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Debug</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData1.debug}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm1}">
+        <Form.Field name="debug" superForm="{superForm1}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Debug</Form.Label>
 
-    <Form.Description>
-      Whether to display the form state in a debug panel underneath the form.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData1.debug}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>
+            Whether to display the form state in a debug panel underneath the form.
+          </Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Form.Root debug="{$superFormData1.debug}" superForm="{superForm2}">
-  <Form.Field name="username" superForm="{superForm2}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Placeholder</Form.Label>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-      <Input {...attrs} {...constraints} variant="text" bind:value="{$superFormData2.username}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root {...$superFormData1} superForm="{superForm2}">
+        <Form.Field name="username" superForm="{superForm2}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Placeholder</Form.Label>
 
-    <Form.Description>This is your public display name.</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              variant="text"
+              bind:value="{$superFormData2.username}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>This is your public display name.</Form.Description>
+
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

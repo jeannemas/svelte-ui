@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { Pagination as PaginationPrimitive } from 'bits-ui';
-  import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+  import ChevronLeftIcon from 'lucide-svelte/icons/chevron-left';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -55,7 +55,7 @@
     on:click
   >
     <slot builder="{builder}">
-      <ChevronLeft class="h-4 w-4" />
+      <ChevronLeftIcon class="h-4 w-4" />
 
       <span>Previous</span>
     </slot>

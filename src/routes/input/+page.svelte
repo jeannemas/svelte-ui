@@ -1,22 +1,21 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Input, { variants } from '$lib/components/input/index.js';
+  import Input, { variants, type Variant } from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
-    z
-      .object({
-        disabled: z.boolean().default(false),
-        placeholder: z.string().default(''),
-        variant: z.enum(variants).default('text'),
-      })
-      .partial(),
+    z.object({
+      disabled: z.boolean().default(false).optional(),
+      placeholder: z.string().default('').optional(),
+      variant: z.enum(variants).default('text'),
+    }),
   );
 </script>
 
@@ -26,82 +25,97 @@
     validators: adapter,
   });
   const { form: superFormData } = superForm;
+
+  function handleSelectedChange(selected: Selected<Variant> | undefined) {
+    $superFormData.variant = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Disabled</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Disabled</Form.Label>
 
-    <Form.Description>Whether the input is disabled.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>Whether the input is disabled.</Form.Description>
 
-  <Form.Field name="placeholder" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Placeholder</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Input {...attrs} {...constraints} variant="text" bind:value="{$superFormData.placeholder}" />
-    </Form.Control>
+        <Form.Field name="placeholder" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Placeholder</Form.Label>
 
-    <Form.Description>The input placeholder.</Form.Description>
+            <Input
+              {...attrs}
+              {...constraints}
+              variant="text"
+              bind:value="{$superFormData.placeholder}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>The input placeholder.</Form.Description>
 
-  <Form.Field name="variant" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Variant</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{variants.map((variant) => ({
-          label: variant,
-          value: variant,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.variant = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.variant !== undefined
-          ? {
-              label: $superFormData.variant,
-              value: $superFormData.variant,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="variant" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Variant</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{variants.map((variant) => ({
+                label: variant,
+                value: variant,
+              }))}"
+              onSelectedChange="{handleSelectedChange}"
+              portal="{null}"
+              selected="{$superFormData.variant !== undefined
+                ? {
+                    label: $superFormData.variant,
+                    value: $superFormData.variant,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each variants as variant, index (index)}
-            <Select.Item value="{variant}">
-              {variant}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The variant of the input.</Form.Description>
+              <Select.Content>
+                {#each variants as variant, index (index)}
+                  <Select.Item value="{variant}">
+                    {variant}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The variant of the input.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Input
-  disabled="{$superFormData.disabled}"
-  placeholder="{$superFormData.placeholder}"
-  variant="{$superFormData.variant ?? 'text'}"
-/>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
+
+    <Accordion.Content>
+      <Input {...$superFormData} />
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

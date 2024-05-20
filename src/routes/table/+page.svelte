@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import Separator from '$lib/components/separator/index.js';
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Table from '$lib/components/table/index.js';
 
   const invoices = [
@@ -54,34 +54,46 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Separator />
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-<Table.Root>
-  <Table.Caption>A list of your recent invoices.</Table.Caption>
+    <Accordion.Content></Accordion.Content>
+  </Accordion.Item>
 
-  <Table.Header>
-    <Table.Row>
-      <Table.Head class="w-[100px]">Invoice</Table.Head>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-      <Table.Head>Status</Table.Head>
+    <Accordion.Content>
+      <Table.Root>
+        <Table.Caption>A list of your recent invoices.</Table.Caption>
 
-      <Table.Head>Method</Table.Head>
+        <Table.Header>
+          <Table.Row>
+            <Table.Head class="w-[100px]">Invoice</Table.Head>
 
-      <Table.Head class="text-right">Amount</Table.Head>
-    </Table.Row>
-  </Table.Header>
+            <Table.Head>Status</Table.Head>
 
-  <Table.Body>
-    {#each invoices as invoice, index (index)}
-      <Table.Row>
-        <Table.Cell class="font-medium">{invoice.invoice}</Table.Cell>
+            <Table.Head>Method</Table.Head>
 
-        <Table.Cell>{invoice.paymentStatus}</Table.Cell>
+            <Table.Head class="text-right">Amount</Table.Head>
+          </Table.Row>
+        </Table.Header>
 
-        <Table.Cell>{invoice.paymentMethod}</Table.Cell>
+        <Table.Body>
+          {#each invoices as invoice, index (index)}
+            <Table.Row>
+              <Table.Cell class="font-medium">{invoice.invoice}</Table.Cell>
 
-        <Table.Cell class="text-right">{invoice.totalAmount}</Table.Cell>
-      </Table.Row>
-    {/each}
-  </Table.Body>
-</Table.Root>
+              <Table.Cell>{invoice.paymentStatus}</Table.Cell>
+
+              <Table.Cell>{invoice.paymentMethod}</Table.Cell>
+
+              <Table.Cell class="text-right">{invoice.totalAmount}</Table.Cell>
+            </Table.Row>
+          {/each}
+        </Table.Body>
+      </Table.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

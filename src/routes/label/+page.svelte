@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
+  import * as Accordion from '$lib/components/accordion/index.js';
+  import Checkbox from '$lib/components/checkbox/index.js';
   import Label from '$lib/components/label/index.js';
-  import Separator from '$lib/components/separator/index.js';
 </script>
 
 <script lang="ts">
@@ -9,10 +10,24 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Separator />
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-<div class="flex items-center space-x-2">
-  <!-- <Checkbox id="terms" /> -->
+    <Accordion.Content>
+      <!--  -->
+    </Accordion.Content>
+  </Accordion.Item>
 
-  <Label for="terms">Accept terms and conditions</Label>
-</div>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
+
+    <Accordion.Content>
+      <div class="flex items-center space-x-2">
+        <Checkbox id="terms" />
+
+        <Label for="terms">Accept terms and conditions</Label>
+      </div>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import Circle from 'lucide-svelte/icons/circle';
+  import CircleIcon from 'lucide-svelte/icons/circle';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -68,7 +68,7 @@
 >
   <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
     <DropdownMenuPrimitive.RadioIndicator>
-      <Circle class="h-2 w-2 fill-current" />
+      <CircleIcon class="h-2 w-2 fill-current" />
     </DropdownMenuPrimitive.RadioIndicator>
   </span>
 

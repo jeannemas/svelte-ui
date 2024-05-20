@@ -3,12 +3,12 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Dialog from '$lib/components/dialog/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -34,102 +34,113 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on escape</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on escape</Form.Label>
 
-    <Form.Description>
-      If true, the dialog will close when the user presses the escape key.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            If true, the dialog will close when the user presses the escape key.
+          </Form.Description>
 
-  <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Close on outside click</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnOutsideClick}" />
-    </Form.Control>
+        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Close on outside click</Form.Label>
 
-    <Form.Description>
-      If true, the dialog will close when the user clicks outside of it.
-    </Form.Description>
+            <Switch
+              {...attrs}
+              {...constraints}
+              bind:checked="{$superFormData.closeOnOutsideClick}"
+            />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            If true, the dialog will close when the user clicks outside of it.
+          </Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>
-      The open state of the Dialog. You can bind to this value to programatically open/close the
-      Dialog.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            The open state of the Dialog. You can bind to this value to programatically open/close
+            the Dialog.
+          </Form.Description>
 
-  <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Prevent scroll</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-    </Form.Control>
+        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Prevent scroll</Form.Label>
 
-    <Form.Description>
-      If true, the dialog will prevent scrolling on the body when it is open.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>
+            If true, the dialog will prevent scrolling on the body when it is open.
+          </Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Dialog.Root
-  closeOnEscape="{$superFormData.closeOnEscape}"
-  closeOnOutsideClick="{$superFormData.closeOnOutsideClick}"
-  preventScroll="{$superFormData.preventScroll}"
-  bind:open="{$superFormData.open}"
->
-  <Dialog.Trigger asChild let:builder>
-    <Button builders="{[builder]}" variant="outline">Edit Profile</Button>
-  </Dialog.Trigger>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Dialog.Content class="sm:max-w-[425px]">
-    <Dialog.Header>
-      <Dialog.Title>Edit profile</Dialog.Title>
+    <Accordion.Content>
+      <Dialog.Root {...$superFormData} bind:open="{$superFormData.open}">
+        <Dialog.Trigger asChild let:builder>
+          <Button builders="{[builder]}" variant="outline">Edit Profile</Button>
+        </Dialog.Trigger>
 
-      <Dialog.Description>
-        Make changes to your profile here. Click save when you're done.
-      </Dialog.Description>
-    </Dialog.Header>
+        <Dialog.Content class="sm:max-w-[425px]">
+          <Dialog.Header>
+            <Dialog.Title>Edit profile</Dialog.Title>
 
-    <div class="grid gap-4 py-4">
-      <div class="grid grid-cols-4 items-center gap-4">
-        <Label class="text-right" for="name">Name</Label>
+            <Dialog.Description>
+              Make changes to your profile here. Click save when you're done.
+            </Dialog.Description>
+          </Dialog.Header>
 
-        <Input class="col-span-3" id="name" value="Pedro Duarte" variant="text" />
-      </div>
+          <div class="grid gap-4 py-4">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label class="text-right" for="name">Name</Label>
 
-      <div class="grid grid-cols-4 items-center gap-4">
-        <Label class="text-right" for="username">Username</Label>
+              <Input class="col-span-3" id="name" value="Pedro Duarte" variant="text" />
+            </div>
 
-        <Input class="col-span-3" id="username" value="@peduarte" variant="text" />
-      </div>
-    </div>
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label class="text-right" for="username">Username</Label>
 
-    <Dialog.Footer>
-      <Button type="submit">Save changes</Button>
-    </Dialog.Footer>
-  </Dialog.Content>
-</Dialog.Root>
+              <Input class="col-span-3" id="username" value="@peduarte" variant="text" />
+            </div>
+          </div>
+
+          <Dialog.Footer>
+            <Button type="submit">Save changes</Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

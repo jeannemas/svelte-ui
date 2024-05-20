@@ -3,13 +3,13 @@
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Card from '$lib/components/card/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
   import * as Tabs from '$lib/components/tabs/index.js';
 
@@ -35,156 +35,163 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="activateOnFocus" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Activate on focus</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.activateOnFocus}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="activateOnFocus" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Activate on focus</Form.Label>
 
-    <Form.Description>
-      Whether or not the tabs should activate when the trigger is focused.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.activateOnFocus}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not the tabs should activate when the trigger is focused.
+          </Form.Description>
 
-  <Form.Field name="loop" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Loop</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-    </Form.Control>
+        <Form.Field name="loop" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Loop</Form.Label>
 
-    <Form.Description>
-      Whether or not the tabs should loop around when the end is reached.
-    </Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
+          <Form.Description>
+            Whether or not the tabs should loop around when the end is reached.
+          </Form.Description>
 
-  <Form.Field name="orientation" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Orientation</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Select.Root
-        items="{Tabs.rootOrientations.map((orientation) => ({
-          label: orientation,
-          value: orientation,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.orientation = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.orientation !== undefined
-          ? {
-              label: $superFormData.orientation,
-              value: $superFormData.orientation,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+        <Form.Field name="orientation" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Orientation</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{Tabs.rootOrientations.map((orientation) => ({
+                label: orientation,
+                value: orientation,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.orientation = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.orientation !== undefined
+                ? {
+                    label: $superFormData.orientation,
+                    value: $superFormData.orientation,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each Tabs.rootOrientations as orientation, index (index)}
-            <Select.Item value="{orientation}">
-              {orientation}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>
-      The orientation of the tabs, which determines how keyboard navigation works.
-    </Form.Description>
+              <Select.Content>
+                {#each Tabs.rootOrientations as orientation, index (index)}
+                  <Select.Item value="{orientation}">
+                    {orientation}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>
+            The orientation of the tabs, which determines how keyboard navigation works.
+          </Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Tabs.Root
-  activateOnFocus="{$superFormData.activateOnFocus}"
-  loop="{$superFormData.loop}"
-  orientation="{$superFormData.orientation}"
-  value="account"
->
-  <Tabs.List
-    class="
-      grid
-      {$superFormData.orientation === 'horizontal' ? 'grid-cols-2' : ''}
-      {$superFormData.orientation === 'vertical' ? 'h-auto grid-cols-1' : ''}
-    "
-  >
-    <Tabs.Trigger value="account">Account</Tabs.Trigger>
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-    <Tabs.Trigger value="password">Password</Tabs.Trigger>
-  </Tabs.List>
+    <Accordion.Content>
+      <Tabs.Root {...$superFormData} value="account">
+        <Tabs.List
+          class="
+            grid
+            {$superFormData.orientation === 'horizontal' ? 'grid-cols-2' : ''}
+            {$superFormData.orientation === 'vertical' ? 'h-auto grid-cols-1' : ''}
+          "
+        >
+          <Tabs.Trigger value="account">Account</Tabs.Trigger>
 
-  <Tabs.Content value="account">
-    <Card.Root>
-      <Card.Header>
-        <Card.Title>Account</Card.Title>
+          <Tabs.Trigger value="password">Password</Tabs.Trigger>
+        </Tabs.List>
 
-        <Card.Description>
-          Make changes to your account here. Click save when you're done.
-        </Card.Description>
-      </Card.Header>
+        <Tabs.Content value="account">
+          <Card.Root>
+            <Card.Header>
+              <Card.Title>Account</Card.Title>
 
-      <Card.Content class="space-y-2">
-        <div class="space-y-1">
-          <Label for="name">Name</Label>
+              <Card.Description>
+                Make changes to your account here. Click save when you're done.
+              </Card.Description>
+            </Card.Header>
 
-          <Input id="name" value="Pedro Duarte" variant="text" />
-        </div>
+            <Card.Content class="space-y-2">
+              <div class="space-y-1">
+                <Label for="name">Name</Label>
 
-        <div class="space-y-1">
-          <Label for="username">Username</Label>
+                <Input id="name" value="Pedro Duarte" variant="text" />
+              </div>
 
-          <Input id="username" value="@peduarte" variant="text" />
-        </div>
-      </Card.Content>
+              <div class="space-y-1">
+                <Label for="username">Username</Label>
 
-      <Card.Footer>
-        <Button>Save changes</Button>
-      </Card.Footer>
-    </Card.Root>
-  </Tabs.Content>
+                <Input id="username" value="@peduarte" variant="text" />
+              </div>
+            </Card.Content>
 
-  <Tabs.Content value="password">
-    <Card.Root>
-      <Card.Header>
-        <Card.Title>Password</Card.Title>
+            <Card.Footer>
+              <Button>Save changes</Button>
+            </Card.Footer>
+          </Card.Root>
+        </Tabs.Content>
 
-        <Card.Description>
-          Change your password here. After saving, you'll be logged out.
-        </Card.Description>
-      </Card.Header>
+        <Tabs.Content value="password">
+          <Card.Root>
+            <Card.Header>
+              <Card.Title>Password</Card.Title>
 
-      <Card.Content class="space-y-2">
-        <div class="space-y-1">
-          <Label for="current">Current password</Label>
+              <Card.Description>
+                Change your password here. After saving, you'll be logged out.
+              </Card.Description>
+            </Card.Header>
 
-          <Input id="current" type="password" variant="text" />
-        </div>
+            <Card.Content class="space-y-2">
+              <div class="space-y-1">
+                <Label for="current">Current password</Label>
 
-        <div class="space-y-1">
-          <Label for="new">New password</Label>
+                <Input id="current" type="password" variant="text" />
+              </div>
 
-          <Input id="new" type="password" variant="text" />
-        </div>
-      </Card.Content>
+              <div class="space-y-1">
+                <Label for="new">New password</Label>
 
-      <Card.Footer>
-        <Button>Save password</Button>
-      </Card.Footer>
-    </Card.Root>
-  </Tabs.Content>
-</Tabs.Root>
+                <Input id="new" type="password" variant="text" />
+              </div>
+            </Card.Content>
+
+            <Card.Footer>
+              <Button>Save password</Button>
+            </Card.Footer>
+          </Card.Root>
+        </Tabs.Content>
+      </Tabs.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

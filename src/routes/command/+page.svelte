@@ -1,18 +1,18 @@
 <script context="module" lang="ts">
-  import Calculator from 'lucide-svelte/icons/calculator';
-  import Calendar from 'lucide-svelte/icons/calendar';
-  import CreditCard from 'lucide-svelte/icons/credit-card';
-  import Settings from 'lucide-svelte/icons/settings';
-  import Smile from 'lucide-svelte/icons/smile';
-  import User from 'lucide-svelte/icons/user';
+  import CalculatorIcon from 'lucide-svelte/icons/calculator';
+  import CalendarIcon from 'lucide-svelte/icons/calendar';
+  import CreditCardIcon from 'lucide-svelte/icons/credit-card';
+  import SettingsIcon from 'lucide-svelte/icons/settings';
+  import SmileIcon from 'lucide-svelte/icons/smile';
+  import UserIcon from 'lucide-svelte/icons/user';
   import { onMount } from 'svelte';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Command from '$lib/components/command/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Separator from '$lib/components/separator/index.js';
   import Switch from '$lib/components/switch/index.js';
 
   const adapter = zod(
@@ -37,7 +37,7 @@
       if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
         event.preventDefault();
 
-        $superFormData.open = !$superFormData.open;
+        $superFormData.open = true;
       }
     }
 
@@ -50,107 +50,119 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="loop" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Loop</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-    </Form.Control>
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="loop" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Loop</Form.Label>
 
-    <Form.Description>
-      Optionally set to
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
+          </Form.Control>
 
-      <code>true</code>
+          <Form.Description>
+            Optionally set to
 
-      to enable looping through the items when the user reaches the end of the list using the
-      keyboard.
-    </Form.Description>
+            <code>true</code>
 
-    <Form.FieldErrors />
-  </Form.Field>
+            to enable looping through the items when the user reaches the end of the list using the
+            keyboard.
+          </Form.Description>
 
-  <Form.Field name="open" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Open</Form.Label>
+          <Form.FieldErrors />
+        </Form.Field>
 
-      <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-    </Form.Control>
+        <Form.Field name="open" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Open</Form.Label>
 
-    <Form.Description>The open state of the command dialog.</Form.Description>
+            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The open state of the command dialog.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<p class="text-sm text-muted-foreground">
-  Press
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <kbd
-    class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
-  >
-    <span class="text-xs">⌘</span>
+    <Accordion.Content>
+      <p class="text-sm text-muted-foreground">
+        Press
 
-    <span>+</span>
+        <kbd
+          class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
+        >
+          <span class="text-xs">⌘</span>
 
-    <span>K</span>
-  </kbd>
-</p>
+          <span>+</span>
 
-<Command.Dialog loop="{$superFormData.loop}" bind:open="{$superFormData.open}">
-  <Command.Input placeholder="Type a command or search..." />
+          <span>K</span>
+        </kbd>
+      </p>
 
-  <Command.List>
-    <Command.Empty>No results found.</Command.Empty>
+      <Command.Dialog {...$superFormData} bind:open="{$superFormData.open}">
+        <Command.Input placeholder="Type a command or search..." />
 
-    <Command.Group heading="Suggestions">
-      <Command.Item>
-        <Calendar class="mr-2 h-4 w-4" />
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
 
-        <span>Calendar</span>
-      </Command.Item>
+          <Command.Group heading="Suggestions">
+            <Command.Item class="gap-x-2">
+              <CalendarIcon />
 
-      <Command.Item>
-        <Smile class="mr-2 h-4 w-4" />
+              <span>Calendar</span>
+            </Command.Item>
 
-        <span>Search Emoji</span>
-      </Command.Item>
+            <Command.Item class="gap-x-2">
+              <SmileIcon />
 
-      <Command.Item>
-        <Calculator class="mr-2 h-4 w-4" />
+              <span>Search Emoji</span>
+            </Command.Item>
 
-        <span>Calculator</span>
-      </Command.Item>
-    </Command.Group>
+            <Command.Item class="gap-x-2">
+              <CalculatorIcon />
 
-    <Command.Separator />
+              <span>Calculator</span>
+            </Command.Item>
+          </Command.Group>
 
-    <Command.Group heading="Settings">
-      <Command.Item>
-        <User class="mr-2 h-4 w-4" />
+          <Command.Separator />
 
-        <span>Profile</span>
+          <Command.Group heading="Settings">
+            <Command.Item class="gap-x-2">
+              <UserIcon />
 
-        <Command.Shortcut>⌘P</Command.Shortcut>
-      </Command.Item>
+              <span>Profile</span>
 
-      <Command.Item>
-        <CreditCard class="mr-2 h-4 w-4" />
+              <Command.Shortcut>⌘P</Command.Shortcut>
+            </Command.Item>
 
-        <span>Billing</span>
+            <Command.Item class="gap-x-2">
+              <CreditCardIcon />
 
-        <Command.Shortcut>⌘B</Command.Shortcut>
-      </Command.Item>
+              <span>Billing</span>
 
-      <Command.Item>
-        <Settings class="mr-2 h-4 w-4" />
+              <Command.Shortcut>⌘B</Command.Shortcut>
+            </Command.Item>
 
-        <span>Settings</span>
+            <Command.Item class="gap-x-2">
+              <SettingsIcon />
 
-        <Command.Shortcut>⌘S</Command.Shortcut>
-      </Command.Item>
-    </Command.Group>
-  </Command.List>
-</Command.Dialog>
+              <span>Settings</span>
+
+              <Command.Shortcut>⌘S</Command.Shortcut>
+            </Command.Item>
+          </Command.Group>
+        </Command.List>
+      </Command.Dialog>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

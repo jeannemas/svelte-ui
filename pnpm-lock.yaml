@@ -15,8 +15,8 @@ importers:
         specifier: ^0.76.2
         version: 0.76.2(svelte@4.2.12)
       bits-ui:
-        specifier: ^0.21.7
-        version: 0.21.7(svelte@4.2.12)
+        specifier: ^0.21.8
+        version: 0.21.8(svelte@4.2.12)
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
@@ -850,8 +850,8 @@ packages:
     peerDependencies:
       svelte: ^4.0.0
 
-  bits-ui@0.21.7:
-    resolution: {integrity: sha512-1PKp90ly1R6jexIiAUj1Dk4u2pln7ok+L8Vc0rHMY7pi7YZvadFNZvkp1G5BtmL8qh2xsn4MVNgKjPAQMCxW0A==}
+  bits-ui@0.21.8:
+    resolution: {integrity: sha512-fr++Gf//41w9/Td5r1SfaeA/XXv5YEOw3LFY7JVH+eAbi7RzNqf7Xy8BS/W8HXfRqlsu1ReFgZ7ZZ4DbrP4HwQ==}
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0-next.118
 
@@ -3659,7 +3659,7 @@ snapshots:
       nanoid: 5.0.7
       svelte: 4.2.12
 
-  bits-ui@0.21.7(svelte@4.2.12):
+  bits-ui@0.21.8(svelte@4.2.12):
     dependencies:
       '@internationalized/date': 3.5.2
       '@melt-ui/svelte': 0.76.2(svelte@4.2.12)

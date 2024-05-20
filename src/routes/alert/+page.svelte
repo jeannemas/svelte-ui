@@ -1,13 +1,13 @@
 <script context="module" lang="ts">
-  import Terminal from 'lucide-svelte/icons/terminal';
+  import TerminalIcon from 'lucide-svelte/icons/terminal';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
+  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Alert from '$lib/components/alert/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator from '$lib/components/separator/index.js';
 
   const adapter = zod(
     z
@@ -29,55 +29,67 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Form.Root superForm="{superForm}">
-  <Form.Field name="variant" superForm="{superForm}" let:constraints>
-    <Form.Control let:attrs>
-      <Form.Label>Variant</Form.Label>
+<Accordion.Root multiple value="{['demo']}">
+  <Accordion.Item value="config">
+    <Accordion.Trigger>Config</Accordion.Trigger>
 
-      <Select.Root
-        items="{Alert.variants.map((variant) => ({
-          label: variant,
-          value: variant,
-        }))}"
-        onSelectedChange="{(selected) => {
-          $superFormData.variant = selected?.value;
-        }}"
-        portal="{null}"
-        selected="{$superFormData.variant !== undefined
-          ? {
-              label: $superFormData.variant,
-              value: $superFormData.variant,
-            }
-          : undefined}"
-      >
-        <Select.Input {...attrs} {...constraints} />
+    <Accordion.Content>
+      <Form.Root superForm="{superForm}">
+        <Form.Field name="variant" superForm="{superForm}" let:constraints>
+          <Form.Control let:attrs>
+            <Form.Label>Variant</Form.Label>
 
-        <Select.Trigger>
-          <Select.Value />
-        </Select.Trigger>
+            <Select.Root
+              items="{Alert.variants.map((variant) => ({
+                label: variant,
+                value: variant,
+              }))}"
+              onSelectedChange="{(selected) => {
+                $superFormData.variant = selected?.value;
+              }}"
+              portal="{null}"
+              selected="{$superFormData.variant !== undefined
+                ? {
+                    label: $superFormData.variant,
+                    value: $superFormData.variant,
+                  }
+                : undefined}"
+            >
+              <Select.Input {...attrs} {...constraints} />
 
-        <Select.Content>
-          {#each Alert.variants as variant, index (index)}
-            <Select.Item value="{variant}">
-              {variant}
-            </Select.Item>
-          {/each}
-        </Select.Content>
-      </Select.Root>
-    </Form.Control>
+              <Select.Trigger>
+                <Select.Value />
+              </Select.Trigger>
 
-    <Form.Description>The variant of the alert.</Form.Description>
+              <Select.Content>
+                {#each Alert.variants as variant, index (index)}
+                  <Select.Item value="{variant}">
+                    {variant}
+                  </Select.Item>
+                {/each}
+              </Select.Content>
+            </Select.Root>
+          </Form.Control>
 
-    <Form.FieldErrors />
-  </Form.Field>
-</Form.Root>
+          <Form.Description>The variant of the alert.</Form.Description>
 
-<Separator />
+          <Form.FieldErrors />
+        </Form.Field>
+      </Form.Root>
+    </Accordion.Content>
+  </Accordion.Item>
 
-<Alert.Root variant="{$superFormData.variant}">
-  <Terminal class="h-4 w-4" />
+  <Accordion.Item value="demo">
+    <Accordion.Trigger>Demo</Accordion.Trigger>
 
-  <Alert.Title>Heads up!</Alert.Title>
+    <Accordion.Content>
+      <Alert.Root {...$superFormData}>
+        <TerminalIcon class="h-4 w-4" />
 
-  <Alert.Description>You can add components to your app using the cli.</Alert.Description>
-</Alert.Root>
+        <Alert.Title>Heads up!</Alert.Title>
+
+        <Alert.Description>You can add components to your app using the CLI.</Alert.Description>
+      </Alert.Root>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>

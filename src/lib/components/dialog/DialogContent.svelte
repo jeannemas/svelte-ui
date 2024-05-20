@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { Dialog as DialogPrimitive } from 'bits-ui';
-  import X from 'lucide-svelte/icons/x';
+  import XIcon from 'lucide-svelte/icons/x';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -147,7 +147,7 @@
     <slot builder="{builder}" />
 
     <DialogClose {...closeAttributesAndProps}>
-      <X class="h-4 w-4" />
+      <XIcon class="h-4 w-4" />
 
       <span class="sr-only">Close</span>
     </DialogClose>

@@ -7,7 +7,7 @@
   "dependencies": {
     "@internationalized/date": "^3.5.2",
     "@melt-ui/svelte": "^0.76.2",
-    "bits-ui": "^0.21.7",
+    "bits-ui": "^0.21.8",
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.17",
     "formsnap": "^1.0.0",
@@ -52,6 +52,10 @@
     "vitest": "^1.2.0"
   },
   "exports": {
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "svelte": "./dist/components/accordion/index.js"
+    },
     "./components/alert": {
       "types": "./dist/components/alert/index.d.ts",
       "svelte": "./dist/components/alert/index.js"
@@ -76,9 +80,17 @@
       "types": "./dist/components/card/index.d.ts",
       "svelte": "./dist/components/card/index.js"
     },
+    "./components/checkbox": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "svelte": "./dist/components/checkbox/index.js"
+    },
     "./components/collapsible": {
       "types": "./dist/components/collapsible/index.d.ts",
       "svelte": "./dist/components/collapsible/index.js"
+    },
+    "./components/combobox": {
+      "types": "./dist/components/combobox/index.d.ts",
+      "svelte": "./dist/components/combobox/index.js"
     },
     "./components/command": {
       "types": "./dist/components/command/index.d.ts",

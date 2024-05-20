@@ -9,6 +9,8 @@
   import Container from '$lib/components/container/index.js';
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
+  import { setTopNavigationContext } from './context.js';
+
   /**
    * The attributes for the root.
    */
@@ -113,6 +115,8 @@
   export let open: Props['open'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  $: setTopNavigationContext({ breakpoint });
 </script>
 
 <!-- <style lang="postcss">

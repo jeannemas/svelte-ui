@@ -101,7 +101,7 @@
    * The styles of the calendar.
    */
   export const styles = tv({
-    base: ['p-3'],
+    base: ['inline-block p-3'],
   });
   /**
    * The week starts on values.
