@@ -1,5 +1,11 @@
 # @jeanne-mas/svelte-ui
 
+## 0.17.11
+
+### Patch Changes
+
+- 47913dc: Added combobox, accordion and checkbox components
+
 ## 0.17.10
 
 ### Patch Changes

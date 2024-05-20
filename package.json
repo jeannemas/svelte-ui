@@ -221,5 +221,5 @@
   "svelte": "./dist/index.js",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "version": "0.17.10"
+  "version": "0.17.11"
 }
