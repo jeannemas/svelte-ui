@@ -22,8 +22,8 @@
   /**
    * The styles of the header.
    */
-  export const styles = tv({
-    base: ['flex flex-col space-y-1.5 p-6'],
+  export const headerStyles = tv({
+    base: ['flex flex-col gap-y-2'],
   });
 </script>
 
@@ -40,7 +40,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{headerStyles({
     class: attributes.class,
   })}"
 >

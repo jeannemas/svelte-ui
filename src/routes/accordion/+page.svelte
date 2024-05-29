@@ -1,86 +1,61 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
   import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        disabled: z.boolean().default(false),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="disabled" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Disabled</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disabled</Form.Label>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.disabled.description}
+      </Form.Description>
 
-          <Form.Description>
-            <span>When</span>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-            <code>true</code>
-
-            <span>, prevents the user from interacting with the accordion.</span>
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Accordion.Root class="rounded-lg border border-border bg-muted/50 p-2" {...$superFormData}>
-        <Accordion.Item value="item-1">
-          <Accordion.Trigger>Is it accessible?</Accordion.Trigger>
-
-          <Accordion.Content>Yes. It adheres to the WAI-ARIA design pattern.</Accordion.Content>
-        </Accordion.Item>
-
-        <Accordion.Item value="item-2">
-          <Accordion.Trigger>Is it styled?</Accordion.Trigger>
+  <svelte:fragment slot="demo">
+    <Accordion.Root {...$props} class="rounded-lg border border-border bg-muted/50 p-2">
+      {#each data.posts as post (post.id)}
+        <Accordion.Item value="{post.id.toString()}">
+          <Accordion.Header>
+            <Accordion.Trigger>
+              {post.title}
+            </Accordion.Trigger>
+          </Accordion.Header>
 
           <Accordion.Content>
-            Yes. It comes with default styles that matches the other components' aesthetic.
+            {post.body}
           </Accordion.Content>
         </Accordion.Item>
-
-        <Accordion.Item value="item-3">
-          <Accordion.Trigger>Is it animated?</Accordion.Trigger>
-
-          <Accordion.Content>
-            Yes. It's animated by default, but you can disable it if you prefer.
-          </Accordion.Content>
-        </Accordion.Item>
-      </Accordion.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+      {/each}
+    </Accordion.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

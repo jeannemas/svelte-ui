@@ -1,30 +1,30 @@
 <script context="module" lang="ts">
-  import { Select as SelectPrimitive } from 'bits-ui';
+  import { Accordion as AccordionPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
-  type Primitive = ComponentInfo<SelectPrimitive.Input>;
+  type Primitive = ComponentInfo<AccordionPrimitive.Header>;
 
   /**
-   * The attributes of the input.
+   * The attributes of the header.
    */
-  export type Attributes = SvelteHTMLElements['input'];
+  export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The props of the input.
+   * The props of the header.
    */
   export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
-   * The slots of the input.
+   * The slots of the header.
    */
   export type Slots = Primitive['slots'];
 
   /**
-   * The styles of the input.
+   * The styles of the header.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const headerStyles = tv({
+    base: ['flex flex-row'],
   });
 </script>
 
@@ -35,6 +35,7 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
+  export let level: Props['level'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -42,14 +43,15 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<SelectPrimitive.Input
+<AccordionPrimitive.Header
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{headerStyles({
     class: attributes.class,
   })}"
   el="{el}"
+  level="{level}"
   let:builder
 >
   <slot builder="{builder}" />
-</SelectPrimitive.Input>
+</AccordionPrimitive.Header>

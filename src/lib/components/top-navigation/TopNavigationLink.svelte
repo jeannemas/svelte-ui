@@ -5,7 +5,7 @@
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
   import { styles as topNavigationButtonStyles } from './TopNavigationButton.svelte';
-  import { getTopNavigationContext, hasTopNavigationContext } from './context.js';
+  import { ctx } from './context.js';
 
   /**
    * The attributes for the link.
@@ -58,9 +58,7 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = hasTopNavigationContext()
-    ? getTopNavigationContext().breakpoint
-    : styles.defaultVariants.breakpoint;
+  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
 </script>
 
 <!-- <style lang="postcss">
@@ -74,8 +72,6 @@
     class: attributes.class,
   })}"
   href="{href}"
-  data-active="{active}"
-  data-breakpoint="{breakpoint}"
 >
   <slot />
 </a>

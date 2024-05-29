@@ -147,7 +147,7 @@
     <slot builder="{builder}" />
 
     <DialogClose {...closeAttributesAndProps}>
-      <XIcon class="h-4 w-4" />
+      <XIcon class="size-4" />
 
       <span class="sr-only">Close</span>
     </DialogClose>

@@ -31,8 +31,8 @@
   /**
    * The styles of the separator.
    */
-  export const styles = tv({
-    base: ['[&>svg]:size-3.5'],
+  export const separatorStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -55,7 +55,7 @@
 {:else}
   <li
     {...attributes}
-    class="{styles({
+    class="{separatorStyles({
       class: attributes.class,
     })}"
     role="presentation"

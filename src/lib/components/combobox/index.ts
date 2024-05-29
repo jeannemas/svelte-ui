@@ -1,48 +1,48 @@
 export {
   default as Content,
-  styles as contentStyles,
+  contentStyles,
   type Attributes as ContentAttributes,
   type Props as ContentProps,
   type Slots as ContentSlots,
 } from './ComboboxContent.svelte';
 export {
   default as Group,
-  styles as groupStyles,
+  groupStyles,
   type Attributes as GroupAttributes,
   type Props as GroupProps,
   type Slots as GroupSlots,
 } from './ComboboxGroup.svelte';
 export {
   default as GroupLabel,
-  styles as groupLabelStyles,
+  groupLabelStyles,
   type Attributes as GroupLabelAttributes,
   type Props as GroupLabelProps,
   type Slots as GroupLabelSlots,
 } from './ComboboxGroupLabel.svelte';
 export {
   default as HiddenInput,
-  styles as hiddenInputStyles,
+  hiddenInputStyles,
   type Attributes as HiddenInputAttributes,
   type Props as HiddenInputProps,
   type Slots as HiddenInputSlots,
 } from './ComboboxHiddenInput.svelte';
 export {
   default as Input,
-  styles as inputStyles,
+  inputStyles,
   type Attributes as InputAttributes,
   type Props as InputProps,
   type Slots as InputSlots,
 } from './ComboboxInput.svelte';
 export {
   default as Item,
-  styles as itemStyles,
+  itemStyles,
   type Attributes as ItemAttributes,
   type Props as ItemProps,
   type Slots as ItemSlots,
 } from './ComboboxItem.svelte';
 export {
   default as Label,
-  styles as labelStyles,
+  labelStyles,
   type Attributes as LabelAttributes,
   type Props as LabelProps,
   type Slots as LabelSlots,

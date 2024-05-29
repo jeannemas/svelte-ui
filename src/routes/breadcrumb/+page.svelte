@@ -1,52 +1,92 @@
 <script context="module" lang="ts">
-  import * as Accordion from '$lib/components/accordion/index.js';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+
   import * as Breadcrumb from '$lib/components/breadcrumb/index.js';
+  import * as Form from '$lib/components/form/index.js';
+  import * as Select from '$lib/components/select/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
+
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
+  export let data: PageData;
+
+  const form = superForm(data.form, {
+    SPA: true,
+    validators: zodClient(schema),
+  });
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="breakpoint" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Breakpoint</Form.Label>
 
-    <Accordion.Content>
-      <!--  -->
-    </Accordion.Content>
-  </Accordion.Item>
+        <Select.Root
+          items="{data.breakpoints}"
+          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
+          selected="{$props.breakpoint && {
+            label: $props.breakpoint,
+            value: $props.breakpoint,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-    <Accordion.Content>
-      <Breadcrumb.Root>
-        <Breadcrumb.List>
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="#/">Home</Breadcrumb.Link>
-          </Breadcrumb.Item>
+          <Select.Content>
+            {#each data.breakpoints as breakpoint (breakpoint.value)}
+              <Select.Item value="{breakpoint.value}">
+                {breakpoint.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-          <Breadcrumb.Separator />
+      <Form.Description>
+        {schema.shape.breakpoint.description}
+      </Form.Description>
 
-          <Breadcrumb.Item>
-            <Breadcrumb.Ellipsis />
-          </Breadcrumb.Item>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Breadcrumb.Separator />
+  <svelte:fragment slot="demo">
+    <Breadcrumb.Root {...$props}>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#/">Home</Breadcrumb.Link>
+        </Breadcrumb.Item>
 
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="#/docs/components">Components</Breadcrumb.Link>
-          </Breadcrumb.Item>
+        <Breadcrumb.Separator />
 
-          <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Ellipsis />
+        </Breadcrumb.Item>
 
-          <Breadcrumb.Item>
-            <Breadcrumb.Page>Breadcrumb</Breadcrumb.Page>
-          </Breadcrumb.Item>
-        </Breadcrumb.List>
-      </Breadcrumb.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+        <Breadcrumb.Separator />
+
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#/docs/components">Components</Breadcrumb.Link>
+        </Breadcrumb.Item>
+
+        <Breadcrumb.Separator />
+
+        <Breadcrumb.Item>
+          <Breadcrumb.Page>Breadcrumb</Breadcrumb.Page>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

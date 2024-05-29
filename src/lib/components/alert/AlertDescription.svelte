@@ -22,8 +22,8 @@
   /**
    * The styles of the description.
    */
-  export const styles = tv({
-    base: ['text-sm', '[&_p]:leading-relaxed'],
+  export const descriptionStyles = tv({
+    base: ['text-sm'],
   });
 </script>
 
@@ -40,7 +40,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{descriptionStyles({
     class: attributes.class,
   })}"
 >

@@ -1,10 +1,6 @@
 export {
   default,
-  defaultSize,
-  defaultVariant,
-  sizes,
-  styles,
-  variants,
+  buttonStyles,
   type Attributes,
   type Props,
   type Size,

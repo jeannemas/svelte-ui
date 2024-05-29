@@ -23,9 +23,9 @@
   /**
    * The styles of the cell.
    */
-  export const styles = tv({
+  export const cellStyles = tv({
     base: [
-      'relative h-9 w-9 p-0 text-center text-sm',
+      'relative size-8 p-0 text-center text-sm',
       'focus-within:relative focus-within:z-20',
       '[&:has([data-selected])]:bg-accent',
       'first:[&:has([data-selected])]:rounded-l-md',
@@ -53,7 +53,7 @@
 <CalendarPrimitive.Cell
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{cellStyles({
     class: attributes.class,
   })}"
   date="{date}"

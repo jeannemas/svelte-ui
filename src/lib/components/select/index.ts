@@ -13,12 +13,12 @@ export {
   type Slots as GroupSlots,
 } from './SelectGroup.svelte';
 export {
-  default as Input,
-  styles as inputStyles,
-  type Attributes as InputAttributes,
-  type Props as InputProps,
-  type Slots as InputSlots,
-} from './SelectInput.svelte';
+  default as HiddenInput,
+  styles as hiddenInputStyles,
+  type Attributes as HiddenInputAttributes,
+  type Props as HiddenInputProps,
+  type Slots as HiddenInputSlots,
+} from './SelectHiddenInput.svelte';
 export {
   default as Item,
   styles as itemStyles,

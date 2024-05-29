@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv } from 'tailwind-variants';
+  import { tv, type VariantProps } from 'tailwind-variants';
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
@@ -11,19 +11,39 @@
   /**
    * The props of the root.
    */
-  export type Props = EmptyObject;
+  export type Props = {
+    /**
+     * The variant of the root.
+     *
+     * @default 'default'
+     */
+    variant?: Variant;
+  };
   /**
    * The slots of the root.
    */
   export type Slots = {
     default: Slot;
   };
+  /**
+   * The variant of the root.
+   */
+  export type Variant = NonNullable<VariantProps<typeof rootStyles>['variant']>;
 
   /**
    * The styles of the root.
    */
-  export const styles = tv({
-    base: ['rounded-lg border bg-card text-card-foreground shadow-sm'],
+  export const rootStyles = tv({
+    base: ['flex flex-col gap-y-4 rounded-lg border p-4 shadow-sm'],
+    defaultVariants: {
+      variant: 'default',
+    },
+    variants: {
+      variant: {
+        default: ['border-border bg-card text-card-foreground'],
+        destructive: ['border-destructive bg-destructive/5 text-destructive'],
+      },
+    },
   });
 </script>
 
@@ -31,6 +51,8 @@
   type $$Events = EmptyObject;
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
+
+  export let variant: Props['variant'] = rootStyles.defaultVariants.variant;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -40,8 +62,9 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
+    variant,
   })}"
 >
   <slot />

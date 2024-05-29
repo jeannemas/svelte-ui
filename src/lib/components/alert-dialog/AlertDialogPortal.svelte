@@ -23,8 +23,8 @@
   /**
    * The styles of the portal.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const portalStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <AlertDialogPrimitive.Portal
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{portalStyles({
     class: attributes.class,
   })}"
   el="{el}"

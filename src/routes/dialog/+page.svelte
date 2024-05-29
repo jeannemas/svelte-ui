@@ -10,20 +10,16 @@
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import Switch from '$lib/components/switch/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(true),
-        open: z.boolean().default(false),
-        preventScroll: z.boolean().default(true),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      closeOnEscape: z.boolean().default(true).optional(),
+      closeOnOutsideClick: z.boolean().default(true).optional(),
+      preventScroll: z.boolean().default(true).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -72,21 +68,6 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
-
-          <Form.Description>
-            The open state of the Dialog. You can bind to this value to programatically open/close
-            the Dialog.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-
         <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
           <Form.Control let:attrs>
             <Form.Label>Prevent scroll</Form.Label>
@@ -108,7 +89,7 @@
     <Accordion.Trigger>Demo</Accordion.Trigger>
 
     <Accordion.Content>
-      <Dialog.Root {...$superFormData} bind:open="{$superFormData.open}">
+      <Dialog.Root {...$superFormData}>
         <Dialog.Trigger asChild let:builder>
           <Button builders="{[builder]}" variant="outline">Edit Profile</Button>
         </Dialog.Trigger>

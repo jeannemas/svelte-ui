@@ -57,7 +57,7 @@
     <slot builder="{builder}">
       <span>Next</span>
 
-      <ChevronRightIcon class="h-4 w-4" />
+      <ChevronRightIcon class="size-4" />
     </slot>
   </Button>
 </PaginationPrimitive.NextButton>

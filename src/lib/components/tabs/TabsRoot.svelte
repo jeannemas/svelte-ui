@@ -28,14 +28,14 @@
    * The styles of the root.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
     defaultVariants: {
       orientation: 'horizontal',
     },
     variants: {
       orientation: {
-        horizontal: [] as string[],
-        vertical: [] as string[],
+        horizontal: [''],
+        vertical: [''],
       },
     },
   });
@@ -85,7 +85,6 @@
   loop="{loop}"
   onValueChange="{onValueChange}"
   orientation="{orientation}"
-  data-orientation="{orientation}"
   bind:value="{value}"
   let:builder
   let:value

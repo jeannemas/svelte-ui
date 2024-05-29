@@ -30,7 +30,7 @@
   /**
    * The size of the button.
    */
-  export type Size = NonNullable<VariantProps<typeof styles>['size']>;
+  export type Size = NonNullable<VariantProps<typeof buttonStyles>['size']>;
   /**
    * The slots of the button.
    */
@@ -38,14 +38,14 @@
   /**
    * The variant of the button.
    */
-  export type Variant = NonNullable<VariantProps<typeof styles>['variant']>;
+  export type Variant = NonNullable<VariantProps<typeof buttonStyles>['variant']>;
 
   /**
    * The styles of the button.
    */
-  export const styles = tv({
+  export const buttonStyles = tv({
     base: [
-      'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors',
+      'inline-flex flex-row items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
     ],
@@ -55,11 +55,11 @@
     },
     variants: {
       size: {
-        circular: 'aspect-square h-10 w-10 rounded-full',
+        circular: 'aspect-square size-10 rounded-full',
         default: 'h-10 px-4 py-2',
-        icon: 'aspect-square h-10 w-10',
-        lg: 'h-11 rounded-md px-8',
-        sm: 'h-9 rounded-md px-3',
+        icon: 'aspect-square size-10',
+        lg: 'h-12 rounded-md px-8',
+        sm: 'h-8 rounded-md px-3',
       },
       variant: {
         default: ['bg-primary text-primary-foreground', 'hover:bg-primary/90'],
@@ -74,22 +74,6 @@
       },
     },
   });
-  /**
-   * The default size of the button.
-   */
-  export const defaultSize = styles.defaultVariants.size!;
-  /**
-   * The default variant of the button.
-   */
-  export const defaultVariant = styles.defaultVariants.variant!;
-  /**
-   * The sizes of the button.
-   */
-  export const sizes = Object.keys(styles.variants.size) as [Size, ...Size[]];
-  /**
-   * The variants of the button.
-   */
-  export const variants = Object.keys(styles.variants.variant) as [Variant, ...Variant[]];
 </script>
 
 <script lang="ts">
@@ -97,8 +81,8 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let size: Props['size'] = undefined;
-  export let variant: Props['variant'] = undefined;
+  export let size: Props['size'] = buttonStyles.defaultVariants.size;
+  export let variant: Props['variant'] = buttonStyles.defaultVariants.variant;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -108,14 +92,11 @@
 
 <ButtonPrimitive.Root
   {...attributes}
-  builders="{attributes.builders ?? []}"
-  class="{styles({
+  class="{buttonStyles({
     class: attributes.class,
     size,
     variant,
   })}"
-  data-size="{size}"
-  data-variant="{variant}"
   on:click
   on:keydown
 >

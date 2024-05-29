@@ -4,7 +4,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { styles as buttonStyles } from '$lib/components/button/index.js';
+  import { buttonStyles } from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<CalendarPrimitive.NextButton>;
@@ -25,11 +25,11 @@
   /**
    * The styles of the next button.
    */
-  export const styles = tv({
+  export const nextButtonStyles = tv({
     base: [
       buttonStyles({ variant: 'outline' }),
 
-      'h-7 w-7 bg-transparent p-0 opacity-50',
+      'size-8 bg-transparent p-0 opacity-50',
       'hover:opacity-100',
     ],
   });
@@ -52,7 +52,7 @@
 <CalendarPrimitive.NextButton
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{nextButtonStyles({
     class: attributes.class,
   })}"
   el="{el}"
@@ -60,6 +60,6 @@
   on:click
 >
   <slot builder="{builder}">
-    <ChevronRightIcon class="h-4 w-4" />
+    <ChevronRightIcon class="size-4" />
   </slot>
 </CalendarPrimitive.NextButton>

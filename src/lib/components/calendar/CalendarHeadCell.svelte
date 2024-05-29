@@ -23,8 +23,8 @@
   /**
    * The styles of the head cell.
    */
-  export const styles = tv({
-    base: ['w-9 rounded-md text-[0.8rem] font-normal text-muted-foreground'],
+  export const headCellStyles = tv({
+    base: ['w-8 rounded-md text-[0.8rem] font-normal text-muted-foreground'],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <CalendarPrimitive.HeadCell
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{headCellStyles({
     class: attributes.class,
   })}"
   el="{el}"

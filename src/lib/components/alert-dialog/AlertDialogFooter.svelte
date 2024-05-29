@@ -1,28 +1,19 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes of the footer.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The breakpoint of the footer.
-   */
-  export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
-  /**
    * The props of the footer.
    */
-  export type Props = {
-    /**
-     * The breakpoint of the footer.
-     *
-     * @default 'sm'
-     */
-    breakpoint?: Breakpoint;
-  };
+  export type Props = EmptyObject;
   /**
    * The slots of the footer.
    */
@@ -33,11 +24,8 @@
   /**
    * The styles of the footer.
    */
-  export const styles = tv({
+  export const footerStyles = tv({
     base: ['flex flex-col-reverse gap-2'],
-    defaultVariants: {
-      breakpoint: 'sm',
-    },
     variants: {
       breakpoint: {
         sm: ['sm:flex-row sm:justify-end'],
@@ -46,17 +34,6 @@
       },
     },
   });
-  /**
-   * The breakpoints of the footer.
-   */
-  export const breakpoints = Object.keys(styles.variants.breakpoint) as [
-    Breakpoint,
-    ...Breakpoint[],
-  ];
-  /**
-   * The default breakpoint of the footer.
-   */
-  export const defaultBreakpoint = styles.defaultVariants.breakpoint!;
 </script>
 
 <script lang="ts">
@@ -64,9 +41,15 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let breakpoint: Props['breakpoint'] = undefined;
-
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('AlertDialog.Footer must be used within an AlertDialog.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -74,11 +57,10 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{footerStyles({
     breakpoint,
     class: attributes.class,
   })}"
-  data-breakpoint="{breakpoint}"
 >
   <slot />
 </div>

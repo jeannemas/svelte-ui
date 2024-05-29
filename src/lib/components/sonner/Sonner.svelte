@@ -62,22 +62,22 @@
     },
     variants: {
       dir: {
-        auto: [] as string[],
-        ltr: [] as string[],
-        rtl: [] as string[],
+        auto: [''],
+        ltr: [''],
+        rtl: [''],
       },
       position: {
-        'top-left': [] as string[],
-        'top-right': [] as string[],
-        'bottom-left': [] as string[],
-        'bottom-right': [] as string[],
-        'top-center': [] as string[],
-        'bottom-center': [] as string[],
+        'top-left': [''],
+        'top-right': [''],
+        'bottom-left': [''],
+        'bottom-right': [''],
+        'top-center': [''],
+        'bottom-center': [''],
       },
       theme: {
-        light: [] as string[],
-        dark: [] as string[],
-        system: [] as string[],
+        light: [''],
+        dark: [''],
+        system: [''],
       },
     },
   });
@@ -179,9 +179,6 @@
     },
   }}"
   visibleToasts="{visibleToasts}"
-  data-dir="{dir}"
-  data-position="{position}"
-  data-theme="{theme}"
 >
   <!-- <slot name="loading-icon" slot="loading-icon">
     <Loader visible="{toast.type === 'loading'}" />

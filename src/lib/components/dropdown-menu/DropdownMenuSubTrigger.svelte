@@ -32,7 +32,7 @@
    */
   export const styles = tv({
     base: [
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
+      'flex cursor-default select-none flex-row items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
       'data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
     ],
@@ -80,7 +80,6 @@
   })}"
   disabled="{disabled}"
   el="{el}"
-  data-inset="{inset}"
   let:builder
   on:click
   on:focusin
@@ -92,5 +91,5 @@
 >
   <slot builder="{builder}" />
 
-  <ChevronRightIcon class="ml-auto h-4 w-4" />
+  <ChevronRightIcon class="ml-auto size-4" />
 </DropdownMenuPrimitive.SubTrigger>

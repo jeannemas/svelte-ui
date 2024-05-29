@@ -24,7 +24,7 @@
    * The styles of the ellipsis.
    */
   export const styles = tv({
-    base: ['flex h-9 w-9 items-center justify-center'],
+    base: ['flex size-8 flex-row items-center justify-center'],
   });
 </script>
 
@@ -47,7 +47,7 @@
   aria-hidden="true"
 >
   <slot>
-    <EllipsisIcon class="h-4 w-4" />
+    <EllipsisIcon class="size-4" />
 
     <span class="sr-only">More pages</span>
   </slot>

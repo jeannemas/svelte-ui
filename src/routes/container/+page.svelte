@@ -7,18 +7,15 @@
   import Container from '$lib/components/container/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        xAxis: z.boolean().default(false),
-        yAxis: z.boolean().default(false),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      xAxis: z.boolean().default(false).optional(),
+      yAxis: z.boolean().default(false).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,

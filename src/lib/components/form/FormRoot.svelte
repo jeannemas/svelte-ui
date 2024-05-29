@@ -35,7 +35,7 @@
    * The styles of the root.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
   });
 </script>
 

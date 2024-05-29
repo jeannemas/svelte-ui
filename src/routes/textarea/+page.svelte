@@ -117,11 +117,7 @@
           </Form.Control>
 
           <Form.Description>
-            <span>You can</span>
-
-            <code>@mention</code>
-
-            <span>other users and organizations.</span>
+            You can <code>@mention</code> other users and organizations.
           </Form.Description>
 
           <Form.FieldErrors />

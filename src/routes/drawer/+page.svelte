@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-  import MinusIcon from 'lucide-svelte/icons/minus';
-  import PlusIcon from 'lucide-svelte/icons/plus';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
@@ -10,19 +8,15 @@
   import * as Drawer from '$lib/components/drawer/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(true),
-        open: z.boolean().default(false),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      closeOnEscape: z.boolean().default(true).optional(),
+      closeOnOutsideClick: z.boolean().default(true).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -76,21 +70,6 @@
 
           <Form.FieldErrors />
         </Form.Field>
-
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
-
-          <Form.Description>
-            The open state of the Drawer. You can bind to this value to programatically open/close
-            the Drawer.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
       </Form.Root>
     </Accordion.Content>
   </Accordion.Item>
@@ -99,12 +78,7 @@
     <Accordion.Trigger>Demo</Accordion.Trigger>
 
     <Accordion.Content>
-      <Drawer.Root
-        {...$superFormData}
-        dismissible
-        shouldScaleBackground
-        bind:open="{$superFormData.open}"
-      >
+      <Drawer.Root {...$superFormData} dismissible shouldScaleBackground>
         <Drawer.Trigger asChild let:builder>
           <Button builders="{[builder]}" variant="outline">Open Drawer</Button>
         </Drawer.Trigger>
@@ -118,20 +92,20 @@
             </Drawer.Header>
 
             <div class="p-4 pb-0">
-              <div class="flex items-center justify-center space-x-2">
+              <div class="flex flex-row items-center justify-center gap-x-2">
                 <Button
-                  class="h-8 w-8 shrink-0 rounded-full"
+                  class="size-8 shrink-0 rounded-full"
                   disabled="{goal <= 200}"
                   size="icon"
                   variant="outline"
                   on:click="{() => handleClick(-10)}"
                 >
-                  <MinusIcon class="h-4 w-4" />
+                  -
 
                   <span class="sr-only">Decrease</span>
                 </Button>
 
-                <div class="flex-1 text-center">
+                <div class="shrink grow basis-0 text-center">
                   <div class="text-7xl font-bold tracking-tighter">
                     {goal}
                   </div>
@@ -140,13 +114,13 @@
                 </div>
 
                 <Button
-                  class="h-8 w-8 shrink-0 rounded-full"
+                  class="size-8 shrink-0 rounded-full"
                   disabled="{goal >= 400}"
                   size="icon"
                   variant="outline"
                   on:click="{() => handleClick(10)}"
                 >
-                  <PlusIcon class="h-4 w-4" />
+                  +
 
                   <span class="sr-only">Increase</span>
                 </Button>

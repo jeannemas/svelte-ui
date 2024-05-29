@@ -23,8 +23,8 @@
   /**
    * The styles of the grid row.
    */
-  export const styles = tv({
-    base: ['flex'],
+  export const gridRowStyles = tv({
+    base: ['flex flex-row'],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <CalendarPrimitive.GridRow
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{gridRowStyles({
     class: attributes.class,
   })}"
   el="{el}"

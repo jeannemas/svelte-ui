@@ -9,7 +9,7 @@
   import Container from '$lib/components/container/index.js';
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import { setTopNavigationContext } from './context.js';
+  import { ctx } from './context.js';
 
   /**
    * The attributes for the root.
@@ -83,9 +83,9 @@
     },
     variants: {
       breakpoint: {
-        sm: [] as string[],
-        md: [] as string[],
-        lg: [] as string[],
+        sm: [''],
+        md: [''],
+        lg: [''],
       },
       viewport: {
         desktop: ['hidden'],
@@ -116,7 +116,7 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: setTopNavigationContext({ breakpoint });
+  $: ctx.set({ breakpoint });
 </script>
 
 <!-- <style lang="postcss">
@@ -131,8 +131,6 @@
     viewport: 'desktop',
   })}"
   xAxis
-  data-breakpoint="{breakpoint}"
-  data-viewport="desktop"
 >
   <div class="flex h-16 flex-row justify-between">
     <slot />
@@ -147,8 +145,6 @@
     class: attributes.class,
     viewport: 'mobile',
   })}"
-  data-breakpoint="{breakpoint}"
-  data-viewport="mobile"
   bind:open="{open}"
 >
   <Collapsible.Trigger asChild let:builder>

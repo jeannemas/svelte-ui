@@ -23,8 +23,8 @@
   /**
    * The styles of the header.
    */
-  export const styles = tv({
-    base: ['relative flex w-full items-center justify-between pt-1'],
+  export const headerStyles = tv({
+    base: ['relative flex w-full flex-row items-center justify-between'],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <CalendarPrimitive.Header
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{headerStyles({
     class: attributes.class,
   })}"
   el="{el}"

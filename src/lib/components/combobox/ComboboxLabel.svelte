@@ -24,7 +24,7 @@
   /**
    * The styles of the label.
    */
-  export const styles = tv({
+  export const labelStyles = tv({
     base: [...selectLabelStyles.base],
   });
 </script>
@@ -46,7 +46,7 @@
 <ComboboxPrimitive.Label
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{labelStyles({
     class: attributes.class,
   })}"
   el="{el}"

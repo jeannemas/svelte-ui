@@ -7,17 +7,14 @@
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Separator, { defaultOrientation, orientations } from '$lib/components/separator/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        orientation: z.enum(orientations).default(defaultOrientation),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      orientation: z.enum(orientations).default(defaultOrientation).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -54,7 +51,7 @@
                   }
                 : undefined}"
             >
-              <Select.Input {...attrs} {...constraints} />
+              <Select.HiddenInput {...attrs} {...constraints} />
 
               <Select.Trigger>
                 <Select.Value />
@@ -84,7 +81,7 @@
     <Accordion.Content>
       <div
         class="flex items-center justify-evenly text-sm"
-        class:h-5="{$superFormData.orientation === 'vertical'}"
+        class:h-4="{$superFormData.orientation === 'vertical'}"
         class:flex-col="{$superFormData.orientation === 'horizontal'}"
         class:flex-row="{$superFormData.orientation === 'vertical'}"
       >

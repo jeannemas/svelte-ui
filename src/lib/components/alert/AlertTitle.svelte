@@ -27,8 +27,8 @@
   /**
    * The styles of the title.
    */
-  export const styles = tv({
-    base: ['mb-1 font-medium leading-none tracking-tight'],
+  export const titleStyles = tv({
+    base: ['mb-2 font-medium leading-none tracking-tight'],
   });
 </script>
 
@@ -49,7 +49,7 @@
 <svelte:element
   this="{level}"
   {...attributes}
-  class="{styles({
+  class="{titleStyles({
     class: attributes.class,
   })}"
 >

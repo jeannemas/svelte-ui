@@ -55,7 +55,7 @@
     on:click
   >
     <slot builder="{builder}">
-      <ChevronLeftIcon class="h-4 w-4" />
+      <ChevronLeftIcon class="size-4" />
 
       <span>Previous</span>
     </slot>

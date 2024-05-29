@@ -23,8 +23,8 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const rootStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -48,7 +48,7 @@
 <CollapsiblePrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"

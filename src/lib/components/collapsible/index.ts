@@ -1,20 +1,20 @@
 export {
   default as Content,
-  styles as contentStyles,
+  contentStyles,
   type Attributes as ContentAttributes,
   type Props as ContentProps,
   type Slots as ContentSlots,
 } from './CollapsibleContent.svelte';
 export {
   default as Root,
-  styles as rootStyles,
+  rootStyles,
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
 } from './CollapsibleRoot.svelte';
 export {
   default as Trigger,
-  styles as triggerStyles,
+  triggerStyles,
   type Attributes as TriggerAttributes,
   type Props as TriggerProps,
   type Slots as TriggerSlots,

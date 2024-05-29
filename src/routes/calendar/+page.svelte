@@ -1,268 +1,154 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Calendar from '$lib/components/calendar/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        disabled: z.boolean().default(false),
-        fixedWeeks: z.boolean().default(false),
-        numberOfMonths: z.number().int().min(1).default(1),
-        pagedNavigation: z.boolean().default(false),
-        preventDeselect: z.boolean().default(false),
-        readonly: z.boolean().default(false),
-        weekStartsOn: z
-          .union([
-            z.literal(0),
-            z.literal(1),
-            z.literal(2),
-            z.literal(3),
-            z.literal(4),
-            z.literal(5),
-            z.literal(6),
-          ])
-          .default(0),
-        weekdayFormat: z.enum(['long', 'narrow', 'short']).default('narrow'),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="breakpoint" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Breakpoint</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disabled</Form.Label>
+        <Select.Root
+          items="{data.breakpoints}"
+          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
+          selected="{$props.breakpoint && {
+            label: $props.breakpoint,
+            value: $props.breakpoint,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-          </Form.Control>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-          <Form.Description>
-            Whether the calendar is disabled. When true, the user will not be able to focus or
-            select dates.
-          </Form.Description>
+          <Select.Content>
+            {#each data.breakpoints as breakpoint (breakpoint.value)}
+              <Select.Item value="{breakpoint.value}">
+                {breakpoint.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.breakpoint.description}
+      </Form.Description>
 
-        <Form.Field name="fixedWeeks" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Fixed weeks</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.fixedWeeks}" />
-          </Form.Control>
+    <Form.Field name="disabled" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Disabled</Form.Label>
 
-          <Form.Description>
-            Display 6 weeks per month, regardless the month's number of weeks. This is useful for
-            displaying a consistent calendar, where the size of the calendar doesn't change month to
-            month.
-          </Form.Description>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.disabled.description}
+      </Form.Description>
 
-        <Form.Field name="numberOfMonths" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Number of months</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              variant="number"
-              bind:value="{$superFormData.numberOfMonths}"
-            />
-          </Form.Control>
+    <Form.Field name="fixedWeeks" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Fixed weeks</Form.Label>
 
-          <Form.Description>
-            Determines the number of months to display on the calendar simultaneously.
-          </Form.Description>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.fixedWeeks}" />
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.fixedWeeks.description}
+      </Form.Description>
 
-        <Form.Field name="pagedNavigation" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Paged navigation</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.pagedNavigation}" />
-          </Form.Control>
+    <Form.Field name="numberOfMonths" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Number of months</Form.Label>
 
-          <Form.Description>
-            <p>Applicable only when numberOfMonths is greater than 1.</p>
+        <Input {...attrs} {...constraints} variant="number" bind:value="{$props.numberOfMonths}" />
+      </Form.Control>
 
-            <p>
-              Controls whether to use paged navigation for the next and previous buttons in the date
-              picker. With paged navigation set to true, clicking the next/prev buttons changes all
-              months in view. When set to false, it shifts the view by a single month.
-            </p>
+      <Form.Description>
+        {schema.shape.numberOfMonths.description}
+      </Form.Description>
 
-            <p>
-              For example, with pagedNavigation set to true and 2 months displayed (January and
-              February), clicking the next button changes the view to March and April. If
-              pagedNavigation is false, the view shifts to February and March.
-            </p>
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="pagedNavigation" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Paged navigation</Form.Label>
 
-        <Form.Field name="preventDeselect" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Prevent deselect</Form.Label>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.pagedNavigation}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventDeselect}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.pagedNavigation.description}
+      </Form.Description>
 
-          <Form.Description>
-            Prevent deselecting the selected date(s), which would set the value to undefined. You
-            can use this to ensure a date is always selected in certain situations.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="preventDeselect" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Prevent deselect</Form.Label>
 
-        <Form.Field name="readonly" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Readonly</Form.Label>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.preventDeselect}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.readonly}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.preventDeselect.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether the calendar is readonly. When true, the user will be able to focus and navigate
-            the calendar, but will not be able to select dates.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="readonly" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Readonly</Form.Label>
 
-        <Form.Field name="weekStartsOn" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Week starts on</Form.Label>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.readonly}" />
+      </Form.Control>
 
-            <Select.Root
-              items="{Calendar.rootWeekStartsOn.map((weekStartsOn) => ({
-                label: weekStartsOn.toString(),
-                value: weekStartsOn,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.weekStartsOn = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.weekStartsOn !== undefined
-                ? {
-                    label: $superFormData.weekStartsOn.toString(),
-                    value: $superFormData.weekStartsOn,
-                  }
-                : undefined}"
-            >
-              <Select.Input {...attrs} {...constraints} />
+      <Form.Description>
+        {schema.shape.readonly.description}
+      </Form.Description>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-              <Select.Content>
-                {#each Calendar.rootWeekStartsOn as weekStartsOn, index (index)}
-                  <Select.Item value="{weekStartsOn}">
-                    {weekStartsOn}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
-
-          <Form.Description>
-            The day of the week to start the calendar on, which must be a number between 0 and 6,
-            where 0 is Sunday and 6 is Saturday.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-
-        <Form.Field name="weekdayFormat" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Weekday format</Form.Label>
-
-            <Select.Root
-              items="{Calendar.rootWeekdayFormats.map((weekdayFormat) => ({
-                label: weekdayFormat,
-                value: weekdayFormat,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.weekdayFormat = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.weekdayFormat !== undefined
-                ? {
-                    label: $superFormData.weekdayFormat,
-                    value: $superFormData.weekdayFormat,
-                  }
-                : undefined}"
-            >
-              <Select.Input {...attrs} {...constraints} />
-
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
-
-              <Select.Content>
-                {#each Calendar.rootWeekdayFormats as weekdayFormat, index (index)}
-                  <Select.Item value="{weekdayFormat}">
-                    {weekdayFormat}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
-
-          <Form.Description>
-            How the string representation of the weekdays provided via the weekdays state store
-            should be formatted.
-
-            <ul class="list-inside list-disc">
-              <li>"long": "Sunday", "Monday", "Tuesday", etc.</li>
-
-              <li>"short": "Sun", "Mon", "Tue", etc.</li>
-
-              <li>"narrow": "S", "M", "T", etc.</li>
-            </ul>
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Calendar.Root {...$superFormData} class="rounded-md border border-border" />
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+  <svelte:fragment slot="demo">
+    <Calendar.Root {...$props} class="rounded-md border border-border" />
+  </svelte:fragment>
+</ComponentDemoLayout>

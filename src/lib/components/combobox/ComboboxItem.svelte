@@ -25,7 +25,7 @@
   /**
    * The styles of the item.
    */
-  export const styles = tv({
+  export const itemStyles = tv({
     base: [...selectItemStyles.base],
   });
 </script>
@@ -50,7 +50,7 @@
 <ComboboxPrimitive.Item
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{itemStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -66,9 +66,9 @@
   on:pointerleave
   on:pointermove
 >
-  <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+  <span class="absolute left-2 flex size-4 flex-row items-center justify-center">
     <ComboboxPrimitive.ItemIndicator>
-      <CheckIcon class="h-4 w-4" />
+      <CheckIcon class="size-4" />
     </ComboboxPrimitive.ItemIndicator>
   </span>
 

@@ -1,10 +1,4 @@
 <script context="module" lang="ts">
-  import CalculatorIcon from 'lucide-svelte/icons/calculator';
-  import CalendarIcon from 'lucide-svelte/icons/calendar';
-  import CreditCardIcon from 'lucide-svelte/icons/credit-card';
-  import SettingsIcon from 'lucide-svelte/icons/settings';
-  import SmileIcon from 'lucide-svelte/icons/smile';
-  import UserIcon from 'lucide-svelte/icons/user';
   import { onMount } from 'svelte';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
@@ -15,17 +9,18 @@
   import * as Form from '$lib/components/form/index.js';
   import Switch from '$lib/components/switch/index.js';
 
-  const adapter = zod(
-    z
-      .object({
-        loop: z.boolean().default(false),
-        open: z.boolean().default(false),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
 </script>
 
 <script lang="ts">
+  export let data: PageData;
+
+  const adapter = zod(
+    z.object({
+      loop: z.boolean().default(false).optional(),
+      open: z.boolean().default(false).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -64,12 +59,8 @@
           </Form.Control>
 
           <Form.Description>
-            Optionally set to
-
-            <code>true</code>
-
-            to enable looping through the items when the user reaches the end of the list using the
-            keyboard.
+            Optionally set to <code>true</code> to enable looping through the items when the user reaches
+            the end of the list using the keyboard.
           </Form.Description>
 
           <Form.FieldErrors />
@@ -98,7 +89,7 @@
         Press
 
         <kbd
-          class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
+          class="pointer-events-none inline-flex h-6 select-none flex-row items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
         >
           <span class="text-xs">⌘</span>
 
@@ -114,52 +105,22 @@
         <Command.List>
           <Command.Empty>No results found.</Command.Empty>
 
-          <Command.Group heading="Suggestions">
-            <Command.Item class="gap-x-2">
-              <CalendarIcon />
-
-              <span>Calendar</span>
-            </Command.Item>
-
-            <Command.Item class="gap-x-2">
-              <SmileIcon />
-
-              <span>Search Emoji</span>
-            </Command.Item>
-
-            <Command.Item class="gap-x-2">
-              <CalculatorIcon />
-
-              <span>Calculator</span>
-            </Command.Item>
+          <Command.Group heading="Todo">
+            {#each data.todos.filter(({ completed }) => !completed) as todo (todo.id)}
+              <Command.Item>
+                {todo.title}
+              </Command.Item>
+            {/each}
           </Command.Group>
 
           <Command.Separator />
 
-          <Command.Group heading="Settings">
-            <Command.Item class="gap-x-2">
-              <UserIcon />
-
-              <span>Profile</span>
-
-              <Command.Shortcut>⌘P</Command.Shortcut>
-            </Command.Item>
-
-            <Command.Item class="gap-x-2">
-              <CreditCardIcon />
-
-              <span>Billing</span>
-
-              <Command.Shortcut>⌘B</Command.Shortcut>
-            </Command.Item>
-
-            <Command.Item class="gap-x-2">
-              <SettingsIcon />
-
-              <span>Settings</span>
-
-              <Command.Shortcut>⌘S</Command.Shortcut>
-            </Command.Item>
+          <Command.Group heading="Completed">
+            {#each data.todos.filter(({ completed }) => completed) as todo (todo.id)}
+              <Command.Item>
+                {todo.title}
+              </Command.Item>
+            {/each}
           </Command.Group>
         </Command.List>
       </Command.Dialog>

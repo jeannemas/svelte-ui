@@ -32,8 +32,8 @@
   /**
    * The styles of the link.
    */
-  export const styles = tv({
-    base: ['transition-colors hover:text-foreground'],
+  export const linkStyles = tv({
+    base: ['transition-colors', 'hover:text-foreground'],
   });
 </script>
 
@@ -57,7 +57,7 @@
 {:else}
   <a
     {...attributes}
-    class="{styles({
+    class="{linkStyles({
       class: attributes.class,
     })}"
     href="{href}"

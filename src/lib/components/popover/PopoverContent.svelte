@@ -43,7 +43,7 @@
    */
   export const styles = tv({
     base: [
-      'z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
+      'z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
     ],
   });
 </script>

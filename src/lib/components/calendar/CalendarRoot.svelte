@@ -2,7 +2,8 @@
   import type { DateValue } from '@internationalized/date';
   import { Calendar as CalendarPrimitive, type Month } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv } from 'tailwind-variants';
+  import { writable } from 'svelte/store';
+  import { tv, type VariantProps } from 'tailwind-variants';
 
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
@@ -55,6 +56,7 @@
     type Attributes as CalendarPreviousButtonAttributes,
     type Props as CalendarPreviousButtonProps,
   } from './CalendarPreviousButton.svelte';
+  import { rootContext } from './context.js';
 
   type Primitive<TMultiple extends boolean = false> = ComponentInfo<
     CalendarPrimitive.Root<TMultiple>
@@ -65,12 +67,22 @@
    */
   export type Attributes = Omit<SvelteHTMLElements['div'], 'placeholder'>;
   /**
+   * The breakpoint of the calendar.
+   */
+  export type Breakpoint = NonNullable<VariantProps<typeof rootStyles>['breakpoint']>;
+  /**
    * The props of the calendar.
    */
   export type Props<TMultiple extends boolean = false> = Omit<
     Primitive<TMultiple>['props'],
     keyof Attributes
   > & {
+    /**
+     * The breakpoint of the months.
+     *
+     * @default 'sm'
+     */
+    breakpoint?: Breakpoint;
     /**
      * Callback to be called when a day is clicked.
      *
@@ -100,21 +112,19 @@
   /**
    * The styles of the calendar.
    */
-  export const styles = tv({
-    base: ['inline-block p-3'],
+  export const rootStyles = tv({
+    base: ['inline-block p-2'],
+    defaultVariants: {
+      breakpoint: 'sm',
+    },
+    variants: {
+      breakpoint: {
+        sm: [''],
+        md: [''],
+        lg: [''],
+      },
+    },
   });
-  /**
-   * The week starts on values.
-   */
-  export const weekStartsOn = [0, 1, 2, 3, 4, 5, 6] as const satisfies Props['weekStartsOn'][];
-  /**
-   * The weekday format values.
-   */
-  export const weekdayFormats = [
-    'long',
-    'narrow',
-    'short',
-  ] as const satisfies Props['weekdayFormat'][];
 </script>
 
 <script generics="TMultiple extends boolean = false" lang="ts">
@@ -124,6 +134,7 @@
   type TypedProps = Props<TMultiple>;
 
   export let asChild: TypedProps['asChild'] = undefined;
+  export let breakpoint: TypedProps['breakpoint'] = rootStyles.defaultVariants.breakpoint;
   export let calendarLabel: TypedProps['calendarLabel'] = undefined;
   export let cellAttributesAndProps: TypedProps['cellAttributesAndProps'] = undefined;
   export let dayAttributesAndProps: TypedProps['dayAttributesAndProps'] = undefined;
@@ -161,6 +172,13 @@
   export let value: TypedProps['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    breakpoint,
+  }));
 </script>
 
 <!-- <style lang="postcss">
@@ -170,7 +188,7 @@
   {...attributes}
   asChild="{asChild}"
   calendarLabel="{calendarLabel}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -211,10 +229,7 @@
       {#each months as month}
         <CalendarGrid {...gridAttributesAndProps}>
           <CalendarGridHead {...gridHeadAttributesAndProps}>
-            <CalendarGridRow
-              {...gridRowAttributesAndProps}
-              class="{cn('flex', gridRowAttributesAndProps?.class)}"
-            >
+            <CalendarGridRow {...gridRowAttributesAndProps}>
               {#each weekdays as weekday}
                 <CalendarHeadCell {...headCellAttributesAndProps}>
                   {weekday.slice(0, 2)}

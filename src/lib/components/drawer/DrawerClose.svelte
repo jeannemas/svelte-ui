@@ -30,7 +30,7 @@
    * The styles of the close.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
   });
 </script>
 

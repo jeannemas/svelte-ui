@@ -4,7 +4,7 @@
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import { getTopNavigationContext, hasTopNavigationContext } from './context.js';
+  import { ctx } from './context.js';
 
   /**
    * The attributes for the button.
@@ -49,9 +49,7 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = hasTopNavigationContext()
-    ? getTopNavigationContext().breakpoint
-    : styles.defaultVariants.breakpoint;
+  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
 </script>
 
 <!-- <style lang="postcss">
@@ -63,7 +61,6 @@
     breakpoint,
     class: attributes.class,
   })}"
-  data-breakpoint="{breakpoint}"
 >
   <slot />
 </button>

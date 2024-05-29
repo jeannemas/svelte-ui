@@ -69,8 +69,6 @@
     xAxis,
     yAxis,
   })}"
-  data-x-axis="{xAxis}"
-  data-y-axis="{yAxis}"
 >
   <slot />
 </div>

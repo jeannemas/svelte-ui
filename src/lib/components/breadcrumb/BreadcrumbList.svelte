@@ -1,21 +1,19 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes of the list.
    */
   export type Attributes = SvelteHTMLElements['ol'];
   /**
-   * The breakpoint of the list.
-   */
-  export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
-  /**
    * The props of the list.
    */
-  export type Props = (
+  export type Props =
     | {
         asChild: true;
         el: never;
@@ -23,15 +21,7 @@
     | {
         asChild?: false;
         el?: HTMLOListElement;
-      }
-  ) & {
-    /**
-     * The breakpoint of the list.
-     *
-     * @default 'sm'
-     */
-    breakpoint?: Breakpoint;
-  };
+      };
   /**
    * The slots of the list.
    */
@@ -42,30 +32,18 @@
   /**
    * The styles of the list.
    */
-  export const styles = tv({
-    base: ['flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground'],
-    defaultVariants: {
-      breakpoint: 'sm',
-    },
+  export const listStyles = tv({
+    base: [
+      'flex flex-row flex-wrap items-center gap-x-2 break-words text-sm text-muted-foreground',
+    ],
     variants: {
       breakpoint: {
-        sm: ['sm:gap-2.5'],
-        md: ['md:gap-2.5'],
-        lg: ['lg:gap-2.5'],
+        sm: ['sm:gap-x-4'],
+        md: ['md:gap-x-4'],
+        lg: ['lg:gap-x-4'],
       },
     },
   });
-  /**
-   * The breakpoints of the list.
-   */
-  export const breakpoints = Object.keys(styles.variants.breakpoint) as [
-    Breakpoint,
-    ...Breakpoint[],
-  ];
-  /**
-   * The default breakpoint of the list.
-   */
-  export const defaultBreakpoint = styles.defaultVariants.breakpoint!;
 </script>
 
 <script lang="ts">
@@ -74,10 +52,17 @@
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
-  export let breakpoint: Props['breakpoint'] = undefined;
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Breadcrumb.List must be used within an Breadcrumb.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -88,11 +73,10 @@
 {:else}
   <ol
     {...attributes}
-    class="{styles({
+    class="{listStyles({
       breakpoint,
       class: attributes.class,
     })}"
-    data-breakpoint="{breakpoint}"
     bind:this="{el}"
   >
     <slot />

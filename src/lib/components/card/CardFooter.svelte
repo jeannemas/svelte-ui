@@ -22,8 +22,8 @@
   /**
    * The styles of the footer.
    */
-  export const styles = tv({
-    base: ['flex items-center p-6 pt-0'],
+  export const footerStyles = tv({
+    base: ['flex flex-row items-center'],
   });
 </script>
 
@@ -40,7 +40,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{footerStyles({
     class: attributes.class,
   })}"
 >

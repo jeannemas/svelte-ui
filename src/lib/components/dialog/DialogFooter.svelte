@@ -25,7 +25,7 @@
    * The styles of the footer.
    */
   export const styles = tv({
-    base: ['flex flex-col-reverse', 'sm:flex-row sm:justify-end sm:space-x-2'],
+    base: ['flex flex-col-reverse', 'sm:flex-row sm:justify-end sm:gap-x-2'],
   });
 </script>
 

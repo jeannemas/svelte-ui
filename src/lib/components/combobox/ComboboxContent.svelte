@@ -42,7 +42,7 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: [...selectContentStyles.base],
   });
 </script>
@@ -96,7 +96,7 @@
   alignOffset="{alignOffset}"
   asChild="{asChild}"
   avoidCollisions="{avoidCollisions}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   collisionBoundary="{collisionBoundary}"

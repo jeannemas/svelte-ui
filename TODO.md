@@ -1,0 +1,4 @@
+- Improve the docs pages with proper forms for props
+- Improve styles/variants typing and extensibility
+- Wrap form components with a form
+- Make form components require accessiblity props (such as id, name, etc)

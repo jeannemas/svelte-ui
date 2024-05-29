@@ -68,7 +68,6 @@
     class: attributes.class,
     inset,
   })}"
-  data-inset="{inset}"
   let:builder
 >
   <slot builder="{builder}" />

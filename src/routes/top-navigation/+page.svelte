@@ -66,7 +66,7 @@
                   }
                 : undefined}"
             >
-              <Select.Input {...attrs} {...constraints} />
+              <Select.HiddenInput {...attrs} {...constraints} />
 
               <Select.Trigger>
                 <Select.Value />

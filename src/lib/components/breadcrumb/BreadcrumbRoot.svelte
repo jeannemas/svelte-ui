@@ -1,17 +1,24 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv } from 'tailwind-variants';
+  import { writable } from 'svelte/store';
+  import { tv, type VariantProps } from 'tailwind-variants';
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes of the root.
    */
   export type Attributes = SvelteHTMLElements['nav'];
   /**
+   * The breakpoint of the list.
+   */
+  export type Breakpoint = NonNullable<VariantProps<typeof rootStyles>['breakpoint']>;
+  /**
    * The props of the root.
    */
-  export type Props =
+  export type Props = (
     | {
         asChild: true;
         el: never;
@@ -19,7 +26,15 @@
     | {
         asChild?: false;
         el?: HTMLElement;
-      };
+      }
+  ) & {
+    /**
+     * The breakpoint of the root.
+     *
+     * @default 'sm'
+     */
+    breakpoint?: Breakpoint;
+  };
   /**
    * The slots of the root.
    */
@@ -30,8 +45,18 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const rootStyles = tv({
+    base: [''],
+    defaultVariants: {
+      breakpoint: 'sm',
+    },
+    variants: {
+      breakpoint: {
+        sm: [''],
+        md: [''],
+        lg: [''],
+      },
+    },
   });
 </script>
 
@@ -41,9 +66,17 @@
   type $$Slots = Slots;
 
   export let asChild: Props['asChild'] = undefined;
+  export let breakpoint: Props['breakpoint'] = rootStyles.defaultVariants.breakpoint;
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    breakpoint,
+  }));
 </script>
 
 <!-- <style lang="postcss">
@@ -54,7 +87,7 @@
 {:else}
   <nav
     {...attributes}
-    class="{styles({
+    class="{rootStyles({
       class: attributes.class,
     })}"
     aria-label="breadcrumb"

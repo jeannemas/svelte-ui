@@ -41,8 +41,8 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
-    base: ['overflow-hidden p-1 text-sm transition-all'],
+  export const contentStyles = tv({
+    base: ['overflow-hidden p-2 text-sm transition-all'],
   });
 </script>
 
@@ -83,7 +83,7 @@
 <AccordionPrimitive.Content
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   el="{el}"

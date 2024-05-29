@@ -30,7 +30,7 @@
    * The styles of the trigger.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
   });
 </script>
 

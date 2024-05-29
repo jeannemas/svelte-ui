@@ -23,8 +23,8 @@
   /**
    * The styles of the grid head.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const gridHeadStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <CalendarPrimitive.GridHead
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{gridHeadStyles({
     class: attributes.class,
   })}"
   el="{el}"

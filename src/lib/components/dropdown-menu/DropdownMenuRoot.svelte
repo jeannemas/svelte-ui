@@ -32,8 +32,8 @@
     },
     variants: {
       dir: {
-        ltr: [] as string[],
-        rtl: [] as string[],
+        ltr: [''],
+        rtl: [''],
       },
     },
   });

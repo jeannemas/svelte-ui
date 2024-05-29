@@ -1,93 +1,89 @@
 <script context="module" lang="ts">
-  import * as Accordion from '$lib/components/accordion/index.js';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+
   import Button from '$lib/components/button/index.js';
   import * as Card from '$lib/components/card/index.js';
+  import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const frameworks = [
-    {
-      value: 'sveltekit',
-      label: 'SvelteKit',
-    },
-    {
-      value: 'next',
-      label: 'Next.js',
-    },
-    {
-      value: 'astro',
-      label: 'Astro',
-    },
-    {
-      value: 'nuxt',
-      label: 'Nuxt.js',
-    },
-  ];
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
+  export let data: PageData;
+
+  const form = superForm(data.form, {
+    SPA: true,
+    validators: zodClient(schema),
+  });
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="variant" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Variant</Form.Label>
 
-    <Accordion.Content>
-      <!--  -->
-    </Accordion.Content>
-  </Accordion.Item>
+        <Select.Root
+          items="{data.variants}"
+          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
+          selected="{$props.variant && {
+            label: $props.variant,
+            value: $props.variant,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-    <Accordion.Content>
-      <Card.Root>
-        <Card.Header>
-          <Card.Title>Create project</Card.Title>
+          <Select.Content>
+            {#each data.variants as variant (variant.value)}
+              <Select.Item value="{variant.value}">
+                {variant.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-          <Card.Description>Deploy your new project in one-click.</Card.Description>
-        </Card.Header>
+      <Form.Description>
+        {schema.shape.variant.description}
+      </Form.Description>
 
-        <Card.Content>
-          <form>
-            <div class="grid w-full items-center gap-4">
-              <div class="flex flex-col space-y-1.5">
-                <Label for="name">Name</Label>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-                <Input id="name" placeholder="Name of your project" variant="text" />
-              </div>
+  <svelte:fragment slot="demo">
+    <Card.Root {...$props}>
+      <Card.Header>
+        <Card.Title>Create project</Card.Title>
 
-              <div class="flex flex-col space-y-1.5">
-                <Label for="framework">Framework</Label>
+        <Card.Description>Deploy your new project in one-click.</Card.Description>
+      </Card.Header>
 
-                <Select.Root>
-                  <Select.Trigger id="framework">
-                    <Select.Value placeholder="Select" />
-                  </Select.Trigger>
+      <Card.Content class="flex flex-col gap-y-2">
+        <Label for="name">Name</Label>
 
-                  <Select.Content>
-                    {#each frameworks as framework}
-                      <Select.Item value="{framework.value}" label="{framework.label}">
-                        {framework.label}
-                      </Select.Item>
-                    {/each}
-                  </Select.Content>
-                </Select.Root>
-              </div>
-            </div>
-          </form>
-        </Card.Content>
+        <Input autocomplete="off" id="name" placeholder="Name of your project" variant="text" />
+      </Card.Content>
 
-        <Card.Footer class="flex justify-between">
-          <Button variant="outline">Cancel</Button>
+      <Card.Footer class="flex flex-row justify-between">
+        <Button variant="outline">Cancel</Button>
 
-          <Button>Deploy</Button>
-        </Card.Footer>
-      </Card.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+        <Button>Deploy</Button>
+      </Card.Footer>
+    </Card.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

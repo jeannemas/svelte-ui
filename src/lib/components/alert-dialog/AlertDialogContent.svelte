@@ -14,6 +14,7 @@
     type Attributes as AlertDialogPortalAttributes,
     type Props as AlertDialogPortalProps,
   } from './AlertDialogPortal.svelte';
+  import { rootContext } from './context.js';
 
   type Primitive<
     TContentTransition extends Transition = Transition,
@@ -41,8 +42,14 @@
     Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['props'],
     keyof Attributes
   > & {
+    /**
+     * The attributes and props for the overlay.
+     */
     overlayAttributesAndProps?: AlertDialogOverlayAttributes &
       AlertDialogOverlayProps<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
+    /**
+     * The attributes and props for the portal.
+     */
     portalAttributesAndProps?: AlertDialogPortalAttributes & AlertDialogPortalProps;
   };
   /**
@@ -57,10 +64,21 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: [
-      'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-lg border bg-background p-6 shadow-lg',
+      'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-lg border p-4 shadow-lg',
     ],
+    variants: {
+      breakpoint: {
+        sm: ['sm:max-w-lg'],
+        md: ['md:max-w-xl'],
+        lg: ['lg:max-w-2xl'],
+      },
+      variant: {
+        default: ['border-border bg-background text-foreground'],
+        destructive: ['border-destructive bg-destructive/5 text-destructive'],
+      },
+    },
   });
 </script>
 
@@ -103,6 +121,14 @@
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('AlertDialog.Content must be used within an AlertDialog.Root component.');
+  }
+
+  $: ({ breakpoint, variant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -114,8 +140,10 @@
   <AlertDialogPrimitive.Content
     {...attributes}
     asChild="{asChild}"
-    class="{styles({
+    class="{contentStyles({
+      breakpoint,
       class: attributes.class,
+      variant,
     })}"
     el="{el}"
     inTransition="{inTransition}"

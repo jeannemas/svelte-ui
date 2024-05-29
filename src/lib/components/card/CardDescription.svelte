@@ -22,7 +22,7 @@
   /**
    * The styles of the description.
    */
-  export const styles = tv({
+  export const descriptionStyles = tv({
     base: ['text-sm text-muted-foreground'],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <p
   {...attributes}
-  class="{styles({
+  class="{descriptionStyles({
     class: attributes.class,
   })}"
 >

@@ -1,28 +1,19 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes of the header.
    */
   export type Attributes = SvelteHTMLElements['div'];
   /**
-   * The breakpoint of the header.
-   */
-  export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
-  /**
    * The props of the header.
    */
-  export type Props = {
-    /**
-     * The breakpoint of the header.
-     *
-     * @default 'sm'
-     */
-    breakpoint?: Breakpoint;
-  };
+  export type Props = EmptyObject;
   /**
    * The slots of the header.
    */
@@ -33,11 +24,8 @@
   /**
    * The styles of the header.
    */
-  export const styles = tv({
+  export const headerStyles = tv({
     base: ['flex flex-col gap-y-2 text-center'],
-    defaultVariants: {
-      breakpoint: 'sm',
-    },
     variants: {
       breakpoint: {
         sm: ['sm:text-left'],
@@ -46,17 +34,6 @@
       },
     },
   });
-  /**
-   * The breakpoints of the header.
-   */
-  export const breakpoints = Object.keys(styles.variants.breakpoint) as [
-    Breakpoint,
-    ...Breakpoint[],
-  ];
-  /**
-   * The default breakpoint of the header.
-   */
-  export const defaultBreakpoint = styles.defaultVariants.breakpoint!;
 </script>
 
 <script lang="ts">
@@ -64,9 +41,15 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let breakpoint: Props['breakpoint'] = undefined;
-
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('AlertDialog.Header must be used within an AlertDialog.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -74,11 +57,10 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{headerStyles({
     breakpoint,
     class: attributes.class,
   })}"
-  data-breakpoint="{breakpoint}"
 >
   <slot />
 </div>

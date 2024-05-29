@@ -1,130 +1,168 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as AlertDialog from '$lib/components/alert-dialog/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
+  import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(false),
-        open: z.boolean().default(false),
-        preventScroll: z.boolean().default(true),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="breakpoint" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Breakpoint</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Close on escape</Form.Label>
+        <Select.Root
+          items="{data.breakpoints}"
+          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
+          selected="{$props.breakpoint && {
+            label: $props.breakpoint,
+            value: $props.breakpoint,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-          </Form.Control>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-          <Form.Description>
-            Whether or not to close the alert dialog when the escape key is pressed.
-          </Form.Description>
+          <Select.Content>
+            {#each data.breakpoints as breakpoint (breakpoint.value)}
+              <Select.Item value="{breakpoint.value}">
+                {breakpoint.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.breakpoint.description}
+      </Form.Description>
 
-        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Close on outside click</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Switch
-              {...attrs}
-              {...constraints}
-              bind:checked="{$superFormData.closeOnOutsideClick}"
-            />
-          </Form.Control>
+    <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Close on escape</Form.Label>
 
-          <Form.Description>
-            Whether or not to close the alert dialog when the escape key is pressed.
-          </Form.Description>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.closeOnEscape.description}
+      </Form.Description>
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
+    <Form.Field name="closeOnOutsideClick" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Close on outside click</Form.Label>
 
-          <Form.Description>The open state of the alert dialog.</Form.Description>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
+      <Form.Description>
+        {schema.shape.closeOnOutsideClick.description}
+      </Form.Description>
 
-        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Prevent scroll</Form.Label>
+      <Form.FieldErrors />
+    </Form.Field>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-          </Form.Control>
+    <Form.Field name="preventScroll" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Prevent scroll</Form.Label>
 
-          <Form.Description>
-            Whether or not to prevent scrolling when the alert dialog is open.
-          </Form.Description>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.preventScroll}" />
+      </Form.Control>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+      <Form.Description>
+        {schema.shape.preventScroll.description}
+      </Form.Description>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+      <Form.FieldErrors />
+    </Form.Field>
 
-    <Accordion.Content>
-      <AlertDialog.Root {...$superFormData} bind:open="{$superFormData.open}">
-        <AlertDialog.Trigger asChild let:builder>
-          <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
-        </AlertDialog.Trigger>
+    <Form.Field name="variant" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Variant</Form.Label>
 
-        <AlertDialog.Content>
-          <AlertDialog.Header>
-            <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+        <Select.Root
+          items="{data.variants}"
+          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
+          selected="{$props.variant && {
+            label: $props.variant,
+            value: $props.variant,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <AlertDialog.Description>
-              This action cannot be undone. This will permanently delete your account and remove
-              your data from our servers.
-            </AlertDialog.Description>
-          </AlertDialog.Header>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-          <AlertDialog.Footer>
-            <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+          <Select.Content>
+            {#each data.variants as variant (variant.value)}
+              <Select.Item value="{variant.value}">
+                {variant.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-            <AlertDialog.Action>Continue</AlertDialog.Action>
-          </AlertDialog.Footer>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+      <Form.Description>
+        {schema.shape.variant.description}
+      </Form.Description>
+
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
+
+  <svelte:fragment slot="demo">
+    <AlertDialog.Root {...$props}>
+      <AlertDialog.Trigger asChild let:builder>
+        <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
+      </AlertDialog.Trigger>
+
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+
+          <AlertDialog.Description>
+            This action cannot be undone. This will permanently delete your account and remove your
+            data from our servers.
+          </AlertDialog.Description>
+        </AlertDialog.Header>
+
+        <AlertDialog.Footer>
+          <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+
+          <AlertDialog.Action>Continue</AlertDialog.Action>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

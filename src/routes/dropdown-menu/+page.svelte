@@ -1,18 +1,4 @@
 <script context="module" lang="ts">
-  import CirclePlusIcon from 'lucide-svelte/icons/circle-plus';
-  import CloudIcon from 'lucide-svelte/icons/cloud';
-  import CreditCardIcon from 'lucide-svelte/icons/credit-card';
-  import GithubIcon from 'lucide-svelte/icons/github';
-  import KeyboardIcon from 'lucide-svelte/icons/keyboard';
-  import LifeBuoyIcon from 'lucide-svelte/icons/life-buoy';
-  import LogOutIcon from 'lucide-svelte/icons/log-out';
-  import MailIcon from 'lucide-svelte/icons/mail';
-  import MessageSquareIcon from 'lucide-svelte/icons/message-square';
-  import PlusIcon from 'lucide-svelte/icons/plus';
-  import SettingsIcon from 'lucide-svelte/icons/settings';
-  import UserIcon from 'lucide-svelte/icons/user';
-  import UserPlusIcon from 'lucide-svelte/icons/user-plus';
-  import UsersIcon from 'lucide-svelte/icons/users';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
@@ -23,30 +9,31 @@
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnItemClick: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(true),
-        dir: z.enum(DropdownMenu.rootDirs).default(DropdownMenu.rootDefaultDir),
-        disableFocusFirstItem: z.boolean().default(false),
-        loop: z.boolean().default(false),
-        open: z.boolean().default(false),
-        preventScroll: z.boolean().default(true),
-        typeahead: z.boolean().default(true),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      closeOnEscape: z.boolean().default(true).optional(),
+      closeOnItemClick: z.boolean().default(true).optional(),
+      closeOnOutsideClick: z.boolean().default(true).optional(),
+      dir: z.enum(DropdownMenu.rootDirs).default(DropdownMenu.rootDefaultDir).optional(),
+      disableFocusFirstItem: z.boolean().default(false).optional(),
+      loop: z.boolean().default(false).optional(),
+      preventScroll: z.boolean().default(true).optional(),
+      typeahead: z.boolean().default(true).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
   });
   const { form: superFormData } = superForm;
+
+  const rootDirs = DropdownMenu.rootDirs.map((dir) => ({
+    label: dir,
+    value: dir,
+  }));
 </script>
 
 <!-- <style lang="postcss">
@@ -109,10 +96,7 @@
             <Form.Label>Direction</Form.Label>
 
             <Select.Root
-              items="{DropdownMenu.rootDirs.map((dir) => ({
-                label: dir,
-                value: dir,
-              }))}"
+              items="{rootDirs}"
               onSelectedChange="{(selected) => {
                 $superFormData.dir = selected?.value;
               }}"
@@ -124,7 +108,7 @@
                   }
                 : undefined}"
             >
-              <Select.Input {...attrs} {...constraints} />
+              <Select.HiddenInput {...attrs} {...constraints} />
 
               <Select.Trigger>
                 <Select.Value />
@@ -156,9 +140,9 @@
             />
           </Form.Control>
 
-          <Form.Description
-            >Optionally prevent focusing the first item in the menu.</Form.Description
-          >
+          <Form.Description>
+            Optionally prevent focusing the first item in the menu.
+          </Form.Description>
 
           <Form.FieldErrors />
         </Form.Field>
@@ -175,21 +159,6 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
-
-          <Form.Description>
-            The open state of the context menu. You can bind this to a boolean value to
-            programmatically control the open state.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-
         <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
           <Form.Control let:attrs>
             <Form.Label>Prevent scroll</Form.Label>
@@ -197,9 +166,9 @@
             <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
           </Form.Control>
 
-          <Form.Description
-            >Whether or not to prevent scrolling when the menu is open.</Form.Description
-          >
+          <Form.Description>
+            Whether or not to prevent scrolling when the menu is open.
+          </Form.Description>
 
           <Form.FieldErrors />
         </Form.Field>
@@ -211,9 +180,9 @@
             <Switch {...attrs} {...constraints} bind:checked="{$superFormData.typeahead}" />
           </Form.Control>
 
-          <Form.Description
-            >Whether to use typeahead to automatically focus elements.</Form.Description
-          >
+          <Form.Description>
+            Whether to use typeahead to automatically focus elements.
+          </Form.Description>
 
           <Form.FieldErrors />
         </Form.Field>
@@ -225,44 +194,36 @@
     <Accordion.Trigger>Demo</Accordion.Trigger>
 
     <Accordion.Content>
-      <DropdownMenu.Root {...$superFormData} bind:open="{$superFormData.open}">
+      <DropdownMenu.Root {...$superFormData}>
         <DropdownMenu.Trigger asChild let:builder>
           <Button builders="{[builder]}" variant="outline">Open</Button>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content class="w-56">
+        <DropdownMenu.Content class="w-64">
           <DropdownMenu.Label>My Account</DropdownMenu.Label>
 
           <DropdownMenu.Separator />
 
           <DropdownMenu.Group>
             <DropdownMenu.Item>
-              <UserIcon class="mr-2 h-4 w-4" />
-
               <span>Profile</span>
 
               <DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <CreditCardIcon class="mr-2 h-4 w-4" />
-
               <span>Billing</span>
 
               <DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <SettingsIcon class="mr-2 h-4 w-4" />
-
               <span>Settings</span>
 
               <DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <KeyboardIcon class="mr-2 h-4 w-4" />
-
               <span>Keyboard shortcuts</span>
 
               <DropdownMenu.Shortcut>⌘K</DropdownMenu.Shortcut>
@@ -272,43 +233,21 @@
           <DropdownMenu.Separator />
 
           <DropdownMenu.Group>
-            <DropdownMenu.Item>
-              <UsersIcon class="mr-2 h-4 w-4" />
-
-              <span>Team</span>
-            </DropdownMenu.Item>
+            <DropdownMenu.Item>Team</DropdownMenu.Item>
 
             <DropdownMenu.Sub>
-              <DropdownMenu.SubTrigger>
-                <UserPlusIcon class="mr-2 h-4 w-4" />
-
-                <span>Invite users</span>
-              </DropdownMenu.SubTrigger>
+              <DropdownMenu.SubTrigger>Invite users</DropdownMenu.SubTrigger>
 
               <DropdownMenu.SubContent>
-                <DropdownMenu.Item>
-                  <MailIcon class="mr-2 h-4 w-4" />
+                <DropdownMenu.Item>Email</DropdownMenu.Item>
 
-                  <span>Email</span>
-                </DropdownMenu.Item>
+                <DropdownMenu.Item>Message</DropdownMenu.Item>
 
-                <DropdownMenu.Item>
-                  <MessageSquareIcon class="mr-2 h-4 w-4" />
-
-                  <span>Message</span>
-                </DropdownMenu.Item>
-
-                <DropdownMenu.Item>
-                  <CirclePlusIcon class="mr-2 h-4 w-4" />
-
-                  <span>More...</span>
-                </DropdownMenu.Item>
+                <DropdownMenu.Item>More...</DropdownMenu.Item>
               </DropdownMenu.SubContent>
             </DropdownMenu.Sub>
 
             <DropdownMenu.Item>
-              <PlusIcon class="mr-2 h-4 w-4" />
-
               <span>New Team</span>
 
               <DropdownMenu.Shortcut>⌘+T</DropdownMenu.Shortcut>
@@ -317,29 +256,15 @@
 
           <DropdownMenu.Separator />
 
-          <DropdownMenu.Item>
-            <GithubIcon class="mr-2 h-4 w-4" />
+          <DropdownMenu.Item>Github</DropdownMenu.Item>
 
-            <span>GitHub</span>
-          </DropdownMenu.Item>
+          <DropdownMenu.Item>Support</DropdownMenu.Item>
 
-          <DropdownMenu.Item>
-            <LifeBuoyIcon class="mr-2 h-4 w-4" />
-
-            <span>Support</span>
-          </DropdownMenu.Item>
-
-          <DropdownMenu.Item>
-            <CloudIcon class="mr-2 h-4 w-4" />
-
-            <span>API</span>
-          </DropdownMenu.Item>
+          <DropdownMenu.Item>API</DropdownMenu.Item>
 
           <DropdownMenu.Separator />
 
           <DropdownMenu.Item>
-            <LogOutIcon class="mr-2 h-4 w-4" />
-
             <span>Log out</span>
 
             <DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>

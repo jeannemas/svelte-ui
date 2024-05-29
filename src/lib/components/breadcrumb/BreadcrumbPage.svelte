@@ -30,7 +30,7 @@
   /**
    * The styles of the page.
    */
-  export const styles = tv({
+  export const pageStyles = tv({
     base: ['font-normal text-foreground'],
   });
 </script>
@@ -54,7 +54,7 @@
 {:else}
   <span
     {...attributes}
-    class="{styles({
+    class="{pageStyles({
       class: attributes.class,
     })}"
     role="link"

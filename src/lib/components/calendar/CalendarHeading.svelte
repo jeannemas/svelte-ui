@@ -23,7 +23,7 @@
   /**
    * The styles of the heading.
    */
-  export const styles = tv({
+  export const headingStyles = tv({
     base: ['text-sm font-medium'],
   });
 </script>
@@ -45,7 +45,7 @@
 <CalendarPrimitive.Heading
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{headingStyles({
     class: attributes.class,
   })}"
   el="{el}"

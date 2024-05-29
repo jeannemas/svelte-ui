@@ -4,7 +4,7 @@
 
   import type { EmptyObject, Slot } from '$lib/utils/types.js';
 
-  import { getTopNavigationContext, hasTopNavigationContext } from './context.js';
+  import { ctx } from './context.js';
 
   /**
    * The attributes for the section.
@@ -25,7 +25,7 @@
    * The styles for the section.
    */
   export const styles = tv({
-    base: ['space-y-1', 'lg:flex lg:gap-x-2 lg:space-y-0'],
+    base: ['space-y-1'],
     defaultVariants: {
       breakpoint: 'lg',
     },
@@ -46,9 +46,7 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = hasTopNavigationContext()
-    ? getTopNavigationContext().breakpoint
-    : styles.defaultVariants.breakpoint;
+  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
 </script>
 
 <!-- <style lang="postcss">
@@ -60,7 +58,6 @@
     breakpoint,
     class: attributes.class,
   })}"
-  data-breakpoint="{breakpoint}"
 >
   <slot />
 </div>

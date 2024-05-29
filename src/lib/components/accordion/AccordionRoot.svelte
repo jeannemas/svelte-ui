@@ -1,9 +1,12 @@
 <script context="module" lang="ts">
   import { Accordion as AccordionPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive<TMultiple extends boolean = false> = ComponentInfo<
     AccordionPrimitive.Root<TMultiple>
@@ -28,8 +31,16 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: ['divide-y'],
+    defaultVariants: {
+      disabled: false,
+    },
+    variants: {
+      disabled: {
+        true: ['cursor-default'],
+      },
+    },
   });
 </script>
 
@@ -40,13 +51,20 @@
   type TypedProps = Props<TMultiple>;
 
   export let asChild: TypedProps['asChild'] = undefined;
-  export let disabled: TypedProps['disabled'] = undefined;
+  export let disabled: TypedProps['disabled'] = rootStyles.defaultVariants.disabled;
   export let el: TypedProps['el'] = undefined;
   export let multiple: TypedProps['multiple'] = undefined;
   export let onValueChange: TypedProps['onValueChange'] = undefined;
   export let value: TypedProps['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    disabled,
+  }));
 </script>
 
 <!-- <style lang="postcss">
@@ -55,8 +73,9 @@
 <AccordionPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
+    disabled,
   })}"
   disabled="{disabled}"
   el="{el}"

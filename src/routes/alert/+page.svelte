@@ -1,95 +1,72 @@
 <script context="module" lang="ts">
-  import TerminalIcon from 'lucide-svelte/icons/terminal';
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Alert from '$lib/components/alert/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        variant: z.enum(Alert.variants).default(Alert.defaultVariant),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="variant" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Variant</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="variant" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Variant</Form.Label>
+        <Select.Root
+          items="{data.variants}"
+          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
+          selected="{$props.variant && {
+            label: $props.variant,
+            value: $props.variant,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{Alert.variants.map((variant) => ({
-                label: variant,
-                value: variant,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.variant = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.variant !== undefined
-                ? {
-                    label: $superFormData.variant,
-                    value: $superFormData.variant,
-                  }
-                : undefined}"
-            >
-              <Select.Input {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content>
+            {#each data.variants as variant (variant.value)}
+              <Select.Item value="{variant.value}">
+                {variant.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each Alert.variants as variant, index (index)}
-                  <Select.Item value="{variant}">
-                    {variant}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.variant.description}
+      </Form.Description>
 
-          <Form.Description>The variant of the alert.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+  <svelte:fragment slot="demo">
+    <Alert.Root {...$props}>
+      <Alert.Title>Heads up!</Alert.Title>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Alert.Root {...$superFormData}>
-        <TerminalIcon class="h-4 w-4" />
-
-        <Alert.Title>Heads up!</Alert.Title>
-
-        <Alert.Description>You can add components to your app using the CLI.</Alert.Description>
-      </Alert.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+      <Alert.Description>You can add components to your app using the CLI.</Alert.Description>
+    </Alert.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

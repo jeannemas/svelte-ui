@@ -31,8 +31,8 @@
   /**
    * The styles of the ellipsis.
    */
-  export const styles = tv({
-    base: ['flex h-9 w-9 items-center justify-center'],
+  export const ellipsisStyles = tv({
+    base: ['flex size-8 flex-row items-center justify-center'],
   });
 </script>
 
@@ -55,7 +55,7 @@
 {:else}
   <span
     {...attributes}
-    class="{styles({
+    class="{ellipsisStyles({
       class: attributes.class,
     })}"
     role="presentation"
@@ -63,7 +63,7 @@
     bind:this="{el}"
   >
     <slot>
-      <EllipsisIcon class="h-4 w-4" />
+      <EllipsisIcon class="size-4" />
 
       <span class="sr-only">More</span>
     </slot>

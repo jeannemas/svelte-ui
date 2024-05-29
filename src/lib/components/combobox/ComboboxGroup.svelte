@@ -24,7 +24,7 @@
   /**
    * The styles of the group.
    */
-  export const styles = tv({
+  export const groupStyles = tv({
     base: [...selectGroupStyles.base],
   });
 </script>
@@ -46,7 +46,7 @@
 <ComboboxPrimitive.Group
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{groupStyles({
     class: attributes.class,
   })}"
   el="{el}"

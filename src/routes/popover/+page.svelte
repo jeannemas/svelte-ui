@@ -10,21 +10,17 @@
   import Label from '$lib/components/label/index.js';
   import * as Popover from '$lib/components/popover/index.js';
   import Switch from '$lib/components/switch/index.js';
-
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(true),
-        disableFocusTrap: z.boolean().default(false),
-        open: z.boolean().default(false),
-        preventScroll: z.boolean().default(false),
-      })
-      .partial(),
-  );
 </script>
 
 <script lang="ts">
+  const adapter = zod(
+    z.object({
+      closeOnEscape: z.boolean().default(true).optional(),
+      closeOnOutsideClick: z.boolean().default(true).optional(),
+      disableFocusTrap: z.boolean().default(false).optional(),
+      preventScroll: z.boolean().default(false).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -87,18 +83,6 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
-
-          <Form.Description>The open state of the popover.</Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-
         <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
           <Form.Control let:attrs>
             <Form.Label>Prevent scroll</Form.Label>
@@ -120,7 +104,7 @@
     <Accordion.Trigger>Demo</Accordion.Trigger>
 
     <Accordion.Content>
-      <Popover.Root {...$superFormData} portal="{null}" bind:open="{$superFormData.open}">
+      <Popover.Root {...$superFormData} portal="{null}">
         <Popover.Trigger asChild let:builder>
           <Button builders="{[builder]}" variant="outline">Open</Button>
         </Popover.Trigger>

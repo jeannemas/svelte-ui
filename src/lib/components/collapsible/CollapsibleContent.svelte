@@ -41,8 +41,8 @@
   /**
    * The styles of the collapsible.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const contentStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -83,7 +83,7 @@
 <CollapsiblePrimitive.Content
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   el="{el}"

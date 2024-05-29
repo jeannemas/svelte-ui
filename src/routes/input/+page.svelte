@@ -9,7 +9,9 @@
   import Input, { variants, type Variant } from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
+</script>
 
+<script lang="ts">
   const adapter = zod(
     z.object({
       disabled: z.boolean().default(false).optional(),
@@ -17,9 +19,6 @@
       variant: z.enum(variants).default('text'),
     }),
   );
-</script>
-
-<script lang="ts">
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
@@ -87,7 +86,7 @@
                   }
                 : undefined}"
             >
-              <Select.Input {...attrs} {...constraints} />
+              <Select.HiddenInput {...attrs} {...constraints} />
 
               <Select.Trigger>
                 <Select.Value />

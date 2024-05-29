@@ -7,22 +7,19 @@
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Switch from '$lib/components/switch/index.js';
+</script>
 
+<script lang="ts">
   const adapter1 = zod(
-    z
-      .object({
-        debug: z.boolean().default(false),
-      })
-      .partial(),
+    z.object({
+      debug: z.boolean().default(false).optional(),
+    }),
   );
   const adapter2 = zod(
     z.object({
       username: z.string().min(2).max(50),
     }),
   );
-</script>
-
-<script lang="ts">
   const superForm1 = createSuperForm(defaults(adapter1), {
     SPA: true,
     validators: adapter1,

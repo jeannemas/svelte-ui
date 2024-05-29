@@ -1,5 +1,4 @@
 <script context="module" lang="ts">
-  import type { Selected } from 'bits-ui';
   import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import z from 'zod';
@@ -9,29 +8,31 @@
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
 
-  const adapter = zod(
-    z
-      .object({
-        closeOnEscape: z.boolean().default(true),
-        closeOnOutsideClick: z.boolean().default(true),
-        disabled: z.boolean().default(false),
-        loop: z.boolean().default(false),
-        open: z.boolean().default(false),
-        preventScroll: z.boolean().default(false),
-      })
-      .partial(),
-  );
-  const fruits = ['apple', 'banana', 'blueberry', 'grapes', 'pineapple'];
+  import type { PageData } from './$types.js';
 </script>
 
 <script lang="ts">
+  export let data: PageData;
+
+  const users = data.users.map(({ id, name }) => ({
+    label: name,
+    value: id.toString(),
+  }));
+
+  const adapter = zod(
+    z.object({
+      closeOnEscape: z.boolean().default(true).optional(),
+      closeOnOutsideClick: z.boolean().default(true).optional(),
+      disabled: z.boolean().default(false).optional(),
+      loop: z.boolean().default(false).optional(),
+      preventScroll: z.boolean().default(false).optional(),
+    }),
+  );
   const superForm = createSuperForm(defaults(adapter), {
     SPA: true,
     validators: adapter,
   });
   const { form: superFormData } = superForm;
-
-  let selectedFruit: Selected<string> | undefined = undefined;
 </script>
 
 <!-- <style lang="postcss">
@@ -102,18 +103,6 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
-
-          <Form.Description>The open state of the select menu.</Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-
         <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
           <Form.Control let:attrs>
             <Form.Label>Prevent scroll</Form.Label>
@@ -135,29 +124,17 @@
     <Accordion.Trigger>Demo</Accordion.Trigger>
 
     <Accordion.Content>
-      <Select.Root
-        {...$superFormData}
-        items="{fruits.map((fruit) => ({
-          label: fruit,
-          value: fruit,
-        }))}"
-        onSelectedChange="{(selected) => {
-          selectedFruit = selected;
-        }}"
-        portal="{null}"
-        selected="{selectedFruit}"
-        bind:open="{$superFormData.open}"
-      >
-        <Select.Input id="fruit" name="fruit" />
+      <Select.Root {...$superFormData} items="{users}" portal="{null}">
+        <Select.HiddenInput id="user" name="user" />
 
         <Select.Trigger>
-          <Select.Value placeholder="Select a fruit" />
+          <Select.Value placeholder="Select a user" />
         </Select.Trigger>
 
         <Select.Content>
-          {#each fruits as fruit, index (index)}
-            <Select.Item value="{fruit}">
-              {fruit}
+          {#each users as user (user.value)}
+            <Select.Item value="{user.value}">
+              {user.label}
             </Select.Item>
           {/each}
         </Select.Content>

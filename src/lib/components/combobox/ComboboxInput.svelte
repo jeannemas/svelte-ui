@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { styles as inputStyles } from '$lib/components/input/index.js';
+  import { styles as baseInputStyles } from '$lib/components/input/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<ComboboxPrimitive.Input>;
@@ -24,8 +24,8 @@
   /**
    * The styles of the input.
    */
-  export const styles = tv({
-    base: [...inputStyles.base],
+  export const inputStyles = tv({
+    base: [...baseInputStyles.base],
   });
 </script>
 
@@ -47,7 +47,7 @@
 <ComboboxPrimitive.Input
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{inputStyles({
     class: attributes.class,
   })}"
   el="{el}"

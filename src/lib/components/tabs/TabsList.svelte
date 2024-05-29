@@ -24,7 +24,9 @@
    * The styles of the list.
    */
   export const styles = tv({
-    base: ['inline-flex items-center justify-center rounded-md bg-muted p-1 text-muted-foreground'],
+    base: [
+      'inline-flex flex-row items-center justify-center rounded-md bg-muted p-1 text-muted-foreground',
+    ],
   });
 </script>
 

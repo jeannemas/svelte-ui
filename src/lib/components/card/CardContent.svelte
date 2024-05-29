@@ -22,8 +22,8 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
-    base: ['p-6 pt-0'],
+  export const contentStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -40,7 +40,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
 >

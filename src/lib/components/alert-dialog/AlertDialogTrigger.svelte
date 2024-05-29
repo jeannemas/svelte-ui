@@ -23,8 +23,8 @@
   /**
    * The styles of the trigger.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const triggerStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <AlertDialogPrimitive.Trigger
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{triggerStyles({
     class: attributes.class,
   })}"
   el="{el}"

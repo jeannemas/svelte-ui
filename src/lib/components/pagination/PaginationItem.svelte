@@ -23,7 +23,7 @@
    * The styles of the item.
    */
   export const styles = tv({
-    base: [] as string[],
+    base: [''],
   });
 </script>
 

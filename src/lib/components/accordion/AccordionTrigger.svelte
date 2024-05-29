@@ -7,6 +7,8 @@
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { itemContext, rootContext } from './context.js';
+
   type Primitive = ComponentInfo<AccordionPrimitive.Trigger>;
 
   /**
@@ -16,9 +18,7 @@
   /**
    * The props of the trigger.
    */
-  export type Props = Omit<Primitive['props'], keyof Attributes> & {
-    headerAttributesAndProps?: ComponentInfo<AccordionPrimitive.Header>['props'];
-  };
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the trigger.
    */
@@ -27,12 +27,19 @@
   /**
    * The styles of the trigger.
    */
-  export const styles = tv({
+  export const triggerStyles = tv({
     base: [
-      'flex flex-1 items-center justify-between py-4 font-medium transition-all',
-      'hover:underline',
-      '[&[data-state=open]>svg]:rotate-180',
+      'flex shrink grow basis-0 flex-row items-center justify-between py-4 font-medium transition-all',
     ],
+    defaultVariants: {
+      disabled: false,
+    },
+    variants: {
+      disabled: {
+        false: ['hover:underline'],
+        true: ['cursor-default'],
+      },
+    },
   });
 </script>
 
@@ -43,31 +50,48 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
-  export let headerAttributesAndProps: Props['headerAttributesAndProps'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const itemCtx = itemContext.get();
+  const rootCtx = rootContext.get();
+
+  if (!itemCtx) {
+    throw new Error('Accordion.Trigger must be used within an Accordion.Item component.');
+  }
+
+  if (!rootCtx) {
+    throw new Error('Accordion.Trigger must be used within an Accordion.Root component.');
+  }
+
+  $: ({ disabled: itemDisabled } = $itemCtx!);
+  $: ({ disabled: rootDisabled } = $rootCtx!);
+  $: isDisabled = rootDisabled || itemDisabled;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<AccordionPrimitive.Header
-  {...headerAttributesAndProps}
-  class="{cn('flex', headerAttributesAndProps?.class)}"
+<AccordionPrimitive.Trigger
+  {...attributes}
+  asChild="{asChild}"
+  class="{triggerStyles({
+    class: attributes.class,
+    disabled: isDisabled,
+  })}"
+  el="{el}"
+  let:builder
+  on:click
+  on:keydown
 >
-  <AccordionPrimitive.Trigger
-    {...attributes}
-    asChild="{asChild}"
-    class="{styles({
-      class: attributes.class,
-    })}"
-    el="{el}"
-    let:builder
-    on:click
-    on:keydown
-  >
-    <slot builder="{builder}" />
+  <slot builder="{builder}" />
 
-    <ChevronDownIcon class="h-4 w-4 transition-transform duration-200" />
-  </AccordionPrimitive.Trigger>
-</AccordionPrimitive.Header>
+  {#if !isDisabled}
+    <ChevronDownIcon
+      class="{cn(
+        'size-4 transition-transform duration-200',
+        builder['data-state'] === 'open' && 'rotate-180',
+      )}"
+    />
+  {/if}
+</AccordionPrimitive.Trigger>

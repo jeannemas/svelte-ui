@@ -1,149 +1,118 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
-  import Button, {
-    defaultSize,
-    defaultVariant,
-    sizes,
-    variants,
-  } from '$lib/components/button/index.js';
+  import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        disabled: z.boolean().default(false),
-        size: z.enum(sizes).default(defaultSize),
-        variant: z.enum(variants).default(defaultVariant),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="disabled" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Disabled</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disabled</Form.Label>
+        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.disabled.description}
+      </Form.Description>
 
-          <Form.Description>Whether the button is disabled.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="size" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Size</Form.Label>
 
-        <Form.Field name="size" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Size</Form.Label>
+        <Select.Root
+          items="{data.sizes}"
+          onSelectedChange="{(selected) => ($props.size = selected?.value)}"
+          selected="{$props.size && {
+            label: $props.size,
+            value: $props.size,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{sizes.map((size) => ({
-                label: size,
-                value: size,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.size = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.size !== undefined
-                ? {
-                    label: $superFormData.size,
-                    value: $superFormData.size,
-                  }
-                : undefined}"
-            >
-              <Select.Input {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content>
+            {#each data.sizes as size (size.value)}
+              <Select.Item value="{size.value}">
+                {size.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each sizes as size, index (index)}
-                  <Select.Item value="{size}">
-                    {size}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.size.description}
+      </Form.Description>
 
-          <Form.Description>The size of the button.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="variant" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label>Variant</Form.Label>
 
-        <Form.Field name="variant" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Variant</Form.Label>
+        <Select.Root
+          items="{data.variants}"
+          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
+          selected="{$props.variant && {
+            label: $props.variant,
+            value: $props.variant,
+          }}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{variants.map((variant) => ({
-                label: variant,
-                value: variant,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.variant = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.variant !== undefined
-                ? {
-                    label: $superFormData.variant,
-                    value: $superFormData.variant,
-                  }
-                : undefined}"
-            >
-              <Select.Input {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content>
+            {#each data.variants as variant (variant.value)}
+              <Select.Item value="{variant.value}">
+                {variant.label}
+              </Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each variants as variant, index (index)}
-                  <Select.Item value="{variant}">
-                    {variant}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.variant.description}
+      </Form.Description>
 
-          <Form.Description>The variant of the button.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Button {...$superFormData}>Lorem ipsum</Button>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+  <svelte:fragment slot="demo">
+    <Button {...$props}>Lorem ipsum</Button>
+  </svelte:fragment>
+</ComponentDemoLayout>

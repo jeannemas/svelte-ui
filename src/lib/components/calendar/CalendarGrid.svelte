@@ -23,7 +23,7 @@
   /**
    * The styles of the grid.
    */
-  export const styles = tv({
+  export const gridStyles = tv({
     base: ['w-full border-collapse space-y-1'],
   });
 </script>
@@ -45,7 +45,7 @@
 <CalendarPrimitive.Grid
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{gridStyles({
     class: attributes.class,
   })}"
   el="{el}"

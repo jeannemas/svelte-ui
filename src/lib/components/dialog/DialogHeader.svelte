@@ -25,7 +25,7 @@
    * The styles of the header.
    */
   export const styles = tv({
-    base: ['flex flex-col space-y-1.5 text-center', 'sm:text-left'],
+    base: ['flex flex-col gap-y-2 text-center', 'sm:text-left'],
   });
 </script>
 

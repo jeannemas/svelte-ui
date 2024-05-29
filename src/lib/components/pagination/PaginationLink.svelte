@@ -3,10 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import {
-    styles as buttonStyles,
-    type Props as ButtonProps,
-  } from '$lib/components/button/index.js';
+  import { buttonStyles, type Props as ButtonProps } from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<PaginationPrimitive.Page>;
@@ -69,8 +66,6 @@
   })}"
   el="{el}"
   page="{page}"
-  data-size="{size}"
-  data-variant="{variant}"
   let:builder
   on:click
 >

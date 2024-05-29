@@ -23,8 +23,8 @@
   /**
    * The styles of the grid body.
    */
-  export const styles = tv({
-    base: [] as string[],
+  export const gridBodyStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -45,7 +45,7 @@
 <CalendarPrimitive.GridBody
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{gridBodyStyles({
     class: attributes.class,
   })}"
   el="{el}"

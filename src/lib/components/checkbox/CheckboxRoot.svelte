@@ -5,35 +5,42 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import CheckboxHiddenInput from './CheckboxHiddenInput.svelte';
+  import CheckboxIndicator from './CheckboxIndicator.svelte';
 
   type Primitive = ComponentInfo<CheckboxPrimitive.Root>;
 
   /**
-   * The attributes of the checkbox.
+   * The attributes of the root.
    */
   export type Attributes = Omit<SvelteHTMLElements['button'], 'disabled' | 'name' | 'value'>;
   /**
-   * The props of the checkbox.
+   * The props of the root.
    */
   export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
-   * The slots of the checkbox.
+   * The slots of the root.
    */
   export type Slots = Primitive['slots'];
 
   /**
-   * The styles of the checkbox.
+   * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: [
-      'peer box-content h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background',
+      'peer box-content size-4 shrink-0 rounded-sm border border-primary ring-offset-background',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-      'disabled:cursor-not-allowed disabled:opacity-50',
       'data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50',
       'data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
     ],
+    defaultVariants: {},
+    variants: {
+      disabled: {
+        true: ['cursor-not-allowed opacity-50'],
+      },
+    },
   });
 </script>
 
@@ -60,7 +67,7 @@
 <CheckboxPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -75,16 +82,14 @@
   on:keydown
 >
   <slot builder="{builder}">
-    <CheckboxPrimitive.Indicator
-      class="{cn('flex h-4 w-4 items-center justify-center text-current')}"
-      let:isChecked
-      let:isIndeterminate
-    >
+    <CheckboxHiddenInput name="{name}" />
+
+    <CheckboxIndicator let:isChecked let:isIndeterminate>
       {#if isChecked}
-        <CheckIcon class="h-3.5 w-3.5" />
+        <CheckIcon class="size-4" />
       {:else if isIndeterminate}
-        <MinusIcon class="h-3.5 w-3.5" />
+        <MinusIcon class="size-4" />
       {/if}
-    </CheckboxPrimitive.Indicator>
+    </CheckboxIndicator>
   </slot>
 </CheckboxPrimitive.Root>

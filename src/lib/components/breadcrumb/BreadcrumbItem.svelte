@@ -30,8 +30,8 @@
   /**
    * The styles of the item.
    */
-  export const styles = tv({
-    base: ['inline-flex items-center gap-1.5'],
+  export const itemStyles = tv({
+    base: ['inline-flex flex-row items-center gap-x-2'],
   });
 </script>
 
@@ -54,7 +54,7 @@
 {:else}
   <li
     {...attributes}
-    class="{styles({
+    class="{itemStyles({
       class: attributes.class,
     })}"
     bind:this="{el}"
