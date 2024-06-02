@@ -4,7 +4,12 @@
   import type { FormPath } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { AnyObject, ComponentInfo, EmptyObject, ObjectOf } from '$lib/utils/types.js';
+  import type {
+    AnyObject,
+    ComponentInfo,
+    EmptyObject,
+    ValidationConstraints,
+  } from '$lib/utils/types.js';
 
   type Primitive<TObject extends AnyObject, TPath extends FormPath<TObject>> = ComponentInfo<
     Field<TObject, TPath>
@@ -29,7 +34,7 @@
   export type Slots<TObject extends AnyObject, TPath extends FormPath<TObject>> = {
     default: Omit<Primitive<TObject, TPath>['slots']['default'], 'constraints' | 'value'> & {
       // Manual omissions to prevent infinite loop while compiling the package
-      constraints?: ObjectOf<unknown>;
+      constraints?: ValidationConstraints;
       value: unknown;
     };
   };
@@ -37,7 +42,7 @@
   /**
    * The styles of the field.
    */
-  export const styles = tv({
+  export const fieldStyles = tv({
     base: ['space-y-2'],
   });
 </script>
@@ -60,7 +65,7 @@
 <Field form="{superForm}" name="{name}" let:constraints let:errors let:tainted let:value>
   <div
     {...attributes}
-    class="{styles({
+    class="{fieldStyles({
       class: attributes.class,
     })}"
   >

@@ -13,7 +13,7 @@
   /**
    * The direction of the root.
    */
-  export type Dir = NonNullable<VariantProps<typeof styles>['dir']>;
+  export type Dir = NonNullable<VariantProps<typeof rootStyles>['dir']>;
   /**
    * The props of the root.
    */
@@ -26,7 +26,7 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     defaultVariants: {
       dir: 'ltr',
     },
@@ -37,14 +37,6 @@
       },
     },
   });
-  /**
-   * The default direction of the root.
-   */
-  export const defaultDir = styles.defaultVariants.dir!;
-  /**
-   * The directions of the root.
-   */
-  export const dirs = Object.keys(styles.variants.dir) as [Dir, ...Dir[]];
 </script>
 
 <script lang="ts">
@@ -56,7 +48,7 @@
   export let closeOnEscape: Props['closeOnEscape'] = undefined;
   export let closeOnItemClick: Props['closeOnItemClick'] = undefined;
   export let closeOnOutsideClick: Props['closeOnOutsideClick'] = undefined;
-  export let dir: Props['dir'] = undefined;
+  export let dir: Props['dir'] = rootStyles.defaultVariants.dir;
   export let disableFocusFirstItem: Props['disableFocusFirstItem'] = undefined;
   export let loop: Props['loop'] = undefined;
   export let onOpenChange: Props['onOpenChange'] = undefined;

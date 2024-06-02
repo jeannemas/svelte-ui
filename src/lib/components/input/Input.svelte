@@ -44,7 +44,7 @@
   /**
    * The styles of the input.
    */
-  export const styles = tv({
+  export const inputStyles = tv({
     base: [
       'flex h-10 w-full flex-row rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background',
       'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground',
@@ -92,7 +92,7 @@
   <input
     type="number"
     {...attributes}
-    class="{styles({
+    class="{inputStyles({
       class: attributes.class,
     })}"
     bind:value="{value}"
@@ -115,7 +115,7 @@
   <input
     type="text"
     {...attributes}
-    class="{styles({
+    class="{inputStyles({
       class: attributes.class,
     })}"
     bind:value="{value}"

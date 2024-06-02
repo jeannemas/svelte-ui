@@ -1,11 +1,12 @@
 <script context="module" lang="ts">
   import { Combobox as ComboboxPrimitive } from 'bits-ui';
-  import CheckIcon from 'lucide-svelte/icons/check';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
   import { itemStyles as selectItemStyles } from '$lib/components/select/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import ComboboxItemIndicator from './ComboboxItemIndicator.svelte';
 
   type Primitive = ComponentInfo<ComboboxPrimitive.Item>;
 
@@ -66,13 +67,9 @@
   on:pointerleave
   on:pointermove
 >
-  <span class="absolute left-2 flex size-4 flex-row items-center justify-center">
-    <ComboboxPrimitive.ItemIndicator>
-      <CheckIcon class="size-4" />
-    </ComboboxPrimitive.ItemIndicator>
-  </span>
-
   <slot builder="{builder}" isSelected="{isSelected}">
+    <ComboboxItemIndicator />
+
     {label || value}
   </slot>
 </ComboboxPrimitive.Item>

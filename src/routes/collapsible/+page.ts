@@ -5,7 +5,11 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async () => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      disabled: false,
+    },
+  });
 
   return {
     form,

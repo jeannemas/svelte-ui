@@ -62,7 +62,7 @@
   /**
    * The styles of the dialog.
    */
-  export const styles = tv({
+  export const dialogStyles = tv({
     base: [
       '[&_[data-cmdk-group-heading]]:px-2 [&_[data-cmdk-group-heading]]:font-medium [&_[data-cmdk-group-heading]]:text-muted-foreground',
       '[&_[data-cmdk-group]:not([hidden])_~[data-cmdk-group]]:pt-0',
@@ -123,7 +123,7 @@
     <CommandRoot
       {...attributes}
       asChild="{asChild}"
-      class="{styles({
+      class="{dialogStyles({
         class: attributes.class,
       })}"
       filter="{filter}"

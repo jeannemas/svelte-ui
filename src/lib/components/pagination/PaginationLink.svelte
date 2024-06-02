@@ -27,7 +27,7 @@
   /**
    * The styles of the link.
    */
-  export const styles = tv({
+  export const linkStyles = tv({
     base: [...buttonStyles.base],
     defaultVariants: {
       ...buttonStyles.defaultVariants,
@@ -59,7 +59,7 @@
 <PaginationPrimitive.Page
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{linkStyles({
     class: attributes.class,
     size,
     variant,

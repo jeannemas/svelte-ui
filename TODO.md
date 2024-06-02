@@ -2,3 +2,12 @@
 - Improve styles/variants typing and extensibility
 - Wrap form components with a form
 - Make form components require accessiblity props (such as id, name, etc)
+- Make sure each form components can both use a binding and event handlers
+- Make sure each component doesn't wrap other ones implicitly
+- Make sure styles are concise, don't repeat themselves, and are easy to extend
+- Add breakpoint variants to components with dynamic styles based on the screen size
+- Add contexts to components with variants
+- Comment components just like Formsnap does to make them easier to understand
+- Split the input component into 2 components: one for text inputs and one for number inputs
+- Do not prefix variants exports with `Root` or something
+- Add more sizes to components

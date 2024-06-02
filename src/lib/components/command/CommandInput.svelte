@@ -24,7 +24,7 @@
   /**
    * The styles of the input.
    */
-  export const styles = tv({
+  export const inputStyles = tv({
     base: [
       'flex h-12 w-full flex-row rounded-md bg-transparent py-3 text-sm outline-none',
       'placeholder:text-muted-foreground',
@@ -48,13 +48,13 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<div class="flex flex-row items-center border-b px-2" data-cmdk-input-wrapper="">
-  <SearchIcon class="mr-2 size-4 shrink-0 opacity-50" />
+<div class="flex flex-row items-center gap-x-2 border-b px-2" data-cmdk-input-wrapper="">
+  <SearchIcon class="size-4 shrink-0 opacity-50" />
 
   <CommandPrimitive.Input
     {...attributes}
     asChild="{asChild}"
-    class="{styles({
+    class="{inputStyles({
       class: attributes.class,
     })}"
     el="{el}"

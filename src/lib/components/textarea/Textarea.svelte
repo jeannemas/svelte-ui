@@ -31,7 +31,7 @@
   /**
    * The styles of the textarea.
    */
-  export const styles = tv({
+  export const textareaStyles = tv({
     base: [
       'flex min-h-24 w-full flex-row rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
       'placeholder:text-muted-foreground',
@@ -72,7 +72,7 @@
 
 <textarea
   {...attributes}
-  class="{styles({
+  class="{textareaStyles({
     class: attributes.class,
   })}"
   readonly="{readonly}"

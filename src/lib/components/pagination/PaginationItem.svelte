@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the item.
@@ -16,13 +16,13 @@
    * The slots of the item.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the item.
    */
-  export const styles = tv({
+  export const itemStyles = tv({
     base: [''],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <li
   {...attributes}
-  class="{styles({
+  class="{itemStyles({
     class: attributes.class,
   })}"
 >

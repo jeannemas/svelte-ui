@@ -24,7 +24,7 @@
   /**
    * The styles of the trigger.
    */
-  export const styles = tv({
+  export const triggerStyles = tv({
     base: [
       'flex h-10 w-full flex-row items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
       'placeholder:text-muted-foreground',
@@ -52,7 +52,7 @@
 <SelectPrimitive.Trigger
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{triggerStyles({
     class: attributes.class,
   })}"
   el="{el}"
@@ -62,7 +62,5 @@
 >
   <slot builder="{builder}" />
 
-  <div>
-    <ChevronDownIcon class="size-4 opacity-50" />
-  </div>
+  <ChevronDownIcon class="size-4 opacity-50" />
 </SelectPrimitive.Trigger>

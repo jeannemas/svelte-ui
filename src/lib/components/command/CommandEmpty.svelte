@@ -23,7 +23,7 @@
   /**
    * The styles of the empty.
    */
-  export const styles = tv({
+  export const emptyStyles = tv({
     base: ['py-6 text-center text-sm'],
   });
 </script>
@@ -44,7 +44,7 @@
 <CommandPrimitive.Empty
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{emptyStyles({
     class: attributes.class,
   })}"
 >

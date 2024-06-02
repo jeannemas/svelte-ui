@@ -23,7 +23,7 @@
   /**
    * The styles of the trigger.
    */
-  export const styles = tv({
+  export const triggerStyles = tv({
     base: [''],
   });
 </script>

@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the ellipsis.
@@ -17,13 +17,13 @@
    * The slots of the ellipsis.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the ellipsis.
    */
-  export const styles = tv({
+  export const ellipsisStyles = tv({
     base: ['flex size-8 flex-row items-center justify-center'],
   });
 </script>
@@ -41,7 +41,7 @@
 
 <span
   {...attributes}
-  class="{styles({
+  class="{ellipsisStyles({
     class: attributes.class,
   })}"
   aria-hidden="true"

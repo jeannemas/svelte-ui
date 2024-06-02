@@ -1,38 +1,37 @@
 <script context="module" lang="ts">
   import { onMount } from 'svelte';
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Command from '$lib/components/command/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
   export let data: PageData;
 
-  const adapter = zod(
-    z.object({
-      loop: z.boolean().default(false).optional(),
-      open: z.boolean().default(false).optional(),
-    }),
-  );
-  const superForm = createSuperForm(defaults(adapter), {
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
+
+  let open = false;
+
+  $: activeTodos = data.todos.filter(({ completed }) => !completed);
+  $: completedTodos = data.todos.filter(({ completed }) => completed);
 
   onMount(() => {
     function handleKeydown(event: KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
         event.preventDefault();
 
-        $superFormData.open = true;
+        open = true;
       }
     }
 
@@ -45,85 +44,58 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="loop" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Loop</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="loop" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Loop</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.loop}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.loop.description}
+      </Form.Description>
 
-          <Form.Description>
-            Optionally set to <code>true</code> to enable looping through the items when the user reaches
-            the end of the list using the keyboard.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
+  <svelte:fragment slot="demo">
+    <p class="text-sm text-muted-foreground">
+      Press
 
-        <Form.Field name="open" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Open</Form.Label>
+      <kbd
+        class="pointer-events-none inline-flex h-6 select-none flex-row items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
+      >
+        <span class="text-xs">⌘</span> + K
+      </kbd>
+    </p>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.open}" />
-          </Form.Control>
+    <Command.Dialog {...$props} bind:open="{open}">
+      <Command.Input placeholder="Type a command or search..." />
 
-          <Form.Description>The open state of the command dialog.</Form.Description>
+      <Command.List>
+        <Command.Empty>No results found.</Command.Empty>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+        <Command.Group heading="Todo">
+          {#each activeTodos as todo (todo.id)}
+            <Command.Item>
+              {todo.title}
+            </Command.Item>
+          {/each}
+        </Command.Group>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+        <Command.Separator />
 
-    <Accordion.Content>
-      <p class="text-sm text-muted-foreground">
-        Press
-
-        <kbd
-          class="pointer-events-none inline-flex h-6 select-none flex-row items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
-        >
-          <span class="text-xs">⌘</span>
-
-          <span>+</span>
-
-          <span>K</span>
-        </kbd>
-      </p>
-
-      <Command.Dialog {...$superFormData} bind:open="{$superFormData.open}">
-        <Command.Input placeholder="Type a command or search..." />
-
-        <Command.List>
-          <Command.Empty>No results found.</Command.Empty>
-
-          <Command.Group heading="Todo">
-            {#each data.todos.filter(({ completed }) => !completed) as todo (todo.id)}
-              <Command.Item>
-                {todo.title}
-              </Command.Item>
-            {/each}
-          </Command.Group>
-
-          <Command.Separator />
-
-          <Command.Group heading="Completed">
-            {#each data.todos.filter(({ completed }) => completed) as todo (todo.id)}
-              <Command.Item>
-                {todo.title}
-              </Command.Item>
-            {/each}
-          </Command.Group>
-        </Command.List>
-      </Command.Dialog>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+        <Command.Group heading="Completed">
+          {#each completedTodos as todo (todo.id)}
+            <Command.Item>
+              {todo.title}
+            </Command.Item>
+          {/each}
+        </Command.Group>
+      </Command.List>
+    </Command.Dialog>
+  </svelte:fragment>
+</ComponentDemoLayout>

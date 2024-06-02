@@ -23,7 +23,7 @@
   /**
    * The styles of the value.
    */
-  export const styles = tv({
+  export const valueStyles = tv({
     base: [''],
   });
 </script>
@@ -46,7 +46,7 @@
 <SelectPrimitive.Value
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{valueStyles({
     class: attributes.class,
   })}"
   el="{el}"

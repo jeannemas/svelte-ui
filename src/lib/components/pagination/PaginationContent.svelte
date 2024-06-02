@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the content.
@@ -16,13 +16,13 @@
    * The slots of the content.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: ['flex flex-row items-center gap-1'],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <ul
   {...attributes}
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
 >

@@ -1,137 +1,133 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
+  import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Pagination from '$lib/components/pagination/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
+
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const adapter = zod(
-    z.object({
-      count: z.number().int().min(0).default(20),
-      perPage: z.number().int().min(1).default(10).optional(),
-      siblingCount: z.number().int().min(1).default(1).optional(),
-    }),
-  );
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="count" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Count</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="count" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Count</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.count}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.count}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.count.description}
+      </Form.Description>
 
-          <Form.Description>The total number of items to be paginated.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="perPage" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Per page</Form.Label>
 
-        <Form.Field name="perPage" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Per page</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.perPage}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.perPage}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.perPage.description}
+      </Form.Description>
 
-          <Form.Description>Number of items per page.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="siblingCount" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Sibling count</Form.Label>
 
-        <Form.Field name="siblingCount" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Sibling count</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.siblingCount}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.siblingCount}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.siblingCount.description}
+      </Form.Description>
 
-          <Form.Description>
-            Number of visible items before and after the current page.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Pagination.Root {...$superFormData} let:pages let:currentPage>
-        <Pagination.Content>
-          <Pagination.Item>
-            <Pagination.PreviousButton>
-              &lt;
+  <svelte:fragment slot="demo">
+    <Pagination.Root {...$props} let:pages let:currentPage>
+      <Pagination.Content>
+        <Pagination.Item>
+          <Pagination.PreviousButton asChild let:builder>
+            <Button builders="{[builder]}" class="gap-x-1" variant="ghost">
+              ←
 
               <span class="hidden sm:block">Previous</span>
-            </Pagination.PreviousButton>
-          </Pagination.Item>
+            </Button>
+          </Pagination.PreviousButton>
+        </Pagination.Item>
 
-          {#each pages as page (page.key)}
-            {#if page.type === 'ellipsis'}
-              <Pagination.Item>
-                <Pagination.Ellipsis />
-              </Pagination.Item>
-            {:else}
-              <Pagination.Item>
-                <Pagination.Link isActive="{currentPage === page.value}" page="{page}">
-                  {page.value}
-                </Pagination.Link>
-              </Pagination.Item>
-            {/if}
-          {/each}
+        {#each pages as page (page.key)}
+          {#if page.type === 'ellipsis'}
+            <Pagination.Item>
+              <Pagination.Ellipsis />
+            </Pagination.Item>
+          {:else}
+            <Pagination.Item>
+              <Pagination.Link isActive="{currentPage === page.value}" page="{page}">
+                {page.value}
+              </Pagination.Link>
+            </Pagination.Item>
+          {/if}
+        {/each}
 
-          <Pagination.Item>
-            <Pagination.NextButton>
+        <Pagination.Item>
+          <Pagination.NextButton asChild let:builder>
+            <Button builders="{[builder]}" class="gap-x-1" variant="ghost">
               <span class="hidden sm:block">Next</span>
 
-              &gt;
-            </Pagination.NextButton>
-          </Pagination.Item>
-        </Pagination.Content>
-      </Pagination.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+              →
+            </Button>
+          </Pagination.NextButton>
+        </Pagination.Item>
+      </Pagination.Content>
+    </Pagination.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

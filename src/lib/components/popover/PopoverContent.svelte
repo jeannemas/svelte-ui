@@ -41,7 +41,7 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: [
       'z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
     ],
@@ -97,7 +97,7 @@
   asChild="{asChild}"
   alignOffset="{alignOffset}"
   avoidCollisions="{avoidCollisions}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   collisionBoundary="{collisionBoundary}"

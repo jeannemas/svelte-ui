@@ -1,7 +1,10 @@
 <script context="module" lang="ts">
   import { Select as SelectPrimitive } from 'bits-ui';
+  import { writable } from 'svelte/store';
 
   import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive<TItem, TMultiple extends boolean = false> = ComponentInfo<
     SelectPrimitive.Root<TItem, TMultiple>
@@ -60,14 +63,20 @@
   export let required: TypedProps['required'] = undefined;
   export let selected: TypedProps['selected'] = undefined;
 
-  $: attributes = $$restProps as Attributes;
+  // $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    items,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
 <SelectPrimitive.Root
-  {...attributes}
   closeOnEscape="{closeOnEscape}"
   closeOnOutsideClick="{closeOnOutsideClick}"
   disabled="{disabled}"

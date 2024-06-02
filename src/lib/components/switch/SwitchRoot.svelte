@@ -3,28 +3,29 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import SwitchThumb from './SwitchThumb.svelte';
 
   type Primitive = ComponentInfo<SwitchPrimitive.Root>;
 
   /**
-   * The attributes of the switch.
+   * The attributes of the root.
    */
   export type Attributes = Omit<SvelteHTMLElements['button'], 'disabled' | 'name' | 'value'>;
   /**
-   * The props of the switch.
+   * The props of the root.
    */
   export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
-   * The slots of the switch.
+   * The slots of the root.
    */
   export type Slots = Primitive['slots'];
 
   /**
-   * The styles of the switch.
+   * The styles of the root.
    */
-  export const styles = tv({
+  export const switchStyles = tv({
     base: [
       'peer inline-flex h-6 w-10 shrink-0 cursor-pointer flex-row items-center rounded-full border-2 border-transparent transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
@@ -60,7 +61,7 @@
 <SwitchPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{switchStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -77,12 +78,6 @@
   on:keydown
 >
   <slot builder="{builder}">
-    <SwitchPrimitive.Thumb
-      class="{cn(
-        'pointer-events-none block size-4 rounded-full bg-background shadow-lg ring-0 transition-transform',
-        'data-[state=checked]:translate-x-5',
-        'data-[state=unchecked]:translate-x-0',
-      )}"
-    />
+    <SwitchThumb />
   </slot>
 </SwitchPrimitive.Root>

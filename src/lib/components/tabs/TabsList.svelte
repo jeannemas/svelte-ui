@@ -23,7 +23,7 @@
   /**
    * The styles of the list.
    */
-  export const styles = tv({
+  export const listStyles = tv({
     base: [
       'inline-flex flex-row items-center justify-center rounded-md bg-muted p-1 text-muted-foreground',
     ],
@@ -47,7 +47,7 @@
 <TabsPrimitive.List
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{listStyles({
     class: attributes.class,
   })}"
   el="{el}"

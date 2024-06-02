@@ -23,7 +23,7 @@
   /**
    * The styles of the list.
    */
-  export const styles = tv({
+  export const listStyles = tv({
     base: ['max-h-[300px] overflow-y-auto overflow-x-hidden'],
   });
 </script>
@@ -45,7 +45,7 @@
 <CommandPrimitive.List
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{listStyles({
     class: attributes.class,
   })}"
   el="{el}"

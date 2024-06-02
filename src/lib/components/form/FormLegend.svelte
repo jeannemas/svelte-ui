@@ -23,7 +23,7 @@
   /**
    * The styles of the legend.
    */
-  export const styles = tv({
+  export const legendStyles = tv({
     base: ['text-sm font-medium leading-none', 'data-[fs-error]:text-destructive'],
   });
 </script>
@@ -45,7 +45,7 @@
 <Legend
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{legendStyles({
     class: attributes.class,
   })}"
   el="{el}"

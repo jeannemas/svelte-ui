@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import CheckIcon from 'lucide-svelte/icons/check';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -24,7 +23,7 @@
   /**
    * The styles of the checkbox item.
    */
-  export const styles = tv({
+  export const checkboxItemStyles = tv({
     base: [
       'relative flex cursor-default select-none flex-row items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -53,7 +52,7 @@
 <DropdownMenuPrimitive.CheckboxItem
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{checkboxItemStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -70,11 +69,5 @@
   on:pointerleave
   on:pointermove
 >
-  <span class="absolute left-2 flex size-4 flex-row items-center justify-center">
-    <DropdownMenuPrimitive.CheckboxIndicator>
-      <CheckIcon class="size-4" />
-    </DropdownMenuPrimitive.CheckboxIndicator>
-  </span>
-
   <slot builder="{builder}" />
 </DropdownMenuPrimitive.CheckboxItem>

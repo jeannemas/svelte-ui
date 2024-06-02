@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -19,6 +20,15 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
+
+  $: selectedBreakpoint = {
+    label: $props.breakpoint,
+    value: $props.breakpoint,
+  } satisfies Selected<Breadcrumb.RootBreakpoint>;
+
+  function handleBreakpointChange(selected?: Selected<Breadcrumb.RootBreakpoint>) {
+    $props.breakpoint = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
@@ -28,15 +38,13 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Breakpoint</Form.Label>
+        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.breakpoints}"
-          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
-          selected="{$props.breakpoint && {
-            label: $props.breakpoint,
-            value: $props.breakpoint,
-          }}"
+          onSelectedChange="{handleBreakpointChange}"
+          selected="{selectedBreakpoint}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -44,13 +52,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.breakpoints as breakpoint (breakpoint.value)}
-              <Select.Item value="{breakpoint.value}">
-                {breakpoint.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 

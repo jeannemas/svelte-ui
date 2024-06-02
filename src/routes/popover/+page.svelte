@@ -1,150 +1,132 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Popover from '$lib/components/popover/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
+
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const adapter = zod(
-    z.object({
-      closeOnEscape: z.boolean().default(true).optional(),
-      closeOnOutsideClick: z.boolean().default(true).optional(),
-      disableFocusTrap: z.boolean().default(false).optional(),
-      preventScroll: z.boolean().default(false).optional(),
-    }),
-  );
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Close on escape</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="closeOnEscape" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Close on escape</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeOnEscape}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.closeOnEscape.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not to close the popover when the escape key is pressed.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="closeOnOutsideClick" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Close on outside click</Form.Label>
 
-        <Form.Field name="closeOnOutsideClick" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Close on outside click</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
+      </Form.Control>
 
-            <Switch
-              {...attrs}
-              {...constraints}
-              bind:checked="{$superFormData.closeOnOutsideClick}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.closeOnOutsideClick.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not to close the popover when the escape key is pressed.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="disableFocusTrap" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Disable focus trap</Form.Label>
 
-        <Form.Field name="disableFocusTrap" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disable focus trap</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disableFocusTrap}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disableFocusTrap}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.disableFocusTrap.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not to disable the focus trap when the popover is open.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="preventScroll" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Prevent scroll</Form.Label>
 
-        <Form.Field name="preventScroll" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Prevent scroll</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.preventScroll}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.preventScroll}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.preventScroll.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not to prevent scrolling when the popover is open.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+  <svelte:fragment slot="demo">
+    <Popover.Root {...$props}>
+      <Popover.Trigger asChild let:builder>
+        <Button builders="{[builder]}" variant="outline">Open</Button>
+      </Popover.Trigger>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+      <Popover.Content>
+        <div class="grid gap-4">
+          <div class="space-y-2">
+            <h4 class="font-medium leading-none">Dimensions</h4>
 
-    <Accordion.Content>
-      <Popover.Root {...$superFormData} portal="{null}">
-        <Popover.Trigger asChild let:builder>
-          <Button builders="{[builder]}" variant="outline">Open</Button>
-        </Popover.Trigger>
+            <p class="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+          </div>
 
-        <Popover.Content>
-          <div class="grid gap-4">
-            <div class="space-y-2">
-              <h4 class="font-medium leading-none">Dimensions</h4>
+          <div class="grid gap-2">
+            <div class="grid grid-cols-3 items-center gap-4">
+              <Label for="width">Width</Label>
 
-              <p class="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+              <Input class="col-span-2 h-8" id="width" value="100%" variant="text" />
             </div>
 
-            <div class="grid gap-2">
-              <div class="grid grid-cols-3 items-center gap-4">
-                <Label for="width">Width</Label>
+            <div class="grid grid-cols-3 items-center gap-4">
+              <Label for="maxWidth">Max. width</Label>
 
-                <Input class="col-span-2 h-8" id="width" value="100%" variant="text" />
-              </div>
+              <Input class="col-span-2 h-8" id="maxWidth" value="300px" variant="text" />
+            </div>
 
-              <div class="grid grid-cols-3 items-center gap-4">
-                <Label for="maxWidth">Max. width</Label>
+            <div class="grid grid-cols-3 items-center gap-4">
+              <Label for="height">Height</Label>
 
-                <Input class="col-span-2 h-8" id="maxWidth" value="300px" variant="text" />
-              </div>
+              <Input class="col-span-2 h-8" id="height" value="25px" variant="text" />
+            </div>
 
-              <div class="grid grid-cols-3 items-center gap-4">
-                <Label for="height">Height</Label>
+            <div class="grid grid-cols-3 items-center gap-4">
+              <Label for="maxHeight">Max. height</Label>
 
-                <Input class="col-span-2 h-8" id="height" value="25px" variant="text" />
-              </div>
-
-              <div class="grid grid-cols-3 items-center gap-4">
-                <Label for="maxHeight">Max. height</Label>
-
-                <Input class="col-span-2 h-8" id="maxHeight" value="none" variant="text" />
-              </div>
+              <Input class="col-span-2 h-8" id="maxHeight" value="none" variant="text" />
             </div>
           </div>
-        </Popover.Content>
-      </Popover.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+        </div>
+      </Popover.Content>
+    </Popover.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

@@ -3,7 +3,7 @@
   import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   import { rootContext } from './context.js';
 
@@ -39,7 +39,7 @@
    * The slots of the root.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**

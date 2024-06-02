@@ -28,7 +28,7 @@
   /**
    * The styles of the title.
    */
-  export const styles = tv({
+  export const titleStyles = tv({
     base: ['text-lg font-semibold leading-none tracking-tight'],
   });
 </script>
@@ -52,7 +52,7 @@
 <DialogPrimitive.Title
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{titleStyles({
     class: attributes.class,
   })}"
   el="{el}"

@@ -50,12 +50,6 @@ export type HeadingLevel = `h${1 | 2 | 3 | 4 | 5 | 6}`;
  */
 export type ObjectOf<TValue, TKey extends string | number | symbol = string> = Record<TKey, TValue>;
 /**
- * Represents a slot.
- *
- * @default EmptyObject
- */
-export type Slot<TSlot extends AnyObject = EmptyObject> = TSlot;
-/**
  * A transition function.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,4 +94,20 @@ export type TransitionProps<
    * The configuration to pass to the `outTransition` function.
    */
   outTransitionConfig?: TransitionParams<NoInfer<TTransitionOut>>;
+};
+
+/**
+ * The client-side validation constraints.
+ *
+ * From SuperForms.
+ * @see https://superforms.rocks/concepts/client-validation
+ */
+export type ValidationConstraints = {
+  max?: number | string; // number if number validator, ISO date string if date validator
+  maxlength?: number; // string with a maximum length
+  min?: number | string; // number if number validator, ISO date string if date validator
+  minlength?: number; // string with a minimum length
+  pattern?: string; // The *first* string validator with a RegExp pattern
+  required?: true; // true if not nullable, nullish or optional
+  step?: number | 'any'; // number with a step validator
 };

@@ -1,1 +1,1 @@
-export { default, styles, type Attributes, type Props, type Slots } from './Label.svelte';
+export { default, labelStyles, type Attributes, type Props, type Slots } from './Label.svelte';

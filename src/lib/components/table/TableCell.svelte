@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes for the cell.
@@ -16,13 +16,13 @@
    * The slots for the cell.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles for the cell.
    */
-  export const styles = tv({
+  export const cellStyles = tv({
     base: ['p-4 align-middle', '[&:has([role=checkbox])]:pr-0'],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <td
   {...attributes}
-  class="{styles({
+  class="{cellStyles({
     class: attributes.class,
   })}"
   on:click

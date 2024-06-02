@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import CircleIcon from 'lucide-svelte/icons/circle';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -24,7 +23,7 @@
   /**
    * The styles of the radio item.
    */
-  export const styles = tv({
+  export const radioItemStyles = tv({
     base: [
       'relative flex cursor-default select-none flex-row items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -51,7 +50,7 @@
 <DropdownMenuPrimitive.RadioItem
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{radioItemStyles({
     class: attributes.class,
   })}"
   el="{el}"
@@ -66,11 +65,5 @@
   on:pointerleave
   on:pointermove
 >
-  <span class="absolute left-2 flex size-4 flex-row items-center justify-center">
-    <DropdownMenuPrimitive.RadioIndicator>
-      <CircleIcon class="size-2 fill-current" />
-    </DropdownMenuPrimitive.RadioIndicator>
-  </span>
-
   <slot builder="{builder}" />
 </DropdownMenuPrimitive.RadioItem>

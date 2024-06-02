@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -22,6 +23,15 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
+
+  $: selectedVariant = {
+    label: $props.variant,
+    value: $props.variant,
+  } satisfies Selected<Card.RootVariant>;
+
+  function handleVariantthange(selected?: Selected<Card.RootVariant>) {
+    $props.variant = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
@@ -31,15 +41,13 @@
   <svelte:fragment slot="config">
     <Form.Field name="variant" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Variant</Form.Label>
+        <Form.Label required="{constraints?.required}">Variant</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.variants}"
-          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
-          selected="{$props.variant && {
-            label: $props.variant,
-            value: $props.variant,
-          }}"
+          onSelectedChange="{handleVariantthange}"
+          selected="{selectedVariant}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -47,13 +55,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.variants as variant (variant.value)}
-              <Select.Item value="{variant.value}">
-                {variant.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 

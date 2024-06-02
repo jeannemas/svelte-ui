@@ -41,6 +41,13 @@ export {
   type Slots as ItemSlots,
 } from './ComboboxItem.svelte';
 export {
+  default as ItemIndicator,
+  itemIndicatorStyles,
+  type Attributes as ItemIndicatorAttributes,
+  type Props as ItemIndicatorProps,
+  type Slots as ItemIndicatorSlots,
+} from './ComboboxItemIndicator.svelte';
+export {
   default as Label,
   labelStyles,
   type Attributes as LabelAttributes,

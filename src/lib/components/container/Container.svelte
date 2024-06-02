@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the container.
@@ -29,14 +29,18 @@
    * The slots of the container.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the container.
    */
-  export const styles = tv({
+  export const containerStyles = tv({
     base: ['w-full'],
+    defaultVariants: {
+      xAxis: false,
+      yAxis: false,
+    },
     variants: {
       xAxis: {
         true: ['mx-auto max-w-7xl px-2', 'sm:px-4', 'md:px-6', 'lg:px-8'],
@@ -53,8 +57,8 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let xAxis: Props['xAxis'] = undefined;
-  export let yAxis: Props['yAxis'] = undefined;
+  export let xAxis: Props['xAxis'] = containerStyles.defaultVariants.xAxis;
+  export let yAxis: Props['yAxis'] = containerStyles.defaultVariants.yAxis;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -64,7 +68,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{containerStyles({
     class: attributes.class,
     xAxis,
     yAxis,

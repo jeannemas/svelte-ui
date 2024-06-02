@@ -23,7 +23,7 @@
   /**
    * The styles of the group.
    */
-  export const styles = tv({
+  export const groupStyles = tv({
     base: [''],
   });
 </script>
@@ -45,7 +45,7 @@
 <SelectPrimitive.Group
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{groupStyles({
     class: attributes.class,
   })}"
   el="{el}"

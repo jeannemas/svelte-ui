@@ -41,7 +41,7 @@
   /**
    * The styles of the overlay.
    */
-  export const styles = tv({
+  export const overlayStyles = tv({
     base: ['fixed inset-0 z-50 bg-background/80 backdrop-blur-sm'],
   });
 </script>
@@ -83,7 +83,7 @@
 <DialogPrimitive.Overlay
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{overlayStyles({
     class: attributes.class,
   })}"
   el="{el}"

@@ -23,7 +23,7 @@
   /**
    * The styles of the separator.
    */
-  export const styles = tv({
+  export const separatorStyles = tv({
     base: ['-mx-1 my-1 h-px bg-muted'],
   });
 </script>
@@ -45,7 +45,7 @@
 <DropdownMenuPrimitive.Separator
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{separatorStyles({
     class: attributes.class,
   })}"
   el="{el}"

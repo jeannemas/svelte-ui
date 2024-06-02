@@ -23,7 +23,7 @@
   /**
    * The styles of the close.
    */
-  export const styles = tv({
+  export const closeStyles = tv({
     base: [
       'absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity',
       'hover:opacity-100',
@@ -51,7 +51,7 @@
 <DialogPrimitive.Close
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{closeStyles({
     class: attributes.class,
   })}"
   el="{el}"

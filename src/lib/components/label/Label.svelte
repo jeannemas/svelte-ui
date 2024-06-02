@@ -14,7 +14,9 @@
   /**
    * The props of the label.
    */
-  export type Props = Omit<Primitive['props'], keyof Attributes>;
+  export type Props = Omit<Primitive['props'], keyof Attributes> & {
+    required?: boolean;
+  };
   /**
    * The slots of the label.
    */
@@ -23,11 +25,20 @@
   /**
    * The styles of the label.
    */
-  export const styles = tv({
+  export const labelStyles = tv({
     base: [
       'text-sm font-medium leading-none',
+      'after:text-destructive',
       'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
     ],
+    defaultVariants: {
+      required: false,
+    },
+    variants: {
+      required: {
+        true: ["after:text-destructive after:content-['_*']"],
+      },
+    },
   });
 </script>
 
@@ -38,6 +49,7 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
+  export let required: Props['required'] = labelStyles.defaultVariants.required;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -48,8 +60,9 @@
 <LabelPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{labelStyles({
     class: attributes.class,
+    required,
   })}"
   el="{el}"
   let:builder

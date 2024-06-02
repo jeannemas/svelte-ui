@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import { Select as SelectPrimitive } from 'bits-ui';
-  import CheckIcon from 'lucide-svelte/icons/check';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
@@ -24,7 +23,7 @@
   /**
    * The styles of the item.
    */
-  export const styles = tv({
+  export const itemStyles = tv({
     base: [
       'relative flex w-full cursor-default select-none flex-row items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -59,7 +58,7 @@
 <SelectPrimitive.Item
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{itemStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"
@@ -75,12 +74,6 @@
   on:pointerleave
   on:pointermove
 >
-  <span class="absolute left-2 flex size-4 flex-row items-center justify-center">
-    <SelectPrimitive.ItemIndicator>
-      <CheckIcon class="size-4" />
-    </SelectPrimitive.ItemIndicator>
-  </span>
-
   <slot builder="{builder}" isSelected="{isSelected}">
     {label || value}
   </slot>

@@ -1,10 +1,8 @@
 <script context="module" lang="ts">
   import { Pagination as PaginationPrimitive } from 'bits-ui';
-  import ChevronLeftIcon from 'lucide-svelte/icons/chevron-left';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import Button from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<PaginationPrimitive.PrevButton>;
@@ -16,7 +14,7 @@
   /**
    * The props of the previous button.
    */
-  export type Props = Omit<Primitive['props'], keyof Attributes | 'asChild'>;
+  export type Props = Omit<Primitive['props'], keyof Attributes>;
   /**
    * The slots of the previous button.
    */
@@ -25,8 +23,8 @@
   /**
    * The styles of the previous button.
    */
-  export const styles = tv({
-    base: ['gap-1 pl-2.5'],
+  export const previousButtonStyles = tv({
+    base: [''],
   });
 </script>
 
@@ -35,6 +33,7 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
+  export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
@@ -43,21 +42,14 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<PaginationPrimitive.PrevButton asChild let:builder>
-  <Button
-    {...attributes}
-    builders="{[builder]}"
-    class="{styles({
-      class: attributes.class,
-    })}"
-    el="{el}"
-    variant="ghost"
-    on:click
-  >
-    <slot builder="{builder}">
-      <ChevronLeftIcon class="size-4" />
-
-      <span>Previous</span>
-    </slot>
-  </Button>
+<PaginationPrimitive.PrevButton
+  {...attributes}
+  asChild="{asChild}"
+  class="{previousButtonStyles({
+    class: attributes.class,
+  })}"
+  el="{el}"
+  let:builder
+>
+  <slot builder="{builder}" />
 </PaginationPrimitive.PrevButton>

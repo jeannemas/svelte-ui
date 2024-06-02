@@ -23,7 +23,7 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: [
       'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
     ],
@@ -55,7 +55,7 @@
 <CommandPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
   })}"
   filter="{filter}"

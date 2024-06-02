@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the shortcut.
@@ -16,13 +16,13 @@
    * The slots of the shortcut.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the shortcut.
    */
-  export const styles = tv({
+  export const shortcutStyles = tv({
     base: ['ml-auto text-xs tracking-widest text-muted-foreground'],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <span
   {...attributes}
-  class="{styles({
+  class="{shortcutStyles({
     class: attributes.class,
   })}"
 >

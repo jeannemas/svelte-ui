@@ -23,7 +23,7 @@
   /**
    * The styles of the loading.
    */
-  export const styles = tv({
+  export const loadingStyles = tv({
     base: [''],
   });
 </script>
@@ -45,7 +45,7 @@
 <CommandPrimitive.Loading
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{loadingStyles({
     class: attributes.class,
   })}"
   progress="{progress}"

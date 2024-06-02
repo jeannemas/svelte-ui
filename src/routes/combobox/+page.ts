@@ -6,7 +6,11 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async ({ fetch }) => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      disabled: false,
+    },
+  });
   const users = await fetch('https://jsonplaceholder.typicode.com/users')
     .then((response) => response.json())
     .then(

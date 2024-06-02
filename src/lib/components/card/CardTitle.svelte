@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, HeadingLevel, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject, HeadingLevel } from '$lib/utils/types.js';
 
   /**
    * The attributes of the title.
@@ -21,7 +21,7 @@
    * The slots of the title.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**

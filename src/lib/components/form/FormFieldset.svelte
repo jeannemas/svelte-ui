@@ -34,7 +34,7 @@
   /**
    * The styles of the fieldset.
    */
-  export const styles = tv({
+  export const fieldsetStyles = tv({
     base: ['space-y-2'],
   });
 </script>
@@ -59,7 +59,7 @@
 <Fieldset
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{fieldsetStyles({
     class: attributes.class,
   })}"
   el="{el}"

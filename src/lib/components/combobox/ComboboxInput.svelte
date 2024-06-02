@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { styles as baseInputStyles } from '$lib/components/input/index.js';
+  import { inputStyles as baseInputStyles } from '$lib/components/input/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<ComboboxPrimitive.Input>;

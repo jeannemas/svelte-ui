@@ -14,7 +14,7 @@
   /**
    * The orientation of the root.
    */
-  export type Orientation = NonNullable<VariantProps<typeof styles>['orientation']>;
+  export type Orientation = NonNullable<VariantProps<typeof rootStyles>['orientation']>;
   /**
    * The props of the root.
    */
@@ -27,7 +27,7 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: [''],
     defaultVariants: {
       orientation: 'horizontal',
@@ -39,17 +39,6 @@
       },
     },
   });
-  /**
-   * The default orientation of the root.
-   */
-  export const defaultOrientation = styles.defaultVariants.orientation!;
-  /**
-   * The orientations of the root.
-   */
-  export const orientations = Object.keys(styles.variants.orientation) as [
-    Orientation,
-    ...Orientation[],
-  ];
 </script>
 
 <script lang="ts">
@@ -63,7 +52,7 @@
   export let el: Props['el'] = undefined;
   export let loop: Props['loop'] = undefined;
   export let onValueChange: Props['onValueChange'] = undefined;
-  export let orientation: Props['orientation'] = undefined;
+  export let orientation: Props['orientation'] = rootStyles.defaultVariants.orientation;
   export let value: Props['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
@@ -77,7 +66,7 @@
   activateOnFocus="{activateOnFocus}"
   asChild="{asChild}"
   autoSet="{autoSet}"
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
     orientation,
   })}"

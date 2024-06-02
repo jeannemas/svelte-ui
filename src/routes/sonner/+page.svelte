@@ -1,333 +1,300 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { toast } from 'svelte-sonner';
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Sonner, {
-    defaultDir,
-    defaultPosition,
-    defaultTheme,
-    dirs,
-    positions,
-    themes,
-  } from '$lib/components/sonner/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import Sonner, { type Dir, type Position, type Theme } from '$lib/components/sonner/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        closeButton: z.boolean().default(false),
-        dir: z.enum(dirs).default(defaultDir),
-        duration: z.number().int().default(4000),
-        expand: z.boolean().default(false),
-        gap: z.number().int().default(14),
-        invert: z.boolean().default(false),
-        offset: z.number().int().default(32),
-        position: z.enum(positions).default(defaultPosition),
-        richColors: z.boolean().default(false),
-        theme: z.enum(themes).default(defaultTheme),
-        visibleToasts: z.number().int().default(3),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
+
+  $: selectedDir = {
+    label: $props.dir,
+    value: $props.dir,
+  } satisfies Selected<Dir>;
+  $: selectedPosition = {
+    label: $props.position,
+    value: $props.position,
+  } satisfies Selected<Position>;
+  $: selectedTheme = {
+    label: $props.theme,
+    value: $props.theme,
+  } satisfies Selected<Theme>;
+
+  function handleDirChange(selected?: Selected<Dir>) {
+    $props.dir = selected!.value;
+  }
+  function handlePositionChange(selected?: Selected<Position>) {
+    $props.position = selected!.value;
+  }
+  function handleThemeChange(selected?: Selected<Theme>) {
+    $props.theme = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="closeButton" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Close button</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="closeButton" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Close button</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeButton}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.closeButton}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.closeButton.description}
+      </Form.Description>
 
-          <Form.Description>Adds a close button to all toasts, shows on hover.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="dir" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Direction</Form.Label>
 
-        <Form.Field name="dir" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Direction</Form.Label>
+        <Select.Root
+          {...constraints}
+          items="{data.dirs}"
+          onSelectedChange="{handleDirChange}"
+          selected="{selectedDir}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{dirs.map((dir) => ({
-                label: dir,
-                value: dir,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.dir = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.dir !== undefined
-                ? {
-                    label: $superFormData.dir,
-                    value: $superFormData.dir,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each dirs as dir, index (index)}
-                  <Select.Item value="{dir}">
-                    {dir}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.dir.description}
+      </Form.Description>
 
-          <Form.Description>Directionality of toast's text.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="duration" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Duration</Form.Label>
 
-        <Form.Field name="duration" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Duration</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          min="{100}"
+          step="{100}"
+          variant="number"
+          bind:value="{$props.duration}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              min="{100}"
-              step="{100}"
-              variant="number"
-              bind:value="{$superFormData.duration}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.duration.description}
+      </Form.Description>
 
-          <Form.Description>The duration of the toast in milliseconds.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="expand" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Expand</Form.Label>
 
-        <Form.Field name="expand" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Expand</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.expand}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.expand}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.expand.description}
+      </Form.Description>
 
-          <Form.Description>Toasts will be expanded by default.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="gap" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Gap</Form.Label>
 
-        <Form.Field name="gap" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Gap</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          min="{0}"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.gap}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              min="{0}"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.gap}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.gap.description}
+      </Form.Description>
 
-          <Form.Description>Gap between toasts when expanded, in pixels.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="invert" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Invert</Form.Label>
 
-        <Form.Field name="invert" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Invert</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.invert}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.invert}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.invert.description}
+      </Form.Description>
 
-          <Form.Description>Dark toasts in light mode and vice versa.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="offset" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Offset</Form.Label>
 
-        <Form.Field name="offset" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Offset</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          min="{0}"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.offset}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              min="{0}"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.offset}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.offset.description}
+      </Form.Description>
 
-          <Form.Description>Offset from the edges of the screen.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="position" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Position</Form.Label>
 
-        <Form.Field name="position" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Position</Form.Label>
+        <Select.Root
+          {...constraints}
+          items="{data.positions}"
+          onSelectedChange="{handlePositionChange}"
+          selected="{selectedPosition}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{positions.map((position) => ({
-                label: position,
-                value: position,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.position = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.position !== undefined
-                ? {
-                    label: $superFormData.position,
-                    value: $superFormData.position,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each positions as position, index (index)}
-                  <Select.Item value="{position}">
-                    {position}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.position.description}
+      </Form.Description>
 
-          <Form.Description>Directionality of toast's text.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="richColors" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Rich colors</Form.Label>
 
-        <Form.Field name="richColors" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Rich colors</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.richColors}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.richColors}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.richColors.description}
+      </Form.Description>
 
-          <Form.Description>Makes error and success state more colorful.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="theme" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Theme</Form.Label>
 
-        <Form.Field name="theme" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Theme</Form.Label>
+        <Select.Root
+          {...constraints}
+          items="{data.themes}"
+          onSelectedChange="{handleThemeChange}"
+          selected="{selectedTheme}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{themes.map((theme) => ({
-                label: theme,
-                value: theme,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.theme = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.theme !== undefined
-                ? {
-                    label: $superFormData.theme,
-                    value: $superFormData.theme,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each themes as theme, index (index)}
-                  <Select.Item value="{theme}">
-                    {theme}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.theme.description}
+      </Form.Description>
 
-          <Form.Description>Toast's theme, either light, dark, or system.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="visibleToasts" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Visible toasts</Form.Label>
 
-        <Form.Field name="visibleToasts" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Visible toasts</Form.Label>
+        <Input
+          {...attrs}
+          {...constraints}
+          inputmode="numeric"
+          min="{1}"
+          step="{1}"
+          variant="number"
+          bind:value="{$props.visibleToasts}"
+        />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              inputmode="numeric"
-              min="{1}"
-              step="{1}"
-              variant="number"
-              bind:value="{$superFormData.visibleToasts}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.visibleToasts.description}
+      </Form.Description>
 
-          <Form.Description>Amount of visible toasts.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+  <svelte:fragment slot="demo">
+    <Button
+      variant="outline"
+      on:click="{() =>
+        toast.success('Event has been created', {
+          description: 'Sunday, December 03, 2023 at 9:00 AM',
+          action: {
+            label: 'Undo',
+            onClick: () => console.info('Undo'),
+          },
+        })}"
+    >
+      Show Toast
+    </Button>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Button
-        variant="outline"
-        on:click="{() =>
-          toast.success('Event has been created', {
-            description: 'Sunday, December 03, 2023 at 9:00 AM',
-            action: {
-              label: 'Undo',
-              onClick: () => console.info('Undo'),
-            },
-          })}"
-      >
-        Show Toast
-      </Button>
-
-      <Sonner {...$superFormData} />
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+    <Sonner {...$props} />
+  </svelte:fragment>
+</ComponentDemoLayout>

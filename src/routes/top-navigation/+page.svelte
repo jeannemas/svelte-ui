@@ -48,7 +48,7 @@
       <Form.Root superForm="{superForm}">
         <Form.Field name="breakpoint" superForm="{superForm}" let:constraints>
           <Form.Control let:attrs>
-            <Form.Label>Breakpoint</Form.Label>
+            <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
 
             <Select.Root
               items="{TopNavigation.breakpoints.map((breakpoint) => ({
@@ -58,13 +58,10 @@
               onSelectedChange="{(selected) => {
                 $superFormData.breakpoint = selected?.value;
               }}"
-              portal="{null}"
-              selected="{$superFormData.breakpoint !== undefined
-                ? {
-                    label: $superFormData.breakpoint,
-                    value: $superFormData.breakpoint,
-                  }
-                : undefined}"
+              selected="{$superFormData.breakpoint && {
+                label: $superFormData.breakpoint,
+                value: $superFormData.breakpoint,
+              }}"
             >
               <Select.HiddenInput {...attrs} {...constraints} />
 

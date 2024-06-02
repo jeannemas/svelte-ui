@@ -1,8 +1,6 @@
 export {
   default,
-  defaultOrientation,
-  orientations,
-  styles,
+  separatorStyles,
   type Attributes,
   type Orientation,
   type Props,

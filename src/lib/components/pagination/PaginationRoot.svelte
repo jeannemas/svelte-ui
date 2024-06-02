@@ -28,7 +28,7 @@
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: ['mx-auto flex w-full flex-col items-center'],
   });
 </script>
@@ -46,7 +46,7 @@
   export let siblingCount: Props['siblingCount'] = 1;
 
   $: attributes = $$restProps as Attributes;
-  $: currentPage = page;
+  $: currentPage = page ?? 1;
 </script>
 
 <!-- <style lang="postcss">
@@ -67,11 +67,11 @@
 >
   <nav
     {...builder}
-    class="{styles({
+    class="{rootStyles({
       class: attributes.class,
     })}"
     use:builder.action
   >
-    <slot builder="{builder}" currentPage="{currentPage ?? 1}" pages="{pages}" range="{range}" />
+    <slot builder="{builder}" currentPage="{currentPage}" pages="{pages}" range="{range}" />
   </nav>
 </PaginationPrimitive.Root>

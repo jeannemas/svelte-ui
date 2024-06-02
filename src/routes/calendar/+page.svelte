@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -6,7 +7,7 @@
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
@@ -21,6 +22,15 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
+
+  $: selectedBreakpoint = {
+    label: $props.breakpoint,
+    value: $props.breakpoint,
+  } satisfies Selected<Calendar.RootBreakpoint>;
+
+  function handleBreakpointhange(selected?: Selected<Calendar.RootBreakpoint>) {
+    $props.breakpoint = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
@@ -30,15 +40,13 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Breakpoint</Form.Label>
+        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.breakpoints}"
-          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
-          selected="{$props.breakpoint && {
-            label: $props.breakpoint,
-            value: $props.breakpoint,
-          }}"
+          onSelectedChange="{handleBreakpointhange}"
+          selected="{selectedBreakpoint}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -46,13 +54,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.breakpoints as breakpoint (breakpoint.value)}
-              <Select.Item value="{breakpoint.value}">
-                {breakpoint.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 
@@ -65,9 +67,9 @@
 
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Disabled</Form.Label>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
 
       <Form.Description>
@@ -79,9 +81,9 @@
 
     <Form.Field name="fixedWeeks" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Fixed weeks</Form.Label>
+        <Form.Label required="{constraints?.required}">Fixed weeks</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.fixedWeeks}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.fixedWeeks}" />
       </Form.Control>
 
       <Form.Description>
@@ -93,7 +95,7 @@
 
     <Form.Field name="numberOfMonths" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Number of months</Form.Label>
+        <Form.Label required="{constraints?.required}">Number of months</Form.Label>
 
         <Input {...attrs} {...constraints} variant="number" bind:value="{$props.numberOfMonths}" />
       </Form.Control>
@@ -107,9 +109,9 @@
 
     <Form.Field name="pagedNavigation" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Paged navigation</Form.Label>
+        <Form.Label required="{constraints?.required}">Paged navigation</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.pagedNavigation}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.pagedNavigation}" />
       </Form.Control>
 
       <Form.Description>
@@ -121,9 +123,9 @@
 
     <Form.Field name="preventDeselect" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Prevent deselect</Form.Label>
+        <Form.Label required="{constraints?.required}">Prevent deselect</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.preventDeselect}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.preventDeselect}" />
       </Form.Control>
 
       <Form.Description>
@@ -135,9 +137,9 @@
 
     <Form.Field name="readonly" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Readonly</Form.Label>
+        <Form.Label required="{constraints?.required}">Readonly</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.readonly}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.readonly}" />
       </Form.Control>
 
       <Form.Description>

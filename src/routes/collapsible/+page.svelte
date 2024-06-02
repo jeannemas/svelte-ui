@@ -5,7 +5,7 @@
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
@@ -29,9 +29,9 @@
   <svelte:fragment slot="config">
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Disabled</Form.Label>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
 
       <Form.Description>

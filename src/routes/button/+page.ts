@@ -8,7 +8,13 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async () => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      disabled: false,
+      size: buttonStyles.defaultVariants.size!,
+      variant: buttonStyles.defaultVariants.variant!,
+    },
+  });
   const sizes = Object.keys(buttonStyles.variants.size).map((size) => ({
     label: size,
     value: size,

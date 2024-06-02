@@ -1,100 +1,85 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import type { Selected } from 'bits-ui';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Separator, { defaultOrientation, orientations } from '$lib/components/separator/index.js';
+  import Separator, { type Orientation } from '$lib/components/separator/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
+
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const adapter = zod(
-    z.object({
-      orientation: z.enum(orientations).default(defaultOrientation).optional(),
-    }),
-  );
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
+
+  $: selectedOrientation = {
+    label: $props.orientation,
+    value: $props.orientation,
+  } satisfies Selected<Orientation>;
+
+  function handleOrientationChange(selected?: Selected<Orientation>) {
+    $props.orientation = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="orientation" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Orientation</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="orientation" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Orientation</Form.Label>
+        <Select.Root
+          {...constraints}
+          items="{data.orientations}"
+          onSelectedChange="{handleOrientationChange}"
+          selected="{selectedOrientation}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{orientations.map((orientation) => ({
-                label: orientation,
-                value: orientation,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.orientation = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.orientation !== undefined
-                ? {
-                    label: $superFormData.orientation,
-                    value: $superFormData.orientation,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each orientations as orientation, index (index)}
-                  <Select.Item value="{orientation}">
-                    {orientation}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.orientation.description}
+      </Form.Description>
 
-          <Form.Description>The orientation of the separator.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+  <svelte:fragment slot="demo">
+    <div
+      class="flex items-center justify-evenly text-sm"
+      class:h-4="{$props.orientation === 'vertical'}"
+      class:flex-col="{$props.orientation === 'horizontal'}"
+      class:flex-row="{$props.orientation === 'vertical'}"
+    >
+      <div>Foo</div>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
+      <Separator {...$props} />
 
-    <Accordion.Content>
-      <div
-        class="flex items-center justify-evenly text-sm"
-        class:h-4="{$superFormData.orientation === 'vertical'}"
-        class:flex-col="{$superFormData.orientation === 'horizontal'}"
-        class:flex-row="{$superFormData.orientation === 'vertical'}"
-      >
-        <div>Foo</div>
+      <div>Bar</div>
 
-        <Separator {...$superFormData} />
+      <Separator {...$props} />
 
-        <div>Bar</div>
-
-        <Separator {...$superFormData} />
-
-        <div>Baz</div>
-      </div>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+      <div>Baz</div>
+    </div>
+  </svelte:fragment>
+</ComponentDemoLayout>

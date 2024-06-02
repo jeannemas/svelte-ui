@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -6,7 +7,7 @@
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
@@ -21,6 +22,22 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
+
+  $: selectedBreakpoint = {
+    label: $props.breakpoint,
+    value: $props.breakpoint,
+  } satisfies Selected<AlertDialog.RootBreakpoint>;
+  $: selectedVariant = {
+    label: $props.variant,
+    value: $props.variant,
+  } satisfies Selected<AlertDialog.RootVariant>;
+
+  function handleBreakpointChange(selected?: Selected<AlertDialog.RootBreakpoint>) {
+    $props.breakpoint = selected!.value;
+  }
+  function handleVariantChange(selected?: Selected<AlertDialog.RootVariant>) {
+    $props.variant = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
@@ -30,15 +47,13 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Breakpoint</Form.Label>
+        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.breakpoints}"
-          onSelectedChange="{(selected) => ($props.breakpoint = selected?.value)}"
-          selected="{$props.breakpoint && {
-            label: $props.breakpoint,
-            value: $props.breakpoint,
-          }}"
+          onSelectedChange="{handleBreakpointChange}"
+          selected="{selectedBreakpoint}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -46,13 +61,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.breakpoints as breakpoint (breakpoint.value)}
-              <Select.Item value="{breakpoint.value}">
-                {breakpoint.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 
@@ -65,9 +74,9 @@
 
     <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Close on escape</Form.Label>
+        <Form.Label required="{constraints?.required}">Close on escape</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
       </Form.Control>
 
       <Form.Description>
@@ -79,9 +88,9 @@
 
     <Form.Field name="closeOnOutsideClick" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Close on outside click</Form.Label>
+        <Form.Label required="{constraints?.required}">Close on outside click</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
       </Form.Control>
 
       <Form.Description>
@@ -93,9 +102,9 @@
 
     <Form.Field name="preventScroll" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Prevent scroll</Form.Label>
+        <Form.Label required="{constraints?.required}">Prevent scroll</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.preventScroll}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.preventScroll}" />
       </Form.Control>
 
       <Form.Description>
@@ -107,15 +116,13 @@
 
     <Form.Field name="variant" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Variant</Form.Label>
+        <Form.Label required="{constraints?.required}">Variant</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.variants}"
-          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
-          selected="{$props.variant && {
-            label: $props.variant,
-            value: $props.variant,
-          }}"
+          onSelectedChange="{handleVariantChange}"
+          selected="{selectedVariant}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -123,13 +130,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.variants as variant (variant.value)}
-              <Select.Item value="{variant.value}">
-                {variant.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 

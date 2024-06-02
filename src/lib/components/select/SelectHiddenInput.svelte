@@ -23,7 +23,7 @@
   /**
    * The styles of the hidden input.
    */
-  export const styles = tv({
+  export const hiddenInputStyles = tv({
     base: [''],
   });
 </script>
@@ -45,7 +45,7 @@
 <SelectPrimitive.Input
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{hiddenInputStyles({
     class: attributes.class,
   })}"
   el="{el}"

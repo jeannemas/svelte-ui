@@ -1,197 +1,174 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import type { Selected } from 'bits-ui';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import Button from '$lib/components/button/index.js';
   import * as Card from '$lib/components/card/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import * as Tabs from '$lib/components/tabs/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        activateOnFocus: z.boolean().default(true),
-        loop: z.boolean().default(false),
-        orientation: z.enum(Tabs.rootOrientations).default(Tabs.rootDefaultOrientation),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
+
+  $: selectedOrientation = {
+    label: $props.orientation,
+    value: $props.orientation,
+  } satisfies Selected<Tabs.RootOrientation>;
+
+  function handleOrientationChange(selected?: Selected<Tabs.RootOrientation>) {
+    $props.orientation = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="activateOnFocus" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Activate on focus</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="activateOnFocus" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Activate on focus</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.activateOnFocus}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.activateOnFocus}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.activateOnFocus.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not the tabs should activate when the trigger is focused.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="loop" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Loop</Form.Label>
 
-        <Form.Field name="loop" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Loop</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.loop}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.loop}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.loop.description}
+      </Form.Description>
 
-          <Form.Description>
-            Whether or not the tabs should loop around when the end is reached.
-          </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="orientation" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Orientation</Form.Label>
 
-        <Form.Field name="orientation" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Orientation</Form.Label>
-
-            <Select.Root
-              items="{Tabs.rootOrientations.map((orientation) => ({
-                label: orientation,
-                value: orientation,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.orientation = selected?.value;
-              }}"
-              portal="{null}"
-              selected="{$superFormData.orientation !== undefined
-                ? {
-                    label: $superFormData.orientation,
-                    value: $superFormData.orientation,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
-
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
-
-              <Select.Content>
-                {#each Tabs.rootOrientations as orientation, index (index)}
-                  <Select.Item value="{orientation}">
-                    {orientation}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
-
-          <Form.Description>
-            The orientation of the tabs, which determines how keyboard navigation works.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Tabs.Root {...$superFormData} value="account">
-        <Tabs.List
-          class="
-            grid
-            {$superFormData.orientation === 'horizontal' ? 'grid-cols-2' : ''}
-            {$superFormData.orientation === 'vertical' ? 'h-auto grid-cols-1' : ''}
-          "
+        <Select.Root
+          items="{data.orientations}"
+          onSelectedChange="{handleOrientationChange}"
+          selected="{selectedOrientation}"
         >
-          <Tabs.Trigger value="account">Account</Tabs.Trigger>
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-          <Tabs.Trigger value="password">Password</Tabs.Trigger>
-        </Tabs.List>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-        <Tabs.Content value="account">
-          <Card.Root>
-            <Card.Header>
-              <Card.Title>Account</Card.Title>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Card.Description>
-                Make changes to your account here. Click save when you're done.
-              </Card.Description>
-            </Card.Header>
+      <Form.Description>
+        {schema.shape.orientation.description}
+      </Form.Description>
 
-            <Card.Content class="space-y-2">
-              <div class="space-y-1">
-                <Label for="name">Name</Label>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-                <Input id="name" value="Pedro Duarte" variant="text" />
-              </div>
+  <svelte:fragment slot="demo">
+    <Tabs.Root {...$props} value="account">
+      <Tabs.List
+        class="
+            grid
+            {$props.orientation === 'horizontal' ? 'grid-cols-2' : ''}
+            {$props.orientation === 'vertical' ? 'h-auto grid-cols-1' : ''}
+          "
+      >
+        <Tabs.Trigger value="account">Account</Tabs.Trigger>
 
-              <div class="space-y-1">
-                <Label for="username">Username</Label>
+        <Tabs.Trigger value="password">Password</Tabs.Trigger>
+      </Tabs.List>
 
-                <Input id="username" value="@peduarte" variant="text" />
-              </div>
-            </Card.Content>
+      <Tabs.Content value="account">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Account</Card.Title>
 
-            <Card.Footer>
-              <Button>Save changes</Button>
-            </Card.Footer>
-          </Card.Root>
-        </Tabs.Content>
+            <Card.Description>
+              Make changes to your account here. Click save when you're done.
+            </Card.Description>
+          </Card.Header>
 
-        <Tabs.Content value="password">
-          <Card.Root>
-            <Card.Header>
-              <Card.Title>Password</Card.Title>
+          <Card.Content class="space-y-2">
+            <div class="space-y-1">
+              <Label for="name">Name</Label>
 
-              <Card.Description>
-                Change your password here. After saving, you'll be logged out.
-              </Card.Description>
-            </Card.Header>
+              <Input id="name" value="Pedro Duarte" variant="text" />
+            </div>
 
-            <Card.Content class="space-y-2">
-              <div class="space-y-1">
-                <Label for="current">Current password</Label>
+            <div class="space-y-1">
+              <Label for="username">Username</Label>
 
-                <Input id="current" type="password" variant="text" />
-              </div>
+              <Input id="username" value="@peduarte" variant="text" />
+            </div>
+          </Card.Content>
 
-              <div class="space-y-1">
-                <Label for="new">New password</Label>
+          <Card.Footer>
+            <Button>Save changes</Button>
+          </Card.Footer>
+        </Card.Root>
+      </Tabs.Content>
 
-                <Input id="new" type="password" variant="text" />
-              </div>
-            </Card.Content>
+      <Tabs.Content value="password">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Password</Card.Title>
 
-            <Card.Footer>
-              <Button>Save password</Button>
-            </Card.Footer>
-          </Card.Root>
-        </Tabs.Content>
-      </Tabs.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+            <Card.Description>
+              Change your password here. After saving, you'll be logged out.
+            </Card.Description>
+          </Card.Header>
+
+          <Card.Content class="space-y-2">
+            <div class="space-y-1">
+              <Label for="current">Current password</Label>
+
+              <Input id="current" type="password" variant="text" />
+            </div>
+
+            <div class="space-y-1">
+              <Label for="new">New password</Label>
+
+              <Input id="new" type="password" variant="text" />
+            </div>
+          </Card.Content>
+
+          <Card.Footer>
+            <Button>Save password</Button>
+          </Card.Footer>
+        </Card.Root>
+      </Tabs.Content>
+    </Tabs.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

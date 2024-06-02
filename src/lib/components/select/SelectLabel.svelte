@@ -23,7 +23,7 @@
   /**
    * The styles of the label.
    */
-  export const styles = tv({
+  export const labelStyles = tv({
     base: ['py-1.5 pl-8 pr-2 text-sm font-semibold'],
   });
 </script>
@@ -45,7 +45,7 @@
 <SelectPrimitive.Label
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{labelStyles({
     class: attributes.class,
   })}"
   el="{el}"

@@ -8,7 +8,7 @@
     type Props as LabelProps,
     type Slots as LabelSlots,
   } from '$lib/components/label/index.js';
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the label.
@@ -22,17 +22,15 @@
    * The slots of the label.
    */
   export type Slots = {
-    default: Slot<
-      LabelSlots['default'] & {
-        labelAttrs: Readable<LabelAttrs>;
-      }
-    >;
+    default: LabelSlots['default'] & {
+      labelAttrs: Readable<LabelAttrs>;
+    };
   };
 
   /**
    * The styles of the label.
    */
-  export const styles = tv({
+  export const labelStyles = tv({
     base: ['data-[fs-error]:text-destructive'],
   });
 </script>
@@ -44,6 +42,7 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
+  export let required: Props['required'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 
@@ -57,10 +56,11 @@
   {...attributes}
   {...$labelAttrs}
   asChild="{asChild}"
-  class="{styles({
+  class="{labelStyles({
     class: attributes.class,
   })}"
   el="{el}"
+  required="{required}"
   let:builder
 >
   <slot builder="{builder}" labelAttrs="{labelAttrs}" />

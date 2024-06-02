@@ -23,7 +23,7 @@
   /**
    * The styles of the separator.
    */
-  export const styles = tv({
+  export const separatorStyles = tv({
     base: ['-mx-1 h-px bg-border'],
   });
 </script>
@@ -46,7 +46,7 @@
   {...attributes}
   alwaysRender="{alwaysRender}"
   asChild="{asChild}"
-  class="{styles({
+  class="{separatorStyles({
     class: attributes.class,
   })}"
   let:attrs

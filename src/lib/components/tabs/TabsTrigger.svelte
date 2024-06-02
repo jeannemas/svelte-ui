@@ -23,7 +23,7 @@
   /**
    * The styles of the trigger.
    */
-  export const styles = tv({
+  export const triggerStyles = tv({
     base: [
       'inline-flex flex-row items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
@@ -52,7 +52,7 @@
 <TabsPrimitive.Trigger
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{triggerStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"

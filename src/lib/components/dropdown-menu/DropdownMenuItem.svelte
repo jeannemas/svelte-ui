@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
@@ -10,10 +10,6 @@
    * The attributes of the item.
    */
   export type Attributes = Primitive['props'];
-  /**
-   * The inset of the item.
-   */
-  export type Inset = NonNullable<VariantProps<typeof styles>['inset']>;
   /**
    * The props of the item.
    */
@@ -28,7 +24,7 @@
   /**
    * The styles of the item.
    */
-  export const styles = tv({
+  export const itemStyles = tv({
     base: [
       'relative flex cursor-default select-none flex-row items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -43,14 +39,6 @@
       },
     },
   });
-  /**
-   * The default inset of the item.
-   */
-  export const defaultInset = styles.defaultVariants.inset!;
-  /**
-   * The insets of the item.
-   */
-  export const insets = Object.keys(styles.variants.inset) as unknown as [Inset, ...Inset[]];
 </script>
 
 <script lang="ts">
@@ -58,7 +46,7 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let inset: Props['inset'] = undefined;
+  export let inset: Props['inset'] = itemStyles.defaultVariants.inset;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -68,11 +56,10 @@
 
 <DropdownMenuPrimitive.Item
   {...attributes}
-  class="{styles({
+  class="{itemStyles({
     class: attributes.class,
     inset,
   })}"
-  data-inset="{inset}"
   let:builder
   on:click
   on:focusin

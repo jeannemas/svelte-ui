@@ -1,13 +1,13 @@
 export {
   default as Close,
-  styles as closeStyles,
+  closeStyles,
   type Attributes as CloseAttributes,
   type Props as CloseProps,
   type Slots as CloseSlots,
 } from './PopoverClose.svelte';
 export {
   default as Content,
-  styles as contentStyles,
+  contentStyles,
   type Attributes as ContentAttributes,
   type Props as ContentProps,
   type Slots as ContentSlots,
@@ -20,7 +20,7 @@ export {
 } from './PopoverRoot.svelte';
 export {
   default as Trigger,
-  styles as triggerStyles,
+  triggerStyles,
   type Attributes as TriggerAttributes,
   type Props as TriggerProps,
   type Slots as TriggerSlots,

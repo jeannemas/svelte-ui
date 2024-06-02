@@ -2,7 +2,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes for the row.
@@ -18,14 +20,19 @@
    * The slots for the row.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles for the row.
    */
-  export const styles = tv({
-    base: ['border-b transition-colors', 'hover:bg-muted/50', 'data-[state=selected]:bg-muted'],
+  export const rowStyles = tv({
+    base: ['border-b transition-colors', 'data-[state=selected]:bg-muted'],
+    variants: {
+      hoverable: {
+        true: ['hover:bg-muted/50'],
+      },
+    },
   });
 </script>
 
@@ -35,6 +42,14 @@
   type $$Slots = Slots;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Table.Row must be used within a Table.Root component.');
+  }
+
+  $: ({ hoverable } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -42,8 +57,9 @@
 
 <tr
   {...attributes}
-  class="{styles({
+  class="{rowStyles({
     class: attributes.class,
+    hoverable,
   })}"
   on:click
   on:keydown

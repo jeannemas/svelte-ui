@@ -23,7 +23,7 @@
   /**
    * The styles of the radio group.
    */
-  export const styles = tv({
+  export const radioGroupStyles = tv({
     base: [''],
   });
 </script>
@@ -47,7 +47,7 @@
 <DropdownMenuPrimitive.RadioGroup
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{radioGroupStyles({
     class: attributes.class,
   })}"
   el="{el}"

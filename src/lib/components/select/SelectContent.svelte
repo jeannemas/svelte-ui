@@ -7,6 +7,10 @@
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, ElementEvent, Transition } from '$lib/utils/types.js';
 
+  import { rootContext } from './context.js';
+  import SelectItem from './SelectItem.svelte';
+  import SelectItemIndicator from './SelectItemIndicator.svelte';
+
   type Primitive<
     TContentTransition extends Transition = Transition,
     TContentTransitionIn extends Transition = Transition,
@@ -42,7 +46,7 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: [
       'relative z-50 w-full min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md outline-none',
     ],
@@ -89,6 +93,14 @@
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Select.Content must be used within a Select.Root component.');
+  }
+
+  $: ({ items } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -100,7 +112,7 @@
   alignOffset="{alignOffset}"
   asChild="{asChild}"
   avoidCollisions="{avoidCollisions}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   collisionBoundary="{collisionBoundary}"
@@ -122,5 +134,15 @@
   on:keydown
   on:pointerleave
 >
-  <slot builder="{builder}" />
+  <slot builder="{builder}">
+    {#if items}
+      {#each items as { label, value } (value)}
+        <SelectItem label="{label}" value="{value}">
+          <SelectItemIndicator />
+
+          {label}
+        </SelectItem>
+      {/each}
+    {/if}
+  </slot>
 </SelectPrimitive.Content>

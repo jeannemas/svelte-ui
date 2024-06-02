@@ -28,7 +28,7 @@
   /**
    * The styles of the overlay.
    */
-  export const styles = tv({
+  export const overlayStyles = tv({
     base: ['fixed inset-0 z-50 bg-black/80'],
   });
 </script>
@@ -64,7 +64,7 @@
 <DrawerPrimitive.Overlay
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{overlayStyles({
     class: attributes.class,
   })}"
   el="{el}"

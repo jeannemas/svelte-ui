@@ -8,7 +8,17 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async () => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      breakpoint: rootStyles.defaultVariants.breakpoint!,
+      disabled: false,
+      fixedWeeks: false,
+      numberOfMonths: 1,
+      pagedNavigation: false,
+      preventDeselect: false,
+      readonly: false,
+    },
+  });
   const breakpoints = Object.keys(rootStyles.variants.breakpoint).map((breakpoint) => ({
     label: breakpoint,
     value: breakpoint,

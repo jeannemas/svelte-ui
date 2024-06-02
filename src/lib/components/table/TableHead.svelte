@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes for the head.
@@ -16,13 +16,13 @@
    * The slots for the head.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles for the head.
    */
-  export const styles = tv({
+  export const headStyles = tv({
     base: [
       'h-12 px-4 text-left align-middle font-medium text-muted-foreground',
       '[&:has([role=checkbox])]:pr-0',
@@ -43,7 +43,7 @@
 
 <th
   {...attributes}
-  class="{styles({
+  class="{headStyles({
     class: attributes.class,
   })}"
 >

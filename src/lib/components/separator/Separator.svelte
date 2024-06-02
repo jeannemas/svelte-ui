@@ -14,7 +14,7 @@
   /**
    * The orientation of the separator.
    */
-  export type Orientation = NonNullable<VariantProps<typeof styles>['orientation']>;
+  export type Orientation = NonNullable<VariantProps<typeof separatorStyles>['orientation']>;
   /**
    * The props of the separator.
    */
@@ -27,7 +27,7 @@
   /**
    * The styles of the separator.
    */
-  export const styles = tv({
+  export const separatorStyles = tv({
     base: ['shrink-0 bg-border'],
     defaultVariants: {
       orientation: 'horizontal',
@@ -39,17 +39,6 @@
       },
     },
   });
-  /**
-   * The default orientation of the separator.
-   */
-  export const defaultOrientation = styles.defaultVariants.orientation!;
-  /**
-   * The orientations of the separator.
-   */
-  export const orientations = Object.keys(styles.variants.orientation) as [
-    Orientation,
-    ...Orientation[],
-  ];
 </script>
 
 <script lang="ts">
@@ -60,7 +49,7 @@
   export let asChild: Props['asChild'] = undefined;
   export let decorative: Props['decorative'] = undefined;
   export let el: Props['el'] = undefined;
-  export let orientation: Props['orientation'] = defaultOrientation;
+  export let orientation: Props['orientation'] = separatorStyles.defaultVariants.orientation!;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -71,7 +60,7 @@
 <SeparatorPrimitive.Root
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{separatorStyles({
     class: attributes.class,
     orientation,
   })}"

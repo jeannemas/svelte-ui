@@ -23,7 +23,7 @@
   /**
    * The styles of the description.
    */
-  export const styles = tv({
+  export const descriptionStyles = tv({
     base: ['text-sm text-muted-foreground'],
   });
 </script>
@@ -46,7 +46,7 @@
 <Description
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{descriptionStyles({
     class: attributes.class,
   })}"
   el="{el}"

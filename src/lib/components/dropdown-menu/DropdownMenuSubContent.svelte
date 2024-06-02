@@ -45,7 +45,7 @@
   /**
    * The styles of the sub content.
    */
-  export const styles = tv({
+  export const subContentStyles = tv({
     base: [
       'z-50 min-w-32 rounded-md border bg-popover p-1 text-popover-foreground shadow-lg',
       'focus:outline-none',
@@ -105,7 +105,7 @@
   asChild="{asChild}"
   alignOffset="{alignOffset}"
   avoidCollisions="{avoidCollisions}"
-  class="{styles({
+  class="{subContentStyles({
     class: attributes.class,
   })}"
   collisionBoundary="{collisionBoundary}"

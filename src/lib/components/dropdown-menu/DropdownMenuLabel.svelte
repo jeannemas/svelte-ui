@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
@@ -10,10 +10,6 @@
    * The attributes of the label.
    */
   export type Attributes = Primitive['props'];
-  /**
-   * The inset of the label.
-   */
-  export type Inset = NonNullable<VariantProps<typeof styles>['inset']>;
   /**
    * The props of the label.
    */
@@ -28,7 +24,7 @@
   /**
    * The styles of the label.
    */
-  export const styles = tv({
+  export const labelStyles = tv({
     base: ['px-2 py-1.5 text-sm font-semibold'],
     defaultVariants: {
       inset: false,
@@ -39,14 +35,6 @@
       },
     },
   });
-  /**
-   * The default inset of the label.
-   */
-  export const defaultInset = styles.defaultVariants.inset!;
-  /**
-   * The insets of the label.
-   */
-  export const insets = Object.keys(styles.variants.inset) as unknown as [Inset, ...Inset[]];
 </script>
 
 <script lang="ts">
@@ -54,7 +42,7 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let inset: Props['inset'] = undefined;
+  export let inset: Props['inset'] = labelStyles.defaultVariants.inset;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -64,7 +52,7 @@
 
 <DropdownMenuPrimitive.Label
   {...attributes}
-  class="{styles({
+  class="{labelStyles({
     class: attributes.class,
     inset,
   })}"

@@ -29,7 +29,7 @@
   /**
    * The styles of the close.
    */
-  export const styles = tv({
+  export const closeStyles = tv({
     base: [''],
   });
 </script>
@@ -51,7 +51,7 @@
 <DrawerPrimitive.Close
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{closeStyles({
     class: attributes.class,
   })}"
   el="{el}"

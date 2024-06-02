@@ -1,1 +1,7 @@
-export { default, styles, type Attributes, type Props, type Slots } from './Container.svelte';
+export {
+  containerStyles,
+  default,
+  type Attributes,
+  type Props,
+  type Slots,
+} from './Container.svelte';

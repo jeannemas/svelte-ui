@@ -1,11 +1,12 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import Button, { type Size, type Variant } from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
@@ -20,6 +21,22 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
+
+  $: selectedSize = {
+    label: $props.size,
+    value: $props.size,
+  } satisfies Selected<Size>;
+  $: selectedVariant = {
+    label: $props.variant,
+    value: $props.variant,
+  } satisfies Selected<Variant>;
+
+  function handleSizeChange(selected?: Selected<Size>) {
+    $props.size = selected!.value;
+  }
+  function handleVariantChange(selected?: Selected<Variant>) {
+    $props.variant = selected!.value;
+  }
 </script>
 
 <!-- <style lang="postcss">
@@ -29,9 +46,9 @@
   <svelte:fragment slot="config">
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Disabled</Form.Label>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
 
       <Form.Description>
@@ -43,15 +60,13 @@
 
     <Form.Field name="size" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Size</Form.Label>
+        <Form.Label required="{constraints?.required}">Size</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.sizes}"
-          onSelectedChange="{(selected) => ($props.size = selected?.value)}"
-          selected="{$props.size && {
-            label: $props.size,
-            value: $props.size,
-          }}"
+          onSelectedChange="{handleSizeChange}"
+          selected="{selectedSize}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -59,13 +74,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.sizes as size (size.value)}
-              <Select.Item value="{size.value}">
-                {size.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 
@@ -78,15 +87,13 @@
 
     <Form.Field name="variant" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Variant</Form.Label>
+        <Form.Label required="{constraints?.required}">Variant</Form.Label>
 
         <Select.Root
+          {...constraints}
           items="{data.variants}"
-          onSelectedChange="{(selected) => ($props.variant = selected?.value)}"
-          selected="{$props.variant && {
-            label: $props.variant,
-            value: $props.variant,
-          }}"
+          onSelectedChange="{handleVariantChange}"
+          selected="{selectedVariant}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />
 
@@ -94,13 +101,7 @@
             <Select.Value />
           </Select.Trigger>
 
-          <Select.Content>
-            {#each data.variants as variant (variant.value)}
-              <Select.Item value="{variant.value}">
-                {variant.label}
-              </Select.Item>
-            {/each}
-          </Select.Content>
+          <Select.Content />
         </Select.Root>
       </Form.Control>
 

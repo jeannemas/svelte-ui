@@ -1,55 +1,55 @@
 export {
   default as Body,
-  styles as bodyStyles,
+  bodyStyles,
   type Attributes as BodyAttributes,
   type Props as BodyProps,
   type Slots as BodySlots,
 } from './TableBody.svelte';
 export {
   default as Caption,
-  styles as captionStyles,
+  captionStyles,
   type Attributes as CaptionAttributes,
   type Props as CaptionProps,
   type Slots as CaptionSlots,
 } from './TableCaption.svelte';
 export {
   default as Cell,
-  styles as cellStyles,
+  cellStyles,
   type Attributes as CellAttributes,
   type Props as CellProps,
   type Slots as CellSlots,
 } from './TableCell.svelte';
 export {
   default as Footer,
-  styles as footerStyles,
+  footerStyles,
   type Attributes as FooterAttributes,
   type Props as FooterProps,
   type Slots as FooterSlots,
 } from './TableFooter.svelte';
 export {
   default as Head,
-  styles as headStyles,
+  headStyles,
   type Attributes as HeadAttributes,
   type Props as HeadProps,
   type Slots as HeadSlots,
 } from './TableHead.svelte';
 export {
   default as Header,
-  styles as headerStyles,
+  headerStyles,
   type Attributes as HeaderAttributes,
   type Props as HeaderProps,
   type Slots as HeaderSlots,
 } from './TableHeader.svelte';
 export {
   default as Root,
-  styles as rootStyles,
+  rootStyles,
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
 } from './TableRoot.svelte';
 export {
   default as Row,
-  styles as rowStyles,
+  rowStyles,
   type Attributes as RowAttributes,
   type Props as RowProps,
   type Slots as RowSlots,

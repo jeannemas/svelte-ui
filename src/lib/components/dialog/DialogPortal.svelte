@@ -23,7 +23,7 @@
   /**
    * The styles of the portal.
    */
-  export const styles = tv({
+  export const portalStyles = tv({
     base: [''],
   });
 </script>
@@ -45,7 +45,7 @@
 <DialogPrimitive.Portal
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{portalStyles({
     class: attributes.class,
   })}"
   el="{el}"

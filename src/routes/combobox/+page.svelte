@@ -4,7 +4,7 @@
 
   import * as Combobox from '$lib/components/combobox/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
   import type { PageData } from './$types.js';
@@ -22,6 +22,11 @@
 
   let inputValue = '';
   let touchedInput = false;
+
+  $: filteredUsers =
+    inputValue && touchedInput
+      ? data.users.filter(({ label }) => label?.toLowerCase().includes(inputValue.toLowerCase()))
+      : data.users;
 </script>
 
 <!-- <style lang="postcss">
@@ -31,9 +36,9 @@
   <svelte:fragment slot="config">
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label>Disabled</Form.Label>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-        <Switch {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
 
       <Form.Description>
@@ -54,10 +59,10 @@
       <Combobox.Input placeholder="Search a user" />
 
       <Combobox.Content>
-        {#each inputValue && touchedInput ? data.users.filter(({ label }) => label
-                ?.toLowerCase()
-                .includes(inputValue.toLowerCase())) : data.users as user (user.value)}
+        {#each filteredUsers as user (user.value)}
           <Combobox.Item label="{user.label}" value="{user.value}">
+            <Combobox.ItemIndicator />
+
             {user.label}
           </Combobox.Item>
         {:else}

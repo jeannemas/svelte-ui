@@ -1,73 +1,46 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        checked: z.boolean().default(false),
-        disabled: z.boolean().default(false),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="disabled" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="checked" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Checked</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.checked}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.disabled.description}
+      </Form.Description>
 
-          <Form.Description>The checked state of the switch.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-
-        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disabled</Form.Label>
-
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-          </Form.Control>
-
-          <Form.Description>
-            When <code>true</code>, prevents the user from interacting with the switch.
-          </Form.Description>
-
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Switch {...$superFormData} bind:checked="{$superFormData.checked}" />
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+  <svelte:fragment slot="demo">
+    <Switch.Root {...$props} />
+  </svelte:fragment>
+</ComponentDemoLayout>

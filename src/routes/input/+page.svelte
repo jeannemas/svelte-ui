@@ -1,120 +1,99 @@
 <script context="module" lang="ts">
   import type { Selected } from 'bits-ui';
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
-  import Input, { variants, type Variant } from '$lib/components/input/index.js';
+  import Input, { type Variant } from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
-  import Switch from '$lib/components/switch/index.js';
+  import * as Switch from '$lib/components/switch/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
+
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const adapter = zod(
-    z.object({
-      disabled: z.boolean().default(false).optional(),
-      placeholder: z.string().default('').optional(),
-      variant: z.enum(variants).default('text'),
-    }),
-  );
-  const superForm = createSuperForm(defaults(adapter), {
-    SPA: true,
-    validators: adapter,
-  });
-  const { form: superFormData } = superForm;
+  export let data: PageData;
 
-  function handleSelectedChange(selected: Selected<Variant> | undefined) {
-    $superFormData.variant = selected!.value;
+  const form = superForm(data.form, {
+    SPA: true,
+    validators: zodClient(schema),
+  });
+  const { form: props } = form;
+
+  $: selectedVariant = {
+    label: $props.variant,
+    value: $props.variant,
+  } satisfies Selected<Variant>;
+
+  function handleVariantChange(selected?: Selected<Variant>) {
+    $props.variant = selected!.value;
   }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="disabled" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="disabled" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Disabled</Form.Label>
+        <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
+      </Form.Control>
 
-            <Switch {...attrs} {...constraints} bind:checked="{$superFormData.disabled}" />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.disabled.description}
+      </Form.Description>
 
-          <Form.Description>Whether the input is disabled.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="placeholder" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Placeholder</Form.Label>
 
-        <Form.Field name="placeholder" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Placeholder</Form.Label>
+        <Input {...attrs} {...constraints} variant="text" bind:value="{$props.placeholder}" />
+      </Form.Control>
 
-            <Input
-              {...attrs}
-              {...constraints}
-              variant="text"
-              bind:value="{$superFormData.placeholder}"
-            />
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.placeholder.description}
+      </Form.Description>
 
-          <Form.Description>The input placeholder.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
 
-          <Form.FieldErrors />
-        </Form.Field>
+    <Form.Field name="variant" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Variant</Form.Label>
 
-        <Form.Field name="variant" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label>Variant</Form.Label>
+        <Select.Root
+          {...constraints}
+          items="{data.variants}"
+          onSelectedChange="{handleVariantChange}"
+          selected="{selectedVariant}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{variants.map((variant) => ({
-                label: variant,
-                value: variant,
-              }))}"
-              onSelectedChange="{handleSelectedChange}"
-              portal="{null}"
-              selected="{$superFormData.variant !== undefined
-                ? {
-                    label: $superFormData.variant,
-                    value: $superFormData.variant,
-                  }
-                : undefined}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each variants as variant, index (index)}
-                  <Select.Item value="{variant}">
-                    {variant}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.variant.description}
+      </Form.Description>
 
-          <Form.Description>The variant of the input.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <Input {...$superFormData} />
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+  <svelte:fragment slot="demo">
+    <Input {...$props} />
+  </svelte:fragment>
+</ComponentDemoLayout>

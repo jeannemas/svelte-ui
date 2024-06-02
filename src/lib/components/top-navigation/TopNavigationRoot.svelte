@@ -7,7 +7,7 @@
   import Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import Container from '$lib/components/container/index.js';
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   import { ctx } from './context.js';
 
@@ -38,7 +38,7 @@
    * The slots for the root.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**

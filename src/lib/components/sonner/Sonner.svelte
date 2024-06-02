@@ -14,11 +14,11 @@
   /**
    * The direction of the sonner.
    */
-  export type Dir = NonNullable<VariantProps<typeof styles>['dir']>;
+  export type Dir = NonNullable<VariantProps<typeof sonnerStyles>['dir']>;
   /**
    * The position of the sonner.
    */
-  export type Position = NonNullable<VariantProps<typeof styles>['position']>;
+  export type Position = NonNullable<VariantProps<typeof sonnerStyles>['position']>;
   /**
    * The props of the sonner.
    */
@@ -26,11 +26,11 @@
   /**
    * The slots of the sonner.
    */
-  export type Slots = /* Primitive['slots'] */ EmptyObject;
+  export type Slots = /* Primitive['slots'] */ EmptyObject; // TODO
   /**
    * The theme of the sonner.
    */
-  export type Theme = NonNullable<VariantProps<typeof styles>['theme']>;
+  export type Theme = NonNullable<VariantProps<typeof sonnerStyles>['theme']>;
 
   /**
    * The styles of the sonner action button.
@@ -53,7 +53,7 @@
   /**
    * The styles of the sonner.
    */
-  export const styles = tv({
+  export const sonnerStyles = tv({
     base: ['toaster group'],
     defaultVariants: {
       dir: 'auto',
@@ -90,30 +90,6 @@
       'group-[.toaster]:border-border group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:shadow-lg',
     ],
   });
-  /**
-   * The default direction of the sonner.
-   */
-  export const defaultDir = styles.defaultVariants.dir!;
-  /**
-   * The default position of the sonner.
-   */
-  export const defaultPosition = styles.defaultVariants.position!;
-  /**
-   * The default theme of the sonner.
-   */
-  export const defaultTheme = styles.defaultVariants.theme!;
-  /**
-   * The directions of the sonner.
-   */
-  export const dirs = Object.keys(styles.variants.dir) as [Dir, ...Dir[]];
-  /**
-   * The positions of the sonner.
-   */
-  export const positions = Object.keys(styles.variants.position) as [Position, ...Position[]];
-  /**
-   * The themes of the sonner.
-   */
-  export const themes = Object.keys(styles.variants.theme) as [Theme, ...Theme[]];
 </script>
 
 <script lang="ts">
@@ -143,7 +119,7 @@
 
 <Toaster
   {...attributes}
-  class="{styles({
+  class="{sonnerStyles({
     class: attributes.class,
     dir,
     position,

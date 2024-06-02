@@ -2,7 +2,7 @@
   import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
   import ChevronRightIcon from 'lucide-svelte/icons/chevron-right';
   import type { SvelteHTMLElements } from 'svelte/elements';
-  import { tv, type VariantProps } from 'tailwind-variants';
+  import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
@@ -12,10 +12,6 @@
    * The attributes of the sub trigger.
    */
   export type Attributes = SvelteHTMLElements['div'];
-  /**
-   * The inset of the sub trigger.
-   */
-  export type Inset = NonNullable<VariantProps<typeof styles>['inset']>;
   /**
    * The props of the sub trigger.
    */
@@ -30,7 +26,7 @@
   /**
    * The styles of the sub trigger.
    */
-  export const styles = tv({
+  export const subTriggerStyles = tv({
     base: [
       'flex cursor-default select-none flex-row items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
@@ -45,14 +41,6 @@
       },
     },
   });
-  /**
-   * The default inset of the sub trigger.
-   */
-  export const defaultInset = styles.defaultVariants.inset!;
-  /**
-   * The insets of the sub trigger.
-   */
-  export const insets = Object.keys(styles.variants.inset) as unknown as [Inset, ...Inset[]];
 </script>
 
 <script lang="ts">
@@ -63,7 +51,7 @@
   export let asChild: Props['asChild'] = undefined;
   export let disabled: Props['disabled'] = undefined;
   export let el: Props['el'] = undefined;
-  export let inset: Props['inset'] = undefined;
+  export let inset: Props['inset'] = subTriggerStyles.defaultVariants.inset;
 
   $: attributes = $$restProps as Attributes;
 </script>
@@ -74,7 +62,7 @@
 <DropdownMenuPrimitive.SubTrigger
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{subTriggerStyles({
     class: attributes.class,
     inset,
   })}"

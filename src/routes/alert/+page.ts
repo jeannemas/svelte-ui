@@ -8,7 +8,11 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async () => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      variant: rootStyles.defaultVariants.variant!,
+    },
+  });
   const variants = Object.keys(rootStyles.variants.variant).map((variant) => ({
     label: variant,
     value: variant,

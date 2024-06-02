@@ -3,7 +3,7 @@
   import SuperDebug, { type SuperForm } from 'sveltekit-superforms';
   import { tv } from 'tailwind-variants';
 
-  import type { AnyObject, EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the root.
@@ -28,13 +28,13 @@
    * The slots of the root.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: [''],
   });
 </script>
@@ -55,7 +55,7 @@
 
 <form
   {...attributes}
-  class="{styles({
+  class="{rootStyles({
     class: attributes.class,
   })}"
   method="POST"

@@ -1,63 +1,69 @@
 export {
+  default as CheckboxIndicator,
+  checkboxIndicatorStyles,
+  type Attributes as CheckboxIndicatorAttributes,
+  type Props as CheckboxIndicatorProps,
+  type Slots as CheckboxIndicatorSlots,
+} from './DropdownMenuCheckboxIndicator.svelte';
+export {
   default as CheckboxItem,
-  styles as checkboxItemStyles,
+  checkboxItemStyles,
   type Attributes as CheckboxItemAttributes,
   type Props as CheckboxItemProps,
   type Slots as CheckboxItemSlots,
 } from './DropdownMenuCheckboxItem.svelte';
 export {
   default as Content,
-  styles as contentStyles,
+  contentStyles,
   type Attributes as ContentAttributes,
   type Props as ContentProps,
   type Slots as ContentSlots,
 } from './DropdownMenuContent.svelte';
 export {
   default as Group,
-  styles as groupStyles,
+  groupStyles,
   type Attributes as GroupAttributes,
   type Props as GroupProps,
   type Slots as GroupSlots,
 } from './DropdownMenuGroup.svelte';
 export {
   default as Item,
-  defaultInset as itemDefaultInset,
-  insets as itemInsets,
-  styles as itemStyles,
+  itemStyles,
   type Attributes as ItemAttributes,
-  type Inset as ItemInset,
   type Props as ItemProps,
   type Slots as ItemSlots,
 } from './DropdownMenuItem.svelte';
 export {
   default as Label,
-  defaultInset as labelDefaultInset,
-  insets as labelInsets,
-  styles as labelStyles,
+  labelStyles,
   type Attributes as LabelAttributes,
-  type Inset as LabelInset,
   type Props as LabelProps,
   type Slots as LabelSlots,
 } from './DropdownMenuLabel.svelte';
 export {
   default as RadioGroup,
-  styles as radioGroupStyles,
+  radioGroupStyles,
   type Attributes as RadioGroupAttributes,
   type Props as RadioGroupProps,
   type Slots as RadioGroupSlots,
 } from './DropdownMenuRadioGroup.svelte';
 export {
+  default as RadioIndicator,
+  radioIndicatorStyles,
+  type Attributes as RadioIndicatorAttributes,
+  type Props as RadioIndicatorProps,
+  type Slots as RadioIndicatorSlots,
+} from './DropdownMenuRadioIndicator.svelte';
+export {
   default as RadioItem,
-  styles as radioItemStyles,
+  radioItemStyles,
   type Attributes as RadioItemAttributes,
   type Props as RadioItemProps,
   type Slots as RadioItemSlots,
 } from './DropdownMenuRadioItem.svelte';
 export {
   default as Root,
-  defaultDir as rootDefaultDir,
-  dirs as rootDirs,
-  styles as rootStyles,
+  rootStyles,
   type Attributes as RootAttributes,
   type Dir as RootDir,
   type Props as RootProps,
@@ -65,14 +71,14 @@ export {
 } from './DropdownMenuRoot.svelte';
 export {
   default as Separator,
-  styles as separatorStyles,
+  separatorStyles,
   type Attributes as SeparatorAttributes,
   type Props as SeparatorProps,
   type Slots as SeparatorSlots,
 } from './DropdownMenuSeparator.svelte';
 export {
   default as Shortcut,
-  styles as shortcutStyles,
+  shortcutStyles,
   type Attributes as ShortcutAttributes,
   type Props as ShortcutProps,
   type Slots as ShortcutSlots,
@@ -85,24 +91,21 @@ export {
 } from './DropdownMenuSub.svelte';
 export {
   default as SubContent,
-  styles as subContentStyles,
+  subContentStyles,
   type Attributes as SubContentAttributes,
   type Props as SubContentProps,
   type Slots as SubContentSlots,
 } from './DropdownMenuSubContent.svelte';
 export {
   default as SubTrigger,
-  defaultInset as subTriggerDefaultInset,
-  insets as subTriggerInsets,
-  styles as subTriggerStyles,
+  subTriggerStyles,
   type Attributes as SubTriggerAttributes,
-  type Inset as SubTriggerInset,
   type Props as SubTriggerProps,
   type Slots as SubTriggerSlots,
 } from './DropdownMenuSubTrigger.svelte';
 export {
   default as Trigger,
-  styles as triggerStyles,
+  triggerStyles,
   type Attributes as TriggerAttributes,
   type Props as TriggerProps,
   type Slots as TriggerSlots,

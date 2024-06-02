@@ -26,7 +26,7 @@
   /**
    * The styles of the field errors.
    */
-  export const styles = tv({
+  export const fieldErrorsStyles = tv({
     base: ['text-sm font-medium text-destructive'],
   });
 </script>
@@ -50,7 +50,7 @@
 <FieldErrors
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{fieldErrorsStyles({
     class: attributes.class,
   })}"
   el="{el}"

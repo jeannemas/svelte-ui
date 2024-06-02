@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the footer.
@@ -16,7 +16,7 @@
    * The slots of the footer.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**

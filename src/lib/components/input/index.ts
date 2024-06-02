@@ -1,6 +1,6 @@
 export {
   default,
-  styles,
+  inputStyles,
   variants,
   type Attributes,
   type Props,

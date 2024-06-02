@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes of the header.
@@ -18,13 +18,13 @@
    * The slots of the header.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles of the header.
    */
-  export const styles = tv({
+  export const headerStyles = tv({
     base: ['flex flex-col gap-y-2 text-center', 'sm:text-left'],
   });
 </script>
@@ -44,7 +44,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{headerStyles({
     class: attributes.class,
   })}"
   bind:this="{el}"

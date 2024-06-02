@@ -23,7 +23,7 @@
   /**
    * The styles of the close.
    */
-  export const styles = tv({
+  export const closeStyles = tv({
     base: [''],
   });
 </script>
@@ -45,7 +45,7 @@
 <PopoverPrimitive.Close
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{closeStyles({
     class: attributes.class,
   })}"
   el="{el}"

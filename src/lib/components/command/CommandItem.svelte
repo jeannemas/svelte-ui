@@ -23,7 +23,7 @@
   /**
    * The styles of the item.
    */
-  export const styles = tv({
+  export const itemStyles = tv({
     base: [
       'relative flex cursor-default select-none flex-row items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       'aria-selected:bg-accent aria-selected:text-accent-foreground',
@@ -54,7 +54,7 @@
   {...attributes}
   alwaysRender="{alwaysRender}"
   asChild="{asChild}"
-  class="{styles({
+  class="{itemStyles({
     class: attributes.class,
   })}"
   disabled="{disabled}"

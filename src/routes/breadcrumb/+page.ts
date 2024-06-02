@@ -8,7 +8,11 @@ import type { PageLoad } from './$types.js';
 import { schema } from './props.schema.js';
 
 export const load = (async () => {
-  const form = await superValidate(zod(schema));
+  const form = await superValidate(zod(schema), {
+    defaults: {
+      breakpoint: rootStyles.defaultVariants.breakpoint!,
+    },
+  });
   const breakpoints = Object.keys(rootStyles.variants.breakpoint).map((breakpoint) => ({
     label: breakpoint,
     value: breakpoint,

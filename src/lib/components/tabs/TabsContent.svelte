@@ -23,7 +23,7 @@
   /**
    * The styles of the content.
    */
-  export const styles = tv({
+  export const contentStyles = tv({
     base: [
       'mt-2 ring-offset-background',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
@@ -49,7 +49,7 @@
 <TabsPrimitive.Content
   {...attributes}
   asChild="{asChild}"
-  class="{styles({
+  class="{contentStyles({
     class: attributes.class,
   })}"
   el="{el}"

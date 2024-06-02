@@ -2,7 +2,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject, Slot } from '$lib/utils/types.js';
+  import type { EmptyObject } from '$lib/utils/types.js';
 
   /**
    * The attributes for the footer.
@@ -16,13 +16,13 @@
    * The slots for the footer.
    */
   export type Slots = {
-    default: Slot;
+    default: EmptyObject;
   };
 
   /**
    * The styles for the footer.
    */
-  export const styles = tv({
+  export const footerStyles = tv({
     base: ['bg-primary font-medium text-primary-foreground'],
   });
 </script>
@@ -40,7 +40,7 @@
 
 <tfoot
   {...attributes}
-  class="{styles({
+  class="{footerStyles({
     class: attributes.class,
   })}"
 >
