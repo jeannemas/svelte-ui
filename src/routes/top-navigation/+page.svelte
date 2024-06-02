@@ -1,31 +1,37 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+  import type { Selected } from 'bits-ui';
 
   import { afterNavigate } from '$app/navigation';
-  import * as Accordion from '$lib/components/accordion/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import * as TopNavigation from '$lib/components/top-navigation/index.js';
+  import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        breakpoint: z.enum(TopNavigation.breakpoints).default(TopNavigation.defaultBreakpoint),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const superForm = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
-  const { form: superFormData } = superForm;
+  const { form: props } = form;
 
   let open = false;
+
+  $: selectedBreakpoint = {
+    label: $props.breakpoint,
+    value: $props.breakpoint,
+  } satisfies Selected<TopNavigation.Breakpoint>;
+
+  function handleBreakpointChange(selected?: Selected<TopNavigation.Breakpoint>) {
+    $props.breakpoint = selected!.value;
+  }
 
   afterNavigate((params) => {
     if (params.from?.url.pathname === params.to?.url.pathname || params.type === 'enter') {
@@ -40,64 +46,42 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<Accordion.Root multiple value="{['demo']}">
-  <Accordion.Item value="config">
-    <Accordion.Trigger>Config</Accordion.Trigger>
+<ComponentDemoLayout superForm="{form}">
+  <svelte:fragment slot="config">
+    <Form.Field name="breakpoint" superForm="{form}" let:constraints>
+      <Form.Control let:attrs>
+        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
 
-    <Accordion.Content>
-      <Form.Root superForm="{superForm}">
-        <Form.Field name="breakpoint" superForm="{superForm}" let:constraints>
-          <Form.Control let:attrs>
-            <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
+        <Select.Root
+          items="{data.breakpoints}"
+          onSelectedChange="{handleBreakpointChange}"
+          selected="{selectedBreakpoint}"
+        >
+          <Select.HiddenInput {...attrs} {...constraints} />
 
-            <Select.Root
-              items="{TopNavigation.breakpoints.map((breakpoint) => ({
-                label: breakpoint,
-                value: breakpoint,
-              }))}"
-              onSelectedChange="{(selected) => {
-                $superFormData.breakpoint = selected?.value;
-              }}"
-              selected="{$superFormData.breakpoint && {
-                label: $superFormData.breakpoint,
-                value: $superFormData.breakpoint,
-              }}"
-            >
-              <Select.HiddenInput {...attrs} {...constraints} />
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
 
-              <Select.Trigger>
-                <Select.Value />
-              </Select.Trigger>
+          <Select.Content />
+        </Select.Root>
+      </Form.Control>
 
-              <Select.Content>
-                {#each TopNavigation.breakpoints as breakpoint, index (index)}
-                  <Select.Item value="{breakpoint}">
-                    {breakpoint}
-                  </Select.Item>
-                {/each}
-              </Select.Content>
-            </Select.Root>
-          </Form.Control>
+      <Form.Description>
+        {schema.shape.breakpoint.description}
+      </Form.Description>
 
-          <Form.Description>The breakpoint of the navigation.</Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </svelte:fragment>
 
-          <Form.FieldErrors />
-        </Form.Field>
-      </Form.Root>
-    </Accordion.Content>
-  </Accordion.Item>
+  <svelte:fragment slot="demo">
+    <TopNavigation.Root {...$props} bind:open="{open}">
+      <TopNavigation.Section>
+        <TopNavigation.Button>Button</TopNavigation.Button>
 
-  <Accordion.Item value="demo">
-    <Accordion.Trigger>Demo</Accordion.Trigger>
-
-    <Accordion.Content>
-      <TopNavigation.Root {...$superFormData} bind:open="{open}">
-        <TopNavigation.Section>
-          <TopNavigation.Button>Button</TopNavigation.Button>
-
-          <TopNavigation.Link href="https://www.example.com/">Link</TopNavigation.Link>
-        </TopNavigation.Section>
-      </TopNavigation.Root>
-    </Accordion.Content>
-  </Accordion.Item>
-</Accordion.Root>
+        <TopNavigation.Link href="https://www.example.com/">Link</TopNavigation.Link>
+      </TopNavigation.Section>
+    </TopNavigation.Root>
+  </svelte:fragment>
+</ComponentDemoLayout>

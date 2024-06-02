@@ -4,7 +4,7 @@
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
-  import { ctx } from './context.js';
+  import { rootContext } from './context.js';
 
   /**
    * The attributes for the button.
@@ -24,14 +24,11 @@
   /**
    * The styles for the button.
    */
-  export const styles = tv({
+  export const buttonStyles = tv({
     base: [
       'flex w-full flex-row items-center gap-x-2 border-l-4 border-transparent p-2 text-lg font-medium text-foreground transition-colors',
       'hover:border-primary hover:bg-accent',
     ],
-    defaultVariants: {
-      breakpoint: 'lg',
-    },
     variants: {
       breakpoint: {
         sm: ['sm:border-b-2 sm:border-l-0 sm:text-base', 'sm:hover:bg-transparent'],
@@ -49,7 +46,13 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('TopNavigation.Button must be used within a TopNavigation.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -57,7 +60,7 @@
 
 <button
   {...attributes}
-  class="{styles({
+  class="{buttonStyles({
     breakpoint,
     class: attributes.class,
   })}"

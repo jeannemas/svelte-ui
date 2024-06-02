@@ -2,6 +2,7 @@
   import AlignJustifyIcon from 'lucide-svelte/icons/align-justify';
   import XIcon from 'lucide-svelte/icons/x';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
   import Button from '$lib/components/button/index.js';
@@ -9,7 +10,7 @@
   import Container from '$lib/components/container/index.js';
   import type { EmptyObject } from '$lib/utils/types.js';
 
-  import { ctx } from './context.js';
+  import { rootContext } from './context.js';
 
   /**
    * The attributes for the root.
@@ -18,7 +19,7 @@
   /**
    * The breakpoint of the root.
    */
-  export type Breakpoint = NonNullable<VariantProps<typeof styles>['breakpoint']>;
+  export type Breakpoint = NonNullable<VariantProps<typeof rootStyles>['breakpoint']>;
   /**
    * The props for the root.
    */
@@ -44,7 +45,7 @@
   /**
    * The styles for the root.
    */
-  export const styles = tv({
+  export const rootStyles = tv({
     base: ['bg-background text-foreground shadow'],
     compoundVariants: [
       {
@@ -93,17 +94,6 @@
       },
     },
   });
-  /**
-   * The breakpoints of the root.
-   */
-  export const breakpoints = Object.keys(styles.variants.breakpoint) as [
-    Breakpoint,
-    ...Breakpoint[],
-  ];
-  /**
-   * The default breakpoint of the root.
-   */
-  export const defaultBreakpoint = styles.defaultVariants.breakpoint!;
 </script>
 
 <script lang="ts">
@@ -111,12 +101,17 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let breakpoint: Props['breakpoint'] = undefined;
+  export let breakpoint: Props['breakpoint'] = rootStyles.defaultVariants.breakpoint;
   export let open: Props['open'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 
-  $: ctx.set({ breakpoint });
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    breakpoint,
+  }));
 </script>
 
 <!-- <style lang="postcss">
@@ -125,7 +120,7 @@
 <!-- Desktop -->
 <Container
   {...attributes}
-  class="{styles({
+  class="{rootStyles({
     breakpoint,
     class: attributes.class,
     viewport: 'desktop',
@@ -140,7 +135,7 @@
 <!-- Mobile -->
 <Collapsible.Root
   {...attributes}
-  class="{styles({
+  class="{rootStyles({
     breakpoint,
     class: attributes.class,
     viewport: 'mobile',

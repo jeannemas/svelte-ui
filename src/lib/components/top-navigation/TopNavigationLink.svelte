@@ -4,8 +4,8 @@
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
-  import { styles as topNavigationButtonStyles } from './TopNavigationButton.svelte';
-  import { ctx } from './context.js';
+  import { buttonStyles as topNavigationButtonStyles } from './TopNavigationButton.svelte';
+  import { rootContext } from './context.js';
 
   /**
    * The attributes for the link.
@@ -34,7 +34,7 @@
   /**
    * The styles for the link.
    */
-  export const styles = tv({
+  export const linkStyles = tv({
     base: [...topNavigationButtonStyles.base],
     defaultVariants: {
       ...topNavigationButtonStyles.defaultVariants,
@@ -58,7 +58,13 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('TopNavigation.Link must be used within a TopNavigation.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -66,7 +72,7 @@
 
 <a
   {...attributes}
-  class="{styles({
+  class="{linkStyles({
     active,
     breakpoint,
     class: attributes.class,

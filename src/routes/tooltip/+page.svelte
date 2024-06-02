@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
-  import { superForm as createSuperForm, defaults } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
-  import z from 'zod';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
 
   import Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
@@ -10,23 +9,16 @@
   import * as Tooltip from '$lib/components/tooltip/index.js';
   import ComponentDemoLayout from '$routes/ComponentDemoLayout.svelte';
 
-  const adapter = zod(
-    z
-      .object({
-        closeDelay: z.number().min(0).default(0),
-        closeOnEscape: z.boolean().default(false),
-        closeOnPointerDown: z.boolean().default(false),
-        disableHoverableContent: z.boolean().default(false),
-        openDelay: z.number().min(0).default(0),
-      })
-      .partial(),
-  );
+  import type { PageData } from './$types.js';
+  import { schema } from './props.schema.js';
 </script>
 
 <script lang="ts">
-  const form = createSuperForm(defaults(adapter), {
+  export let data: PageData;
+
+  const form = superForm(data.form, {
     SPA: true,
-    validators: adapter,
+    validators: zodClient(schema),
   });
   const { form: props } = form;
 </script>
@@ -50,7 +42,9 @@
         />
       </Form.Control>
 
-      <Form.Description>The tooltip close delay (in ms).</Form.Description>
+      <Form.Description>
+        {schema.shape.closeDelay.description}
+      </Form.Description>
 
       <Form.FieldErrors />
     </Form.Field>
@@ -62,7 +56,9 @@
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
       </Form.Control>
 
-      <Form.Description>Whether to close the tooltip on escape.</Form.Description>
+      <Form.Description>
+        {schema.shape.closeOnEscape.description}
+      </Form.Description>
 
       <Form.FieldErrors />
     </Form.Field>
@@ -74,7 +70,9 @@
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnPointerDown}" />
       </Form.Control>
 
-      <Form.Description>Whether to close the tooltip on pointer down.</Form.Description>
+      <Form.Description>
+        {schema.shape.closeOnPointerDown.description}
+      </Form.Description>
 
       <Form.FieldErrors />
     </Form.Field>
@@ -86,7 +84,9 @@
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disableHoverableContent}" />
       </Form.Control>
 
-      <Form.Description>Whether to disbale the hoverable content.</Form.Description>
+      <Form.Description>
+        {schema.shape.disableHoverableContent.description}
+      </Form.Description>
 
       <Form.FieldErrors />
     </Form.Field>
@@ -105,7 +105,9 @@
         />
       </Form.Control>
 
-      <Form.Description>The tooltip open delay (in ms).</Form.Description>
+      <Form.Description>
+        {schema.shape.openDelay.description}
+      </Form.Description>
 
       <Form.FieldErrors />
     </Form.Field>

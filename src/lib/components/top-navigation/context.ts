@@ -1,7 +1,7 @@
+import type { Writable } from 'svelte/store';
+
 import { Context } from '$lib/utils/context.js';
 
-import type { Breakpoint } from './index.js';
+import type { RootProps } from './index.js';
 
-export const ctx = new Context<{
-  breakpoint?: Breakpoint;
-}>();
+export const rootContext = new Context<Writable<Pick<RootProps, 'breakpoint'>>>();

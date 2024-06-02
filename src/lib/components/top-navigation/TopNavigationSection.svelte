@@ -4,7 +4,7 @@
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
-  import { ctx } from './context.js';
+  import { rootContext } from './context.js';
 
   /**
    * The attributes for the section.
@@ -24,11 +24,8 @@
   /**
    * The styles for the section.
    */
-  export const styles = tv({
+  export const sectionStyles = tv({
     base: ['space-y-1'],
-    defaultVariants: {
-      breakpoint: 'lg',
-    },
     variants: {
       breakpoint: {
         sm: ['sm:flex sm:gap-x-2 sm:space-y-0'],
@@ -46,7 +43,13 @@
 
   $: attributes = $$restProps as Attributes;
 
-  $: breakpoint = ctx.get()?.breakpoint ?? styles.defaultVariants.breakpoint;
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('TopNavigation.Section must be used within a TopNavigation.Root component.');
+  }
+
+  $: ({ breakpoint } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -54,7 +57,7 @@
 
 <div
   {...attributes}
-  class="{styles({
+  class="{sectionStyles({
     breakpoint,
     class: attributes.class,
   })}"

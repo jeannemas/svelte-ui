@@ -1,22 +1,20 @@
 export {
   default as Button,
-  styles as buttonStyles,
+  buttonStyles,
   type Attributes as ButtonAttributes,
   type Props as ButtonProps,
   type Slots as ButtonSlots,
 } from './TopNavigationButton.svelte';
 export {
   default as Link,
-  styles as linkStyles,
+  linkStyles,
   type Attributes as LinkAttributes,
   type Props as LinkProps,
   type Slots as LinkSlots,
 } from './TopNavigationLink.svelte';
 export {
   default as Root,
-  breakpoints,
-  defaultBreakpoint,
-  styles as rootStyles,
+  rootStyles,
   type Breakpoint,
   type Attributes as RootAttributes,
   type Props as RootProps,
@@ -24,7 +22,7 @@ export {
 } from './TopNavigationRoot.svelte';
 export {
   default as Section,
-  styles as sectionStyles,
+  sectionStyles,
   type Attributes as SectionAttributes,
   type Props as SectionProps,
   type Slots as SectionSlots,

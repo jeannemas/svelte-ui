@@ -11,3 +11,4 @@
 - Split the input component into 2 components: one for text inputs and one for number inputs
 - Do not prefix variants exports with `Root` or something
 - Add more sizes to components
+- Add form/fields context to prevent the need to manually pass constraints to each field
