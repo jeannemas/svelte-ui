@@ -7,7 +7,7 @@
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
-  import { itemContext, rootContext } from './context.js';
+  import { headerContext, itemContext, rootContext } from './context.js';
 
   type Primitive = ComponentInfo<AccordionPrimitive.Trigger>;
 
@@ -22,7 +22,19 @@
   /**
    * The slots of the trigger.
    */
-  export type Slots = Primitive['slots'];
+  export type Slots = {
+    default: Primitive['slots']['default'];
+    icon: {
+      /**
+       * Whether the trigger is disabled.
+       */
+      isDisabled: boolean;
+      /**
+       * Whether the item is open.
+       */
+      isOpen: boolean;
+    };
+  };
 
   /**
    * The styles of the trigger.
@@ -53,24 +65,51 @@
 
   $: attributes = $$restProps as Attributes;
 
+  const headerCtx = headerContext.get();
   const itemCtx = itemContext.get();
   const rootCtx = rootContext.get();
 
-  if (!itemCtx) {
-    throw new Error('Accordion.Trigger must be used within an Accordion.Item component.');
-  }
-
-  if (!rootCtx) {
-    throw new Error('Accordion.Trigger must be used within an Accordion.Root component.');
+  if (!headerCtx) {
+    throw new Error('Accordion.Trigger must be used within an Accordion.Header component.');
   }
 
   $: ({ disabled: itemDisabled } = $itemCtx!);
   $: ({ disabled: rootDisabled } = $rootCtx!);
-  $: isDisabled = rootDisabled || itemDisabled;
+  $: isDisabled = (rootDisabled || itemDisabled) ?? false;
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The trigger for the item.
+
+Must be used within an `Accordion.Header` component.
+
+### Attributes
+
+Accepts the attributes of a `button` element.
+
+### Events
+
+- `click` - Dispatched when the trigger is clicked.
+- `keydown` - Dispatched when a key is pressed down on the trigger.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+- `icon` - The icon slot.
+  - `isDisabled` - Whether the trigger is disabled.
+  - `isOpen` - Whether the item is open.
+-->
 
 <AccordionPrimitive.Trigger
   {...attributes}
@@ -84,14 +123,15 @@
   on:click
   on:keydown
 >
+  {@const isOpen = builder['data-state'] === 'open'}
+
   <slot builder="{builder}" />
 
-  {#if !isDisabled}
-    <ChevronDownIcon
-      class="{cn(
-        'size-4 transition-transform duration-200',
-        builder['data-state'] === 'open' && 'rotate-180',
-      )}"
-    />
-  {/if}
+  <slot isDisabled="{isDisabled}" isOpen="{isOpen}" name="icon">
+    {#if !isDisabled}
+      <ChevronDownIcon
+        class="{cn('size-4 transition-transform duration-200', isOpen && 'rotate-180')}"
+      />
+    {/if}
+  </slot>
 </AccordionPrimitive.Trigger>
