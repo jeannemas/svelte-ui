@@ -48,7 +48,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="loop" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Loop</Form.Label>
+        <Form.Label>Loop</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.loop}" />
       </Form.Control>

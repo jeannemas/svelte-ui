@@ -30,7 +30,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="closeDelay" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close delay</Form.Label>
+        <Form.Label>Close delay</Form.Label>
 
         <Input
           {...attrs}
@@ -51,7 +51,7 @@
 
     <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on escape</Form.Label>
+        <Form.Label>Close on escape</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
       </Form.Control>
@@ -65,7 +65,7 @@
 
     <Form.Field name="closeOnPointerDown" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on pointer down</Form.Label>
+        <Form.Label>Close on pointer down</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnPointerDown}" />
       </Form.Control>
@@ -79,7 +79,7 @@
 
     <Form.Field name="disableHoverableContent" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Disable hoverable content</Form.Label>
+        <Form.Label>Disable hoverable content</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disableHoverableContent}" />
       </Form.Control>
@@ -93,7 +93,7 @@
 
     <Form.Field name="openDelay" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Open delay</Form.Label>
+        <Form.Label>Open delay</Form.Label>
 
         <Input
           {...attrs}

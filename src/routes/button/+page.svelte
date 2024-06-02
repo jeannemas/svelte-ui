@@ -46,7 +46,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
+        <Form.Label>Disabled</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
@@ -60,7 +60,7 @@
 
     <Form.Field name="size" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Size</Form.Label>
+        <Form.Label>Size</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -87,7 +87,7 @@
 
     <Form.Field name="variant" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Variant</Form.Label>
+        <Form.Label>Variant</Form.Label>
 
         <Select.Root
           {...constraints}

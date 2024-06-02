@@ -38,7 +38,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
+        <Form.Label>Breakpoint</Form.Label>
 
         <Select.Root
           {...constraints}

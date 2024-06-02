@@ -38,7 +38,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="orientation" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Orientation</Form.Label>
+        <Form.Label>Orientation</Form.Label>
 
         <Select.Root
           {...constraints}

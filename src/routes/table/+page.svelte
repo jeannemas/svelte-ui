@@ -28,7 +28,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="hoverable" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Hoverable</Form.Label>
+        <Form.Label>Hoverable</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.hoverable}" />
       </Form.Control>

@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { getFormControl, type LabelAttrs } from 'formsnap';
+  import { getFormControl, getFormField, type LabelAttrs } from 'formsnap';
   import type { Readable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
@@ -17,7 +17,7 @@
   /**
    * The props of the label.
    */
-  export type Props = LabelProps;
+  export type Props = Omit<LabelProps, 'required'>;
   /**
    * The slots of the label.
    */
@@ -42,11 +42,11 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let el: Props['el'] = undefined;
-  export let required: Props['required'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 
-  const { labelAttrs } = getFormControl();
+  $: ({ labelAttrs } = getFormControl());
+  $: ({ constraints } = getFormField());
 </script>
 
 <!-- <style lang="postcss">
@@ -55,12 +55,12 @@
 <Label
   {...attributes}
   {...$labelAttrs}
+  {...$constraints}
   asChild="{asChild}"
   class="{labelStyles({
     class: attributes.class,
   })}"
   el="{el}"
-  required="{required}"
   let:builder
 >
   <slot builder="{builder}" labelAttrs="{labelAttrs}" />

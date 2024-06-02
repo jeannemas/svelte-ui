@@ -56,7 +56,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="closeButton" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close button</Form.Label>
+        <Form.Label>Close button</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeButton}" />
       </Form.Control>
@@ -70,7 +70,7 @@
 
     <Form.Field name="dir" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Direction</Form.Label>
+        <Form.Label>Direction</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -97,7 +97,7 @@
 
     <Form.Field name="duration" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Duration</Form.Label>
+        <Form.Label>Duration</Form.Label>
 
         <Input
           {...attrs}
@@ -119,7 +119,7 @@
 
     <Form.Field name="expand" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Expand</Form.Label>
+        <Form.Label>Expand</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.expand}" />
       </Form.Control>
@@ -133,7 +133,7 @@
 
     <Form.Field name="gap" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Gap</Form.Label>
+        <Form.Label>Gap</Form.Label>
 
         <Input
           {...attrs}
@@ -155,7 +155,7 @@
 
     <Form.Field name="invert" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Invert</Form.Label>
+        <Form.Label>Invert</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.invert}" />
       </Form.Control>
@@ -169,7 +169,7 @@
 
     <Form.Field name="offset" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Offset</Form.Label>
+        <Form.Label>Offset</Form.Label>
 
         <Input
           {...attrs}
@@ -191,7 +191,7 @@
 
     <Form.Field name="position" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Position</Form.Label>
+        <Form.Label>Position</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -218,7 +218,7 @@
 
     <Form.Field name="richColors" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Rich colors</Form.Label>
+        <Form.Label>Rich colors</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.richColors}" />
       </Form.Control>
@@ -232,7 +232,7 @@
 
     <Form.Field name="theme" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Theme</Form.Label>
+        <Form.Label>Theme</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -259,7 +259,7 @@
 
     <Form.Field name="visibleToasts" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Visible toasts</Form.Label>
+        <Form.Label>Visible toasts</Form.Label>
 
         <Input
           {...attrs}

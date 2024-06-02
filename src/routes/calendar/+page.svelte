@@ -40,7 +40,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
+        <Form.Label>Breakpoint</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -67,7 +67,7 @@
 
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
+        <Form.Label>Disabled</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
@@ -81,7 +81,7 @@
 
     <Form.Field name="fixedWeeks" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Fixed weeks</Form.Label>
+        <Form.Label>Fixed weeks</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.fixedWeeks}" />
       </Form.Control>
@@ -95,7 +95,7 @@
 
     <Form.Field name="numberOfMonths" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Number of months</Form.Label>
+        <Form.Label>Number of months</Form.Label>
 
         <Input {...attrs} {...constraints} variant="number" bind:value="{$props.numberOfMonths}" />
       </Form.Control>
@@ -109,7 +109,7 @@
 
     <Form.Field name="pagedNavigation" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Paged navigation</Form.Label>
+        <Form.Label>Paged navigation</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.pagedNavigation}" />
       </Form.Control>
@@ -123,7 +123,7 @@
 
     <Form.Field name="preventDeselect" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Prevent deselect</Form.Label>
+        <Form.Label>Prevent deselect</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.preventDeselect}" />
       </Form.Control>
@@ -137,7 +137,7 @@
 
     <Form.Field name="readonly" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Readonly</Form.Label>
+        <Form.Label>Readonly</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.readonly}" />
       </Form.Control>

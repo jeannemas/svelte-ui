@@ -35,7 +35,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on escape</Form.Label>
+        <Form.Label>Close on escape</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
       </Form.Control>
@@ -49,7 +49,7 @@
 
     <Form.Field name="closeOnOutsideClick" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on outside click</Form.Label>
+        <Form.Label>Close on outside click</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
       </Form.Control>

@@ -43,7 +43,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="activateOnFocus" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Activate on focus</Form.Label>
+        <Form.Label>Activate on focus</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.activateOnFocus}" />
       </Form.Control>
@@ -57,7 +57,7 @@
 
     <Form.Field name="loop" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Loop</Form.Label>
+        <Form.Label>Loop</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.loop}" />
       </Form.Control>
@@ -71,7 +71,7 @@
 
     <Form.Field name="orientation" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Orientation</Form.Label>
+        <Form.Label>Orientation</Form.Label>
 
         <Select.Root
           items="{data.orientations}"

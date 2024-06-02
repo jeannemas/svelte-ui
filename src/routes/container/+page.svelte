@@ -28,7 +28,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="xAxis" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">X axis</Form.Label>
+        <Form.Label>X axis</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.xAxis}" />
       </Form.Control>
@@ -42,7 +42,7 @@
 
     <Form.Field name="yAxis" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Y axis</Form.Label>
+        <Form.Label>Y axis</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.yAxis}" />
       </Form.Control>

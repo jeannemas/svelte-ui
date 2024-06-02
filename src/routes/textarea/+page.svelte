@@ -50,7 +50,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="disabled" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Disabled</Form.Label>
+        <Form.Label>Disabled</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disabled}" />
       </Form.Control>
@@ -64,7 +64,7 @@
 
     <Form.Field name="placeholder" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Placeholder</Form.Label>
+        <Form.Label>Placeholder</Form.Label>
 
         <Textarea {...attrs} {...constraints} bind:value="{$props.placeholder}" />
       </Form.Control>
@@ -78,7 +78,7 @@
 
     <Form.Field name="readonly" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Readonly</Form.Label>
+        <Form.Label>Readonly</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.readonly}" />
       </Form.Control>
@@ -95,7 +95,7 @@
     <Form.Root class="flex flex-col gap-y-2" debug superForm="{demoSuperForm}">
       <Form.Field name="bio" superForm="{demoSuperForm}" let:constraints>
         <Form.Control let:attrs>
-          <Form.Label required="{constraints?.required}">Bio</Form.Label>
+          <Form.Label>Bio</Form.Label>
 
           <Textarea {...attrs} {...constraints} {...$props} bind:value="{$demoSuperFormData.bio}" />
         </Form.Control>

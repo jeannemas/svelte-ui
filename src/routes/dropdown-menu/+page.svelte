@@ -40,7 +40,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="closeOnEscape" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on escape</Form.Label>
+        <Form.Label>Close on escape</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnEscape}" />
       </Form.Control>
@@ -54,7 +54,7 @@
 
     <Form.Field name="closeOnItemClick" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on item click</Form.Label>
+        <Form.Label>Close on item click</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnItemClick}" />
       </Form.Control>
@@ -68,7 +68,7 @@
 
     <Form.Field name="closeOnOutsideClick" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Close on outside click</Form.Label>
+        <Form.Label>Close on outside click</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.closeOnOutsideClick}" />
       </Form.Control>
@@ -82,7 +82,7 @@
 
     <Form.Field name="dir" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Direction</Form.Label>
+        <Form.Label>Direction</Form.Label>
 
         <Select.Root
           {...constraints}
@@ -109,7 +109,7 @@
 
     <Form.Field name="disableFocusFirstItem" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Disable focus first item</Form.Label>
+        <Form.Label>Disable focus first item</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.disableFocusFirstItem}" />
       </Form.Control>
@@ -123,7 +123,7 @@
 
     <Form.Field name="loop" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Loop</Form.Label>
+        <Form.Label>Loop</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.loop}" />
       </Form.Control>
@@ -137,7 +137,7 @@
 
     <Form.Field name="preventScroll" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Prevent scroll</Form.Label>
+        <Form.Label>Prevent scroll</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.preventScroll}" />
       </Form.Control>
@@ -151,7 +151,7 @@
 
     <Form.Field name="typeahead" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Typeahead</Form.Label>
+        <Form.Label>Typeahead</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.typeahead}" />
       </Form.Control>

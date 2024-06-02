@@ -29,7 +29,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="count" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Count</Form.Label>
+        <Form.Label>Count</Form.Label>
 
         <Input
           {...attrs}
@@ -50,7 +50,7 @@
 
     <Form.Field name="perPage" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Per page</Form.Label>
+        <Form.Label>Per page</Form.Label>
 
         <Input
           {...attrs}
@@ -71,7 +71,7 @@
 
     <Form.Field name="siblingCount" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Sibling count</Form.Label>
+        <Form.Label>Sibling count</Form.Label>
 
         <Input
           {...attrs}

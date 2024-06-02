@@ -39,7 +39,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="debug" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Debug</Form.Label>
+        <Form.Label>Debug</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.debug}" />
       </Form.Control>
@@ -56,7 +56,7 @@
     <Form.Root {...$props} superForm="{superForm}">
       <Form.Field name="username" superForm="{superForm}" let:constraints>
         <Form.Control let:attrs>
-          <Form.Label required="{constraints?.required}">Placeholder</Form.Label>
+          <Form.Label>Placeholder</Form.Label>
 
           <Input
             {...attrs}

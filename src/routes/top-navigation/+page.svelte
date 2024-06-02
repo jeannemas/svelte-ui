@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
+  import type { Selected } from 'bits-ui';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import type { Selected } from 'bits-ui';
 
   import { afterNavigate } from '$app/navigation';
   import * as Form from '$lib/components/form/index.js';
@@ -50,7 +50,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="breakpoint" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Breakpoint</Form.Label>
+        <Form.Label>Breakpoint</Form.Label>
 
         <Select.Root
           items="{data.breakpoints}"

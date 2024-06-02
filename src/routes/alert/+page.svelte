@@ -38,7 +38,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="variant" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Variant</Form.Label>
+        <Form.Label>Variant</Form.Label>
 
         <Select.Root
           {...constraints}

@@ -29,7 +29,7 @@
   <svelte:fragment slot="config">
     <Form.Field name="required" superForm="{form}" let:constraints>
       <Form.Control let:attrs>
-        <Form.Label required="{constraints?.required}">Required</Form.Label>
+        <Form.Label>Required</Form.Label>
 
         <Switch.Root {...attrs} {...constraints} bind:checked="{$props.required}" />
       </Form.Control>
