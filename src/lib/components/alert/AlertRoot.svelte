@@ -1,8 +1,11 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
   import type { EmptyObject } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   /**
    * The attributes of the root.
@@ -40,8 +43,8 @@
     },
     variants: {
       variant: {
-        default: ['border-border bg-background text-foreground'],
-        destructive: ['border-destructive bg-destructive/5 text-destructive'],
+        default: ['border-border bg-background'],
+        destructive: ['border-destructive bg-destructive/5'],
       },
     },
   });
@@ -55,10 +58,39 @@
   export let variant: Props['variant'] = rootStyles.defaultVariants.variant;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($rootCtx) => ({
+    ...$rootCtx,
+    variant,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The root of the alert component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+None.
+
+### Props
+
+- `variant` - The variant of the alert.
+
+### Slots
+
+- `default` - The default slot.
+-->
 
 <div
   {...attributes}

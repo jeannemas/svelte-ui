@@ -4,6 +4,8 @@
 
   import type { EmptyObject, HeadingLevel } from '$lib/utils/types.js';
 
+  import { rootContext } from './context.js';
+
   /**
    * The attributes of the title.
    */
@@ -29,6 +31,12 @@
    */
   export const titleStyles = tv({
     base: ['mb-2 font-medium leading-none tracking-tight'],
+    variants: {
+      variant: {
+        default: ['text-foreground'],
+        destructive: ['text-destructive'],
+      },
+    },
   });
 </script>
 
@@ -41,16 +49,49 @@
   export let level: TypedProps['level'] = 'h5' as TypedProps['level'];
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Alert.Title must be used within an Alert.Root component.');
+  }
+
+  $: ({ variant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The title of the alert component.
+
+Must be used within an `Alert.Root` component.
+
+### Attributes
+
+Accepts the attributes of a heading element.
+
+### Events
+
+None.
+
+### Props
+
+- `level` - The heading level.
+
+### Slots
+
+- `default` - The default slot.
+-->
 
 <svelte:element
   this="{level}"
   {...attributes}
   class="{titleStyles({
     class: attributes.class,
+    variant,
   })}"
 >
   <slot />

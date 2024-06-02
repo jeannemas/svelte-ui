@@ -24,9 +24,9 @@
   $: selectedVariant = {
     label: $props.variant,
     value: $props.variant,
-  } satisfies Selected<Alert.RootVariant>;
+  } satisfies Selected<Alert.Variant>;
 
-  function handleVariantChange(selected?: Selected<Alert.RootVariant>) {
+  function handleVariantChange(selected?: Selected<Alert.Variant>) {
     $props.variant = selected!.value;
   }
 </script>
