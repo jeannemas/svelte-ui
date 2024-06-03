@@ -5,6 +5,8 @@
 
   import type { ComponentInfo, HeadingLevel } from '$lib/utils/types.js';
 
+  import { contentContext, rootContext } from './context.js';
+
   type Primitive = ComponentInfo<AlertDialogPrimitive.Title>;
 
   /**
@@ -30,6 +32,12 @@
    */
   export const titleStyles = tv({
     base: ['text-lg font-semibold'],
+    variants: {
+      variant: {
+        default: ['text-foreground'],
+        destructive: ['text-red-500'],
+      },
+    },
   });
 </script>
 
@@ -44,16 +52,54 @@
   export let level: TypedProps['level'] = 'h3' as TypedProps['level'];
 
   $: attributes = $$restProps as Attributes;
+
+  const contentCtx = contentContext.get();
+
+  if (!contentCtx) {
+    throw new Error('AlertDialog.Title must be used within an AlertDialog.Content component.');
+  }
+
+  const rootCtx = rootContext.get();
+
+  $: ({ variant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The title of the alert dialog component.
+
+Must be used within an `AlertDialog.Content` component.
+
+### Attributes
+
+Accepts the attributes of a heading element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+- `level` - The heading level.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
 
 <AlertDialogPrimitive.Title
   {...attributes}
   asChild="{asChild}"
   class="{titleStyles({
     class: attributes.class,
+    variant,
   })}"
   el="{el}"
   level="{level}"

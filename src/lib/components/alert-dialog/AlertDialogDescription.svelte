@@ -5,6 +5,8 @@
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { contentContext, rootContext } from './context.js';
+
   type Primitive = ComponentInfo<AlertDialogPrimitive.Description>;
 
   /**
@@ -24,7 +26,13 @@
    * The styles of the description.
    */
   export const descriptionStyles = tv({
-    base: ['text-sm text-muted-foreground'],
+    base: ['text-sm'],
+    variants: {
+      variant: {
+        default: ['text-muted-foreground'],
+        destructive: ['text-red-500'],
+      },
+    },
   });
 </script>
 
@@ -37,16 +45,53 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const contentCtx = contentContext.get();
+
+  if (!contentCtx) {
+    throw new Error('AlertDialog.Title must be used within an AlertDialog.Content component.');
+  }
+
+  const rootCtx = rootContext.get();
+
+  $: ({ variant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The description of the alert dialog component.
+
+Must be used within an `AlertDialog.Content` component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
 
 <AlertDialogPrimitive.Description
   {...attributes}
   asChild="{asChild}"
   class="{descriptionStyles({
     class: attributes.class,
+    variant,
   })}"
   el="{el}"
   let:builder

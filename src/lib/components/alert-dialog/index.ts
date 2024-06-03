@@ -27,20 +27,6 @@ export {
   type Slots as DescriptionSlots,
 } from './AlertDialogDescription.svelte';
 export {
-  default as Footer,
-  footerStyles,
-  type Attributes as FooterAttributes,
-  type Props as FooterProps,
-  type Slots as FooterSlots,
-} from './AlertDialogFooter.svelte';
-export {
-  default as Header,
-  headerStyles,
-  type Attributes as HeaderAttributes,
-  type Props as HeaderProps,
-  type Slots as HeaderSlots,
-} from './AlertDialogHeader.svelte';
-export {
   default as Overlay,
   overlayStyles,
   type Attributes as OverlayAttributes,
@@ -57,11 +43,11 @@ export {
 export {
   default as Root,
   rootStyles,
+  type Breakpoint,
   type Attributes as RootAttributes,
-  type Breakpoint as RootBreakpoint,
   type Props as RootProps,
   type Slots as RootSlots,
-  type Variant as RootVariant,
+  type Variant,
 } from './AlertDialogRoot.svelte';
 export {
   default as Title,

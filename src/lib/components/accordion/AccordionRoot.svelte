@@ -96,6 +96,26 @@ None.
 
 - `default` - The default slot.
   - `builder` - The builder object, provided when `asChild=true`.
+
+### Components hierarchy
+
+```html
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Header>
+      <Accordion.Trigger>
+        ...
+      </Accordion.Trigger>
+    </Accordion.Header>
+
+    <Accordion.Content>
+      ...
+    </Accordion.Content>
+  </Accordion.Item>
+
+  ...
+</Accordion.Root>
+```
 -->
 
 <AccordionPrimitive.Root

@@ -27,7 +27,7 @@
    * The styles of the field errors.
    */
   export const fieldErrorsStyles = tv({
-    base: ['text-sm font-medium text-destructive'],
+    base: ['text-sm font-medium text-red-500'],
   });
 </script>
 

@@ -34,7 +34,7 @@
     variants: {
       variant: {
         default: ['text-foreground'],
-        destructive: ['text-destructive'],
+        destructive: ['text-red-500'],
       },
     },
   });

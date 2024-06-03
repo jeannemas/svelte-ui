@@ -44,7 +44,7 @@
     variants: {
       variant: {
         default: ['border-border bg-background'],
-        destructive: ['border-destructive bg-destructive/5'],
+        destructive: ['border-red-500 bg-red-50'],
       },
     },
   });
@@ -90,6 +90,20 @@ None.
 ### Slots
 
 - `default` - The default slot.
+
+### Components hierarchy
+
+```html
+<Alert.Root>
+  <Alert.Title>
+    ...
+  </Alert.Title>
+
+  <Alert.Description>
+    ...
+  </Alert.Description>
+</Alert.Root>
+```
 -->
 
 <div

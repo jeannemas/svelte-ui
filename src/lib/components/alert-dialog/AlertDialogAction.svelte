@@ -3,10 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { buttonStyles } from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
-  import { rootContext } from './context.js';
+  import { contentContext } from './context.js';
 
   type Primitive = ComponentInfo<AlertDialogPrimitive.Action>;
 
@@ -27,13 +26,7 @@
    * The styles of the action.
    */
   export const actionStyles = tv({
-    base: [...buttonStyles.base],
-    defaultVariants: {
-      ...buttonStyles.defaultVariants,
-    },
-    variants: {
-      ...buttonStyles.variants,
-    },
+    base: [''],
   });
 </script>
 
@@ -47,25 +40,48 @@
 
   $: attributes = $$restProps as Attributes;
 
-  const rootCtx = rootContext.get();
+  const contentCtx = contentContext.get();
 
-  if (!rootCtx) {
-    throw new Error('AlertDialog.Action must be used within an AlertDialog.Root component.');
+  if (!contentCtx) {
+    throw new Error('AlertDialog.Action must be used within an AlertDialog.Content component.');
   }
-
-  $: ({ variant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The action for the alert dialog.
+
+Must be used within an `AlertDialog.Content` component.
+
+### Attributes
+
+Accepts the attributes of a `button` element.
+
+### Events
+
+- `click` - Dispatched when the trigger is clicked.
+- `keydown` - Dispatched when a key is pressed down on the trigger.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
 
 <AlertDialogPrimitive.Action
   {...attributes}
   asChild="{asChild}"
   class="{actionStyles({
     class: attributes.class,
-    size: 'default',
-    variant,
   })}"
   el="{el}"
   let:builder

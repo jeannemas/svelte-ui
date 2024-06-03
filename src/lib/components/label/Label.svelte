@@ -28,7 +28,7 @@
   export const labelStyles = tv({
     base: [
       'text-sm font-medium leading-none',
-      'after:text-destructive',
+      'after:text-red-500',
       'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
     ],
     defaultVariants: {
@@ -36,7 +36,7 @@
     },
     variants: {
       required: {
-        true: ["after:text-destructive after:content-['_*']"],
+        true: ["after:content-['_*']"],
       },
     },
   });

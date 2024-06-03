@@ -1,20 +1,13 @@
 <script context="module" lang="ts">
   import { AlertDialog as AlertDialogPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
-  import AlertDialogOverlay, {
-    type Attributes as AlertDialogOverlayAttributes,
-    type Props as AlertDialogOverlayProps,
-  } from './AlertDialogOverlay.svelte';
-  import AlertDialogPortal, {
-    type Attributes as AlertDialogPortalAttributes,
-    type Props as AlertDialogPortalProps,
-  } from './AlertDialogPortal.svelte';
-  import { rootContext } from './context.js';
+  import { contentContext, portalContext, rootContext } from './context.js';
 
   type Primitive<
     TContentTransition extends Transition = Transition,
@@ -35,23 +28,10 @@
     TContentTransition extends Transition = Transition,
     TContentTransitionIn extends Transition = Transition,
     TContentTransitionOut extends Transition = Transition,
-    TOverlayTransition extends Transition = Transition,
-    TOverlayTransitionIn extends Transition = Transition,
-    TOverlayTransitionOut extends Transition = Transition,
   > = Omit<
     Primitive<TContentTransition, TContentTransitionIn, TContentTransitionOut>['props'],
     keyof Attributes
-  > & {
-    /**
-     * The attributes and props for the overlay.
-     */
-    overlayAttributesAndProps?: AlertDialogOverlayAttributes &
-      AlertDialogOverlayProps<TOverlayTransition, TOverlayTransitionIn, TOverlayTransitionOut>;
-    /**
-     * The attributes and props for the portal.
-     */
-    portalAttributesAndProps?: AlertDialogPortalAttributes & AlertDialogPortalProps;
-  };
+  >;
   /**
    * The slots of the content.
    */
@@ -75,8 +55,8 @@
         lg: ['lg:max-w-2xl'],
       },
       variant: {
-        default: ['border-border bg-background text-foreground'],
-        destructive: ['border-destructive bg-destructive/5 text-destructive'],
+        default: ['border-border bg-background'],
+        destructive: ['border-red-500 bg-red-50'],
       },
     },
   });
@@ -87,9 +67,6 @@
     TContentTransition extends Transition = Transition,
     TContentTransitionIn extends Transition = Transition,
     TContentTransitionOut extends Transition = Transition,
-    TOverlayTransition extends Transition = Transition,
-    TOverlayTransitionIn extends Transition = Transition,
-    TOverlayTransitionOut extends Transition = Transition,
   "
   lang="ts"
 >
@@ -100,14 +77,7 @@
   >['events'];
   type $$Props = Attributes & TypedProps;
   type $$Slots = Slots<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
-  type TypedProps = Props<
-    TContentTransition,
-    TContentTransitionIn,
-    TContentTransitionOut,
-    TOverlayTransition,
-    TOverlayTransitionIn,
-    TOverlayTransitionOut
-  >;
+  type TypedProps = Props<TContentTransition, TContentTransitionIn, TContentTransitionOut>;
 
   export let asChild: TypedProps['asChild'] = undefined;
   export let el: TypedProps['el'] = undefined;
@@ -115,18 +85,24 @@
   export let inTransitionConfig: TypedProps['inTransitionConfig'] = undefined;
   export let outTransition: TypedProps['outTransition'] = undefined;
   export let outTransitionConfig: TypedProps['outTransitionConfig'] = undefined;
-  export let overlayAttributesAndProps: TypedProps['overlayAttributesAndProps'] = undefined;
-  export let portalAttributesAndProps: TypedProps['portalAttributesAndProps'] = undefined;
   export let transition: TypedProps['transition'] = flyAndScale as TypedProps['transition'];
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
   $: attributes = $$restProps as Attributes;
 
-  const rootCtx = rootContext.get();
+  const portalCtx = portalContext.get();
 
-  if (!rootCtx) {
-    throw new Error('AlertDialog.Content must be used within an AlertDialog.Root component.');
+  if (!portalCtx) {
+    throw new Error('AlertDialog.Content must be used within an AlertDialog.Portal component.');
   }
+
+  const contentCtx = contentContext.set(writable());
+
+  contentCtx.update(($contentCtx) => ({
+    ...$contentCtx,
+  }));
+
+  const rootCtx = rootContext.get();
 
   $: ({ breakpoint, variant } = $rootCtx!);
 </script>
@@ -134,33 +110,67 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<AlertDialogPortal {...portalAttributesAndProps}>
-  <AlertDialogOverlay {...overlayAttributesAndProps} />
+<!--
+@component
 
-  <AlertDialogPrimitive.Content
-    {...attributes}
-    asChild="{asChild}"
-    class="{contentStyles({
-      breakpoint,
-      class: attributes.class,
-      variant,
-    })}"
-    el="{el}"
-    inTransition="{inTransition}"
-    inTransitionConfig="{inTransitionConfig}"
-    outTransition="{outTransition}"
-    outTransitionConfig="{outTransitionConfig}"
-    transition="{transition}"
-    transitionConfig="{transitionConfig}"
-    let:builder
-    on:pointerdown
-    on:pointermove
-    on:pointerup
-    on:touchcancel
-    on:touchend
-    on:touchmove
-    on:touchstart
-  >
-    <slot builder="{builder}" />
-  </AlertDialogPrimitive.Content>
-</AlertDialogPortal>
+The content of the alert dialog.
+
+Must be used within an `AlertDialog.Portal` component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+- `pointerdown`
+- `pointermove`
+- `pointerup`
+- `touchcancel`
+- `touchend`
+- `touchmove`
+- `touchstart`
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+- `inTransition` - A transition function to use during the in transition. If provided, this will override the `transition` function.
+- `inTransitionConfig` - The configuration to pass to the `inTransition` function.
+- `outTransition` - A transition function to use during the out transition. If provided, this will override the `transition` function.
+- `outTransitionConfig` - The configuration to pass to the `outTransition` function.
+- `transition` - A transition function to use during both the in and out transitions.
+- `transitionConfig` - TThe configuration to pass to the `transition` function.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
+
+<AlertDialogPrimitive.Content
+  {...attributes}
+  asChild="{asChild}"
+  class="{contentStyles({
+    breakpoint,
+    class: attributes.class,
+    variant,
+  })}"
+  el="{el}"
+  inTransition="{inTransition}"
+  inTransitionConfig="{inTransitionConfig}"
+  outTransition="{outTransition}"
+  outTransitionConfig="{outTransitionConfig}"
+  transition="{transition}"
+  transitionConfig="{transitionConfig}"
+  let:builder
+  on:pointerdown
+  on:pointermove
+  on:pointerup
+  on:touchcancel
+  on:touchend
+  on:touchmove
+  on:touchstart
+>
+  <slot builder="{builder}" />
+</AlertDialogPrimitive.Content>

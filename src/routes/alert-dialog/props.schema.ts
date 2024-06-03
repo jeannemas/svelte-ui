@@ -1,16 +1,9 @@
 import z from 'zod';
 
-import {
-  rootStyles,
-  type RootBreakpoint,
-  type RootVariant,
-} from '$lib/components/alert-dialog/index.js';
+import { rootStyles, type Breakpoint, type Variant } from '$lib/components/alert-dialog/index.js';
 
-const breakpoints = Object.keys(rootStyles.variants.breakpoint) as [
-  RootBreakpoint,
-  ...RootBreakpoint[],
-];
-const variants = Object.keys(rootStyles.variants.variant) as [RootVariant, ...RootVariant[]];
+const breakpoints = Object.keys(rootStyles.variants.breakpoint) as [Breakpoint, ...Breakpoint[]];
+const variants = Object.keys(rootStyles.variants.variant) as [Variant, ...Variant[]];
 
 export const schema = z.object({
   breakpoint: z.enum(breakpoints, {

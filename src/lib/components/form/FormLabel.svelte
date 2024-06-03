@@ -31,7 +31,7 @@
    * The styles of the label.
    */
   export const labelStyles = tv({
-    base: ['data-[fs-error]:text-destructive'],
+    base: ['data-[fs-error]:text-red-500'],
   });
 </script>
 

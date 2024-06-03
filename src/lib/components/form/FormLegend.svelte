@@ -24,7 +24,7 @@
    * The styles of the legend.
    */
   export const legendStyles = tv({
-    base: ['text-sm font-medium leading-none', 'data-[fs-error]:text-destructive'],
+    base: ['text-sm font-medium leading-none', 'data-[fs-error]:text-red-500'],
   });
 </script>
 

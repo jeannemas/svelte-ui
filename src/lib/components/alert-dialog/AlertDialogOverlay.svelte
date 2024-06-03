@@ -6,6 +6,8 @@
 
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
+  import { portalContext } from './context.js';
+
   type Primitive<
     TOverlayTransition extends Transition = Transition,
     TOverlayTransitionIn extends Transition = Transition,
@@ -42,7 +44,7 @@
    * The styles of the overlay.
    */
   export const overlayStyles = tv({
-    base: ['fixed inset-0 z-50 bg-background/80 backdrop-blur-sm'],
+    base: ['fixed inset-0 z-50 bg-background/75 backdrop-blur-sm'],
   });
 </script>
 
@@ -71,10 +73,48 @@
   };
 
   $: attributes = $$restProps as Attributes;
+
+  const portalCtx = portalContext.get();
+
+  if (!portalCtx) {
+    throw new Error('AlertDialog.Overlay must be used within an AlertDialog.Portal component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The overlay of the alert dialog.
+
+Must be used within an `AlertDialog.Portal` component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+- `inTransition` - A transition function to use during the in transition. If provided, this will override the `transition` function.
+- `inTransitionConfig` - The configuration to pass to the `inTransition` function.
+- `outTransition` - A transition function to use during the out transition. If provided, this will override the `transition` function.
+- `outTransitionConfig` - The configuration to pass to the `outTransition` function.
+- `transition` - A transition function to use during both the in and out transitions.
+- `transitionConfig` - TThe configuration to pass to the `transition` function.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
 
 <AlertDialogPrimitive.Overlay
   {...attributes}
@@ -89,4 +129,7 @@
   outTransitionConfig="{outTransitionConfig}"
   transition="{transition}"
   transitionConfig="{transitionConfig}"
-/>
+  let:builder
+>
+  <slot builder="{builder}" />
+</AlertDialogPrimitive.Overlay>

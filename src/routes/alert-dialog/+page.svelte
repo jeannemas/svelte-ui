@@ -26,16 +26,16 @@
   $: selectedBreakpoint = {
     label: $props.breakpoint,
     value: $props.breakpoint,
-  } satisfies Selected<AlertDialog.RootBreakpoint>;
+  } satisfies Selected<AlertDialog.Breakpoint>;
   $: selectedVariant = {
     label: $props.variant,
     value: $props.variant,
-  } satisfies Selected<AlertDialog.RootVariant>;
+  } satisfies Selected<AlertDialog.Variant>;
 
-  function handleBreakpointChange(selected?: Selected<AlertDialog.RootBreakpoint>) {
+  function handleBreakpointChange(selected?: Selected<AlertDialog.Breakpoint>) {
     $props.breakpoint = selected!.value;
   }
-  function handleVariantChange(selected?: Selected<AlertDialog.RootVariant>) {
+  function handleVariantChange(selected?: Selected<AlertDialog.Variant>) {
     $props.variant = selected!.value;
   }
 </script>
@@ -148,22 +148,31 @@
         <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
       </AlertDialog.Trigger>
 
-      <AlertDialog.Content>
-        <AlertDialog.Header>
+      <AlertDialog.Portal>
+        <AlertDialog.Overlay />
+
+        <AlertDialog.Content>
           <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
 
           <AlertDialog.Description>
             This action cannot be undone. This will permanently delete your account and remove your
             data from our servers.
           </AlertDialog.Description>
-        </AlertDialog.Header>
 
-        <AlertDialog.Footer>
-          <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+          <AlertDialog.Action asChild let:builder>
+            <Button
+              builders="{[builder]}"
+              variant="{$props.variant === 'destructive' ? 'destructive' : 'default'}"
+            >
+              Continue
+            </Button>
+          </AlertDialog.Action>
 
-          <AlertDialog.Action>Continue</AlertDialog.Action>
-        </AlertDialog.Footer>
-      </AlertDialog.Content>
+          <AlertDialog.Cancel asChild let:builder>
+            <Button builders="{[builder]}" variant="ghost">Cancel</Button>
+          </AlertDialog.Cancel>
+        </AlertDialog.Content>
+      </AlertDialog.Portal>
     </AlertDialog.Root>
   </svelte:fragment>
 </ComponentDemoLayout>
