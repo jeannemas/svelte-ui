@@ -2,7 +2,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import Label from '$lib/components/label/index.js';
@@ -89,7 +89,7 @@
   <svelte:fragment slot="demo">
     <Popover.Root {...$props}>
       <Popover.Trigger asChild let:builder>
-        <Button builders="{[builder]}" variant="outline">Open</Button>
+        <Button.Root builders="{[builder]}" variant="outline">Open</Button.Root>
       </Popover.Trigger>
 
       <Popover.Content>

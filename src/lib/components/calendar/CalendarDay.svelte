@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { buttonStyles } from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<CalendarPrimitive.Day>;
@@ -26,7 +26,7 @@
    */
   export const dayStyles = tv({
     base: [
-      buttonStyles({ variant: 'ghost' }),
+      Button.rootStyles({ variant: 'ghost' }),
 
       'size-8 p-0 font-normal ',
       '[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent-foreground',

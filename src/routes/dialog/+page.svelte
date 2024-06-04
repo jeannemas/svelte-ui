@@ -2,7 +2,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Dialog from '$lib/components/dialog/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
@@ -75,7 +75,7 @@
   <svelte:fragment slot="demo">
     <Dialog.Root {...$props}>
       <Dialog.Trigger asChild let:builder>
-        <Button builders="{[builder]}" variant="outline">Edit Profile</Button>
+        <Button.Root builders="{[builder]}" variant="outline">Edit Profile</Button.Root>
       </Dialog.Trigger>
 
       <Dialog.Content class="sm:max-w-[425px]">
@@ -102,7 +102,7 @@
         </div>
 
         <Dialog.Footer>
-          <Button type="submit">Save changes</Button>
+          <Button.Root type="submit">Save changes</Button.Root>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

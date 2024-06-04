@@ -3,7 +3,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as DropdownMenu from '$lib/components/dropdown-menu/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
@@ -167,7 +167,7 @@
   <svelte:fragment slot="demo">
     <DropdownMenu.Root {...$props}>
       <DropdownMenu.Trigger asChild let:builder>
-        <Button builders="{[builder]}" variant="outline">Open</Button>
+        <Button.Root builders="{[builder]}" variant="outline">Open</Button.Root>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content class="w-64">

@@ -5,7 +5,7 @@
   import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import Container from '$lib/components/container/index.js';
   import type { EmptyObject } from '$lib/utils/types.js';
@@ -143,13 +143,13 @@
   bind:open="{open}"
 >
   <Collapsible.Trigger asChild let:builder>
-    <Button builders="{[builder]}" class="m-2" size="icon" type="button" variant="outline">
+    <Button.Root builders="{[builder]}" class="m-2" size="icon" type="button" variant="outline">
       {#if open}
         <XIcon />
       {:else}
         <AlignJustifyIcon />
       {/if}
-    </Button>
+    </Button.Root>
   </Collapsible.Trigger>
 
   <Collapsible.Content class="flex flex-col justify-between pb-2">

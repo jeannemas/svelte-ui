@@ -4,7 +4,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
 
   import * as AlertDialog from '$lib/components/alert-dialog/index.js';
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import * as Switch from '$lib/components/switch/index.js';
@@ -145,7 +145,7 @@
   <svelte:fragment slot="demo">
     <AlertDialog.Root {...$props} portal="{null}">
       <AlertDialog.Trigger asChild let:builder>
-        <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
+        <Button.Root builders="{[builder]}" variant="outline">Show Dialog</Button.Root>
       </AlertDialog.Trigger>
 
       <AlertDialog.Portal>
@@ -160,16 +160,16 @@
           </AlertDialog.Description>
 
           <AlertDialog.Action asChild let:builder>
-            <Button
+            <Button.Root
               builders="{[builder]}"
               variant="{$props.variant === 'danger' ? 'danger' : 'default'}"
             >
               Continue
-            </Button>
+            </Button.Root>
           </AlertDialog.Action>
 
           <AlertDialog.Cancel asChild let:builder>
-            <Button builders="{[builder]}" variant="ghost">Cancel</Button>
+            <Button.Root builders="{[builder]}" variant="ghost">Cancel</Button.Root>
           </AlertDialog.Cancel>
         </AlertDialog.Content>
       </AlertDialog.Portal>

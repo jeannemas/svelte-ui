@@ -1,9 +1,12 @@
 import z from 'zod';
 
-import { buttonStyles, type Size, type Variant } from '$lib/components/button/index.js';
+import * as Button from '$lib/components/button/index.js';
 
-const sizes = Object.keys(buttonStyles.variants.size) as [Size, ...Size[]];
-const variants = Object.keys(buttonStyles.variants.variant) as [Variant, ...Variant[]];
+const sizes = Object.keys(Button.rootStyles.variants.size) as [Button.Size, ...Button.Size[]];
+const variants = Object.keys(Button.rootStyles.variants.variant) as [
+  Button.Variant,
+  ...Button.Variant[],
+];
 
 export const schema = z.object({
   disabled: z.boolean({

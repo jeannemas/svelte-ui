@@ -3,7 +3,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Card from '$lib/components/card/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
@@ -82,9 +82,9 @@
       </Card.Content>
 
       <Card.Footer class="flex flex-row justify-between">
-        <Button variant="outline">Cancel</Button>
+        <Button.Root variant="outline">Cancel</Button.Root>
 
-        <Button>Deploy</Button>
+        <Button.Root>Deploy</Button.Root>
       </Card.Footer>
     </Card.Root>
   </svelte:fragment>

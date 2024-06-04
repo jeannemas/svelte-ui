@@ -2,7 +2,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Pagination from '$lib/components/pagination/index.js';
@@ -96,11 +96,11 @@
       <Pagination.Content>
         <Pagination.Item>
           <Pagination.PreviousButton asChild let:builder>
-            <Button builders="{[builder]}" class="gap-x-1" variant="ghost">
+            <Button.Root builders="{[builder]}" class="gap-x-1" variant="ghost">
               ←
 
               <span class="hidden sm:block">Previous</span>
-            </Button>
+            </Button.Root>
           </Pagination.PreviousButton>
         </Pagination.Item>
 
@@ -120,11 +120,11 @@
 
         <Pagination.Item>
           <Pagination.NextButton asChild let:builder>
-            <Button builders="{[builder]}" class="gap-x-1" variant="ghost">
+            <Button.Root builders="{[builder]}" class="gap-x-1" variant="ghost">
               <span class="hidden sm:block">Next</span>
 
               →
-            </Button>
+            </Button.Root>
           </Pagination.NextButton>
         </Pagination.Item>
       </Pagination.Content>

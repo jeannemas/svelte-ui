@@ -2,7 +2,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Collapsible from '$lib/components/collapsible/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Switch from '$lib/components/switch/index.js';
@@ -45,9 +45,9 @@
   <svelte:fragment slot="demo">
     <Collapsible.Root {...$props}>
       <Collapsible.Trigger asChild let:builder>
-        <Button builders="{[builder]}">
+        <Button.Root builders="{[builder]}">
           Toggle collapsible, state: {builder['data-state']}
-        </Button>
+        </Button.Root>
       </Collapsible.Trigger>
 
       <Collapsible.Content class="bg-slate-300">

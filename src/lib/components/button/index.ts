@@ -1,9 +1,9 @@
 export {
-  default,
-  buttonStyles,
-  type Attributes,
-  type Props,
+  default as Root,
+  rootStyles,
+  type Attributes as RootAttributes,
+  type Props as RootProps,
+  type Slots as RootSlots,
   type Size,
-  type Slots,
   type Variant,
-} from './Button.svelte';
+} from './ButtonRoot.svelte';

@@ -3,7 +3,7 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { buttonStyles, type Props as ButtonProps } from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   type Primitive = ComponentInfo<PaginationPrimitive.Page>;
@@ -16,7 +16,7 @@
    * The props of the link.
    */
   export type Props = Omit<Primitive['props'], keyof Attributes> &
-    Omit<ButtonProps, 'variant'> & {
+    Omit<Button.RootProps, 'variant'> & {
       isActive?: boolean;
     };
   /**
@@ -28,12 +28,12 @@
    * The styles of the link.
    */
   export const linkStyles = tv({
-    base: [...buttonStyles.base],
+    base: [...Button.rootStyles.base],
     defaultVariants: {
-      ...buttonStyles.defaultVariants,
+      ...Button.rootStyles.defaultVariants,
     },
     variants: {
-      ...buttonStyles.variants,
+      ...Button.rootStyles.variants,
     },
   });
 </script>

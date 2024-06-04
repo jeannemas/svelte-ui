@@ -4,7 +4,7 @@
   import { zod, zodClient } from 'sveltekit-superforms/adapters';
   import z from 'zod';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Sonner from '$lib/components/sonner/index.js';
   import * as Switch from '$lib/components/switch/index.js';
@@ -107,7 +107,7 @@
         <Form.FieldErrors />
       </Form.Field>
 
-      <Button class="w-full" type="submit">Submit</Button>
+      <Button.Root class="w-full" type="submit">Submit</Button.Root>
     </Form.Root>
 
     <Sonner closeButton duration="{10_000}" position="bottom-right" />

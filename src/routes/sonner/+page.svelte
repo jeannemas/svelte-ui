@@ -4,7 +4,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import Input from '$lib/components/input/index.js';
   import * as Select from '$lib/components/select/index.js';
@@ -281,7 +281,7 @@
   </svelte:fragment>
 
   <svelte:fragment slot="demo">
-    <Button
+    <Button.Root
       variant="outline"
       on:click="{() =>
         toast.success('Event has been created', {
@@ -293,7 +293,7 @@
         })}"
     >
       Show Toast
-    </Button>
+    </Button.Root>
 
     <Sonner {...$props} />
   </svelte:fragment>

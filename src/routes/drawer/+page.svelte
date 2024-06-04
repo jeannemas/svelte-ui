@@ -2,7 +2,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Drawer from '$lib/components/drawer/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Switch from '$lib/components/switch/index.js';
@@ -65,7 +65,7 @@
   <svelte:fragment slot="demo">
     <Drawer.Root {...$props} dismissible shouldScaleBackground>
       <Drawer.Trigger asChild let:builder>
-        <Button builders="{[builder]}" variant="outline">Open Drawer</Button>
+        <Button.Root builders="{[builder]}" variant="outline">Open Drawer</Button.Root>
       </Drawer.Trigger>
 
       <Drawer.Content>
@@ -78,7 +78,7 @@
 
           <div class="p-4 pb-0">
             <div class="flex flex-row items-center justify-center gap-x-2">
-              <Button
+              <Button.Root
                 class="size-8 shrink-0 rounded-full"
                 disabled="{goal <= 200}"
                 size="icon"
@@ -88,7 +88,7 @@
                 -
 
                 <span class="sr-only">Decrease</span>
-              </Button>
+              </Button.Root>
 
               <div class="shrink grow basis-0 text-center">
                 <div class="text-7xl font-bold tracking-tighter">
@@ -98,7 +98,7 @@
                 <div class="text-[0.70rem] uppercase text-muted-foreground">Calories/day</div>
               </div>
 
-              <Button
+              <Button.Root
                 class="size-8 shrink-0 rounded-full"
                 disabled="{goal >= 400}"
                 size="icon"
@@ -108,15 +108,15 @@
                 +
 
                 <span class="sr-only">Increase</span>
-              </Button>
+              </Button.Root>
             </div>
           </div>
 
           <Drawer.Footer>
-            <Button>Submit</Button>
+            <Button.Root>Submit</Button.Root>
 
             <Drawer.Close asChild let:builder>
-              <Button builders="{[builder]}" variant="outline">Cancel</Button>
+              <Button.Root builders="{[builder]}" variant="outline">Cancel</Button.Root>
             </Drawer.Close>
           </Drawer.Footer>
         </div>

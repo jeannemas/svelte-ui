@@ -3,7 +3,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
-  import Button, { type Size, type Variant } from '$lib/components/button/index.js';
+  import * as Button from '$lib/components/button/index.js';
   import * as Form from '$lib/components/form/index.js';
   import * as Select from '$lib/components/select/index.js';
   import * as Switch from '$lib/components/switch/index.js';
@@ -25,16 +25,16 @@
   $: selectedSize = {
     label: $props.size,
     value: $props.size,
-  } satisfies Selected<Size>;
+  } satisfies Selected<Button.Size>;
   $: selectedVariant = {
     label: $props.variant,
     value: $props.variant,
-  } satisfies Selected<Variant>;
+  } satisfies Selected<Button.Variant>;
 
-  function handleSizeChange(selected?: Selected<Size>) {
+  function handleSizeChange(selected?: Selected<Button.Size>) {
     $props.size = selected!.value;
   }
-  function handleVariantChange(selected?: Selected<Variant>) {
+  function handleVariantChange(selected?: Selected<Button.Variant>) {
     $props.variant = selected!.value;
   }
 </script>
@@ -114,6 +114,6 @@
   </svelte:fragment>
 
   <svelte:fragment slot="demo">
-    <Button {...$props}>Lorem ipsum</Button>
+    <Button.Root {...$props}>Lorem ipsum</Button.Root>
   </svelte:fragment>
 </ComponentDemoLayout>

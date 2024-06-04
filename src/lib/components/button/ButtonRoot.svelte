@@ -1,8 +1,11 @@
 <script context="module" lang="ts">
   import { Button as ButtonPrimitive } from 'bits-ui';
+  import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive = ComponentInfo<ButtonPrimitive.Root>;
 
@@ -30,7 +33,7 @@
   /**
    * The size of the button.
    */
-  export type Size = NonNullable<VariantProps<typeof buttonStyles>['size']>;
+  export type Size = NonNullable<VariantProps<typeof rootStyles>['size']>;
   /**
    * The slots of the button.
    */
@@ -38,12 +41,12 @@
   /**
    * The variant of the button.
    */
-  export type Variant = NonNullable<VariantProps<typeof buttonStyles>['variant']>;
+  export type Variant = NonNullable<VariantProps<typeof rootStyles>['variant']>;
 
   /**
    * The styles of the button.
    */
-  export const buttonStyles = tv({
+  export const rootStyles = tv({
     base: [
       'inline-flex flex-row items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
@@ -81,18 +84,58 @@
   type $$Props = Attributes & Props;
   type $$Slots = Slots;
 
-  export let size: Props['size'] = buttonStyles.defaultVariants.size;
-  export let variant: Props['variant'] = buttonStyles.defaultVariants.variant;
+  export let size: Props['size'] = rootStyles.defaultVariants.size;
+  export let variant: Props['variant'] = rootStyles.defaultVariants.variant;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
+    size,
+    variant,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+The root of a button component.
+
+### Attributes
+
+Accepts the attributes of a `button` element.
+
+### Events
+
+- `click`
+- `keydown`
+
+### Props
+
+- `size` - The size of the button.
+- `variant` - The variant of the button.
+
+### Slots
+
+- `default` - The default slot.
+
+### Components hierarchy
+
+```html
+<Button.Root>
+  ...
+</Button.Root>
+```
+-->
+
 <ButtonPrimitive.Root
   {...attributes}
-  class="{buttonStyles({
+  class="{rootStyles({
     class: attributes.class,
     size,
     variant,
