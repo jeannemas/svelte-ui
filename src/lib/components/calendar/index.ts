@@ -85,8 +85,8 @@ export {
 export {
   default as Root,
   rootStyles,
+  type Breakpoint,
   type Attributes as RootAttributes,
-  type Breakpoint as RootBreakpoint,
   type Props as RootProps,
   type Slots as RootSlots,
 } from './CalendarRoot.svelte';

@@ -7,6 +7,8 @@
   import * as Button from '$lib/components/button/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { headerContext } from './context.js';
+
   type Primitive = ComponentInfo<CalendarPrimitive.NextButton>;
 
   /**
@@ -27,7 +29,9 @@
    */
   export const nextButtonStyles = tv({
     base: [
-      Button.rootStyles({ variant: 'outline' }),
+      Button.rootStyles({
+        variant: 'outline',
+      }),
 
       'size-8 bg-transparent p-0 opacity-50',
       'hover:opacity-100',
@@ -44,10 +48,42 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const headerCtx = headerContext.get();
+
+  if (!headerCtx) {
+    throw new Error('Calendar.NextButton must be used within a Calendar.Header component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The next button of a calendar component.
+
+Must be used within a `Calendar.Header` component.
+
+### Attributes
+
+Accepts the attributes of a `button` element.
+
+### Events
+
+- `click`
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
 
 <CalendarPrimitive.NextButton
   {...attributes}

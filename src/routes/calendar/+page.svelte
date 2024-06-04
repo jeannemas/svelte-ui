@@ -26,9 +26,9 @@
   $: selectedBreakpoint = {
     label: $props.breakpoint,
     value: $props.breakpoint,
-  } satisfies Selected<Calendar.RootBreakpoint>;
+  } satisfies Selected<Calendar.Breakpoint>;
 
-  function handleBreakpointhange(selected?: Selected<Calendar.RootBreakpoint>) {
+  function handleBreakpointhange(selected?: Selected<Calendar.Breakpoint>) {
     $props.breakpoint = selected!.value;
   }
 </script>
@@ -151,6 +151,42 @@
   </svelte:fragment>
 
   <svelte:fragment slot="demo">
-    <Calendar.Root {...$props} class="rounded-md border border-border" />
+    <Calendar.Root {...$props} class="rounded-md border border-border" let:months let:weekdays>
+      <Calendar.Header>
+        <Calendar.PreviousButton />
+
+        <Calendar.Heading />
+
+        <Calendar.NextButton />
+      </Calendar.Header>
+
+      <Calendar.Months>
+        {#each months as { value, weeks }, index (index)}
+          <Calendar.Grid>
+            <Calendar.GridHead>
+              <Calendar.GridRow>
+                {#each weekdays as weekday, index (index)}
+                  <Calendar.HeadCell>
+                    {weekday.slice(0, 2)}
+                  </Calendar.HeadCell>
+                {/each}
+              </Calendar.GridRow>
+            </Calendar.GridHead>
+
+            <Calendar.GridBody>
+              {#each weeks as weekDates, index (index)}
+                <Calendar.GridRow>
+                  {#each weekDates as date, index (index)}
+                    <Calendar.Cell date="{date}">
+                      <Calendar.Day date="{date}" month="{value}" />
+                    </Calendar.Cell>
+                  {/each}
+                </Calendar.GridRow>
+              {/each}
+            </Calendar.GridBody>
+          </Calendar.Grid>
+        {/each}
+      </Calendar.Months>
+    </Calendar.Root>
   </svelte:fragment>
 </ComponentDemoLayout>

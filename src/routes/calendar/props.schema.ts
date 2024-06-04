@@ -1,10 +1,10 @@
 import z from 'zod';
 
-import { rootStyles, type RootBreakpoint } from '$lib/components/calendar/index.js';
+import * as Calendar from '$lib/components/calendar/index.js';
 
-const breakpoints = Object.keys(rootStyles.variants.breakpoint) as [
-  RootBreakpoint,
-  ...RootBreakpoint[],
+const breakpoints = Object.keys(Calendar.rootStyles.variants.breakpoint) as [
+  Calendar.Breakpoint,
+  ...Calendar.Breakpoint[],
 ];
 
 export const schema = z.object({

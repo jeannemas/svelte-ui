@@ -59,11 +59,11 @@
       <Combobox.Input placeholder="Search a user" />
 
       <Combobox.Content>
-        {#each filteredUsers as user (user.value)}
-          <Combobox.Item label="{user.label}" value="{user.value}">
+        {#each filteredUsers as { label, value } (value)}
+          <Combobox.Item label="{label}" value="{value}">
             <Combobox.ItemIndicator />
 
-            {user.label}
+            {label}
           </Combobox.Item>
         {:else}
           <Combobox.Item disabled value="{null}">No users found</Combobox.Item>

@@ -79,9 +79,9 @@
         <Command.Empty>No results found.</Command.Empty>
 
         <Command.Group heading="Todo">
-          {#each activeTodos as todo (todo.id)}
+          {#each activeTodos as { id, title } (id)}
             <Command.Item>
-              {todo.title}
+              {title}
             </Command.Item>
           {/each}
         </Command.Group>
@@ -89,9 +89,9 @@
         <Command.Separator />
 
         <Command.Group heading="Completed">
-          {#each completedTodos as todo (todo.id)}
+          {#each completedTodos as { id, title } (id)}
             <Command.Item>
-              {todo.title}
+              {title}
             </Command.Item>
           {/each}
         </Command.Group>

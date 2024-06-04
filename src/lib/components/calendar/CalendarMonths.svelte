@@ -1,10 +1,11 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
-  import { rootContext } from './context.js';
+  import { monthsContext, rootContext } from './context.js';
 
   /**
    * The attributes of the months.
@@ -50,10 +51,40 @@
   }
 
   $: ({ breakpoint } = $rootCtx!);
+
+  const monthsCtx = monthsContext.set(writable());
+
+  $: monthsCtx.update(($ctx) => ({
+    ...$ctx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The months of a calendar component.
+
+Must be used within a `Calendar.Root` component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+None.
+
+### Props
+
+None.
+
+### Slots
+
+- `default` - The default slot.
+-->
 
 <div
   {...attributes}

@@ -60,7 +60,7 @@
   let:fieldErrorsAttrs
 >
   <slot errorAttrs="{errorAttrs}" errors="{errors}" fieldErrorsAttrs="{fieldErrorsAttrs}">
-    {#each errors as error}
+    {#each errors as error, index (index)}
       <div {...errorAttrs} class="{cn(errorClasses)}">
         {error}
       </div>

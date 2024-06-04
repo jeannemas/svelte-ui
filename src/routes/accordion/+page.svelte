@@ -43,16 +43,16 @@
 
   <svelte:fragment slot="demo">
     <Accordion.Root {...$props} class="rounded-lg border border-border bg-muted/50 p-2">
-      {#each data.posts as post (post.id)}
-        <Accordion.Item value="{post.id.toString()}">
+      {#each data.posts as { body, id, title } (id)}
+        <Accordion.Item value="{id.toString()}">
           <Accordion.Header>
             <Accordion.Trigger>
-              {post.title}
+              {title}
             </Accordion.Trigger>
           </Accordion.Header>
 
           <Accordion.Content>
-            {post.body}
+            {body}
           </Accordion.Content>
         </Accordion.Item>
       {/each}
