@@ -59,8 +59,8 @@
 
   const itemCtx = itemContext.set(writable());
 
-  $: itemCtx.update(($itemCtx) => ({
-    ...$itemCtx,
+  $: itemCtx.update(($ctx) => ({
+    ...$ctx,
     disabled,
   }));
 

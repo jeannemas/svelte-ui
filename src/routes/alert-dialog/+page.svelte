@@ -143,7 +143,7 @@
   </svelte:fragment>
 
   <svelte:fragment slot="demo">
-    <AlertDialog.Root {...$props}>
+    <AlertDialog.Root {...$props} portal="{null}">
       <AlertDialog.Trigger asChild let:builder>
         <Button builders="{[builder]}" variant="outline">Show Dialog</Button>
       </AlertDialog.Trigger>
@@ -162,7 +162,7 @@
           <AlertDialog.Action asChild let:builder>
             <Button
               builders="{[builder]}"
-              variant="{$props.variant === 'destructive' ? 'destructive' : 'default'}"
+              variant="{$props.variant === 'danger' ? 'danger' : 'default'}"
             >
               Continue
             </Button>

@@ -2,7 +2,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject } from '$lib/utils/types.js';
+
+  import { itemContext } from './context.js';
 
   /**
    * The attributes of the page.
@@ -24,7 +26,9 @@
    * The slots of the page.
    */
   export type Slots = {
-    default: EmptyObject;
+    default: {
+      builder: AnyObject;
+    };
   };
 
   /**
@@ -44,24 +48,60 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  $: builder = {
+    role: 'link',
+    'aria-current': 'page' as const,
+    'aria-disabled': true,
+  };
+
+  const itemCtx = itemContext.get();
+
+  if (!itemCtx) {
+    throw new Error('Breadcrumb.Page must be used within a Breadcrumb.Item component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+A page of a breadcrumb item component.
+
+Must be used within a `Breadcrumb.Item` component.
+
+### Attributes
+
+Accepts the attributes of an `span` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
+
 {#if asChild}
-  <slot />
+  <slot builder="{builder}" />
 {:else}
   <span
     {...attributes}
+    {...builder}
     class="{pageStyles({
       class: attributes.class,
     })}"
-    role="link"
-    aria-current="page"
-    aria-disabled="true"
     bind:this="{el}"
   >
-    <slot />
+    <slot builder="{builder}" />
   </span>
 {/if}

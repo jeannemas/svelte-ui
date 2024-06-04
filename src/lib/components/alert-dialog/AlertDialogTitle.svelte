@@ -34,8 +34,8 @@
     base: ['text-lg font-semibold'],
     variants: {
       variant: {
+        danger: ['text-red-500'],
         default: ['text-foreground'],
-        destructive: ['text-red-500'],
       },
     },
   });

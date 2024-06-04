@@ -29,8 +29,8 @@
     base: ['text-sm'],
     variants: {
       variant: {
+        danger: ['text-red-500'],
         default: ['text-muted-foreground'],
-        destructive: ['text-red-500'],
       },
     },
   });

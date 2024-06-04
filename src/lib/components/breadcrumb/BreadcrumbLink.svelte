@@ -2,7 +2,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject } from '$lib/utils/types.js';
+
+  import { itemContext } from './context.js';
 
   /**
    * The attributes of the link.
@@ -26,7 +28,9 @@
    * The slots of the link.
    */
   export type Slots = {
-    default: EmptyObject;
+    default: {
+      builder: AnyObject;
+    };
   };
 
   /**
@@ -47,22 +51,58 @@
   export let href: Props['href'];
 
   $: attributes = $$restProps as Attributes;
+
+  $: builder = {};
+
+  const itemCtx = itemContext.get();
+
+  if (!itemCtx) {
+    throw new Error('Breadcrumb.Link must be used within a Breadcrumb.Item component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+A link of a breadcrumb item component.
+
+Must be used within a `Breadcrumb.Item` component.
+
+### Attributes
+
+Accepts the attributes of an `a` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+- `href` - The URL of the link.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
+
 {#if asChild}
-  <slot />
+  <slot builder="{builder}" />
 {:else}
   <a
     {...attributes}
+    {...builder}
     class="{linkStyles({
       class: attributes.class,
     })}"
     href="{href}"
     bind:this="{el}"
   >
-    <slot />
+    <slot builder="{builder}" />
   </a>
 {/if}

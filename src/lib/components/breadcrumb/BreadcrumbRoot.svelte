@@ -3,7 +3,7 @@
   import { writable } from 'svelte/store';
   import { tv, type VariantProps } from 'tailwind-variants';
 
-  import type { EmptyObject } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject } from '$lib/utils/types.js';
 
   import { rootContext } from './context.js';
 
@@ -39,7 +39,9 @@
    * The slots of the root.
    */
   export type Slots = {
-    default: EmptyObject;
+    default: {
+      builder: AnyObject;
+    };
   };
 
   /**
@@ -71,10 +73,14 @@
 
   $: attributes = $$restProps as Attributes;
 
+  $: builder = {
+    'aria-label': 'breadcrumb',
+  };
+
   const rootCtx = rootContext.set(writable());
 
-  $: rootCtx.update(($rootCtx) => ({
-    ...$rootCtx,
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
     breakpoint,
   }));
 </script>
@@ -82,17 +88,66 @@
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+The root of the breadcrumb component.
+
+### Attributes
+
+Accepts the attributes of a `nav` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `breakpoint` - The breakpoint of the breadrumb.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+
+### Components hierarchy
+
+```html
+<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Item>
+      <Breadcrumb.Link />
+    </Breadcrumb.Item>
+
+    <Breadcrumb.Separator />
+
+    <Breadcrumb.Item>
+      <Breadcrumb.Ellipsis />
+    </Breadcrumb.Item>
+
+    ...
+
+    <Breadcrumb.Item>
+      <Breadcrumb.Page />
+    </Breadcrumb.Item>
+  </Breadcrumb.List>
+</Breadcrumb.Root>
+```
+-->
+
 {#if asChild}
-  <slot />
+  <slot builder="{builder}" />
 {:else}
   <nav
     {...attributes}
+    {...builder}
     class="{rootStyles({
       class: attributes.class,
     })}"
-    aria-label="breadcrumb"
     bind:this="{el}"
   >
-    <slot />
+    <slot builder="{builder}" />
   </nav>
 {/if}

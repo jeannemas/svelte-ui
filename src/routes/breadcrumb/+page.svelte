@@ -24,9 +24,9 @@
   $: selectedBreakpoint = {
     label: $props.breakpoint,
     value: $props.breakpoint,
-  } satisfies Selected<Breadcrumb.RootBreakpoint>;
+  } satisfies Selected<Breadcrumb.Breakpoint>;
 
-  function handleBreakpointChange(selected?: Selected<Breadcrumb.RootBreakpoint>) {
+  function handleBreakpointChange(selected?: Selected<Breadcrumb.Breakpoint>) {
     $props.breakpoint = selected!.value;
   }
 </script>

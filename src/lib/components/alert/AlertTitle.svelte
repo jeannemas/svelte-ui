@@ -33,8 +33,8 @@
     base: ['mb-2 font-medium leading-none tracking-tight'],
     variants: {
       variant: {
+        danger: ['text-red-500'],
         default: ['text-foreground'],
-        destructive: ['text-red-500'],
       },
     },
   });

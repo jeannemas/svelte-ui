@@ -49,8 +49,8 @@
 
   const portalCtx = portalContext.set(writable());
 
-  $: portalCtx.update(($portalCtx) => ({
-    ...$portalCtx,
+  $: portalCtx.update(($ctx) => ({
+    ...$ctx,
   }));
 </script>
 

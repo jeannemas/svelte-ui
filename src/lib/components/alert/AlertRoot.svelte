@@ -43,8 +43,8 @@
     },
     variants: {
       variant: {
+        danger: ['border-red-500 bg-red-50'],
         default: ['border-border bg-background'],
-        destructive: ['border-red-500 bg-red-50'],
       },
     },
   });
@@ -61,8 +61,8 @@
 
   const rootCtx = rootContext.set(writable());
 
-  $: rootCtx.update(($rootCtx) => ({
-    ...$rootCtx,
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
     variant,
   }));
 </script>

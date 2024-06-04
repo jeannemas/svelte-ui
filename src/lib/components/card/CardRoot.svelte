@@ -40,8 +40,8 @@
     },
     variants: {
       variant: {
+        danger: ['border-red-500 bg-red-50 text-red-500'],
         default: ['border-border bg-card text-card-foreground'],
-        destructive: ['border-destructive bg-destructive/5 text-destructive'],
       },
     },
   });

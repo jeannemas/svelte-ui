@@ -50,8 +50,8 @@
 
   const headerCtx = headerContext.set(writable());
 
-  $: headerCtx.update(($headerCtx) => ({
-    ...$headerCtx,
+  $: headerCtx.update(($ctx) => ({
+    ...$ctx,
   }));
 </script>
 

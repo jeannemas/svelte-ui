@@ -55,8 +55,8 @@
         lg: ['lg:max-w-2xl'],
       },
       variant: {
+        danger: ['border-red-500 bg-red-50'],
         default: ['border-border bg-background'],
-        destructive: ['border-red-500 bg-red-50'],
       },
     },
   });
@@ -98,8 +98,8 @@
 
   const contentCtx = contentContext.set(writable());
 
-  contentCtx.update(($contentCtx) => ({
-    ...$contentCtx,
+  contentCtx.update(($ctx) => ({
+    ...$ctx,
   }));
 
   const rootCtx = rootContext.get();

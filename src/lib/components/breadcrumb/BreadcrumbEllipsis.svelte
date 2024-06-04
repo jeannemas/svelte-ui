@@ -3,7 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import type { EmptyObject } from '$lib/utils/types.js';
+  import type { AnyObject, EmptyObject } from '$lib/utils/types.js';
+
+  import { itemContext } from './context.js';
 
   /**
    * The attributes of the ellipsis.
@@ -25,7 +27,9 @@
    * The slots of the ellipsis.
    */
   export type Slots = {
-    default: EmptyObject;
+    default: {
+      builder: AnyObject;
+    };
   };
 
   /**
@@ -45,24 +49,60 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  $: builder = {
+    role: 'presentation',
+    'aria-hidden': true,
+  };
+
+  const itemCtx = itemContext.get();
+
+  if (!itemCtx) {
+    throw new Error('Breadcrumb.Ellipsis must be used within a Breadcrumb.Item component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+An ellipsis of a breadcrumb item component.
+
+Must be used within a `Breadcrumb.Item` component.
+
+### Attributes
+
+Accepts the attributes of a `span` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `el` - Bind to the underlying DOM element of the component.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+-->
+
 {#if asChild}
-  <slot />
+  <slot builder="{builder}" />
 {:else}
   <span
     {...attributes}
+    {...builder}
     class="{ellipsisStyles({
       class: attributes.class,
     })}"
-    role="presentation"
-    aria-hidden="true"
     bind:this="{el}"
   >
-    <slot>
+    <slot builder="{builder}">
       <EllipsisIcon class="size-4" />
 
       <span class="sr-only">More</span>

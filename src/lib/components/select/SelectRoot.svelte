@@ -67,8 +67,8 @@
 
   const rootCtx = rootContext.set(writable());
 
-  $: rootCtx.update(($rootCtx) => ({
-    ...$rootCtx,
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
     items,
   }));
 </script>
