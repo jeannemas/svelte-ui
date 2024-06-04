@@ -1,8 +1,11 @@
 import z from 'zod';
 
-import { rootStyles, type Variant } from '$lib/components/alert/index.js';
+import * as Alert from '$lib/components/alert/index.js';
 
-const variants = Object.keys(rootStyles.variants.variant) as [Variant, ...Variant[]];
+const variants = Object.keys(Alert.rootStyles.variants.variant) as [
+  Alert.Variant,
+  ...Alert.Variant[],
+];
 
 export const schema = z.object({
   variant: z.enum(variants, {

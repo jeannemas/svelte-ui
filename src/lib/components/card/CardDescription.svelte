@@ -4,6 +4,8 @@
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
+  import { headerContext } from './context.js';
+
   /**
    * The attributes of the description.
    */
@@ -23,7 +25,13 @@
    * The styles of the description.
    */
   export const descriptionStyles = tv({
-    base: ['text-sm text-muted-foreground'],
+    base: ['text-sm'],
+    variants: {
+      variant: {
+        danger: ['text-red-500'],
+        default: ['text-muted-foreground'],
+      },
+    },
   });
 </script>
 
@@ -33,15 +41,48 @@
   type $$Slots = Slots;
 
   $: attributes = $$restProps as Attributes;
+
+  const headerCtx = headerContext.get();
+
+  if (!headerCtx) {
+    throw new Error('Card.Description must be used within a Card.Header component.');
+  }
+
+  $: ({ variant } = $headerCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
+<!--
+@component
+
+The description of the card component.
+
+Must be used within a `Card.Header` component.
+
+### Attributes
+
+Accepts the attributes of a `p` element.
+
+### Events
+
+None.
+
+### Props
+
+None.
+
+### Slots
+
+- `default` - The default slot.
+-->
+
 <p
   {...attributes}
   class="{descriptionStyles({
     class: attributes.class,
+    variant,
   })}"
 >
   <slot />

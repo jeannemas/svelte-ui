@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import '@internationalized/date';
   import { Calendar as CalendarPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { writable } from 'svelte/store';

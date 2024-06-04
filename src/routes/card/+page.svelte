@@ -27,9 +27,9 @@
   $: selectedVariant = {
     label: $props.variant,
     value: $props.variant,
-  } satisfies Selected<Card.RootVariant>;
+  } satisfies Selected<Card.Variant>;
 
-  function handleVariantthange(selected?: Selected<Card.RootVariant>) {
+  function handleVariantChange(selected?: Selected<Card.Variant>) {
     $props.variant = selected!.value;
   }
 </script>
@@ -46,7 +46,7 @@
         <Select.Root
           {...constraints}
           items="{data.variants}"
-          onSelectedChange="{handleVariantthange}"
+          onSelectedChange="{handleVariantChange}"
           selected="{selectedVariant}"
         >
           <Select.HiddenInput {...attrs} {...constraints} />

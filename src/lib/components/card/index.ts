@@ -32,7 +32,7 @@ export {
   type Attributes as RootAttributes,
   type Props as RootProps,
   type Slots as RootSlots,
-  type Variant as RootVariant,
+  type Variant,
 } from './CardRoot.svelte';
 export {
   default as Title,

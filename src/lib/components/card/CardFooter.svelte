@@ -4,10 +4,12 @@
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
+  import { rootContext } from './context.js';
+
   /**
    * The attributes of the footer.
    */
-  export type Attributes = SvelteHTMLElements['div'];
+  export type Attributes = SvelteHTMLElements['footer'];
   /**
    * The props of the footer.
    */
@@ -33,16 +35,46 @@
   type $$Slots = Slots;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Card.Content must be used within a Card.Root component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div
+<!--
+@component
+
+The footer of the card component.
+
+Must be used within a `Card.Root` component.
+
+### Attributes
+
+Accepts the attributes of a `footer` element.
+
+### Events
+
+None.
+
+### Props
+
+None.
+
+### Slots
+
+- `default` - The default slot.
+-->
+
+<footer
   {...attributes}
   class="{footerStyles({
     class: attributes.class,
   })}"
 >
   <slot />
-</div>
+</footer>

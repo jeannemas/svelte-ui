@@ -1,13 +1,16 @@
 <script context="module" lang="ts">
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { EmptyObject } from '$lib/utils/types.js';
 
+  import { headerContext, rootContext } from './context.js';
+
   /**
    * The attributes of the header.
    */
-  export type Attributes = SvelteHTMLElements['div'];
+  export type Attributes = SvelteHTMLElements['header'];
   /**
    * The props of the header.
    */
@@ -33,16 +36,53 @@
   type $$Slots = Slots;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!rootCtx) {
+    throw new Error('Card.Header must be used within a Card.Root component.');
+  }
+
+  const headerCtx = headerContext.set(writable());
+
+  $: headerCtx.update(($ctx) => ({
+    ...$ctx,
+    ...$rootCtx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<div
+<!--
+@component
+
+The header of the card component.
+
+Must be used within a `Card.Root` component.
+
+### Attributes
+
+Accepts the attributes of a `header` element.
+
+### Events
+
+None.
+
+### Props
+
+None.
+
+### Slots
+
+- `default` - The default slot.
+-->
+
+<header
   {...attributes}
   class="{headerStyles({
     class: attributes.class,
   })}"
 >
   <slot />
-</div>
+</header>

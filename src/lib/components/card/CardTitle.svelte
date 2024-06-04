@@ -4,6 +4,8 @@
 
   import type { EmptyObject, HeadingLevel } from '$lib/utils/types.js';
 
+  import { headerContext } from './context.js';
+
   /**
    * The attributes of the title.
    */
@@ -29,6 +31,12 @@
    */
   export const titleStyles = tv({
     base: ['text-lg font-semibold leading-none tracking-tight'],
+    variants: {
+      variant: {
+        danger: ['text-red-500'],
+        default: ['text-card-foreground'],
+      },
+    },
   });
 </script>
 
@@ -41,16 +49,49 @@
   export let level: TypedProps['level'] = 'h3' as TypedProps['level'];
 
   $: attributes = $$restProps as Attributes;
+
+  const headerCtx = headerContext.get();
+
+  if (!headerCtx) {
+    throw new Error('Card.Title must be used within a Card.Header component.');
+  }
+
+  $: ({ variant } = $headerCtx!);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The title of the card component.
+
+Must be used within a `Card.Header` component.
+
+### Attributes
+
+Accepts the attributes of a heading element.
+
+### Events
+
+None.
+
+### Props
+
+- `level` - The heading level.
+
+### Slots
+
+- `default` - The default slot.
+-->
 
 <svelte:element
   this="{level}"
   {...attributes}
   class="{titleStyles({
     class: attributes.class,
+    variant,
   })}"
 >
   <slot />
