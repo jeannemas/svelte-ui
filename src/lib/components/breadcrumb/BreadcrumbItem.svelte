@@ -62,6 +62,7 @@
 
   itemCtx.update(($ctx) => ({
     ...$ctx,
+    ...$listCtx,
   }));
 </script>
 

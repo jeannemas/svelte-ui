@@ -63,7 +63,7 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    disabled,
+    rootDisabled: disabled,
   }));
 </script>
 

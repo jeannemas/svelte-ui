@@ -48,7 +48,7 @@
     throw new Error('Alert.Description must be used within an Alert.Root component.');
   }
 
-  $: ({ variant } = $rootCtx!);
+  $: ({ rootVariant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -82,7 +82,7 @@ None.
   {...attributes}
   class="{descriptionStyles({
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
 >
   <slot />

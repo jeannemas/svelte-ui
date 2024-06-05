@@ -7,7 +7,7 @@
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
 
-  import { contentContext, portalContext, rootContext } from './context.js';
+  import { contentContext, portalContext } from './context.js';
 
   type Primitive<
     TContentTransition extends Transition = Transition,
@@ -98,13 +98,12 @@
 
   const contentCtx = contentContext.set(writable());
 
-  contentCtx.update(($ctx) => ({
+  $: contentCtx.update(($ctx) => ({
     ...$ctx,
+    ...$portalCtx,
   }));
 
-  const rootCtx = rootContext.get();
-
-  $: ({ breakpoint, variant } = $rootCtx!);
+  $: ({ rootBreakpoint, rootVariant } = $contentCtx);
 </script>
 
 <!-- <style lang="postcss">
@@ -152,9 +151,9 @@ Accepts the attributes of a `div` element.
   {...attributes}
   asChild="{asChild}"
   class="{contentStyles({
-    breakpoint,
+    breakpoint: rootBreakpoint,
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
   el="{el}"
   inTransition="{inTransition}"

@@ -67,13 +67,14 @@
     throw new Error('Breadcrumb.List must be used within a Breadcrumb.Root component.');
   }
 
-  $: ({ breakpoint } = $rootCtx!);
-
   const listCtx = listContext.set(writable());
 
   $: listCtx.update(($ctx) => ({
     ...$ctx,
+    ...$rootCtx,
   }));
+
+  $: ({ rootBreakpoint } = $listCtx);
 </script>
 
 <!-- <style lang="postcss">
@@ -112,7 +113,7 @@ None.
     {...attributes}
     {...builder}
     class="{listStyles({
-      breakpoint,
+      breakpoint: rootBreakpoint,
       class: attributes.class,
     })}"
     bind:this="{el}"

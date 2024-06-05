@@ -7,7 +7,7 @@
   import { cn } from '$lib/utils/cn.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
-  import { headerContext, itemContext, rootContext } from './context.js';
+  import { headerContext } from './context.js';
 
   type Primitive = ComponentInfo<AccordionPrimitive.Trigger>;
 
@@ -66,15 +66,12 @@
   $: attributes = $$restProps as Attributes;
 
   const headerCtx = headerContext.get();
-  const itemCtx = itemContext.get();
-  const rootCtx = rootContext.get();
 
   if (!headerCtx) {
     throw new Error('Accordion.Trigger must be used within an Accordion.Header component.');
   }
 
-  $: ({ disabled: itemDisabled } = $itemCtx!);
-  $: ({ disabled: rootDisabled } = $rootCtx!);
+  $: ({ itemDisabled, rootDisabled } = $headerCtx!);
   $: isDisabled = (rootDisabled || itemDisabled) ?? false;
 </script>
 

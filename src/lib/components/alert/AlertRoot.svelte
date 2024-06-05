@@ -63,7 +63,7 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    variant,
+    rootVariant: variant,
   }));
 </script>
 

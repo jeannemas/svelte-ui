@@ -56,7 +56,7 @@
     throw new Error('Card.Title must be used within a Card.Header component.');
   }
 
-  $: ({ variant } = $headerCtx!);
+  $: ({ rootVariant } = $headerCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -91,7 +91,7 @@ None.
   {...attributes}
   class="{titleStyles({
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
 >
   <slot />

@@ -5,7 +5,7 @@
 
   import type { ComponentInfo, HeadingLevel } from '$lib/utils/types.js';
 
-  import { contentContext, rootContext } from './context.js';
+  import { contentContext } from './context.js';
 
   type Primitive = ComponentInfo<AlertDialogPrimitive.Title>;
 
@@ -59,9 +59,7 @@
     throw new Error('AlertDialog.Title must be used within an AlertDialog.Content component.');
   }
 
-  const rootCtx = rootContext.get();
-
-  $: ({ variant } = $rootCtx!);
+  $: ({ rootVariant } = $contentCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -99,7 +97,7 @@ None.
   asChild="{asChild}"
   class="{titleStyles({
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
   el="{el}"
   level="{level}"

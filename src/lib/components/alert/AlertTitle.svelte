@@ -56,7 +56,7 @@
     throw new Error('Alert.Title must be used within an Alert.Root component.');
   }
 
-  $: ({ variant } = $rootCtx!);
+  $: ({ rootVariant } = $rootCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -91,7 +91,7 @@ None.
   {...attributes}
   class="{titleStyles({
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
 >
   <slot />

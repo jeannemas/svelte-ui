@@ -51,6 +51,7 @@
 
   $: gridHeadCtx.update(($ctx) => ({
     ...$ctx,
+    ...$gridCtx,
   }));
 </script>
 

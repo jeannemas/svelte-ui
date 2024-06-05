@@ -52,6 +52,7 @@
 
   $: headerCtx.update(($ctx) => ({
     ...$ctx,
+    ...$itemCtx,
   }));
 </script>
 

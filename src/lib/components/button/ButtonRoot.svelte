@@ -93,8 +93,8 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    size,
-    variant,
+    rootSize: size,
+    rootVariant: variant,
   }));
 </script>
 

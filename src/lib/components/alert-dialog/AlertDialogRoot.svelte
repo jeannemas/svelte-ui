@@ -89,8 +89,8 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    breakpoint,
-    variant,
+    rootBreakpoint: breakpoint,
+    rootVariant: variant,
   }));
 </script>
 

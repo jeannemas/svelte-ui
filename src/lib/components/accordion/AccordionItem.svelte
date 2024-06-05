@@ -61,11 +61,11 @@
 
   $: itemCtx.update(($ctx) => ({
     ...$ctx,
-    disabled,
+    ...$rootCtx,
+    itemDisabled: disabled,
   }));
 
-  $: ({ disabled: itemDisabled } = $itemCtx!);
-  $: ({ disabled: rootDisabled } = $rootCtx!);
+  $: ({ itemDisabled, rootDisabled } = $itemCtx);
   $: isDisabled = rootDisabled || itemDisabled;
 </script>
 

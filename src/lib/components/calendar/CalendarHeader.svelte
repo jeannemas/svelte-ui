@@ -51,6 +51,7 @@
 
   headerCtx.update(($ctx) => ({
     ...$ctx,
+    ...$rootCtx,
   }));
 </script>
 

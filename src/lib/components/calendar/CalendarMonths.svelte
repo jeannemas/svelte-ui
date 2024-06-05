@@ -50,13 +50,13 @@
     throw new Error('Calendar.Months must be used within a Calendar.Root component.');
   }
 
-  $: ({ breakpoint } = $rootCtx!);
-
   const monthsCtx = monthsContext.set(writable());
 
   $: monthsCtx.update(($ctx) => ({
     ...$ctx,
+    ...$rootCtx,
   }));
+  $: ({ rootBreakpoint } = $monthsCtx);
 </script>
 
 <!-- <style lang="postcss">
@@ -89,7 +89,7 @@ None.
 <div
   {...attributes}
   class="{monthsStyles({
-    breakpoint,
+    breakpoint: rootBreakpoint,
     class: attributes.class,
   })}"
 >

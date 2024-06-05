@@ -51,6 +51,7 @@
 
   $: gridCtx.update(($ctx) => ({
     ...$ctx,
+    ...$monthsCtx,
   }));
 </script>
 

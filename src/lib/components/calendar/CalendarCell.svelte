@@ -59,6 +59,7 @@
 
   $: cellCtx.update(($ctx) => ({
     ...$ctx,
+    ...$gridRowCtx,
   }));
 </script>
 

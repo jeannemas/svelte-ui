@@ -1,14 +1,14 @@
 <script context="module" lang="ts">
   import { Checkbox as CheckboxPrimitive } from 'bits-ui';
-  import CheckIcon from 'lucide-svelte/icons/check';
-  import MinusIcon from 'lucide-svelte/icons/minus';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
   import CheckboxHiddenInput from './CheckboxHiddenInput.svelte';
   import CheckboxIndicator from './CheckboxIndicator.svelte';
+  import { rootContext } from './context.js';
 
   type Primitive = ComponentInfo<CheckboxPrimitive.Root>;
 
@@ -35,7 +35,9 @@
       'data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50',
       'data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
     ],
-    defaultVariants: {},
+    defaultVariants: {
+      disabled: false,
+    },
     variants: {
       disabled: {
         true: ['cursor-not-allowed opacity-50'],
@@ -51,7 +53,7 @@
 
   export let asChild: Props['asChild'] = undefined;
   export let checked: Props['checked'] = undefined;
-  export let disabled: Props['disabled'] = undefined;
+  export let disabled: Props['disabled'] = rootStyles.defaultVariants.disabled;
   export let el: Props['el'] = undefined;
   export let name: Props['name'] = undefined;
   export let onCheckedChange: Props['onCheckedChange'] = undefined;
@@ -59,10 +61,57 @@
   export let value: Props['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The root of the checkbox component.
+
+### Attributes
+
+Accepts the attributes of a `button` element.
+
+### Events
+
+- `click`
+- `keydown`
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `checked` - The state of the checkbox. You can bind this to a boolean value to programmatically control the checked state.
+- `disabled` - Whether the checkbox is disabled.
+- `el` - Bind to the underlying DOM element of the component.
+- `name` - The name of the checkbox.
+- `onCheckedChange` - A callback function that is called when the checked state changes.
+- `required` - Whether the checkbox is required.
+- `value` - The value of the checkbox.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+
+### Components hierarchy
+
+```html
+<Checkbox.Root>
+  <Checkbox.HiddenInput />
+
+  <Checkbox.Indicator />
+</Checkbox.Root>
+```
+-->
 
 <CheckboxPrimitive.Root
   {...attributes}
@@ -82,14 +131,8 @@
   on:keydown
 >
   <slot builder="{builder}">
-    <CheckboxHiddenInput name="{name}" />
+    <CheckboxHiddenInput />
 
-    <CheckboxIndicator let:isChecked let:isIndeterminate>
-      {#if isChecked}
-        <CheckIcon class="size-4" />
-      {:else if isIndeterminate}
-        <MinusIcon class="size-4" />
-      {/if}
-    </CheckboxIndicator>
+    <CheckboxIndicator />
   </slot>
 </CheckboxPrimitive.Root>

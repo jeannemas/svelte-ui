@@ -48,7 +48,7 @@
     throw new Error('Card.Description must be used within a Card.Header component.');
   }
 
-  $: ({ variant } = $headerCtx!);
+  $: ({ rootVariant } = $headerCtx!);
 </script>
 
 <!-- <style lang="postcss">
@@ -82,7 +82,7 @@ None.
   {...attributes}
   class="{descriptionStyles({
     class: attributes.class,
-    variant,
+    variant: rootVariant,
   })}"
 >
   <slot />

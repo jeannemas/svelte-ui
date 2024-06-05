@@ -51,6 +51,7 @@
 
   $: portalCtx.update(($ctx) => ({
     ...$ctx,
+    ...$rootCtx,
   }));
 </script>
 
