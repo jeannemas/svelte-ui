@@ -1,9 +1,12 @@
 <script context="module" lang="ts">
   import { Collapsible as CollapsiblePrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive = ComponentInfo<CollapsiblePrimitive.Root>;
 
@@ -40,10 +43,53 @@
   export let onOpenChange: Props['onOpenChange'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!--
+@component
+
+The root of the collapsible component.
+
+### Attributes
+
+Accepts the attributes of a `div` element.
+
+### Events
+
+None.
+
+### Props
+
+- `asChild` - Whether to delegate rendering the element to your own custom element.
+- `disabled` - Whether the checkbox is disabled.
+- `el` - Bind to the underlying DOM element of the component.
+- `open` - Whether the collapsible is open.
+- `onOpenChange` - Callback when the collapsible is opened or closed.
+
+### Slots
+
+- `default` - The default slot.
+  - `builder` - The builder object, provided when `asChild=true`.
+
+### Components hierarchy
+
+```html
+<Collapsible.Root>
+  <Collapsible.Trigger />
+
+  <Collapsible.Content />
+</Collapsible.Root>
+```
+-->
 
 <CollapsiblePrimitive.Root
   {...attributes}
