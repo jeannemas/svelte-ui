@@ -1,7 +1,7 @@
-import type { Writable } from 'svelte/store';
-
 import { Context } from '$lib/utils/context.js';
 
 import type { RootProps } from './index.js';
 
-export const rootContext = new Context<Writable<Pick<RootProps<unknown, boolean>, 'items'>>>();
+type RootContext = Pick<RootProps<unknown, boolean>, 'items'>;
+
+export const rootContext = new Context<RootContext>();

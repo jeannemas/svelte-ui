@@ -6,6 +6,8 @@
   import { inputStyles as baseInputStyles } from '$lib/components/input/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { rootContext } from './context.js';
+
   type Primitive = ComponentInfo<ComboboxPrimitive.Input>;
 
   /**
@@ -39,10 +41,18 @@
   export let value: Props['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!$rootCtx) {
+    throw new Error('Combobox.Input must be used within a Combobox.Root component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.Input
   {...attributes}

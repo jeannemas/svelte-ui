@@ -1,11 +1,4 @@
 export {
-  default as Dialog,
-  dialogStyles,
-  type Attributes as DialogAttributes,
-  type Props as DialogProps,
-  type Slots as DialogSlots,
-} from './CommandDialog.svelte';
-export {
   default as Empty,
   emptyStyles,
   type Attributes as EmptyAttributes,
@@ -40,13 +33,6 @@ export {
   type Props as ListProps,
   type Slots as ListSlots,
 } from './CommandList.svelte';
-export {
-  default as Loading,
-  loadingStyles,
-  type Attributes as LoadingAttributes,
-  type Props as LoadingProps,
-  type Slots as LoadingSlots,
-} from './CommandLoading.svelte';
 export {
   default as Root,
   rootStyles,

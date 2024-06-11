@@ -57,7 +57,7 @@
 
   const itemCtx = itemContext.get();
 
-  if (!itemCtx) {
+  if (!$itemCtx) {
     throw new Error('Breadcrumb.Page must be used within a Breadcrumb.Item component.');
   }
 </script>
@@ -65,31 +65,7 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-A page of a breadcrumb item component.
-
-Must be used within a `Breadcrumb.Item` component.
-
-### Attributes
-
-Accepts the attributes of an `span` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `builder` - The builder object, provided when `asChild=true`.
--->
+<!-- @component -->
 
 {#if asChild}
   <slot builder="{builder}" />

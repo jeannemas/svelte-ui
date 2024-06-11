@@ -44,45 +44,23 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Alert.Description must be used within an Alert.Root component.');
   }
 
-  $: ({ rootVariant } = $rootCtx!);
+  $: ({ variant } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The description of the alert component.
-
-Must be used within an `Alert.Root` component.
-
-### Attributes
-
-Accepts the attributes of a `div` element.
-
-### Events
-
-None.
-
-### Props
-
-None.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <div
   {...attributes}
   class="{descriptionStyles({
     class: attributes.class,
-    variant: rootVariant,
+    variant,
   })}"
 >
   <slot />

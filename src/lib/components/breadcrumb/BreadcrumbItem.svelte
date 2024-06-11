@@ -54,7 +54,7 @@
 
   const listCtx = listContext.get();
 
-  if (!listCtx) {
+  if (!$listCtx) {
     throw new Error('Breadcrumb.Item must be used within a Breadcrumb.List component.');
   }
 
@@ -62,38 +62,14 @@
 
   itemCtx.update(($ctx) => ({
     ...$ctx,
-    ...$listCtx,
+    listContext: $listCtx,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-An item of the breadcrumb component.
-
-Must be used within a `Breadcrumb.List` component.
-
-### Attributes
-
-Accepts the attributes of a `li` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `builder` - The builder object, provided when `asChild=true`.
--->
+<!-- @component -->
 
 {#if asChild}
   <slot builder="{builder}" />

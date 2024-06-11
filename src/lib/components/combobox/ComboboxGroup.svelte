@@ -1,10 +1,13 @@
 <script context="module" lang="ts">
   import { Combobox as ComboboxPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import { groupStyles as selectGroupStyles } from '$lib/components/select/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { contentContext, groupContext } from './context.js';
 
   type Primitive = ComponentInfo<ComboboxPrimitive.Group>;
 
@@ -38,10 +41,25 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const contentCtx = contentContext.get();
+
+  if (!$contentCtx) {
+    throw new Error('Combobox.Group must be used within a Combobox.Content component.');
+  }
+
+  const groupCtx = groupContext.set(writable());
+
+  $: groupCtx.update(($ctx) => ({
+    ...$ctx,
+    contentContext: $contentCtx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.Group
   {...attributes}

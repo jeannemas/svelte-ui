@@ -44,45 +44,25 @@
 
   const headerCtx = headerContext.get();
 
-  if (!headerCtx) {
+  if (!$headerCtx) {
     throw new Error('Card.Description must be used within a Card.Header component.');
   }
 
-  $: ({ rootVariant } = $headerCtx!);
+  $: ({
+    rootContext: { variant },
+  } = $headerCtx);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The description of the card component.
-
-Must be used within a `Card.Header` component.
-
-### Attributes
-
-Accepts the attributes of a `p` element.
-
-### Events
-
-None.
-
-### Props
-
-None.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <p
   {...attributes}
   class="{descriptionStyles({
     class: attributes.class,
-    variant: rootVariant,
+    variant,
   })}"
 >
   <slot />

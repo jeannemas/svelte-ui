@@ -1,11 +1,7 @@
-import type { Writable } from 'svelte/store';
-
 import { Context } from '$lib/utils/context.js';
 
 import type { RootProps } from './index.js';
 
-type RootContext = {
-  [K in keyof Pick<RootProps, never> as `root${Capitalize<K>}`]: RootProps[K];
-};
+type RootContext = Pick<RootProps, never>;
 
-export const rootContext = new Context<Writable<RootContext>>();
+export const rootContext = new Context<RootContext>();

@@ -5,6 +5,8 @@
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { rootContext } from './context.js';
+
   type Primitive = ComponentInfo<ComboboxPrimitive.HiddenInput>;
 
   /**
@@ -38,10 +40,18 @@
   export let value: Props['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!$rootCtx) {
+    throw new Error('Combobox.HiddenInput must be used within a Combobox.Root component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.HiddenInput
   {...attributes}

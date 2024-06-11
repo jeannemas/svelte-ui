@@ -29,7 +29,7 @@
    * The styles of the root.
    */
   export const rootStyles = tv({
-    base: ['mx-auto flex w-full flex-col items-center'],
+    base: ['mx-auto flex flex-col items-center'],
   });
 </script>
 

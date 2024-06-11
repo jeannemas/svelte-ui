@@ -38,7 +38,7 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Card.Content must be used within a Card.Root component.');
   }
 </script>
@@ -46,29 +46,7 @@
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The footer of the card component.
-
-Must be used within a `Card.Root` component.
-
-### Attributes
-
-Accepts the attributes of a `footer` element.
-
-### Events
-
-None.
-
-### Props
-
-None.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <footer
   {...attributes}

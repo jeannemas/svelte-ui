@@ -1,7 +1,10 @@
 <script context="module" lang="ts">
   import { Combobox as ComboboxPrimitive } from 'bits-ui';
+  import { writable } from 'svelte/store';
 
   import type { ComponentInfo, EmptyObject } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive<TItem, TMultiple extends boolean = false> = ComponentInfo<
     ComboboxPrimitive.Root<TItem, TMultiple>
@@ -52,10 +55,18 @@
   export let touchedInput: TypedProps['touchedInput'] = undefined;
 
   // $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.Root
   closeOnEscape="{closeOnEscape}"

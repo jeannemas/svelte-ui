@@ -59,15 +59,23 @@
       <Combobox.Input placeholder="Search a user" />
 
       <Combobox.Content>
-        {#each filteredUsers as { label, value } (value)}
-          <Combobox.Item label="{label}" value="{value}">
-            <Combobox.ItemIndicator />
+        <Combobox.Group>
+          <Combobox.GroupLabel>Users</Combobox.GroupLabel>
 
-            {label}
-          </Combobox.Item>
-        {:else}
-          <Combobox.Item disabled value="{null}">No users found</Combobox.Item>
-        {/each}
+          {#each filteredUsers as { label, value } (value)}
+            <Combobox.Item label="{label}" value="{value}">
+              <Combobox.ItemIndicator />
+
+              <Combobox.Label>
+                {label}
+              </Combobox.Label>
+            </Combobox.Item>
+          {:else}
+            <Combobox.Item disabled value="{null}">
+              <Combobox.Label>No users found</Combobox.Label>
+            </Combobox.Item>
+          {/each}
+        </Combobox.Group>
       </Combobox.Content>
 
       <Combobox.HiddenInput />

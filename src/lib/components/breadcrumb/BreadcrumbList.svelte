@@ -63,7 +63,7 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Breadcrumb.List must be used within a Breadcrumb.Root component.');
   }
 
@@ -71,40 +71,18 @@
 
   $: listCtx.update(($ctx) => ({
     ...$ctx,
-    ...$rootCtx,
+    rootContext: $rootCtx,
   }));
 
-  $: ({ rootBreakpoint } = $listCtx);
+  $: ({
+    rootContext: { breakpoint },
+  } = $listCtx);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The list of the breadcrumb component.
-
-Must be used within a `Breadcrumb.Root` component.
-
-### Attributes
-
-Accepts the attributes of an `ol` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `builder` - The builder object, provided when `asChild=true`.
--->
+<!-- @component -->
 
 {#if asChild}
   <slot builder="{builder}" />
@@ -113,7 +91,7 @@ None.
     {...attributes}
     {...builder}
     class="{listStyles({
-      breakpoint: rootBreakpoint,
+      breakpoint,
       class: attributes.class,
     })}"
     bind:this="{el}"

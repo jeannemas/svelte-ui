@@ -9,6 +9,10 @@ export type { ComponentEvents, ComponentProps } from 'svelte';
  */
 export type AnyObject = ObjectOf<unknown>;
 /**
+ * Represents a builder object.
+ */
+export type BuilderObject = AnyObject;
+/**
  * Extracts the informations of a component.
  */
 export type ComponentInfo<TComponent extends SvelteComponent> =

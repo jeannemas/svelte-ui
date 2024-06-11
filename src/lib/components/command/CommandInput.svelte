@@ -26,7 +26,7 @@
    */
   export const inputStyles = tv({
     base: [
-      'flex h-12 w-full flex-row rounded-md bg-transparent py-3 text-sm outline-none',
+      'flex h-12 flex-row rounded-md bg-transparent py-3 text-sm outline-none',
       'placeholder:text-muted-foreground',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],

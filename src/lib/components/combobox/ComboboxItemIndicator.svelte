@@ -6,6 +6,8 @@
 
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { itemContext } from './context.js';
+
   type Primitive = ComponentInfo<ComboboxPrimitive.ItemIndicator>;
 
   /**
@@ -38,10 +40,18 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const itemCtx = itemContext.get();
+
+  if (!$itemCtx) {
+    throw new Error('Combobox.ItemIndicator must be used within a Combobox.Item component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.ItemIndicator
   {...attributes}

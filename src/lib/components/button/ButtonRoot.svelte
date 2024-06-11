@@ -93,45 +93,15 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    rootSize: size,
-    rootVariant: variant,
+    size,
+    variant,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The root of a button component.
-
-### Attributes
-
-Accepts the attributes of a `button` element.
-
-### Events
-
-- `click`
-- `keydown`
-
-### Props
-
-- `size` - The size of the button.
-- `variant` - The variant of the button.
-
-### Slots
-
-- `default` - The default slot.
-
-### Components hierarchy
-
-```html
-<Button.Root>
-  ...
-</Button.Root>
-```
--->
+<!-- @component -->
 
 <ButtonPrimitive.Root
   {...attributes}

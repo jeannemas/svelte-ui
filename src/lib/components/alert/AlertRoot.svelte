@@ -63,48 +63,14 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    rootVariant: variant,
+    variant,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The root of the alert component.
-
-### Attributes
-
-Accepts the attributes of a `div` element.
-
-### Events
-
-None.
-
-### Props
-
-- `variant` - The variant of the alert.
-
-### Slots
-
-- `default` - The default slot.
-
-### Components hierarchy
-
-```html
-<Alert.Root>
-  <Alert.Title>
-    ...
-  </Alert.Title>
-
-  <Alert.Description>
-    ...
-  </Alert.Description>
-</Alert.Root>
-```
--->
+<!-- @component -->
 
 <div
   {...attributes}

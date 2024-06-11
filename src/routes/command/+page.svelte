@@ -1,5 +1,4 @@
 <script context="module" lang="ts">
-  import { onMount } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -20,25 +19,6 @@
     validators: zodClient(schema),
   });
   const { form: props } = form;
-
-  let open = false;
-
-  $: activeTodos = data.todos.filter(({ completed }) => !completed);
-  $: completedTodos = data.todos.filter(({ completed }) => completed);
-
-  onMount(() => {
-    function handleKeydown(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-        event.preventDefault();
-
-        open = true;
-      }
-    }
-
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => document.removeEventListener('keydown', handleKeydown);
-  });
 </script>
 
 <!-- <style lang="postcss">
@@ -62,24 +42,17 @@
   </svelte:fragment>
 
   <svelte:fragment slot="demo">
-    <p class="text-sm text-muted-foreground">
-      Press
-
-      <kbd
-        class="pointer-events-none inline-flex h-6 select-none flex-row items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
-      >
-        <span class="text-xs">⌘</span> + K
-      </kbd>
-    </p>
-
-    <Command.Dialog {...$props} bind:open="{open}">
+    <Command.Root
+      class="mx-auto rounded-lg border shadow-md sm:max-w-sm md:max-w-md lg:max-w-lg"
+      {...$props}
+    >
       <Command.Input placeholder="Type a command or search..." />
 
       <Command.List>
         <Command.Empty>No results found.</Command.Empty>
 
         <Command.Group heading="Todo">
-          {#each activeTodos as { id, title } (id)}
+          {#each data.todos.filter(({ completed }) => !completed) as { id, title } (id)}
             <Command.Item>
               {title}
             </Command.Item>
@@ -89,13 +62,13 @@
         <Command.Separator />
 
         <Command.Group heading="Completed">
-          {#each completedTodos as { id, title } (id)}
+          {#each data.todos.filter(({ completed }) => completed) as { id, title } (id)}
             <Command.Item>
               {title}
             </Command.Item>
           {/each}
         </Command.Group>
       </Command.List>
-    </Command.Dialog>
+    </Command.Root>
   </svelte:fragment>
 </ComponentDemoLayout>

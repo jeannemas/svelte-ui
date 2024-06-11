@@ -1,11 +1,14 @@
 <script context="module" lang="ts">
   import { Combobox as ComboboxPrimitive } from 'bits-ui';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import { contentStyles as selectContentStyles } from '$lib/components/select/index.js';
   import { flyAndScale } from '$lib/transition/flyAndScale.js';
   import type { ComponentInfo, Transition } from '$lib/utils/types.js';
+
+  import { contentContext, rootContext } from './context.js';
 
   type Primitive<
     TContentTransition extends Transition = Transition,
@@ -85,10 +88,25 @@
   export let transitionConfig: TypedProps['transitionConfig'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.get();
+
+  if (!$rootCtx) {
+    throw new Error('Combobox.HiddenInput must be used within a Combobox.Root component.');
+  }
+
+  const contentCtx = contentContext.set(writable());
+
+  $: contentCtx.update(($ctx) => ({
+    ...$ctx,
+    rootContext: $rootCtx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.Content
   {...attributes}

@@ -1,9 +1,12 @@
 <script context="module" lang="ts">
   import { Command as CommandPrimitive } from 'cmdk-sv';
   import type { SvelteHTMLElements } from 'svelte/elements';
+  import { writable } from 'svelte/store';
   import { tv } from 'tailwind-variants';
 
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { rootContext } from './context.js';
 
   type Primitive = ComponentInfo<CommandPrimitive.Root>;
 
@@ -24,9 +27,7 @@
    * The styles of the root.
    */
   export const rootStyles = tv({
-    base: [
-      'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
-    ],
+    base: ['flex flex-col overflow-hidden rounded-md bg-popover text-popover-foreground'],
   });
 </script>
 
@@ -47,10 +48,18 @@
   export let value: Props['value'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const rootCtx = rootContext.set(writable());
+
+  $: rootCtx.update(($ctx) => ({
+    ...$ctx,
+  }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <CommandPrimitive.Root
   {...attributes}

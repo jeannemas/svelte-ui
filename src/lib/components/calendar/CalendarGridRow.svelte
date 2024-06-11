@@ -44,7 +44,7 @@
   const gridHeadCtx = gridHeadContext.get();
   const gridBodyCtx = gridBodyContext.get();
 
-  if (!gridHeadCtx && !gridBodyCtx) {
+  if (!$gridHeadCtx && !$gridBodyCtx) {
     throw new Error(
       'Calendar.GridRow must be used within a Calendar.GridHead or Calendar.GridBody component.',
     );
@@ -54,39 +54,15 @@
 
   $: gridRowCtx.update(($ctx) => ({
     ...$ctx,
-    ...$gridHeadCtx,
-    ...$gridBodyCtx,
+    gridHeadContext: $gridHeadCtx!,
+    gridBodyContext: $gridBodyCtx!,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The grid row of a month inside a calendar component.
-
-Must be used within a `Calendar.GridHead` or `Calendar.GridBody` components.
-
-### Attributes
-
-Accepts the attributes of a `tr` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `attrs` - The attributes of the row.
--->
+<!-- @component -->
 
 <CalendarPrimitive.GridRow
   {...attributes}

@@ -52,46 +52,24 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Alert.Title must be used within an Alert.Root component.');
   }
 
-  $: ({ rootVariant } = $rootCtx!);
+  $: ({ variant } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The title of the alert component.
-
-Must be used within an `Alert.Root` component.
-
-### Attributes
-
-Accepts the attributes of a heading element.
-
-### Events
-
-None.
-
-### Props
-
-- `level` - The heading level.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <svelte:element
   this="{level}"
   {...attributes}
   class="{titleStyles({
     class: attributes.class,
-    variant: rootVariant,
+    variant,
   })}"
 >
   <slot />

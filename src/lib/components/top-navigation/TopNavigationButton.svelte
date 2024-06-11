@@ -26,7 +26,7 @@
    */
   export const buttonStyles = tv({
     base: [
-      'flex w-full flex-row items-center gap-x-2 border-l-4 border-transparent p-2 text-lg font-medium text-foreground transition-colors',
+      'flex flex-row items-center gap-x-2 border-l-4 border-transparent p-2 text-lg font-medium text-foreground transition-colors',
       'hover:border-primary hover:bg-accent',
     ],
     variants: {
@@ -48,11 +48,11 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('TopNavigation.Button must be used within a TopNavigation.Root component.');
   }
 
-  $: ({ breakpoint } = $rootCtx!);
+  $: ({ breakpoint } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">

@@ -43,7 +43,7 @@
 
   const monthsCtx = monthsContext.get();
 
-  if (!monthsCtx) {
+  if (!$monthsCtx) {
     throw new Error('Calendar.Grid must be used within a Calendar.Months component.');
   }
 
@@ -51,38 +51,14 @@
 
   $: gridCtx.update(($ctx) => ({
     ...$ctx,
-    ...$monthsCtx,
+    monthsContext: $monthsCtx,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The grid of a month inside a calendar component.
-
-Must be used within a `Calendar.Months` component.
-
-### Attributes
-
-Accepts the attributes of a `table` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `builder` - The builder object, provided when `asChild=true`.
--->
+<!-- @component -->
 
 <CalendarPrimitive.Grid
   {...attributes}

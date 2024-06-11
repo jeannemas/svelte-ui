@@ -63,54 +63,14 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    rootVariant: variant,
+    variant,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The root of the card component.
-
-### Attributes
-
-Accepts the attributes of a `div` element.
-
-### Events
-
-None.
-
-### Props
-
-- `variant` - The variant of the card.
-
-### Slots
-
-- `default` - The default slot.
-
-### Components hierarchy
-
-```html
-<Card.Root>
-  <Card.Header>
-    <Card.Title />
-
-    <Card.Description />
-  </Card.Header>
-
-  <Card.Content>
-    ...
-  </Card.Content>
-
-  <Card.Footer>
-    ...
-  </Card.Footer>
-</Card.Root>
-```
--->
+<!-- @component -->
 
 <div
   {...attributes}

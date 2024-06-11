@@ -96,11 +96,11 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Select.Content must be used within a Select.Root component.');
   }
 
-  $: ({ items } = $rootCtx!);
+  $: ({ items } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">

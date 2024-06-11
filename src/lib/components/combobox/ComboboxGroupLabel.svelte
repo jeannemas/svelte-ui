@@ -6,6 +6,8 @@
   import { labelStyles as selectLabelStyles } from '$lib/components/select/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
 
+  import { groupContext } from './context.js';
+
   type Primitive = ComponentInfo<ComboboxPrimitive.GroupLabel>;
 
   /**
@@ -38,10 +40,18 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const groupCtx = groupContext.get();
+
+  if (!$groupCtx) {
+    throw new Error('Combobox.GroupLabel must be used within a Combobox.Group component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.GroupLabel
   {...attributes}

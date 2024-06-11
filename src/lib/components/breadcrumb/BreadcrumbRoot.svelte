@@ -81,61 +81,14 @@
 
   $: rootCtx.update(($ctx) => ({
     ...$ctx,
-    rootBreakpoint: breakpoint,
+    breakpoint,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The root of the breadcrumb component.
-
-### Attributes
-
-Accepts the attributes of a `nav` element.
-
-### Events
-
-None.
-
-### Props
-
-- `asChild` - Whether to delegate rendering the element to your own custom element.
-- `breakpoint` - The breakpoint of the breadrumb.
-- `el` - Bind to the underlying DOM element of the component.
-
-### Slots
-
-- `default` - The default slot.
-  - `builder` - The builder object, provided when `asChild=true`.
-
-### Components hierarchy
-
-```html
-<Breadcrumb.Root>
-  <Breadcrumb.List>
-    <Breadcrumb.Item>
-      <Breadcrumb.Link />
-    </Breadcrumb.Item>
-
-    <Breadcrumb.Separator />
-
-    <Breadcrumb.Item>
-      <Breadcrumb.Ellipsis />
-    </Breadcrumb.Item>
-
-    ...
-
-    <Breadcrumb.Item>
-      <Breadcrumb.Page />
-    </Breadcrumb.Item>
-  </Breadcrumb.List>
-</Breadcrumb.Root>
-```
--->
+<!-- @component -->
 
 {#if asChild}
   <slot builder="{builder}" />

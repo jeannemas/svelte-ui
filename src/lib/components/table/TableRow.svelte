@@ -45,11 +45,11 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Table.Row must be used within a Table.Root component.');
   }
 
-  $: ({ hoverable } = $rootCtx!);
+  $: ({ hoverable } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">

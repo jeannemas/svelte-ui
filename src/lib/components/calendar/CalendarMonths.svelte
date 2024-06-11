@@ -46,7 +46,7 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Calendar.Months must be used within a Calendar.Root component.');
   }
 
@@ -54,42 +54,22 @@
 
   $: monthsCtx.update(($ctx) => ({
     ...$ctx,
-    ...$rootCtx,
+    rootContext: $rootCtx,
   }));
-  $: ({ rootBreakpoint } = $monthsCtx);
+  $: ({
+    rootContext: { breakpoint },
+  } = $monthsCtx);
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The months of a calendar component.
-
-Must be used within a `Calendar.Root` component.
-
-### Attributes
-
-Accepts the attributes of a `div` element.
-
-### Events
-
-None.
-
-### Props
-
-None.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <div
   {...attributes}
   class="{monthsStyles({
-    breakpoint: rootBreakpoint,
+    breakpoint,
     class: attributes.class,
   })}"
 >

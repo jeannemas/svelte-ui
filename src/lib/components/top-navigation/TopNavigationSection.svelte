@@ -45,11 +45,11 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('TopNavigation.Section must be used within a TopNavigation.Root component.');
   }
 
-  $: ({ breakpoint } = $rootCtx!);
+  $: ({ breakpoint } = $rootCtx);
 </script>
 
 <!-- <style lang="postcss">

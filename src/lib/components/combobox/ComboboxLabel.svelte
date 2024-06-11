@@ -3,8 +3,9 @@
   import type { SvelteHTMLElements } from 'svelte/elements';
   import { tv } from 'tailwind-variants';
 
-  import { labelStyles as selectLabelStyles } from '$lib/components/select/index.js';
   import type { ComponentInfo } from '$lib/utils/types.js';
+
+  import { itemContext } from './context.js';
 
   type Primitive = ComponentInfo<ComboboxPrimitive.Label>;
 
@@ -25,7 +26,7 @@
    * The styles of the label.
    */
   export const labelStyles = tv({
-    base: [...selectLabelStyles.base],
+    base: [''],
   });
 </script>
 
@@ -38,10 +39,18 @@
   export let el: Props['el'] = undefined;
 
   $: attributes = $$restProps as Attributes;
+
+  const itemCtx = itemContext.get();
+
+  if (!$itemCtx) {
+    throw new Error('Combobox.Label must be used within a Combobox.Item component.');
+  }
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
+
+<!-- @component -->
 
 <ComboboxPrimitive.Label
   {...attributes}

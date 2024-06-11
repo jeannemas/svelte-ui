@@ -1,4 +1,5 @@
 import { getContext, hasContext, setContext } from 'svelte';
+import type { Writable } from 'svelte/store';
 
 export class Context<TContext> {
   readonly #key = Symbol();
@@ -8,8 +9,8 @@ export class Context<TContext> {
    *
    * @returns The context object or `null` if it doesn't exist.
    */
-  get(): TContext | null {
-    return this.has() ? getContext<TContext>(this.#key) : null;
+  get(): Writable<TContext> | null {
+    return this.has() ? getContext<Writable<TContext>>(this.#key) : null;
   }
 
   /**
@@ -27,7 +28,7 @@ export class Context<TContext> {
    * @param newContext The new context object to set.
    * @returns The new context object.
    */
-  set(newContext: TContext): TContext {
-    return setContext<TContext>(this.#key, newContext);
+  set(newContext: Writable<TContext>): Writable<TContext> {
+    return setContext<Writable<TContext>>(this.#key, newContext);
   }
 }

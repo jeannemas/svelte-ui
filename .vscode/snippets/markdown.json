@@ -1,0 +1,32 @@
+{
+  "Svelte Component doc": {
+    "prefix": "svelte:doc",
+    "body": [
+      "$1",
+      "",
+      "Must be used within a `$2` component.",
+      "",
+      "### Attributes",
+      "",
+      "Accepts the attributes of a `$3` element.",
+      "",
+      "### Events",
+      "",
+      "${4:None.}",
+      "",
+      "### Props",
+      "",
+      "${5:None.}",
+      "",
+      "### Slots",
+      "",
+      "${6:- `default` - The default slot.}",
+      "",
+      "### Components hierarchy",
+      "",
+      "```html",
+      "  $7",
+      "```"
+    ]
+  }
+}

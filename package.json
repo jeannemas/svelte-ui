@@ -24,6 +24,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@playwright/test": "^1.28.1",
+    "@structured-types/api": "^3.46.12",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/package": "^2.0.0",

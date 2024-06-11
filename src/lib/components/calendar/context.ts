@@ -1,5 +1,3 @@
-import type { Writable } from 'svelte/store';
-
 import { Context } from '$lib/utils/context.js';
 
 import type {
@@ -13,36 +11,40 @@ import type {
   RootProps,
 } from './index.js';
 
-type CellContext = GridRowContext & {
-  [K in keyof Pick<CellProps, never> as `cell${Capitalize<K>}`]: CellProps[K];
+type CellContext = Pick<CellProps, never> & {
+  gridRowContext: GridRowContext;
 };
-type GridBodyContext = GridContext & {
-  [K in keyof Pick<GridBodyProps, never> as `gridBody${Capitalize<K>}`]: GridBodyProps[K];
+type GridBodyContext = Pick<GridBodyProps, never> & {
+  gridContext: GridContext;
 };
-type GridHeadContext = GridContext & {
-  [K in keyof Pick<GridHeadProps, never> as `gridHead${Capitalize<K>}`]: GridHeadProps[K];
+type GridHeadContext = Pick<GridHeadProps, never> & {
+  gridContext: GridContext;
 };
-type GridContext = MonthsContext & {
-  [K in keyof Pick<GridProps, never> as `grid${Capitalize<K>}`]: GridProps[K];
+type GridContext = Pick<GridProps, never> & {
+  monthsContext: MonthsContext;
 };
-type GridRowContext = (GridHeadContext | GridBodyContext) & {
-  [K in keyof Pick<GridRowProps, never> as `gridRow${Capitalize<K>}`]: GridRowProps[K];
+type GridRowContext = Pick<GridRowProps, never> &
+  (
+    | {
+        gridHeadContext: GridHeadContext;
+      }
+    | {
+        gridBodyContext: GridBodyContext;
+      }
+  );
+type HeaderContext = Pick<HeaderProps, never> & {
+  rootContext: RootContext;
 };
-type HeaderContext = RootContext & {
-  [K in keyof Pick<HeaderProps, never> as `header${Capitalize<K>}`]: HeaderProps[K];
+type MonthsContext = Pick<MonthsProps, never> & {
+  rootContext: RootContext;
 };
-type MonthsContext = RootContext & {
-  [K in keyof Pick<MonthsProps, never> as `months${Capitalize<K>}`]: MonthsProps[K];
-};
-type RootContext = {
-  [K in keyof Pick<RootProps, 'breakpoint'> as `root${Capitalize<K>}`]: RootProps[K];
-};
+type RootContext = Pick<RootProps, 'breakpoint'>;
 
-export const cellContext = new Context<Writable<CellContext>>();
-export const gridBodyContext = new Context<Writable<GridBodyContext>>();
-export const gridHeadContext = new Context<Writable<GridHeadContext>>();
-export const gridContext = new Context<Writable<GridContext>>();
-export const gridRowContext = new Context<Writable<GridRowContext>>();
-export const headerContext = new Context<Writable<HeaderContext>>();
-export const monthsContext = new Context<Writable<MonthsContext>>();
-export const rootContext = new Context<Writable<RootContext>>();
+export const cellContext = new Context<CellContext>();
+export const gridBodyContext = new Context<GridBodyContext>();
+export const gridHeadContext = new Context<GridHeadContext>();
+export const gridContext = new Context<GridContext>();
+export const gridRowContext = new Context<GridRowContext>();
+export const headerContext = new Context<HeaderContext>();
+export const monthsContext = new Context<MonthsContext>();
+export const rootContext = new Context<RootContext>();

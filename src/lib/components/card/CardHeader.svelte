@@ -39,7 +39,7 @@
 
   const rootCtx = rootContext.get();
 
-  if (!rootCtx) {
+  if (!$rootCtx) {
     throw new Error('Card.Header must be used within a Card.Root component.');
   }
 
@@ -47,36 +47,14 @@
 
   $: headerCtx.update(($ctx) => ({
     ...$ctx,
-    ...$rootCtx,
+    rootContext: $rootCtx,
   }));
 </script>
 
 <!-- <style lang="postcss">
 </style> -->
 
-<!--
-@component
-
-The header of the card component.
-
-Must be used within a `Card.Root` component.
-
-### Attributes
-
-Accepts the attributes of a `header` element.
-
-### Events
-
-None.
-
-### Props
-
-None.
-
-### Slots
-
-- `default` - The default slot.
--->
+<!-- @component -->
 
 <header
   {...attributes}

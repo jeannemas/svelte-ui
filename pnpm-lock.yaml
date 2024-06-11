@@ -57,6 +57,9 @@ importers:
       '@playwright/test':
         specifier: ^1.28.1
         version: 1.43.0
+      '@structured-types/api':
+        specifier: ^3.46.12
+        version: 3.46.12(typescript@5.4.4)
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.2.0(@sveltejs/kit@2.5.5(@sveltejs/vite-plugin-svelte@3.0.2(svelte@4.2.12)(vite@5.2.8))(svelte@4.2.12)(vite@5.2.8))
@@ -592,6 +595,16 @@ packages:
 
   '@sodaru/yup-to-json-schema@2.0.1':
     resolution: {integrity: sha512-lWb0Wiz8KZ9ip/dY1eUqt7fhTPmL24p6Hmv5Fd9pzlzAdw/YNcWZr+tiCT4oZ4Zyxzi9+1X4zv82o7jYvcFxYA==}
+
+  '@structured-types/api@3.46.12':
+    resolution: {integrity: sha512-vFa4nH4eJnX+nZZx5Odng/NAJ4NtT8NOFXySkLb/a334GjKa4ApsNLK3nnDy11iigmeMJGWXFMAj/Mux5+m2Kw==}
+    peerDependencies:
+      typescript: ^4.2.0
+
+  '@structured-types/typescript-config@3.46.9':
+    resolution: {integrity: sha512-hZhrNmywgX0VqeHi6gT7fFSJ1cCBW3iXPTQE4HpABm7VU4MHBwyFETGFTvFKdx8ARC+qK942rysP4NAE/NDcdg==}
+    peerDependencies:
+      typescript: ^4.0.0
 
   '@sveltejs/adapter-auto@3.2.0':
     resolution: {integrity: sha512-She5nKT47kwHE18v9NMe6pbJcvULr82u0V3yZ0ej3n1laWKGgkgdEABE9/ak5iDPs93LqsBkuIo51kkwCLBjJA==}
@@ -1972,6 +1985,9 @@ packages:
 
   pascal-case@3.1.2:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
+
+  path-browserify@1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -3401,6 +3417,19 @@ snapshots:
 
   '@sodaru/yup-to-json-schema@2.0.1':
     optional: true
+
+  '@structured-types/api@3.46.12(typescript@5.4.4)':
+    dependencies:
+      '@structured-types/typescript-config': 3.46.9(typescript@5.4.4)
+      deepmerge: 4.3.1
+      path-browserify: 1.0.1
+      typescript: 5.4.4
+
+  '@structured-types/typescript-config@3.46.9(typescript@5.4.4)':
+    dependencies:
+      deepmerge: 4.3.1
+      path-browserify: 1.0.1
+      typescript: 5.4.4
 
   '@sveltejs/adapter-auto@3.2.0(@sveltejs/kit@2.5.5(@sveltejs/vite-plugin-svelte@3.0.2(svelte@4.2.12)(vite@5.2.8))(svelte@4.2.12)(vite@5.2.8))':
     dependencies:
@@ -4940,6 +4969,8 @@ snapshots:
     dependencies:
       no-case: 3.0.4
       tslib: 2.6.2
+
+  path-browserify@1.0.1: {}
 
   path-exists@4.0.0: {}
 
